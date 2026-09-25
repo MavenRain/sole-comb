@@ -75,14 +75,21 @@ elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict
 
 ## Remaining Stage 0 work
 
-The measurement harness is a prerequisite for S0-5. S0-5 still needs the scratch
-Bend lexer/parser/checker and its two source twins, the native informational
-build, Bun and Node worker measurements, prebuilt-bundle start-up measurements,
-the GREEN repeat when required, and `dev/r2-risk.json`. Scratch compiler code
-belongs under `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree.
+The measurement harness and [R2 evidence assembler](dev/r2-risk.md) are ready
+for S0-5. `make test-r2` checks its refusal and selection rules; `make r2-report
+R2_MANIFEST=/absolute/path/to/manifest.json` verifies measured evidence and
+writes `dev/r2-risk.json`. Reports preserve raw samples, source and bundle
+hashes, the pinned and observed Bend, Bun and Node sha256s, both startup
+shares and the required GREEN confirmation.
 
-The plan's load ceiling is 8.0 with a 3600-second wait budget. Endpoint selection
-and the Stage A kernel port remain pending until the probe has valid evidence.
-The current preflight observation is recorded in
-`dev/validation/s0-5-bench-preflight.json`; it is a historical observation, so
-rerun `make bench-preflight` before measuring.
+S0-5 still needs the scratch Bend lexer/parser/checker and its two source
+twins, the native informational build, Bun and Node worker measurements,
+prebuilt-bundle startup measurements, and the GREEN repeat when required.
+Scratch compiler code belongs under
+`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
+verdict or runtime selection has been made.
+
+The plan's load ceiling is 8.0 with a 3600-second wait budget. Endpoint
+selection and the Stage A kernel port remain pending until the probe has
+valid evidence. The observation in `dev/validation/s0-5-bench-preflight.json`
+is historical; rerun `make bench-preflight` before measuring.

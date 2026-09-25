@@ -41,7 +41,15 @@ def positive(value, name):
 
 def limits(pins):
     return {key: positive(pins[key], key) for key in
-            ("load_ceiling", "load_wait_max_s", "leg_deadline_s")}
+             ("load_ceiling", "load_wait_max_s", "leg_deadline_s")}
+
+
+def input_snapshot(paths):
+    records = []
+    for path in sorted({path.resolve() for path in paths}):
+        data = path.read_bytes()
+        records.append({"path": str(path), "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)})
+    return records
 
 
 class TaskInfo(ctypes.Structure):
@@ -252,6 +260,7 @@ def main():
     parser.add_argument("--poll-s", type=float, default=os.environ.get("BENCH_POLL_S", "30"))
     parser.add_argument("--json", type=Path, help="write the full result, including failed attempts")
     parser.add_argument("--accept-line", help="require this complete stdout line, ignoring ANSI colors")
+    parser.add_argument("--input", type=Path, action="append", default=[], help="hash a measured input before and after the leg; repeat for dependencies")
     parser.add_argument("--require-threads", action="store_true")
     parser.add_argument("--cache-state", choices=("cold", "warm", "unknown"), default="unknown")
     parser.add_argument("--preflight", action="store_true", help="check pins and current load without waiting or running a sample")
@@ -279,6 +288,7 @@ def main():
         report["pin_check"] = {"exit_code": check.returncode, "stdout": check.stdout, "stderr": check.stderr}
         if check.returncode:
             raise ValueError("toolchain pin check failed")
+        report["inputs"] = input_snapshot(args.input)
         if args.preflight:
             load = os.getloadavg()[0]
             ready = math.isfinite(load) and load <= report["limits"]["load_ceiling"]
@@ -292,11 +302,16 @@ def main():
             code = run_leg(report, report["limits"], command,
                            args.runs, args.poll_s, args.accept_line, args.require_threads,
                            args.cache_state, emit=lambda line: print(line, flush=True))
+            if input_snapshot(args.input) != report["inputs"]:
+                raise ValueError("measured inputs changed during the benchmark leg")
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         report.update(status="ERROR", reason=f"{type(error).__name__}: {error}")
+        report.pop("summary", None)
+        code = 1
     except KeyboardInterrupt:
         report.update(status="INTERRUPTED", reason="cancelled by operator")
         code = 130
+    report["completed_at"] = datetime.now(timezone.utc).isoformat()
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile(mode="w", dir=args.json.parent, delete=False) as handle:

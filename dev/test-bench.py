@@ -260,5 +260,61 @@ class CliTests(unittest.TestCase):
         self.assertEqual(report["launcher"], "direct")
 
 
+class InputSnapshotTests(unittest.TestCase):
+    def capture(self, change):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve()
+            pins, source, output = root / "pins.json", root / "input.sole", root / "report.json"
+            pins.write_text(json.dumps(LIMITS))
+            source.write_text("before")
+            before = bench.input_snapshot([source])
+
+            def leg(report, *args, **kwargs):
+                samples = [{**sample(), "run": 1, "accepted": True, "load1_start": 1, "load1_end": 1}]
+                report.update(status="PASS", samples=samples, summary=bench.summary(samples))
+                change(source)
+                return 0
+
+            argv = ["bench.py", "snapshot", "/usr/bin/true", "--argv", "--input", str(source),
+                    "--toolchain", str(pins), "--json", str(output)]
+            with patch.object(sys, "argv", argv), patch.object(bench, "run_leg", side_effect=leg), \
+                    patch.object(bench.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "pins", "")), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                code = bench.main()
+            return code, json.loads(output.read_text()), before
+
+    def test_stable_input_keeps_success_and_records_completion(self):
+        code, report, before = self.capture(lambda source: None)
+        self.assertEqual((code, report["status"]), (0, "PASS"))
+        self.assertEqual(report["inputs"], before)
+        start = bench.datetime.fromisoformat(report["recorded_at"])
+        end = bench.datetime.fromisoformat(report["completed_at"])
+        self.assertLessEqual(start, end)
+        self.assertIsNotNone(end.utcoffset())
+
+    def test_input_change_invalidates_success_and_removes_median(self):
+        code, report, before = self.capture(lambda source: source.write_text("after"))
+        self.assertEqual((code, report["status"]), (1, "ERROR"))
+        self.assertEqual(report["inputs"], before)
+        self.assertNotIn("summary", report)
+        self.assertIn("inputs changed", report["reason"])
+
+    def test_input_removal_invalidates_success(self):
+        code, report, _ = self.capture(lambda source: source.unlink())
+        self.assertEqual((code, report["status"]), (1, "ERROR"))
+        self.assertNotIn("summary", report)
+
+    def test_snapshot_uses_resolved_paths_and_deduplicates_aliases(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source = Path(folder) / "source"
+            source.write_text("fixed")
+            alias = Path(folder) / "alias"
+            alias.symlink_to(source)
+            records = bench.input_snapshot([source, alias])
+            self.assertEqual(len(records), 1)
+            self.assertEqual(records[0]["path"], str(source.resolve()))
+            self.assertEqual(records[0]["bytes"], 5)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
