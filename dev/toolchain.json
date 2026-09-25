@@ -96,12 +96,13 @@
   "leg_deadline_s": 600,
   "mutant_deadline_s": 1800,
   "endpoint": null,
-  "endpoint_candidates": ["bun", "node-worker", "native"],
+  "endpoint_candidates": ["bun", "node-worker"],
+  "endpoint_info_only": ["native"],
   "notes": {
     "stack_kib": "UNVERIFIED for sole-comb. 65500 is the assay value (assay/dev/toolchain.json). S0-5 runs deep terms and sets the sole-comb value.",
     "load_ceiling": "One-minute load average. USER ruling LOAD-LIMITS 2026-09-24. A timed leg waits while the load is over the ceiling, for at most load_wait_max_s, then prints UNMET and does not run.",
     "deadlines": "USER ruling LOAD-LIMITS 2026-09-24. A leg or rebuild past its deadline is UNMET on its row, not a kill.",
-    "endpoint": "null until S0-5 picks one of endpoint_candidates. native is INFO only in S0-5 and is never picked.",
+    "endpoint": "null until S0-5 picks one of endpoint_candidates. native is INFO only (endpoint_info_only) and is never picked.",
     "wasm_gc": "Wasm GC support in the pinned wasm-tools, wasmtime and node is UNVERIFIED. No module has run."
   }
 }

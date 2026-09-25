@@ -124,6 +124,9 @@ def limits_checks(pins):
                                               and pins["load_ceiling"] > 0, f"load_ceiling={pins['load_ceiling']}")),
         check("limits.endpoint", lambda: (pins["endpoint"] is None or pins["endpoint"] in pins["endpoint_candidates"],
                                           f"endpoint={pins['endpoint']}")),
+        check("limits.endpoint_candidates", lambda: (not set(pins["endpoint_candidates"]) & set(pins["endpoint_info_only"]),
+                                                     f"candidates={pins['endpoint_candidates']} "
+                                                     f"info_only={pins['endpoint_info_only']}")),
         check("limits.sha256.format", lambda: (all(map(is_sha256, [
             pins["bend"]["binary_sha256"], pins["kanon"]["oracle"]["sha256"],
             *(tool["sha256"] for tool in pins["tools"].values())])), "every sha256 is 64 lower-case hex digits")),

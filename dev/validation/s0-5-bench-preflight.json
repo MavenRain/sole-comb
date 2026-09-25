@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "s0-5",
+  "phase": "preflight",
+  "recorded_at": "2026-09-25T08:20:00.872291+00:00",
+  "status": "READY",
+  "toolchain": "/Users/oobi/Documents/sole-comb/dev/toolchain.json",
+  "samples": [],
+  "launcher": "/bin/zsh -f -c",
+  "cpu_method": "wait4 child user + system CPU; observer excluded; includes /bin/zsh -f start-up CPU (about 3 ms on darwin)",
+  "affinity": "not set",
+  "compile_cache_state": "unknown",
+  "accept_line": null,
+  "toolchain_sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+  "limits": {
+    "load_ceiling": 8.0,
+    "load_wait_max_s": 3600,
+    "leg_deadline_s": 600
+  },
+  "pin_check": {
+    "exit_code": 0,
+    "stdout": "PINCHECK PASS groups=bend,kanon,tools,limits checks=35 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json\n",
+    "stderr": ""
+  },
+  "load1": 7.84521484375,
+  "reason": "preflight only; no timed leg or R2 verdict"
+}

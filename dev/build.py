@@ -10,13 +10,16 @@ Copied from attest/dev/build.py and assay/dev/build.py (M0 plan S0-3, 8.3):
 - Every bend run sets BEND_NO_TELEMETRY=1 and BEND_LIB=_build/bend-cache, runs
   from the sole-comb root, and is bounded by build_deadline_s.
 - The output is cached by transitive source hashes, compiler identity and
-  options. The output sha256 is checked before reuse.
+  options. The output sha256 is checked before reuse. The hashes cover every
+  header import (indented or not) and every foreign `import "<path>.c|js"` file
+  that Bend reads. Content-addressed 0x<hash>/ imports are skipped.
 - js writes _build/sole-comb.js and the endpoint launchers _build/endpoint/bun
   and _build/endpoint/node-worker. native writes _build/native/sole-comb.exe
   and _build/endpoint/native (INFO only: the full native build is not
   validated, and the native path without the attest CC wrapper is UNVERIFIED).
-- ./sole-comb is written only when dev/toolchain.json names an endpoint.
-  At Stage 0 the endpoint is null (S0-5 picks it).
+- ./sole-comb is written only when dev/toolchain.json names an endpoint, and
+  only for one of endpoint_candidates (bun, node-worker). native is INFO only
+  and is never activated. At Stage 0 the endpoint is null (S0-5 picks it).
 
 Exit codes: 0 built or cached, 1 failure, 3 UNMET (the build passed build_deadline_s).
 """
@@ -37,7 +40,9 @@ ROOT = Path(__file__).resolve().parent.parent
 TOOLCHAIN = Path(os.environ.get("SOLE_COMB_TOOLCHAIN", ROOT / "dev/toolchain.json"))
 ENTRY = "bin/sole-comb.bend"
 OUTPUTS = {"js": "_build/sole-comb.js", "native": "_build/native/sole-comb.exe"}
-IMPORT = re.compile(r"^import[^\S\n]+(\S+\.bend)(?:[^\S\n]+as[^\S\n]+\w+)?[^\S\n]*(?:(?://|#)[^\n]*)?$", re.M)
+IMPORT = re.compile(r"^[^\S\n]*import[^\S\n]+(\S+\.bend)(?:[^\S\n]+as[^\S\n]+\w+)?[^\S\n]*(?:(?://|#)[^\n]*)?$", re.M)
+FOREIGN = re.compile(r'\bimport\s*"([^"\n]*\.(?:c|js))"')
+CONTENT_ADDRESSED = re.compile(r"^0x[0-9a-f]+/")
 UNMET = 3
 
 
@@ -49,14 +54,22 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def inside(path):
+    if ROOT not in path.parents:
+        raise ValueError(f"source import escapes the repository: {path}")
+    return path
+
+
 def dependencies(source, seen=frozenset()):
+    """Bend .bend imports recursively, plus foreign .c/.js files as leaves."""
     source = source.resolve()
     if source in seen:
         return seen
-    if ROOT not in source.parents:
-        raise ValueError(f"source import escapes the repository: {source}")
+    text = inside(source).read_text()
+    foreign = frozenset(inside((source.parent / name).resolve()) for name in FOREIGN.findall(text))
     return reduce(lambda acc, imported: dependencies(source.parent / imported, acc),
-                  IMPORT.findall(source.read_text()), seen | {source})
+                  [name for name in IMPORT.findall(text) if not CONTENT_ADDRESSED.match(name)],
+                  seen | {source} | foreign)
 
 
 def source_hashes():
@@ -86,7 +99,7 @@ def write_executable(path, text):
 
 def node_worker_script(pins):
     return ("const { Worker } = require('node:worker_threads'); "
-            "const worker = new Worker(process.argv[1], { argv: process.argv.slice(2), execArgv: [], "
+            "const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], "
             f"resourceLimits: {{ stackSizeMb: {pins['stack_kib'] / 1024} }} }}); "
             "worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); "
             "worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });")
@@ -111,6 +124,8 @@ def activate(pins):
     if endpoint is None:
         launcher.unlink(missing_ok=True)
         print("LAUNCHER ./sole-comb not written: endpoint is null in dev/toolchain.json (S0-5 picks it)", flush=True)
+    elif endpoint not in pins["endpoint_candidates"]:
+        raise ValueError(f"endpoint {endpoint} is not one of endpoint_candidates {pins['endpoint_candidates']}")
     elif not chosen.is_file():
         raise ValueError(f"endpoint {endpoint} has no launcher; build its backend first")
     else:

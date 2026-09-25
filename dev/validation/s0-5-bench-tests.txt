@@ -1,0 +1,44 @@
+test_observer_records_mid_run_load_peak_and_nonfinite_error (__main__.ChildTests.test_observer_records_mid_run_load_peak_and_nonfinite_error) ... ok
+test_output_matching_handles_ansi_and_refuses_substrings (__main__.ChildTests.test_output_matching_handles_ansi_and_refuses_substrings) ... ok
+test_thread_count_is_the_child_thread_number (__main__.ChildTests.test_thread_count_is_the_child_thread_number) ... ok
+test_timeout_kills_descendant_before_delayed_write (__main__.ChildTests.test_timeout_kills_descendant_before_delayed_write) ... ok
+test_timeout_survives_eperm_from_zombie_process_group (__main__.ChildTests.test_timeout_survives_eperm_from_zombie_process_group) ... ok
+test_wait4_cpu_and_real_acceptance_line (__main__.ChildTests.test_wait4_cpu_and_real_acceptance_line) ... ok
+test_zero_exit_without_acceptance_line_is_not_accept (__main__.ChildTests.test_zero_exit_without_acceptance_line_is_not_accept) ... ok
+test_argv_mode_runs_without_shell (__main__.CliTests.test_argv_mode_runs_without_shell) ... ok
+test_pin_failure_stops_preflight (__main__.CliTests.test_pin_failure_stops_preflight) ... ok
+test_preflight_busy_is_not_a_completed_load_wait_or_r2_verdict (__main__.CliTests.test_preflight_busy_is_not_a_completed_load_wait_or_r2_verdict) ... ok
+test_preflight_ready_has_no_benchmark_samples (__main__.CliTests.test_preflight_ready_has_no_benchmark_samples) ... ok
+test_busy_machine_never_starts_child (__main__.LegTests.test_busy_machine_never_starts_child) ... ok
+test_ceiling_boundary_is_accepted (__main__.LegTests.test_ceiling_boundary_is_accepted) ... ok
+test_failure_never_emits_median_even_after_successful_samples (__main__.LegTests.test_failure_never_emits_median_even_after_successful_samples) ... ok
+test_invalid_limits_are_rejected (__main__.LegTests.test_invalid_limits_are_rejected) ... ok
+test_load_rise_after_child_discards_and_repeats_same_run (__main__.LegTests.test_load_rise_after_child_discards_and_repeats_same_run) ... ok
+test_load_spike_during_child_discards_warmup (__main__.LegTests.test_load_spike_during_child_discards_warmup) ... ok
+test_load_wait_then_recovery (__main__.LegTests.test_load_wait_then_recovery) ... ok
+test_missing_threads_are_explicit_and_strict_mode_refuses (__main__.LegTests.test_missing_threads_are_explicit_and_strict_mode_refuses) ... ok
+test_nonfinite_loads_cannot_pass_or_break_json (__main__.LegTests.test_nonfinite_loads_cannot_pass_or_break_json) ... ok
+test_repeated_discard_is_bounded_even_if_pre_run_load_is_low (__main__.LegTests.test_repeated_discard_is_bounded_even_if_pre_run_load_is_low) ... ok
+test_warmup_excluded_and_five_timed_runs (__main__.LegTests.test_warmup_excluded_and_five_timed_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 3.708s
+
+OK
+test_activate_refuses_info_only_native_endpoint (__main__.LauncherTests.test_activate_refuses_info_only_native_endpoint) ... ok
+test_node_worker_launcher_accepts_bare_relative_invocation (__main__.LauncherTests.test_node_worker_launcher_accepts_bare_relative_invocation) ... ok
+test_foreign_import_cannot_escape_the_repository (__main__.SourceTests.test_foreign_import_cannot_escape_the_repository) ... ok
+test_source_hashes_cover_indented_and_foreign_imports (__main__.SourceTests.test_source_hashes_cover_indented_and_foreign_imports) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.531s
+
+OK
+test_candidate_or_null_endpoint_passes (__main__.EndpointTests.test_candidate_or_null_endpoint_passes) ... ok
+test_info_only_native_endpoint_fails (__main__.EndpointTests.test_info_only_native_endpoint_fails) ... ok
+test_native_in_candidates_fails (__main__.EndpointTests.test_native_in_candidates_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.309s
+
+OK
