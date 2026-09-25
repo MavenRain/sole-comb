@@ -1,0 +1,97 @@
+test_observer_records_mid_run_load_peak_and_nonfinite_error (__main__.ChildTests.test_observer_records_mid_run_load_peak_and_nonfinite_error) ... ok
+test_output_matching_handles_ansi_and_refuses_substrings (__main__.ChildTests.test_output_matching_handles_ansi_and_refuses_substrings) ... ok
+test_thread_count_is_the_child_thread_number (__main__.ChildTests.test_thread_count_is_the_child_thread_number) ... ok
+test_timeout_kills_descendant_before_delayed_write (__main__.ChildTests.test_timeout_kills_descendant_before_delayed_write) ... ok
+test_timeout_survives_eperm_from_zombie_process_group (__main__.ChildTests.test_timeout_survives_eperm_from_zombie_process_group) ... ok
+test_wait4_cpu_and_real_acceptance_line (__main__.ChildTests.test_wait4_cpu_and_real_acceptance_line) ... ok
+test_zero_exit_without_acceptance_line_is_not_accept (__main__.ChildTests.test_zero_exit_without_acceptance_line_is_not_accept) ... ok
+test_argv_mode_runs_without_shell (__main__.CliTests.test_argv_mode_runs_without_shell) ... ok
+test_pin_failure_stops_preflight (__main__.CliTests.test_pin_failure_stops_preflight) ... ok
+test_preflight_busy_is_not_a_completed_load_wait_or_r2_verdict (__main__.CliTests.test_preflight_busy_is_not_a_completed_load_wait_or_r2_verdict) ... ok
+test_preflight_ready_has_no_benchmark_samples (__main__.CliTests.test_preflight_ready_has_no_benchmark_samples) ... ok
+test_input_change_invalidates_success_and_removes_median (__main__.InputSnapshotTests.test_input_change_invalidates_success_and_removes_median) ... ok
+test_input_removal_invalidates_success (__main__.InputSnapshotTests.test_input_removal_invalidates_success) ... ok
+test_snapshot_uses_resolved_paths_and_deduplicates_aliases (__main__.InputSnapshotTests.test_snapshot_uses_resolved_paths_and_deduplicates_aliases) ... ok
+test_stable_input_keeps_success_and_records_completion (__main__.InputSnapshotTests.test_stable_input_keeps_success_and_records_completion) ... ok
+test_busy_machine_never_starts_child (__main__.LegTests.test_busy_machine_never_starts_child) ... ok
+test_ceiling_boundary_is_accepted (__main__.LegTests.test_ceiling_boundary_is_accepted) ... ok
+test_failure_never_emits_median_even_after_successful_samples (__main__.LegTests.test_failure_never_emits_median_even_after_successful_samples) ... ok
+test_invalid_limits_are_rejected (__main__.LegTests.test_invalid_limits_are_rejected) ... ok
+test_load_rise_after_child_discards_and_repeats_same_run (__main__.LegTests.test_load_rise_after_child_discards_and_repeats_same_run) ... ok
+test_load_spike_during_child_discards_warmup (__main__.LegTests.test_load_spike_during_child_discards_warmup) ... ok
+test_load_wait_then_recovery (__main__.LegTests.test_load_wait_then_recovery) ... ok
+test_missing_threads_are_explicit_and_strict_mode_refuses (__main__.LegTests.test_missing_threads_are_explicit_and_strict_mode_refuses) ... ok
+test_nonfinite_loads_cannot_pass_or_break_json (__main__.LegTests.test_nonfinite_loads_cannot_pass_or_break_json) ... ok
+test_repeated_discard_is_bounded_even_if_pre_run_load_is_low (__main__.LegTests.test_repeated_discard_is_bounded_even_if_pre_run_load_is_low) ... ok
+test_warmup_excluded_and_five_timed_runs (__main__.LegTests.test_warmup_excluded_and_five_timed_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 4.098s
+
+OK
+test_activate_refuses_info_only_native_endpoint (__main__.LauncherTests.test_activate_refuses_info_only_native_endpoint) ... ok
+test_node_worker_launcher_accepts_bare_relative_invocation (__main__.LauncherTests.test_node_worker_launcher_accepts_bare_relative_invocation) ... ok
+test_foreign_import_cannot_escape_the_repository (__main__.SourceTests.test_foreign_import_cannot_escape_the_repository) ... ok
+test_source_hashes_cover_indented_and_foreign_imports (__main__.SourceTests.test_source_hashes_cover_indented_and_foreign_imports) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.564s
+
+OK
+test_candidate_or_null_endpoint_passes (__main__.EndpointTests.test_candidate_or_null_endpoint_passes) ... ok
+test_info_only_native_endpoint_fails (__main__.EndpointTests.test_info_only_native_endpoint_fails) ... ok
+test_native_in_candidates_fails (__main__.EndpointTests.test_native_in_candidates_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.815s
+
+OK
+test_amber_recomputes_cpu_and_startup_share (__main__.EvidenceTests.test_amber_recomputes_cpu_and_startup_share) ... ok
+test_artifact_tampering_is_rejected (__main__.EvidenceTests.test_artifact_tampering_is_rejected) ... ok
+test_cli_preserves_inputs_and_reports_pin_failure (__main__.EvidenceTests.test_cli_preserves_inputs_and_reports_pin_failure) ... ok
+test_command_pins_and_acceptance_are_bound (__main__.EvidenceTests.test_command_pins_and_acceptance_are_bound) ... ok
+test_confirmation_cannot_precede_first_round (__main__.EvidenceTests.test_confirmation_cannot_precede_first_round) ... ok
+test_confirmation_cannot_reuse_or_copy_reports (__main__.EvidenceTests.test_confirmation_cannot_reuse_or_copy_reports) ... ok
+test_confirmation_uses_conservative_verdict (__main__.EvidenceTests.test_confirmation_uses_conservative_verdict) ... ok
+test_crossing_winners_and_confirmation_switch_require_ruling (__main__.EvidenceTests.test_crossing_winners_and_confirmation_switch_require_ruling) ... ok
+test_denominator_rejects_changed_bend_twin_import (__main__.EvidenceTests.test_denominator_rejects_changed_bend_twin_import) ... ok
+test_denominator_requires_bend_twin_imports (__main__.EvidenceTests.test_denominator_requires_bend_twin_imports) ... ok
+test_discarded_load_attempt_does_not_enter_median (__main__.EvidenceTests.test_discarded_load_attempt_does_not_enter_median) ... ok
+test_duplicate_keys_and_nonfinite_numbers_rejected (__main__.EvidenceTests.test_duplicate_keys_and_nonfinite_numbers_rejected) ... ok
+test_error_without_child_failure_is_refused (__main__.EvidenceTests.test_error_without_child_failure_is_refused) ... ok
+test_exact_ties_prefer_bun (__main__.EvidenceTests.test_exact_ties_prefer_bun) ... ok
+test_existing_endpoint_cannot_silently_switch (__main__.EvidenceTests.test_existing_endpoint_cannot_silently_switch) ... ok
+test_extra_measured_dependencies_are_bound_and_protected (__main__.EvidenceTests.test_extra_measured_dependencies_are_bound_and_protected) ... ok
+test_fail_is_complete_but_returns_exit_four (__main__.EvidenceTests.test_fail_is_complete_but_returns_exit_four) ... ok
+test_failed_endpoint_dropped_but_unmet_is_not (__main__.EvidenceTests.test_failed_endpoint_dropped_but_unmet_is_not) ... ok
+test_failed_rerun_keeps_complete_report (__main__.EvidenceTests.test_failed_rerun_keeps_complete_report) ... ok
+test_failed_rerun_never_overwrites_an_input_sibling (__main__.EvidenceTests.test_failed_rerun_never_overwrites_an_input_sibling) ... ok
+test_green_requires_independent_confirmation (__main__.EvidenceTests.test_green_requires_independent_confirmation) ... ok
+test_incomplete_or_invalid_sample_is_rejected (__main__.EvidenceTests.test_incomplete_or_invalid_sample_is_rejected) ... ok
+test_legacy_report_without_input_snapshots_is_rejected (__main__.EvidenceTests.test_legacy_report_without_input_snapshots_is_rejected) ... ok
+test_legs_that_snapshot_exactly_their_inputs_assemble (__main__.EvidenceTests.test_legs_that_snapshot_exactly_their_inputs_assemble) ... ok
+test_manifest_cannot_rebind_old_measurements_to_changed_sources (__main__.EvidenceTests.test_manifest_cannot_rebind_old_measurements_to_changed_sources) ... ok
+test_measured_inputs_must_bind_the_workload_exactly_once (__main__.EvidenceTests.test_measured_inputs_must_bind_the_workload_exactly_once) ... ok
+test_measured_inputs_must_include_the_probe_bundle (__main__.EvidenceTests.test_measured_inputs_must_include_the_probe_bundle) ... ok
+test_measured_inputs_must_include_the_probe_sources (__main__.EvidenceTests.test_measured_inputs_must_include_the_probe_sources) ... ok
+test_measurement_timestamps_must_have_timezones (__main__.EvidenceTests.test_measurement_timestamps_must_have_timezones) ... ok
+test_native_never_enters_selection (__main__.EvidenceTests.test_native_never_enters_selection) ... ok
+test_no_eligible_endpoint_is_unmet (__main__.EvidenceTests.test_no_eligible_endpoint_is_unmet) ... ok
+test_node_worker_command_is_literal (__main__.EvidenceTests.test_node_worker_command_is_literal) ... ok
+test_overlapping_measurements_are_rejected (__main__.EvidenceTests.test_overlapping_measurements_are_rejected) ... ok
+test_ratios_bind_median_of_timed_child_cpu (__main__.EvidenceTests.test_ratios_bind_median_of_timed_child_cpu) ... ok
+test_report_records_pinned_binary_shas (__main__.EvidenceTests.test_report_records_pinned_binary_shas) ... ok
+test_startup_needs_known_cache_and_exact_bundle_copy (__main__.EvidenceTests.test_startup_needs_known_cache_and_exact_bundle_copy) ... ok
+test_startup_shares_use_own_legs (__main__.EvidenceTests.test_startup_shares_use_own_legs) ... ok
+test_threshold_boundaries (__main__.EvidenceTests.test_threshold_boundaries) ... ok
+test_zero_denominator_rejected (__main__.EvidenceTests.test_zero_denominator_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 1.661s
+
+OK
+...............................
+----------------------------------------------------------------------
+Ran 31 tests in 6.427s
+
+OK

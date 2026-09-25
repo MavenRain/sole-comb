@@ -75,12 +75,14 @@ elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict
 
 ## Remaining Stage 0 work
 
-The measurement harness and [R2 evidence assembler](dev/r2-risk.md) are ready
-for S0-5. `make test-r2` checks its refusal and selection rules; `make r2-report
-R2_MANIFEST=/absolute/path/to/manifest.json` verifies measured evidence and
-writes `dev/r2-risk.json`. Reports preserve raw samples, source and bundle
-hashes, the pinned and observed Bend, Bun and Node sha256s, both startup
-shares and the required GREEN confirmation.
+The [serial measurement runner](dev/r2-run.md) and
+[R2 evidence assembler](dev/r2-risk.md) are ready for S0-5.
+`make test-r2-run` checks collection, cancellation, and confirmation;
+`make test-r2` checks evidence refusal and selection rules. Once the scratch
+probe and twins exist, `make r2-run R2_PLAN=/absolute/path/to/run-plan.json
+R2_OUTPUT=/new/scratch/directory` collects the required legs. Each attempt
+preserves raw measurements and a hash-bound manifest. A GREEN first round
+automatically gets an independent confirmation.
 
 S0-5 still needs the scratch Bend lexer/parser/checker and its two source
 twins, the native informational build, Bun and Node worker measurements,
@@ -89,7 +91,12 @@ Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
 verdict or runtime selection has been made.
 
+`make r2-report R2_MANIFEST=/absolute/path/to/manifest.json` verifies collected
+evidence and writes `dev/r2-risk.json`. Reports preserve raw samples, source
+and bundle hashes, pinned and observed tool hashes, startup shares, and the
+required GREEN confirmation. The runner never changes the pinned endpoint.
+
 The plan's load ceiling is 8.0 with a 3600-second wait budget. Endpoint
 selection and the Stage A kernel port remain pending until the probe has
-valid evidence. The observation in `dev/validation/s0-5-bench-preflight.json`
-is historical; rerun `make bench-preflight` before measuring.
+valid evidence. Saved preflight observations are historical;
+rerun `make bench-preflight` before measuring.

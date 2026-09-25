@@ -1,0 +1,11 @@
+python3 -P dev/test-bench.py
+python3 -P dev/test-build.py
+python3 -P dev/test-pin-check.py
+python3 -P dev/test-r2-risk.py
+python3 -P dev/test-r2-run.py
+python3 -P dev/pin-check.py
+PINCHECK PASS groups=bend,kanon,tools,limits checks=35 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+python3 -P dev/build.py --check
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=0.331 child_cpu_s=0.505

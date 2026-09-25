@@ -49,7 +49,8 @@ against the pinned paths and stack configuration:
 | Native probe, informational | scratch native binary, twin |
 
 For prebuilt startup legs, copy the existing `attest.js` and `assay.js` bundles
-to `/private/tmp/claude/kan-elim-lang-m0/startup/`. Never build in those source
+to a scratch directory outside the attest and assay trees; `dev/r2-run.py`
+copies them to `<attempt>/startup/`. Never build in those source
 trees. Their source and copied hashes must match. Collect one startup leg for
 each runtime on its own trivial input. `arguments` below are CLI arguments
 between the bundle and input path, such as `check` or `--check`, as required
