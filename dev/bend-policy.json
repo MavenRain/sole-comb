@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "scope": "sole-comb HOST source only: the Bend 2 files under bin/, lib/, surface/, wasm/ and dev/. The sole-comb object language has no @unsafe (Q2+Q3).",
+  "unsafe_meaning": "These scoped host functions bypass Bend termination checking. Type, affine-use and exhaustiveness checks remain required. A new entry needs a reviewed registry change.",
+  "catchall_meaning": "These named host sites use a catch-all match pattern for scalar dispatch, parser fallback or explicit refusal. A new site needs a reviewed registry change.",
+  "catchalls": [],
+  "unsafe": []
+}

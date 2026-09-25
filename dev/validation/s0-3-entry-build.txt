@@ -1,0 +1,20 @@
+S0-3 hyphenated entry build record, 2026-09-24
+
+Goal: confirm that the pinned Bend 2 binary builds a hyphenated entry file (M0 plan S0-1, S0-3).
+Result: PASS. The entry stays bin/sole-comb.bend. No rename to bin/sole_comb.bend is needed.
+
+Command, from the sole-comb root: python3 -P dev/build.py
+The builder runs, with BEND_NO_TELEMETRY=1 and BEND_LIB=_build/bend-cache set inside dev/build.py:
+  /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/sole-comb.building.js
+Bend revision ff7a40cc9070a34c78399ecd2bbe46a044ad9b4b, binary sha256 a745353338ca6aa8cbf8c756432f3efd74d04fd5e48629931708281e63553700.
+Load average at the build: over the ceiling (about 40). The build is not a timed leg, so it is not load gated.
+
+Builder output:
+  PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+  BUILD sole-comb js compile: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/sole-comb.building.js
+  BUILD sole-comb js OK wall_s=0.150 child_cpu_s=0.340 output=_build/sole-comb.js sha256=a164618b0cab8b763d79cc938231a8a0826ce63c5c2aa6c030ecc33065ee2302
+  ENDPOINTS bun node-worker
+  LAUNCHER ./sole-comb not written: endpoint is null in dev/toolchain.json (S0-5 picks it)
+  exit=0
+
+Bend log (.gatework/build/sole-comb-js.log), byte count: 0

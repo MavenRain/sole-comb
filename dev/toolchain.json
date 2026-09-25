@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "observed": "2026-09-24",
+  "kanon": {
+    "role": "semantic pin (Q0) and oracle, read only",
+    "checkout": "/Users/oobi/Documents/kanon",
+    "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "commit_date": "2026-09-09 22:19:37 -0700",
+    "head_observed": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "head_matches_revision": true,
+    "oracle": {
+      "path": "/Users/oobi/Documents/kanon/_build/default/bin/kanon.exe",
+      "sha256": "d8b522e8b92ce11227fb16c5420d472e33f601013721e1826e9d04fc3231ccc3",
+      "mtime": "2026-09-07",
+      "build_revision": "UNVERIFIED",
+      "note": "The build revision of this executable is UNVERIFIED. The file mtime (2026-09-07) is older than the revision commit date (2026-09-09). The pin check compares the sha256 and the kanon HEAD only."
+    }
+  },
+  "bend": {
+    "repository": "https://github.com/bendlang/bend.git",
+    "checkout": "/Users/oobi/Documents/attest/_tools/bend",
+    "checkout_role": "read only; sole-comb never clones, updates or builds it",
+    "revision": "ff7a40cc9070a34c78399ecd2bbe46a044ad9b4b",
+    "version": "2.0.25",
+    "commit_date": "2026-09-22 19:36:55 +0200",
+    "binary": "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+    "binary_sha256": "a745353338ca6aa8cbf8c756432f3efd74d04fd5e48629931708281e63553700",
+    "env": {
+      "BEND_NO_TELEMETRY": "1"
+    },
+    "rules": [
+      "Every bend run sets BEND_NO_TELEMETRY=1.",
+      "Use bend version, not bend --version.",
+      "Never run bend update. Upstream prints 2.0.27 is available; the pin stays 2.0.25."
+    ]
+  },
+  "prior_art": {
+    "attest": {
+      "checkout": "/Users/oobi/Documents/attest",
+      "role": "Bend-port reference, read only",
+      "head_observed": "777661c9cfa60b098f080c9555cbd3a8e1736f8e",
+      "head_commit_date": "2026-09-24 17:56:07 -0700",
+      "plan_cites": "777661c9cfa60b098f080c9555cbd3a8e1736f8e"
+    },
+    "assay": {
+      "checkout": "/Users/oobi/Documents/assay",
+      "role": "Bend-port reference, read only",
+      "head_observed": "f29b4282a9ec706934ac0941572019984d3600e6",
+      "head_commit_date": "2026-09-24 19:50:53 -0700",
+      "plan_cites": "2cd3259f10d085dfedb405395d9adb341ef816ed",
+      "note": "The assay HEAD moved after the plan was written. The plan cites 2cd3259; the observed HEAD on 2026-09-24 is f29b428. assay pins Bend c65bcb788dbfb298bb434c1d858b47c193841dc0 (lineage only)."
+    }
+  },
+  "tools": {
+    "wasm-tools": {
+      "path": "/opt/homebrew/bin/wasm-tools",
+      "realpath": "/opt/homebrew/Cellar/wasm-tools/1.258.0/bin/wasm-tools",
+      "version": "wasm-tools 1.258.0",
+      "sha256": "f6d76114ae7a25d972e64e51598b1788572fd4d1d0b3f7f24da8a01f77864d9f",
+      "informational": false
+    },
+    "wasmtime": {
+      "path": "/opt/homebrew/bin/wasmtime",
+      "realpath": "/opt/homebrew/Cellar/wasmtime/48.0.1/bin/wasmtime",
+      "version": "wasmtime 48.0.1 (7bac2c277 2026-08-24)",
+      "sha256": "62c9c9644d690f3615c842e6bfa977588c4eac905622508507821fadce385681",
+      "informational": false
+    },
+    "node": {
+      "path": "/opt/homebrew/bin/node",
+      "realpath": "/opt/homebrew/Cellar/node/23.10.0_1/bin/node",
+      "version": "v23.10.0",
+      "sha256": "68df4fd9c6de2301b79bef0a79fe46e4923c80494b2ddf68439ea21a7abd159d",
+      "informational": false
+    },
+    "bun": {
+      "path": "/Users/oobi/.bun/bin/bun",
+      "realpath": "/Users/oobi/.bun/bin/bun",
+      "version": "1.3.11",
+      "sha256": "1d77af7bfd811aebb7d37bec496a5eed14fe227ded3ab7866d2f39786e8107b6",
+      "informational": false
+    },
+    "wasm-opt": {
+      "path": "/opt/homebrew/bin/wasm-opt",
+      "realpath": "/opt/homebrew/Cellar/binaryen/130/bin/wasm-opt",
+      "version": "wasm-opt version 130",
+      "sha256": "826aa105e432fff388ba0f286ae1b936d23beed7c081f8758259c0a2ad16e6e0",
+      "informational": true
+    }
+  },
+  "node_minimum_major": 22,
+  "stack_kib": 65500,
+  "load_ceiling": 8.0,
+  "load_wait_max_s": 3600,
+  "build_deadline_s": 1200,
+  "leg_deadline_s": 600,
+  "mutant_deadline_s": 1800,
+  "endpoint": null,
+  "endpoint_candidates": ["bun", "node-worker", "native"],
+  "notes": {
+    "stack_kib": "UNVERIFIED for sole-comb. 65500 is the assay value (assay/dev/toolchain.json). S0-5 runs deep terms and sets the sole-comb value.",
+    "load_ceiling": "One-minute load average. USER ruling LOAD-LIMITS 2026-09-24. A timed leg waits while the load is over the ceiling, for at most load_wait_max_s, then prints UNMET and does not run.",
+    "deadlines": "USER ruling LOAD-LIMITS 2026-09-24. A leg or rebuild past its deadline is UNMET on its row, not a kill.",
+    "endpoint": "null until S0-5 picks one of endpoint_candidates. native is INFO only in S0-5 and is never picked.",
+    "wasm_gc": "Wasm GC support in the pinned wasm-tools, wasmtime and node is UNVERIFIED. No module has run."
+  }
+}
