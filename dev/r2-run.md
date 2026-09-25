@@ -12,6 +12,15 @@ Runner tests use synthetic measurements and do not establish an R2 verdict.
 
 ## Input plan
 
+The [probe preparer](r2-prepare.md) can generate this plan from scratch source
+files after building and qualifying their endpoints. Its generated plan adds
+a `preparation` path and a `disqualified` list of the candidates that failed
+qualification. The collector verifies that READY record, its plan and
+toolchain hashes, the `disqualified` list, and all bound files before
+collection. It refuses `disqualified` without `preparation`, so a manual plan
+cannot drop a candidate. Manual plans without these fields remain supported
+and require their own build and correctness checks.
+
 Paths are absolute or relative to the plan file. The format uses paths
 rather than precomputed hashes; preparation binds each file to its current
 SHA-256. The following example shows the required shape. Replace the bundle
@@ -124,7 +133,9 @@ ceiling, wait budget, and child deadline come from the toolchain pins.
 The assembler's decision rule determines whether a fresh second round is
 required: GREEN always gets an independent confirmation. A changed winner
 remains UNMET. A GREEN result can degrade to AMBER or FAIL on confirmation.
-Only an evidenced child rejection can drop a candidate endpoint. Harness
+Only an evidenced child rejection or a prepared disqualification can drop a
+candidate endpoint. The collector still measures a disqualified candidate,
+and the manifest carries its `disqualified` list to the assembler. Harness
 errors, changed inputs, unmet measurement conditions, and cancellation stop
 collection and preserve the attempt. The one exception is an informational
 native leg that ends UNMET on a missed child thread count or a child

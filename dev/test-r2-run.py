@@ -180,6 +180,21 @@ class CollectionTests(unittest.TestCase):
         self.assertEqual((code, journal["status"], journal["endpoint"]), (3, "UNMET", None))
         self.assertIn("fastest endpoint changed", journal["reason"])
 
+    def test_disqualified_endpoint_never_drives_the_confirmation_round(self):
+        # A GREEN disqualified endpoint must not trigger a second round when the eligible one is AMBER.
+        self.cpus.update(bun=60, **{"node-worker": 30})
+        original = runner.Collection.prepare
+
+        def prepared(collection):
+            original(collection)
+            collection.manifest["disqualified"] = ["node-worker"]
+        with patch.object(runner.Collection, "prepare", prepared):
+            code, journal = self.run_cli()
+        self.assertEqual((code, journal["status"], journal["endpoint"], journal["verdict"]),
+                         (0, "COMPLETE", "bun", "AMBER"))
+        self.assertEqual(len(self.calls), 10)
+        self.assertEqual(self.result()["rounds"][0]["decision"]["dropped"], ["node-worker"])
+
     def test_native_remains_informational(self):
         binary = self.fixture.artifact("probe-native", "native")
         self.plan["native"] = {"binary": binary["path"], "build_log": self.plan["probe"]["build_log"]}
@@ -349,6 +364,7 @@ class CollectionTests(unittest.TestCase):
     def test_invalid_plan_is_refused_before_any_write_or_measurement(self):
         original = copy.deepcopy(self.plan)
         cases = [lambda p: p.update(schema=True), lambda p: p.update(extra=1),
+                 lambda p: p.update(disqualified=["node-worker"]),
                  lambda p: p["startup"]["bun"].update(cache_state="unknown"),
                  lambda p: p["startup"]["bun"].update(accept_line="ACCEPT\n"),
                  lambda p: p["workloads"]["conversion"].update(sole=p["workloads"]["small"]["sole"]),

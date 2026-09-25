@@ -194,7 +194,7 @@ def classify(ratio):
     return "GREEN" if ratio <= 0.45 else "AMBER" if ratio <= 1.0 else "FAIL"
 
 
-def decide(denominators, endpoints):
+def decide(denominators, endpoints, disqualified=()):
     if any(leg["status"] != "PASS" for leg in denominators.values()):
         raise Incomplete("both denominator measurements must pass")
     for leg in denominators.values():
@@ -203,9 +203,12 @@ def decide(denominators, endpoints):
     dropped = []
     for endpoint, legs in endpoints.items():
         states = [leg["status"] for leg in legs.values()]
-        if "UNMET" in states or "INTERRUPTED" in states:
+        # An endpoint that failed correctness qualification never enters selection, however fast it is.
+        if endpoint in disqualified:
+            dropped.append(endpoint)
+        elif "UNMET" in states or "INTERRUPTED" in states:
             raise Incomplete(f"{endpoint}: measurement conditions unmet")
-        if "ERROR" in states:
+        elif "ERROR" in states:
             dropped.append(endpoint)
         else:
             eligible[endpoint] = {w: number(legs[w]["cpu_ms"] / denominators[w]["cpu_ms"], "CPU ratio") for w in WORKLOADS}
@@ -256,9 +259,14 @@ def completed(path):
 
 
 def assemble(manifest, artifacts, pins, pins_sha, report):
-    fields(manifest, ("schema", "probe", "workloads", "empty", "startup", "native", "rounds"), "manifest")
+    expected = ("schema", "probe", "workloads", "empty", "startup", "native", "rounds")
+    fields(manifest, (*expected, "disqualified") if "disqualified" in manifest else expected, "manifest")
     if type(manifest["schema"]) is not int or manifest["schema"] != 1:
         raise ValueError("unsupported manifest schema")
+    disqualified = manifest.get("disqualified", [])
+    if (not isinstance(disqualified, list) or disqualified != [e for e in CANDIDATES if e in disqualified] or
+            len(disqualified) >= len(CANDIDATES)):
+        raise ValueError("disqualified must list a strict subset of the candidate endpoints in candidate order")
     probe = manifest["probe"]
     fields(probe, ("sources", "javascript", "build_log"), "probe")
     if not isinstance(probe["sources"], list) or not probe["sources"]:
@@ -342,7 +350,7 @@ def assemble(manifest, artifacts, pins, pins_sha, report):
             result["denominator"][w] = read_leg(entry["denominator"][w], argv, [twins[w]["bend"], *imports[w]], "All terms check.")
         for endpoint in CANDIDATES:
             result["endpoints"][endpoint] = probe_legs(entry["endpoints"][endpoint], endpoint, javascript)
-        result["decision"] = decide(result["denominator"], result["endpoints"])
+        result["decision"] = decide(result["denominator"], result["endpoints"], disqualified)
         for endpoint in CANDIDATES:
             startup = report["startup"][endpoint]
             if startup["status"] != "PASS":

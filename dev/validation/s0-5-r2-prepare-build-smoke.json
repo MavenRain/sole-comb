@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "status": "BUILD_SMOKE_ONLY",
+  "recorded_at": "2026-09-25T20:47:20.654266+00:00",
+  "plan": {
+    "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/fixture-plan.json",
+    "sha256": "c4109ceee4e92bce68537f588a3aed33db634bc007019e2c4aeea17d1e0ccd3e"
+  },
+  "toolchain": {
+    "path": "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/toolchain.json",
+    "sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6"
+  },
+  "steps": [
+    {
+      "name": "pins-before",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/pin-check.py",
+        "--toolchain",
+        "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/toolchain.json"
+      ],
+      "status": "OK",
+      "deadline_s": 1200,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-before.stdout",
+        "sha256": "3bca2715858193bc24346f9b90640a47ba032e87ab192589ce29fe62c163665f"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-before.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "build-javascript",
+      "command": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/fixture.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.js"
+      ],
+      "status": "OK",
+      "deadline_s": 1200,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-javascript.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-javascript.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artifact": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.js",
+        "sha256": "a164618b0cab8b763d79cc938231a8a0826ce63c5c2aa6c030ecc33065ee2302"
+      }
+    },
+    {
+      "name": "build-native",
+      "command": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/fixture.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.exe"
+      ],
+      "status": "OK",
+      "deadline_s": 1200,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-native.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artifact": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.exe",
+        "sha256": "bb7ae38326f13891e3cdebcdd17569c1cff05f486a784bf034d349af081f9408"
+      }
+    },
+    {
+      "name": "smoke-bun",
+      "command": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.js"
+      ],
+      "status": "OK",
+      "deadline_s": 600,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-bun.stdout",
+        "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-bun.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "smoke-node-worker",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.js"
+      ],
+      "status": "OK",
+      "deadline_s": 600,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-node-worker.stdout",
+        "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-node-worker.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "smoke-native",
+      "command": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.exe"
+      ],
+      "status": "OK",
+      "deadline_s": 600,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-native.stdout",
+        "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "pins-after",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/pin-check.py",
+        "--toolchain",
+        "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/toolchain.json"
+      ],
+      "status": "OK",
+      "deadline_s": 1200,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-after.stdout",
+        "sha256": "3bca2715858193bc24346f9b90640a47ba032e87ab192589ce29fe62c163665f"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-after.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "endpoint": null,
+  "verdict": null,
+  "completed_at": "2026-09-25T20:47:23.009406+00:00",
+  "note": "Host constant-returning fixture only. No R2 probe, twins, qualification or timings.",
+  "files": [
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/fixture-plan.json",
+      "sha256": "c4109ceee4e92bce68537f588a3aed33db634bc007019e2c4aeea17d1e0ccd3e"
+    },
+    {
+      "path": "/Users/oobi/Documents/gpt5/sole-comb-r2-prepare/dev/toolchain.json",
+      "sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/fixture.bend",
+      "sha256": "d69a09301b0bb7fb45f8d415eb0d0bef8ccad6836a61d355aba0975eb1b15700"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/small.sole",
+      "sha256": "a7e5c4c5aa4af6159fdcc60e35997114dfc58be39d555aecc109f788ad3e1a99"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/other.bend",
+      "sha256": "869d639ba2525f222ee25075824c5994ecb56cd7bf4abc3e702e4a796d97c807"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/conversion.sole",
+      "sha256": "40d24bd45bada3f6af49677d8f3a7c1a6a95bb652aa5c84ab2df7452bed6392f"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/empty.sole",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/reject-lex.sole",
+      "sha256": "922ecb6058de0f90db4df820da2f03e601fde0e7012a00050161b051a3d69338"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/reject-parse.sole",
+      "sha256": "c7ba54351b24d00dac24ba3970773dffd7a0476b4e3426bf4ed050446e5f3a3a"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/reject-type.sole",
+      "sha256": "da59f63c370220778ea4af783f59c3677a051d69b0cac582c71d69f8e62f7953"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/reject-conversion.sole",
+      "sha256": "ff40c56ef2fc1714f39acf5a43f07b12d5bb2bf522e15c39928b5240da2411c9"
+    },
+    {
+      "path": "/Users/oobi/Documents/attest/_build/js/bin/attest.js",
+      "sha256": "957a126b9b2a2c504ecf494d66750d789ab01c4f0893403577e2693d7b89921a"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/trivial.att",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/oobi/Documents/assay/_build/bend/assay.js",
+      "sha256": "6c488a6439e20689c42269ee6fe58673f8df7bcc4f0c662698c566b2563c2031"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/trivial.asy",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-before.stdout",
+      "sha256": "3bca2715858193bc24346f9b90640a47ba032e87ab192589ce29fe62c163665f"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-javascript.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-javascript.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.js",
+      "sha256": "a164618b0cab8b763d79cc938231a8a0826ce63c5c2aa6c030ecc33065ee2302"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-native.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/build-native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/fixture.exe",
+      "sha256": "bb7ae38326f13891e3cdebcdd17569c1cff05f486a784bf034d349af081f9408"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-bun.stdout",
+      "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-bun.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-node-worker.stdout",
+      "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-node-worker.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-native.stdout",
+      "sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/smoke-native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-after.stdout",
+      "sha256": "3bca2715858193bc24346f9b90640a47ba032e87ab192589ce29fe62c163665f"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-prepare-smoke-4nbizqge/build/logs/pins-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

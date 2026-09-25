@@ -1,9 +1,10 @@
-.PHONY: build check test test-bench test-r2 test-r2-run bench-preflight r2-report r2-run gates
+.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare bench-preflight r2-report r2-run r2-prepare gates
 
 R2_MANIFEST ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/manifest.json
 R2_TOOLCHAIN ?= dev/toolchain.json
 R2_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/run-plan.json
 R2_OUTPUT ?=
+R2_PREPARE_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/prepare-plan.json
 
 # Stage 0 validates the pinned host and benchmark harness. The compiler
 # suite and dev/gates.sh are added by later stages.
@@ -14,7 +15,7 @@ build:
 check:
 	python3 -P dev/build.py --check
 
-test: build test-bench test-r2 test-r2-run
+test: build test-bench test-r2 test-r2-run test-r2-prepare
 	python3 -P dev/pin-check.py
 
 test-bench:
@@ -31,6 +32,13 @@ test-r2:
 test-r2-run:
 	python3 -P dev/test-r2-run.py
 
+test-r2-prepare:
+	python3 -P dev/test-r2-prepare.py
+
+r2-prepare:
+	@test -n "$(R2_OUTPUT)" || { echo 'Set R2_OUTPUT to a new scratch directory.' >&2; exit 2; }
+	python3 -P dev/r2-prepare.py --plan "$(R2_PREPARE_PLAN)" --toolchain "$(R2_TOOLCHAIN)" --output "$(R2_OUTPUT)"
+
 r2-run:
 	@test -n "$(R2_OUTPUT)" || { echo 'Set R2_OUTPUT to a new scratch directory.' >&2; exit 2; }
 	python3 -P dev/r2-run.py --plan "$(R2_PLAN)" --toolchain "$(R2_TOOLCHAIN)" --output "$(R2_OUTPUT)"
@@ -38,6 +46,6 @@ r2-run:
 r2-report:
 	python3 -P dev/r2-risk.py --manifest "$(R2_MANIFEST)" --toolchain "$(R2_TOOLCHAIN)" --json dev/r2-risk.json
 
-gates: test-bench test-r2 test-r2-run
+gates: test-bench test-r2 test-r2-run test-r2-prepare
 	python3 -P dev/pin-check.py
 	python3 -P dev/build.py --check

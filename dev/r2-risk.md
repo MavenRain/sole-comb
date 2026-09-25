@@ -144,7 +144,9 @@ verdict mismatch drops that candidate. An `ERROR` report is a drop only
 when its reason is `child exit or acceptance line mismatch`, no sample timed
 out, and the last sample shows the failure. Any other `ERROR` needs a new
 measurement. Unmet measurement conditions cannot be used to drop a
-competitor and select the remaining runtime. Missing or
+competitor and select the remaining runtime. An optional manifest
+`disqualified` list, a strict subset of the candidates in candidate order,
+drops each listed candidate in every round, whatever its legs show. Missing or
 failed denominators and startup legs prevent a complete result.
 
 The chosen candidate must have the lowest median CPU on both workloads.

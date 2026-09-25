@@ -76,6 +76,35 @@ class Collection:
             if r2.digest(Path(ref["path"]).read_bytes()) != ref["sha256"]:
                 raise ValueError(f"input changed: {ref['path']}")
 
+    def verify_preparation(self, path, plan_ref, pins_ref, disqualified):
+        required = set(self.files) - {plan_ref["path"]}
+        ref = self.input(path)
+        prepared = r2.read_json(Path(ref["path"]).read_bytes())
+        if (not isinstance(prepared, dict) or type(prepared.get("schema")) is not int or prepared["schema"] != 1 or
+                prepared.get("status") != "READY"):
+            raise ValueError("preparation must have schema 1 and status READY")
+        if prepared.get("run_plan") != plan_ref or prepared.get("toolchain") != pins_ref:
+            raise ValueError("preparation does not bind this run plan and toolchain")
+        candidates = prepared.get("qualified_candidates")
+        if (not isinstance(candidates, dict) or set(candidates) != set(r2.CANDIDATES) or
+                any(type(candidates[endpoint]) is not bool for endpoint in r2.CANDIDATES) or
+                not any(candidates.values())):
+            raise ValueError("preparation must qualify at least one candidate endpoint")
+        if not prepared.get("disqualified") == disqualified == [e for e in r2.CANDIDATES if not candidates[e]]:
+            raise ValueError("preparation must drop exactly the candidate endpoints that failed qualification")
+        files = prepared.get("files")
+        if not isinstance(files, list) or not files:
+            raise ValueError("preparation must bind its files")
+        seen = set()
+        for expected in files:
+            r2.fields(expected, ("path", "sha256"), "prepared file")
+            actual = self.input(expected["path"])
+            if actual != expected or actual["path"] in seen:
+                raise ValueError("prepared file changed or is duplicated")
+            seen.add(actual["path"])
+        if not required <= seen:
+            raise ValueError("preparation does not bind every run-plan input")
+
     def prepare(self):
         plan_ref = self.reference(self.plan_path)
         pins_ref = self.reference(self.toolchain)
@@ -83,7 +112,9 @@ class Collection:
         self.pins = r2.read_json(self.toolchain.read_bytes())
         self.pins_sha = pins_ref["sha256"]
         self.verify()
-        r2.fields(plan, ("schema", "probe", "workloads", "empty", "startup", "native"), "run plan")
+        expected = ("schema", "probe", "workloads", "empty", "startup", "native")
+        # Only a bound preparation can drop a candidate; a manual plan measures and selects both.
+        r2.fields(plan, (*expected, "preparation", "disqualified") if "preparation" in plan else expected, "run plan")
         if type(plan["schema"]) is not int or plan["schema"] != 1:
             raise ValueError("unsupported run plan schema")
         # A fresh external directory prevents overwriting inputs, prior evidence or checkouts.
@@ -154,6 +185,9 @@ class Collection:
         else:
             r2.fields(native, ("binary", "build_log"), "native")
             self.manifest["native"] = {k: self.input(native[k]) for k in ("binary", "build_log")}
+        if "preparation" in plan:
+            self.verify_preparation(plan["preparation"], plan_ref, pins_ref, plan["disqualified"])
+            self.manifest["disqualified"] = plan["disqualified"]
         self.verify()
         self.output.mkdir(parents=True, exist_ok=False)
         self.journal = {"schema": 1, "recorded_at": now(), "status": "PREPARING",
@@ -241,7 +275,7 @@ class Collection:
             entry["endpoints"][endpoint], endpoints[endpoint] = self.probes(
                 f"round-{number}-{endpoint}", endpoint, self.manifest["probe"]["javascript"]["path"])
         self.save()
-        return r2.decide(denominators, endpoints)
+        return r2.decide(denominators, endpoints, self.manifest.get("disqualified", []))
 
     def collect(self):
         self.journal["status"] = "RUNNING"

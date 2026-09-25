@@ -75,8 +75,13 @@ elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict
 
 ## Remaining Stage 0 work
 
-The [serial measurement runner](dev/r2-run.md) and
+The [probe preparer](dev/r2-prepare.md),
+[serial measurement runner](dev/r2-run.md), and
 [R2 evidence assembler](dev/r2-risk.md) are ready for S0-5.
+`make test-r2-prepare` checks builds, correctness qualification, and the
+hash-bound handoff. Once the scratch probe and twins exist, `make r2-prepare
+R2_PREPARE_PLAN=/absolute/path/to/prepare-plan.json R2_OUTPUT=/new/scratch/directory`
+builds the endpoints and publishes `run-plan.json` only after its checks pass.
 `make test-r2-run` checks collection, cancellation, and confirmation;
 `make test-r2` checks evidence refusal and selection rules. Once the scratch
 probe and twins exist, `make r2-run R2_PLAN=/absolute/path/to/run-plan.json
@@ -85,7 +90,7 @@ preserves raw measurements and a hash-bound manifest. A GREEN first round
 automatically gets an independent confirmation.
 
 S0-5 still needs the scratch Bend lexer/parser/checker and its two source
-twins, the native informational build, Bun and Node worker measurements,
+twins, their preparation and native informational build, Bun and Node worker measurements,
 prebuilt-bundle startup measurements, and the GREEN repeat when required.
 Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2

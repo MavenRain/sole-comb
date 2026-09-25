@@ -528,6 +528,33 @@ class EvidenceTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "no child failure evidence"):
                     self.assemble()
 
+    def test_disqualified_endpoint_never_wins(self):
+        self.manifest["rounds"] = []
+        self.add_round(bun=(60, 70), node=(40, 50))
+        self.assertEqual(self.assemble()["endpoint"], "node-worker")
+        self.manifest["disqualified"] = ["node-worker"]
+        report = self.assemble()
+        self.assertEqual(report["endpoint"], "bun")
+        self.assertEqual(report["rounds"][0]["decision"]["dropped"], ["node-worker"])
+        self.assertNotIn("node-worker", report["rounds"][0]["decision"]["ratios"])
+        for invalid in (["bun", "node-worker"], ["native"], ["node-worker", "node-worker"], "node-worker", None):
+            with self.subTest(disqualified=invalid):
+                self.manifest["disqualified"] = invalid
+                with self.assertRaisesRegex(ValueError, "strict subset"):
+                    self.assemble()
+        # The confirmation round drops the same endpoint, and its unmet leg does not stop assembly.
+        self.manifest["disqualified"] = ["node-worker"]
+        self.manifest["rounds"] = []
+        self.add_round(bun=(40, 40), node=(30, 30))
+        self.add_round(bun=(42, 44), node=(20, 20))
+        report = self.assemble()
+        self.assertEqual((report["endpoint"], report["verdict"]), ("bun", "GREEN"))
+        self.assertEqual([r["decision"]["dropped"] for r in report["rounds"]], [["node-worker"], ["node-worker"]])
+        ref = self.manifest["rounds"][1]["endpoints"]["node-worker"]["small"]
+        argv = json.loads(Path(ref["path"]).read_text())["command"]
+        ref.update(self.leg(argv, 50, self.snapshot_of(ref), status="UNMET"))
+        self.assertEqual(self.assemble()["endpoint"], "bun")
+
     def test_exact_ties_prefer_bun(self):
         self.manifest["rounds"] = []
         self.add_round(bun=(60, 70), node=(60, 70))
