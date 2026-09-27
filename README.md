@@ -22,6 +22,15 @@ worker using valid measurements. Consequently `make build` creates candidate
 launchers under `_build/endpoint/` and does not activate `./sole-comb` yet.
 No command installs tools or updates the pinned Bend checkout.
 
+The active next task is the [bounded S0-5 closeout](dev/s0-5-closeout.md).
+Its [frozen workload manifest](dev/r2-workloads.json) selects the plan's
+`smoke.bend` plus complete `core.bend` alternative and the complete core
+conversion workload with all four obligations. Sole translations and
+qualification remain pending. These workloads determine the remaining
+scratch features. After valid GREEN or AMBER evidence selects an eligible
+endpoint, the [Stage A milestones](dev/stage-a-milestones.md) introduce
+reviewed compiler-source commits while retaining the full integration gate.
+
 ## Benchmark measurements
 
 `dev/bench.sh NAME 'exec COMMAND ARGS'` preserves the original interface. It runs
@@ -137,7 +146,8 @@ an explicit `as x return M` motive. K1 iota reduces an elimination of a
 constructor with all of its fields. Indexed families, motive inference,
 records, projections, and the connection to the arm expander remain pending.
 
-S0-5 still needs the rest of the scratch checker, portable file input, and
+S0-5 still needs the checker subset that the
+[S0-5 closeout](dev/s0-5-closeout.md) requires, portable file input, and
 its two source twins, their preparation and informational native build, Bun
 and Node worker measurements, prebuilt-bundle startup measurements, and the
 GREEN repeat when required. Scratch compiler code belongs under

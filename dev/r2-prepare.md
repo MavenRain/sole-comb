@@ -34,17 +34,29 @@ Bun detects. It checks non-indexed data types from caller metadata,
 constructor spines in checking mode, and `elim` with an explicit motive, and
 it applies K1 iota.
 
-Type-directed conversion rules (eta and proof irrelevance), record expansion,
-recursive sugar processing, projection typing and reduction, indexed
-families, and motive inference are still required, alongside portable file
-input and two source twins, with grammar extensions if the twins need them.
-They belong outside this repository, under
+The [S0-5 closeout](s0-5-closeout.md) sets the remaining scratch scope.
+Indexed families, data metadata from source, portable file input, and the
+two complete source twins are still required, with grammar extensions if
+the twins need them. Records, projections, `else` expansion with recursive
+sugar processing, and motive inference are deferred. Eta and
+proof-irrelevance rules wait unless the step 1 translations show a concrete
+need. Scratch sources belong outside this repository, under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver,
 conversion, typing, arm expansion, and data fixtures are not qualified probe
 workloads.
 Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
 before using their timings.
+
+The active work order is the [S0-5 closeout](s0-5-closeout.md), using the
+[frozen workload manifest](r2-workloads.json). It replaces the feature
+scope and ordering in earlier scratch checkpoints. Translate the complete
+selected programs before adding checker features; preserve all four core
+obligations.
+The manifest records selected Bend inputs. Sole translations, preparation,
+and measurements remain pending. It is not a `prepare-plan.json` or a
+qualification result; construct the strict preparation plan below after
+the missing artifacts exist.
 
 ## Preparation plan
 

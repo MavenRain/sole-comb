@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "adopted": "2026-09-27",
+  "status": "bend-inputs-frozen",
+  "scope": "S0-5 workload selection and seed correctness; sole translations remain pending",
+  "origin_repository": "/Users/oobi/Documents/attest",
+  "origin_revision": "5cd62f3d32ceca6c6bd2c4d2d60325fb24942ece",
+  "toolchain": "toolchain.json",
+  "toolchain_sha256_at_freeze": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+  "sources": {
+    "core": {
+      "origin": "/Users/oobi/Documents/attest/pilot/bend2/core.bend",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.bend",
+      "sha256": "f724fcf32cc41b10bf60e55513a4b11a0337af35d6d8d82ade83b37bde9a0f35"
+    },
+    "smoke": {
+      "origin": "/Users/oobi/Documents/attest/pilot/bend2/smoke.bend",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.bend",
+      "sha256": "394d32107f0b9c909a948f7e7133fc7b315a9d9c622bc88559227637b0e3d232"
+    },
+    "conversion": {
+      "origin": "local namespace wrapper for the frozen core",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/conversion.bend",
+      "sha256": "64df92e0292efeea27b2446a2d795def8e12e6f82cb95c92ffa8689eb83f0fc6"
+    }
+  },
+  "workloads": {
+    "small": {
+      "bend_entry": "smoke",
+      "local_import_closure": [
+        "smoke",
+        "core"
+      ],
+      "planned_sole_source": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.sole",
+      "sole_sha256": null,
+      "translation_status": "pending",
+      "preserve": "complete core plus original nested-let main, fuel 9, U32 values 7 and 9"
+    },
+    "conversion": {
+      "bend_entry": "conversion",
+      "local_import_closure": [
+        "conversion",
+        "core"
+      ],
+      "planned_sole_source": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.sole",
+      "sole_sha256": null,
+      "translation_status": "pending",
+      "preserve": "all core declarations and all four obligations"
+    }
+  },
+  "host_imports": {
+    "Base": "resolved through the pinned Bend toolchain; bind its closure during preparation"
+  },
+  "required_obligations": [
+    "lookup_head",
+    "closed_var_impossible",
+    "lookup_tail",
+    "let_bound_value"
+  ],
+  "sole_representation": "Nat uses M0-PLAN NAT-MU; U32 stays a scratch-only builtin with literals (the plan adds U32 at M2 under U32-BUILTIN); preserve dependent bounds, indexed terms and exhaustion",
+  "seed_checks": {
+    "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/seed-checks-002.json",
+    "sha256": "88d932b3a6a3269c75b9983fecd18ca35cfa1b2858fc20c5eb1b6be69d5b468d",
+    "accepted": 2,
+    "false_imported_law_refused": 1,
+    "false_law_core": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/false-law/core.bend",
+      "sha256": "25f0d9bf362e163b51059c7c41eb276a65cf1bab087e8c6b95cc065e41c3ab35"
+    },
+    "initial_direct_entry_record": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/seed-checks.json",
+    "initial_direct_entry_sha256": "4bddb57f5c421c5672edbd14e8a9472a3d38e548341a453f95d047dc1c14708e"
+  },
+  "probe_qualification": "pending",
+  "measurement_status": "pending",
+  "selected_endpoint": null,
+  "r2_verdict": null,
+  "next_step": "Step 1 in s0-5-closeout.md: translate both complete programs and review their declaration/law map before another checker feature slice"
+}
