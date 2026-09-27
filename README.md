@@ -105,8 +105,15 @@ The [scratch name resolver](dev/validation/s0-5-r2-resolver.md) passes 76
 exact-tree and refusal cases on those three runtimes, with ten detected
 mutations. It resolves local names to binder indices and checks ordered,
 nonrecursive global definitions. Record declarations and `else` arms
-explicitly require sugar expansion. This is the first checker pass; sugar
-expansion, typing, and conversion remain pending.
+explicitly require sugar expansion. This is the first checker pass.
+
+The [scratch conversion engine](dev/validation/s0-5-r2-conversion.md) passes
+107 exact-normal-form, comparison, and refusal cases on all three runtimes,
+with twenty detected mutations. It implements capture-safe normalization
+and alpha/beta/delta/zeta conversion for the resolved function fragment.
+Conversion is untyped. Typing, type-directed conversion rules (eta and proof
+irrelevance), sugar expansion, and projection/elimination reduction remain
+pending.
 
 S0-5 still needs the rest of the scratch checker, portable file input, and
 its two source twins, their preparation and informational native build, Bun

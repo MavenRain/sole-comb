@@ -10,13 +10,20 @@ correctness checks. The [scratch parser](validation/s0-5-r2-parser.md) has
 passed its syntax-tree and refusal checks for the documented subset.
 The [scratch name resolver](validation/s0-5-r2-resolver.md) has passed 76
 exact-tree and refusal cases on Bun, the pinned Node worker, and the
-informational native build. This is the first checker pass; it does not
-establish sugar expansion, typing, conversion, or twin correctness. The rest
-of the scratch checker (sugar expansion, typing, and conversion), the
-portable file-input boundary, and two source twins are still required, with
-grammar extensions if the twins need them. They belong outside this
-repository, under `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`.
-Lexer, parser, and resolver fixtures are not qualified probe workloads.
+informational native build. This is the first checker pass.
+
+The [scratch conversion engine](validation/s0-5-r2-conversion.md) has passed
+107 exact-normal-form, comparison, and refusal cases on those three runtimes,
+with twenty detected mutations. It implements capture-safe normalization and
+alpha/beta/delta/zeta conversion for the resolved function fragment.
+Conversion is untyped.
+
+Typing, type-directed conversion rules (eta and proof irrelevance), sugar
+expansion, and projection/elimination reduction are still required,
+alongside portable file input and two source twins, with grammar extensions
+if the twins need them. They belong outside this repository, under
+`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver, and
+conversion fixtures are not qualified probe workloads.
 Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
 before using their timings.
