@@ -23,12 +23,19 @@ three runtimes, with nineteen detected mutations. It checks dependent
 functions, annotations, `let` bindings, exact universes, and impredicative
 `Prop` products through a combined source entry point.
 
-Type-directed conversion rules (eta and proof irrelevance), sugar expansion,
-and projection/elimination typing and reduction are still required,
-alongside portable file input and two source twins, with grammar extensions
-if the twins need them. They belong outside this repository, under
+The [scratch arm expander](validation/s0-5-r2-arms.md) has passed 57
+exact-tree and refusal cases on all three runtimes, with twelve detected
+mutations. It validates positional labels against supplied constructor
+names and expands a final `else` without rewriting branch bodies.
+
+Type-directed conversion rules (eta and proof irrelevance), record expansion,
+recursive sugar processing, and projection/elimination typing and reduction
+are still required, alongside portable file input and two source twins, with
+grammar extensions if the twins need them. They belong outside this
+repository, under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver,
-conversion, and typing fixtures are not qualified probe workloads.
+conversion, typing, and arm expansion fixtures are not qualified probe
+workloads.
 Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
 before using their timings.
