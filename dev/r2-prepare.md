@@ -35,12 +35,16 @@ constructor spines in checking mode, and `elim` with an explicit motive, and
 it applies K1 iota.
 
 The [S0-5 closeout](s0-5-closeout.md) sets the remaining scratch scope.
-Indexed families, data metadata from source, portable file input, and the
-two complete source twins are still required, with grammar extensions if
-the twins need them. Records, projections, `else` expansion with recursive
-sugar processing, and motive inference are deferred. Eta and
-proof-irrelevance rules wait unless the step 1 translations show a concrete
-need. Scratch sources belong outside this repository, under
+The [two complete source twins](validation/s0-5-r2-twins.md) now have a
+declaration map and passing lexical checks. Step 2 must meet the source
+requirements in the twins record, including indexed families,
+source-derived data metadata, scratch U32 literals, zero-arity
+sum/prod/tuple with the zero-arm elimination of `sum ()`, K1/K1d recursion,
+and Id/reflexivity checking. Portable file input remains a step 3 item.
+Records, projections, `else` expansion with recursive sugar processing, and
+motive inference are deferred. By reading, the step 1 translations need no
+eta or proof-irrelevance rules, so these rules remain deferred. Scratch
+sources belong outside this repository, under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver,
 conversion, typing, arm expansion, and data fixtures are not qualified probe
 workloads.
@@ -50,11 +54,13 @@ before using their timings.
 
 The active work order is the [S0-5 closeout](s0-5-closeout.md), using the
 [frozen workload manifest](r2-workloads.json). It replaces the feature
-scope and ordering in earlier scratch checkpoints. Translate the complete
-selected programs before adding checker features; preserve all four core
-obligations.
-The manifest records selected Bend inputs. Sole translations, preparation,
-and measurements remain pending. It is not a `prepare-plan.json` or a
+scope and ordering in earlier scratch checkpoints. Step 1 supplies the
+complete translations and their reviewed declaration map. Step 2 must
+check both inputs and their negative fixtures from source, preserving all
+four core obligations.
+The manifest records selected Bend inputs and unqualified sole translations.
+Source checker qualification, preparation, and measurements remain pending.
+It is not a `prepare-plan.json` or a
 qualification result; construct the strict preparation plan below after
 the missing artifacts exist.
 

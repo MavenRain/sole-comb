@@ -1,0 +1,693 @@
+{
+  "schema": 1,
+  "kind": "s0-5-step-1-twin-translation",
+  "recorded_at": "2026-09-27T21:59:55.549545+00:00",
+  "status": "PASS",
+  "scope": "Declaration coverage, structural audit, and lexing only. No sole typechecking or R2 result.",
+  "frozen_bend_sources": {
+    "core": {
+      "origin": "/Users/oobi/Documents/attest/pilot/bend2/core.bend",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.bend",
+      "sha256": "f724fcf32cc41b10bf60e55513a4b11a0337af35d6d8d82ade83b37bde9a0f35"
+    },
+    "smoke": {
+      "origin": "/Users/oobi/Documents/attest/pilot/bend2/smoke.bend",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.bend",
+      "sha256": "394d32107f0b9c909a948f7e7133fc7b315a9d9c622bc88559227637b0e3d232"
+    },
+    "conversion": {
+      "origin": "local namespace wrapper for the frozen core",
+      "snapshot": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/conversion.bend",
+      "sha256": "64df92e0292efeea27b2446a2d795def8e12e6f82cb95c92ffa8689eb83f0fc6"
+    }
+  },
+  "reused_seed_checks": {
+    "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/seed-checks-002.json",
+    "sha256": "88d932b3a6a3269c75b9983fecd18ca35cfa1b2858fc20c5eb1b6be69d5b468d",
+    "accepted": 2,
+    "false_imported_law_refused": 1,
+    "false_law_core": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/false-law/core.bend",
+      "sha256": "25f0d9bf362e163b51059c7c41eb276a65cf1bab087e8c6b95cc065e41c3ab35"
+    },
+    "initial_direct_entry_record": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/seed-checks.json",
+    "initial_direct_entry_sha256": "4bddb57f5c421c5672edbd14e8a9472a3d38e548341a453f95d047dc1c14708e"
+  },
+  "sources": [
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.sole",
+      "sha256": "b443ac9a964a46e41d7c3fcd354a90f9f790512d6f98fc7fff09cbab090b8e27",
+      "bytes": 4129
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.sole",
+      "sha256": "277927406f2956d6c1e78b6debd390ea39d81c211142a1174ef615eda6d8e463",
+      "bytes": 4421
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/audit-twins.py",
+      "sha256": "d24bc5fd78b2916e8c031e3c0a911baef6e4f1043b9b4b1c690b13185f271f02",
+      "bytes": 10418
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/validate-twin-lexing.py",
+      "sha256": "b3385f91afbbe0ad15332c618586f766d06f86eb09d4d1e89532f97dc2ceaa23",
+      "bytes": 2279
+    }
+  ],
+  "core_bend_declarations": 19,
+  "core_mapping_groups": 13,
+  "declaration_map": [
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "Bound",
+          "first_line": 4,
+          "last_line": 8
+        },
+        {
+          "kind": "def",
+          "name": "Bound",
+          "first_line": 9,
+          "last_line": 19
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "Bound",
+          "first_line": 20,
+          "last_line": 31
+        }
+      ],
+      "mapping": "Nat recursor; Empty at zero; Unit at the head."
+    },
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "Env",
+          "first_line": 20,
+          "last_line": 23
+        },
+        {
+          "kind": "def",
+          "name": "Env",
+          "first_line": 27,
+          "last_line": 33
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "Env",
+          "first_line": 36,
+          "last_line": 41
+        }
+      ],
+      "mapping": "Nat recursor; Unit at zero; Cell with the predecessor environment as tail."
+    },
+    {
+      "source": [
+        {
+          "kind": "type",
+          "name": "Env.Cell",
+          "first_line": 24,
+          "last_line": 26
+        }
+      ],
+      "target": [
+        {
+          "kind": "mu",
+          "name": "EnvCellF",
+          "first_line": 32,
+          "last_line": 35
+        },
+        {
+          "kind": "def",
+          "name": "EnvCell",
+          "first_line": 42,
+          "last_line": 44
+        }
+      ],
+      "mapping": "Tail-parameterized Cell plus EnvCell n = EnvCellF (Env n); two original fields, in order."
+    },
+    {
+      "source": [
+        {
+          "kind": "type",
+          "name": "Term",
+          "first_line": 34,
+          "last_line": 39
+        }
+      ],
+      "target": [
+        {
+          "kind": "mu",
+          "name": "Term",
+          "first_line": 45,
+          "last_line": 51
+        }
+      ],
+      "mapping": "Explicit length indices; Lit, Var, Let, Ann in source order; bounds and successor body length retained."
+    },
+    {
+      "source": [
+        {
+          "kind": "type",
+          "name": "Job",
+          "first_line": 40,
+          "last_line": 43
+        }
+      ],
+      "target": [
+        {
+          "kind": "mu",
+          "name": "Job",
+          "first_line": 52,
+          "last_line": 56
+        }
+      ],
+      "mapping": "Eval carries its length, term, and environment; Return carries U32."
+    },
+    {
+      "source": [
+        {
+          "kind": "type",
+          "name": "Kont",
+          "first_line": 44,
+          "last_line": 47
+        }
+      ],
+      "target": [
+        {
+          "kind": "mu",
+          "name": "Kont",
+          "first_line": 57,
+          "last_line": 61
+        }
+      ],
+      "mapping": "Halt and Bind retain the successor body, environment, and recursive continuation."
+    },
+    {
+      "source": [
+        {
+          "kind": "type",
+          "name": "Outcome",
+          "first_line": 48,
+          "last_line": 51
+        }
+      ],
+      "target": [
+        {
+          "kind": "mu",
+          "name": "Outcome",
+          "first_line": 62,
+          "last_line": 66
+        }
+      ],
+      "mapping": "Done and Exhausted remain distinct constructors."
+    },
+    {
+      "source": [
+        {
+          "kind": "def",
+          "name": "lookup",
+          "first_line": 52,
+          "last_line": 65
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "lookup",
+          "first_line": 67,
+          "last_line": 80
+        }
+      ],
+      "mapping": "Convoy motive over n and i; only the predecessor lookup IH is used."
+    },
+    {
+      "source": [
+        {
+          "kind": "def",
+          "name": "run",
+          "first_line": 66,
+          "last_line": 88
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "run",
+          "first_line": 81,
+          "last_line": 104
+        }
+      ],
+      "mapping": "Fuel recursor; indexed Term convoy; all machine transitions consume the fuel IH."
+    },
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "lookup_head",
+          "first_line": 89,
+          "last_line": 94
+        },
+        {
+          "kind": "def",
+          "name": "lookup_head",
+          "first_line": 95,
+          "last_line": 97
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "lookup_head",
+          "first_line": 105,
+          "last_line": 108
+        }
+      ],
+      "mapping": "Id U32 and refl head."
+    },
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "closed_var_impossible",
+          "first_line": 98,
+          "last_line": 102
+        },
+        {
+          "kind": "def",
+          "name": "closed_var_impossible",
+          "first_line": 103,
+          "last_line": 105
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "closed_var_impossible",
+          "first_line": 109,
+          "last_line": 111
+        }
+      ],
+      "mapping": "Empty elimination from Bound zero index."
+    },
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "lookup_tail",
+          "first_line": 106,
+          "last_line": 113
+        },
+        {
+          "kind": "def",
+          "name": "lookup_tail",
+          "first_line": 114,
+          "last_line": 116
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "lookup_tail",
+          "first_line": 112,
+          "last_line": 117
+        }
+      ],
+      "mapping": "Id U32 and refl of predecessor lookup."
+    },
+    {
+      "source": [
+        {
+          "kind": "law",
+          "name": "let_bound_value",
+          "first_line": 117,
+          "last_line": 120
+        },
+        {
+          "kind": "def",
+          "name": "let_bound_value",
+          "first_line": 121,
+          "last_line": 122
+        }
+      ],
+      "target": [
+        {
+          "kind": "def",
+          "name": "let_bound_value",
+          "first_line": 118,
+          "last_line": 123
+        }
+      ],
+      "mapping": "Id Outcome; the original five-fuel computation equals Done value."
+    }
+  ],
+  "smoke_map": {
+    "source": "smoke.bend:4-6 main",
+    "targets": [
+      "complete core.sole",
+      "nine",
+      "main"
+    ],
+    "intended_verdict": "ACCEPT",
+    "intended_normal_form": "Done 7",
+    "observed_verdict": "PENDING"
+  },
+  "core_intended_verdict": "ACCEPT",
+  "core_observed_verdict": "PENDING",
+  "required_obligations": [
+    "lookup_head",
+    "closed_var_impossible",
+    "lookup_tail",
+    "let_bound_value"
+  ],
+  "structural_checks": {
+    "all_mapped_core_targets": true,
+    "complete_core_prefix": true,
+    "frozen_main": true,
+    "nine_is_nine": true,
+    "nat_is_mu": true,
+    "five_is_five": true,
+    "unit_and_empty_shapes": true,
+    "no_forbidden_forms_or_holes": true,
+    "explicit_motives": true,
+    "term_arm_order": true,
+    "term_recursive_ih_binders": true,
+    "kont_recursive_ih_binder": true,
+    "indexed_convoy": true,
+    "dependent_var_and_let_fields": true,
+    "cell_tail_index": true,
+    "explicit_exhaustion": true,
+    "no_sole_imports": true,
+    "ascii": true
+  },
+  "audit_mutants": {
+    "missing-law": [
+      "all_mapped_core_targets"
+    ],
+    "missing-let-ih": [
+      "complete_core_prefix",
+      "term_recursive_ih_binders"
+    ],
+    "missing-core-prefix": [
+      "complete_core_prefix"
+    ],
+    "changed-smoke-value": [
+      "frozen_main"
+    ]
+  },
+  "negative_fixtures": [
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/bad-constructor.sole",
+      "sha256": "9f9c435d016c396a233b14064a1081a136bdc422cc4e63412796b15fb9b3842a",
+      "bytes": 4179,
+      "intended_verdict": "REFUSE",
+      "phase": "typing",
+      "reason": "Lit expects U32, but unit has Unit type.",
+      "observed_verdict": "PENDING"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/bad-bound.sole",
+      "sha256": "9a224435d0e320b4cdf4bad78a3f1907d7e4875f7fec868a7a09295c77e5bb57",
+      "bytes": 4178,
+      "intended_verdict": "REFUSE",
+      "phase": "typing",
+      "reason": "Bound zero zero reduces to Empty, so unit cannot inhabit it.",
+      "observed_verdict": "PENDING"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/false-law.sole",
+      "sha256": "a76a4dfb882ddeffbe1c48a2e0b55b366fdcd94ee46f37f9c44a60fbcf2d360e",
+      "bytes": 4193,
+      "intended_verdict": "REFUSE",
+      "phase": "conversion",
+      "reason": "Done 7 and Exhausted have distinct constructor heads.",
+      "observed_verdict": "PENDING"
+    }
+  ],
+  "lexing": {
+    "record": {
+      "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/validation.json",
+      "sha256": "4f7753db04ce14464c9d6cf1453e4d102d3cf3f31d55f6293b795fc9304379ec",
+      "bytes": 8749
+    },
+    "cases": 2,
+    "endpoints": [
+      "bun",
+      "node-worker",
+      "native-info"
+    ],
+    "record_data": {
+      "schema": 1,
+      "kind": "scratch-lexer-correctness",
+      "recorded_at": "2026-09-27T21:56:29.174127+00:00",
+      "status": "PASS",
+      "scope": "Complete Step 1 twin lexing only; parsing, typing, and R2 qualification are pending.",
+      "cases": [
+        "core",
+        "smoke"
+      ],
+      "sources": [
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/lexer.bend",
+          "bytes": 7955,
+          "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/assertions.bend",
+          "bytes": 2715,
+          "sha256": "ebe89f11e8274cdfda5638aad9d69971ac24601d193655c01d901e4d75ebacb0"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/validate.py",
+          "bytes": 12611,
+          "sha256": "8fb8ac0e10de2c79f811f929f9200559764936da2f85a6f056bbec06afd9bdd2"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/bend-policy.json",
+          "bytes": 851,
+          "sha256": "34f35f8fa6f586775019e073d0ed09d42e496e0a6687dab52b5481526dbe7422"
+        },
+        {
+          "path": "/private/tmp/sole-comb-step1-20260927/repo/dev/toolchain.json",
+          "bytes": 4892,
+          "sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6"
+        },
+        {
+          "path": "/private/tmp/sole-comb-step1-20260927/repo/dev/build.py",
+          "bytes": 10807,
+          "sha256": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991"
+        },
+        {
+          "path": "/private/tmp/sole-comb-step1-20260927/repo/dev/pin-check.py",
+          "bytes": 7261,
+          "sha256": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/validate-twin-lexing.py",
+          "bytes": 2279,
+          "sha256": "b3385f91afbbe0ad15332c618586f766d06f86eb09d4d1e89532f97dc2ceaa23"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.sole",
+          "bytes": 4129,
+          "sha256": "b443ac9a964a46e41d7c3fcd354a90f9f790512d6f98fc7fff09cbab090b8e27"
+        },
+        {
+          "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.sole",
+          "bytes": 4421,
+          "sha256": "277927406f2956d6c1e78b6debd390ea39d81c211142a1174ef615eda6d8e463"
+        }
+      ],
+      "steps": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-P",
+            "/private/tmp/sole-comb-step1-20260927/repo/dev/pin-check.py"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/pins-before.stdout",
+            "bytes": 145,
+            "sha256": "1a4dd47622e3894e65abf9bcc14e69ef7cf78e7deb7a2507cf34ab2670d4c368"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/pins-before.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "argv": [
+            "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.bend",
+            "--check-only"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/check.stdout",
+            "bytes": 17,
+            "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/check.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "argv": [
+            "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.bend",
+            "-o",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.js"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/build-javascript.stdout",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/build-javascript.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "argv": [
+            "/Users/oobi/.bun/bin/bun",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.js"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/bun.stdout",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/bun.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "endpoint": "bun",
+          "cases": [
+            "core",
+            "smoke"
+          ],
+          "failure_mask": "0",
+          "passed": true
+        },
+        {
+          "argv": [
+            "/opt/homebrew/bin/node",
+            "-e",
+            "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.js"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/node-worker.stdout",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/node-worker.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "endpoint": "node-worker",
+          "cases": [
+            "core",
+            "smoke"
+          ],
+          "failure_mask": "0",
+          "passed": true
+        },
+        {
+          "argv": [
+            "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.bend",
+            "-o",
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.exe"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/build-native.stdout",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/build-native.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "argv": [
+            "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/tests.exe"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/native-info.stdout",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/batch-0/native-info.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "endpoint": "native-info",
+          "cases": [
+            "core",
+            "smoke"
+          ],
+          "failure_mask": "0",
+          "passed": true
+        },
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-P",
+            "/private/tmp/sole-comb-step1-20260927/repo/dev/pin-check.py"
+          ],
+          "status": "FINISHED",
+          "exit_code": 0,
+          "stdout": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/pins-after.stdout",
+            "bytes": 145,
+            "sha256": "1a4dd47622e3894e65abf9bcc14e69ef7cf78e7deb7a2507cf34ab2670d4c368"
+          },
+          "stderr": {
+            "path": "/private/tmp/sole-comb-step1-20260927/lexing-003/pins-after.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ],
+      "endpoint": null,
+      "verdict": null,
+      "completed_at": "2026-09-27T21:56:35.126581+00:00"
+    }
+  },
+  "qualification": "PENDING",
+  "measurement": "PENDING",
+  "endpoint": null,
+  "r2_verdict": null,
+  "next_step": "Step 2: derive source data metadata and check both complete twins and their negative fixtures."
+}

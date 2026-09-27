@@ -25,11 +25,12 @@ No command installs tools or updates the pinned Bend checkout.
 The active next task is the [bounded S0-5 closeout](dev/s0-5-closeout.md).
 Its [frozen workload manifest](dev/r2-workloads.json) selects the plan's
 `smoke.bend` plus complete `core.bend` alternative and the complete core
-conversion workload with all four obligations. Sole translations and
-qualification remain pending. These workloads determine the remaining
-scratch features. After valid GREEN or AMBER evidence selects an eligible
-endpoint, the [Stage A milestones](dev/stage-a-milestones.md) introduce
-reviewed compiler-source commits while retaining the full integration gate.
+conversion workload with all four obligations. The complete sole
+translations exist and pass lexing. Their source checker qualification
+remains pending. These workloads determine the remaining scratch features.
+After valid GREEN or AMBER evidence selects an eligible endpoint, the
+[Stage A milestones](dev/stage-a-milestones.md) introduce reviewed
+compiler-source commits while retaining the full integration gate.
 
 ## Benchmark measurements
 
@@ -146,9 +147,14 @@ an explicit `as x return M` motive. K1 iota reduces an elimination of a
 constructor with all of its fields. Indexed families, motive inference,
 records, projections, and the connection to the arm expander remain pending.
 
+The [complete workload translations](dev/validation/s0-5-r2-twins.md) map
+all 19 core declarations and preserve all four obligations. Both full
+inputs pass lexing on Bun, the pinned Node worker, and native (INFO).
+Their source checker qualification remains pending.
+
 S0-5 still needs the checker subset that the
-[S0-5 closeout](dev/s0-5-closeout.md) requires, portable file input, and
-its two source twins, their preparation and informational native build, Bun
+[S0-5 closeout](dev/s0-5-closeout.md) requires, portable file input,
+the twins' preparation and informational native build, Bun
 and Node worker measurements, prebuilt-bundle startup measurements, and the
 GREEN repeat when required. Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2

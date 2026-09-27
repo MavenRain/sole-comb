@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "adopted": "2026-09-27",
-  "status": "bend-inputs-frozen",
-  "scope": "S0-5 workload selection and seed correctness; sole translations remain pending",
+  "status": "sole-twins-translated",
+  "scope": "Frozen Bend inputs and complete sole translations; source checker qualification remains pending",
   "origin_repository": "/Users/oobi/Documents/attest",
   "origin_revision": "5cd62f3d32ceca6c6bd2c4d2d60325fb24942ece",
   "toolchain": "toolchain.json",
@@ -32,8 +32,8 @@
         "core"
       ],
       "planned_sole_source": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.sole",
-      "sole_sha256": null,
-      "translation_status": "pending",
+      "sole_sha256": "277927406f2956d6c1e78b6debd390ea39d81c211142a1174ef615eda6d8e463",
+      "translation_status": "translated-unqualified",
       "preserve": "complete core plus original nested-let main, fuel 9, U32 values 7 and 9"
     },
     "conversion": {
@@ -43,8 +43,8 @@
         "core"
       ],
       "planned_sole_source": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.sole",
-      "sole_sha256": null,
-      "translation_status": "pending",
+      "sole_sha256": "b443ac9a964a46e41d7c3fcd354a90f9f790512d6f98fc7fff09cbab090b8e27",
+      "translation_status": "translated-unqualified",
       "preserve": "all core declarations and all four obligations"
     }
   },
@@ -74,5 +74,10 @@
   "measurement_status": "pending",
   "selected_endpoint": null,
   "r2_verdict": null,
-  "next_step": "Step 1 in s0-5-closeout.md: translate both complete programs and review their declaration/law map before another checker feature slice"
+  "next_step": "Step 2 in s0-5-closeout.md: derive data metadata and check both complete twins and their negative fixtures from source",
+  "translation_evidence": {
+    "path": "validation/s0-5-r2-twins.json",
+    "sha256": "377f0f669ba52f5ec0443f3ea51b50dd32e688f45ce792e0490b087ca2cddcb2"
+  },
+  "translation_review": "validation/s0-5-r2-twins.md"
 }

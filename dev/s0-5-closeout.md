@@ -33,8 +33,9 @@ revision.
 
 The Bend inputs are copied byte for byte to
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/`.
-The sole translations are still pending. The freeze selects the programs and
-their obligations; it supplies no correctness qualification or R2 result.
+The [complete sole translations](validation/s0-5-r2-twins.md) now have a
+reviewed declaration map and passing lexical checks. Their source checker
+qualification remains pending. The freeze supplies no R2 result.
 Selecting this existing alternative avoids the `elab_state.bend` import
 closure. It does not change the denominator command, thresholds, or host pin.
 
@@ -56,6 +57,13 @@ records are reusable component evidence. They do not complete steps 1
 through 4. The current data slice has no source data syntax and supports
 non-indexed caller metadata only, so indexed support remains a real step 2
 gap.
+
+Step 1 completed on 2026-09-27. Its [record](validation/s0-5-r2-twins.json)
+accounts for all 19 core declarations, the smoke main, and all four
+obligations. Both complete twins pass lexing; their intended ACCEPT verdicts
+and the three negative fixtures' intended REFUSE verdicts remain pending.
+Step 2 is the next unmet acceptance condition. Its concrete syntax and
+checker requirements are in the [translation review](validation/s0-5-r2-twins.md).
 
 ## Deferred scratch work
 
