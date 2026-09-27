@@ -89,12 +89,25 @@ R2_OUTPUT=/new/scratch/directory` collects the required legs. Each attempt
 preserves raw measurements and a hash-bound manifest. A GREEN first round
 automatically gets an independent confirmation.
 
-S0-5 still needs the scratch Bend lexer/parser/checker and its two source
-twins, their preparation and native informational build, Bun and Node worker measurements,
-prebuilt-bundle startup measurements, and the GREEN repeat when required.
-Scratch compiler code belongs under
+The [scratch Bend lexer](dev/validation/s0-5-r2-lexer.md) passes 35 correctness
+cases on Bun, the pinned Node worker, and the informational native build.
+Its source, tests, and six detected mutations remain under the scratch path.
+This is frontend development evidence; it does not qualify a probe endpoint.
+
+The [scratch Bend parser](dev/validation/s0-5-r2-parser.md) passes 75 syntax
+and refusal cases on the same three runtimes, with eight detected mutations.
+It builds explicit syntax trees for the documented probe subset, preserves
+arm and declaration order, and refuses pattern keywords. Its fuel-bounded
+state machine has no unsafe declarations. Name resolution, sugar expansion,
+typing, and conversion remain the scratch checker's responsibility.
+
+S0-5 still needs the scratch checker, portable file input, and its two
+source twins, their preparation and informational native build, Bun and Node
+worker measurements, prebuilt-bundle startup measurements, and the GREEN
+repeat when required. Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
-verdict or runtime selection has been made.
+verdict or runtime selection has been made. Extend the scratch grammar if
+the chosen twins require constructs outside the validated parser subset.
 
 `make r2-report R2_MANIFEST=/absolute/path/to/manifest.json` verifies collected
 evidence and writes `dev/r2-risk.json`. Reports preserve raw samples, source

@@ -5,11 +5,16 @@ artifacts to the [serial measurement runner](r2-run.md). It makes no timing
 samples, chooses no endpoint, and writes no R2 verdict. Its checks can run
 while the machine is above the benchmark load ceiling.
 
-The scratch lexer/parser/checker and its two source twins are still required.
-They belong outside this repository, under
-`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Preparation does not generate
-a compiler or establish semantic equivalence between twins. Review the
-chosen seed, translation, and rejection cases before using their timings.
+The [scratch lexer](validation/s0-5-r2-lexer.md) has passed its byte-token
+correctness checks. The [scratch parser](validation/s0-5-r2-parser.md) has
+passed its syntax-tree and refusal checks for the documented subset.
+The checker, portable file-input boundary, and two source twins are still
+required, with grammar extensions if the twins need them. They belong
+outside this repository, under `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`.
+Lexer and parser fixtures are not qualified probe workloads.
+Preparation does not generate a compiler or
+establish semantic equivalence between twins. Review the chosen seed,
+translation, and rejection cases before using their timings.
 
 ## Preparation plan
 
