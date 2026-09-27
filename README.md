@@ -120,7 +120,7 @@ mutations. Its source entry point connects lexing, parsing, name resolution,
 and bidirectional typing for dependent functions, checked annotations and
 `let` bindings, exact universe levels, and impredicative `Prop` products.
 Type-directed conversion rules (eta and proof irrelevance), record expansion,
-and projection/elimination typing and reduction remain pending.
+and projection typing and reduction remain pending.
 
 The [scratch arm expander](dev/validation/s0-5-r2-arms.md) passes 57 exact-tree
 and refusal cases on all three runtimes, with twelve detected mutations.
@@ -128,6 +128,14 @@ Given constructor names in declaration order, it checks positional labels
 and expands a final `else` into the remaining arms without changing bodies.
 It does not infer constructor metadata or traverse nested eliminations;
 connecting it to data checking and recursive sugar processing remains pending.
+
+The [scratch data checker](dev/validation/s0-5-r2-data.md) passes 40 exact
+signature and refusal cases on all three runtimes, with nine mutations that
+Bun detects. It takes non-indexed data types with parameters from caller
+metadata, checks constructor spines in checking mode, and checks `elim` with
+an explicit `as x return M` motive. K1 iota reduces an elimination of a
+constructor with all of its fields. Indexed families, motive inference,
+records, projections, and the connection to the arm expander remain pending.
 
 S0-5 still needs the rest of the scratch checker, portable file input, and
 its two source twins, their preparation and informational native build, Bun

@@ -28,13 +28,19 @@ exact-tree and refusal cases on all three runtimes, with twelve detected
 mutations. It validates positional labels against supplied constructor
 names and expands a final `else` without rewriting branch bodies.
 
+The [scratch data checker](validation/s0-5-r2-data.md) has passed 40 exact
+signature and refusal cases on all three runtimes, with nine mutations that
+Bun detects. It checks non-indexed data types from caller metadata,
+constructor spines in checking mode, and `elim` with an explicit motive, and
+it applies K1 iota.
+
 Type-directed conversion rules (eta and proof irrelevance), record expansion,
-recursive sugar processing, and projection/elimination typing and reduction
-are still required, alongside portable file input and two source twins, with
-grammar extensions if the twins need them. They belong outside this
-repository, under
+recursive sugar processing, projection typing and reduction, indexed
+families, and motive inference are still required, alongside portable file
+input and two source twins, with grammar extensions if the twins need them.
+They belong outside this repository, under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver,
-conversion, typing, and arm expansion fixtures are not qualified probe
+conversion, typing, arm expansion, and data fixtures are not qualified probe
 workloads.
 Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
