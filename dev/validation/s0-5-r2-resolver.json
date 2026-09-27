@@ -1,0 +1,2875 @@
+{
+  "schema": 1,
+  "kind": "scratch-resolver-correctness",
+  "recorded_at": "2026-09-27T03:12:34.896455+00:00",
+  "status": "PASS",
+  "scope": "name resolution only; no typing, conversion, sugar expansion, twin qualification or timing verdict",
+  "cases": [
+    "empty-exact-fuel",
+    "empty-surplus-fuel",
+    "zero-fuel",
+    "empty-zero-fuel",
+    "definition",
+    "exact-fuel",
+    "one-short-fuel",
+    "no-partial-program",
+    "universe",
+    "explicit-prelude",
+    "no-implicit-prelude",
+    "unknown-annotation",
+    "unknown-value",
+    "self-type",
+    "self-value",
+    "forward-reference",
+    "duplicate-global",
+    "duplicate-prelude",
+    "anonymous-definition",
+    "anonymous-name",
+    "anonymous-prelude",
+    "declaration-order",
+    "lambda-local",
+    "outer-binding",
+    "nearest-shadow",
+    "local-before-global",
+    "global-under-lambda",
+    "lambda-annotation",
+    "annotation-outer-shadow",
+    "annotation-not-self",
+    "dependent-annotation",
+    "anonymous-lambda-depth",
+    "anonymous-lambda-inaccessible",
+    "lambda-sibling-scope",
+    "lambda-does-not-leak",
+    "declaration-scope-isolated",
+    "dependent-pi",
+    "pi-domain-not-self",
+    "pi-does-not-leak",
+    "anonymous-arrow-depth",
+    "anonymous-arrow-outer-depth",
+    "nested-pi-shadow",
+    "let-body",
+    "let-type-not-self",
+    "let-value-not-self",
+    "let-shadow",
+    "let-outer-depth",
+    "let-does-not-leak",
+    "ascription",
+    "unknown-ascription",
+    "projection-label",
+    "projection-value",
+    "application-order",
+    "unknown-argument",
+    "empty-elim",
+    "arm-order",
+    "motive-binder",
+    "motive-outer-depth",
+    "motive-shadow-restored",
+    "motive-does-not-leak",
+    "motive-not-in-scrutinee",
+    "unknown-motive",
+    "arm-scope-isolated",
+    "arm-lambda",
+    "label-is-not-binder",
+    "record-needs-sugar",
+    "else-needs-sugar",
+    "else-after-arm",
+    "else-nested-arm",
+    "else-in-lambda",
+    "else-in-motive",
+    "syntax-forbidden-match",
+    "syntax-zero-parser-fuel",
+    "syntax-lexical-fuel",
+    "syntax-lexical-error",
+    "deep-binders"
+  ],
+  "sources": [
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/validate.py",
+      "bytes": 12611,
+      "sha256": "8fb8ac0e10de2c79f811f929f9200559764936da2f85a6f056bbec06afd9bdd2"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/validate-parser.py",
+      "bytes": 20544,
+      "sha256": "0c316155cbfecd3b187b84b3e9e04ea54e2ec8ea786f597b21bf9656e53b8d61"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/validate-resolver.py",
+      "bytes": 20217,
+      "sha256": "d592fe6f40782c27ba7ebab0305d1a058676c3e12876ab1e0fa944da81b2fd28"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-policy.json",
+      "bytes": 970,
+      "sha256": "ca634142a99ad707ed9ee5b20156028b4bc547fe0ed31bef0f60899066dc42d7"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/toolchain.json",
+      "bytes": 4892,
+      "sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/build.py",
+      "bytes": 10807,
+      "sha256": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/pin-check.py",
+      "bytes": 7261,
+      "sha256": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d"
+    }
+  ],
+  "steps": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/sole-comb/dev/pin-check.py"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/pins-before.stdout",
+        "bytes": 134,
+        "sha256": "ff2317d4b167a24c91e1cbe17928ab9462647b1a35e9f194534e6d373539a87f"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/pins-before.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "empty-exact-fuel",
+        "empty-surplus-fuel",
+        "zero-fuel",
+        "empty-zero-fuel",
+        "definition",
+        "exact-fuel",
+        "one-short-fuel",
+        "no-partial-program"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "empty-exact-fuel",
+        "empty-surplus-fuel",
+        "zero-fuel",
+        "empty-zero-fuel",
+        "definition",
+        "exact-fuel",
+        "one-short-fuel",
+        "no-partial-program"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "empty-exact-fuel",
+        "empty-surplus-fuel",
+        "zero-fuel",
+        "empty-zero-fuel",
+        "definition",
+        "exact-fuel",
+        "one-short-fuel",
+        "no-partial-program"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "universe",
+        "explicit-prelude",
+        "no-implicit-prelude",
+        "unknown-annotation",
+        "unknown-value",
+        "self-type",
+        "self-value",
+        "forward-reference"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "universe",
+        "explicit-prelude",
+        "no-implicit-prelude",
+        "unknown-annotation",
+        "unknown-value",
+        "self-type",
+        "self-value",
+        "forward-reference"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "universe",
+        "explicit-prelude",
+        "no-implicit-prelude",
+        "unknown-annotation",
+        "unknown-value",
+        "self-type",
+        "self-value",
+        "forward-reference"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "duplicate-global",
+        "duplicate-prelude",
+        "anonymous-definition",
+        "anonymous-name",
+        "anonymous-prelude",
+        "declaration-order",
+        "lambda-local",
+        "outer-binding"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "duplicate-global",
+        "duplicate-prelude",
+        "anonymous-definition",
+        "anonymous-name",
+        "anonymous-prelude",
+        "declaration-order",
+        "lambda-local",
+        "outer-binding"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "duplicate-global",
+        "duplicate-prelude",
+        "anonymous-definition",
+        "anonymous-name",
+        "anonymous-prelude",
+        "declaration-order",
+        "lambda-local",
+        "outer-binding"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "nearest-shadow",
+        "local-before-global",
+        "global-under-lambda",
+        "lambda-annotation",
+        "annotation-outer-shadow",
+        "annotation-not-self",
+        "dependent-annotation",
+        "anonymous-lambda-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "nearest-shadow",
+        "local-before-global",
+        "global-under-lambda",
+        "lambda-annotation",
+        "annotation-outer-shadow",
+        "annotation-not-self",
+        "dependent-annotation",
+        "anonymous-lambda-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "nearest-shadow",
+        "local-before-global",
+        "global-under-lambda",
+        "lambda-annotation",
+        "annotation-outer-shadow",
+        "annotation-not-self",
+        "dependent-annotation",
+        "anonymous-lambda-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "anonymous-lambda-inaccessible",
+        "lambda-sibling-scope",
+        "lambda-does-not-leak",
+        "declaration-scope-isolated",
+        "dependent-pi",
+        "pi-domain-not-self",
+        "pi-does-not-leak",
+        "anonymous-arrow-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "anonymous-lambda-inaccessible",
+        "lambda-sibling-scope",
+        "lambda-does-not-leak",
+        "declaration-scope-isolated",
+        "dependent-pi",
+        "pi-domain-not-self",
+        "pi-does-not-leak",
+        "anonymous-arrow-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "anonymous-lambda-inaccessible",
+        "lambda-sibling-scope",
+        "lambda-does-not-leak",
+        "declaration-scope-isolated",
+        "dependent-pi",
+        "pi-domain-not-self",
+        "pi-does-not-leak",
+        "anonymous-arrow-depth"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "anonymous-arrow-outer-depth",
+        "nested-pi-shadow",
+        "let-body",
+        "let-type-not-self",
+        "let-value-not-self",
+        "let-shadow",
+        "let-outer-depth",
+        "let-does-not-leak"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "anonymous-arrow-outer-depth",
+        "nested-pi-shadow",
+        "let-body",
+        "let-type-not-self",
+        "let-value-not-self",
+        "let-shadow",
+        "let-outer-depth",
+        "let-does-not-leak"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "anonymous-arrow-outer-depth",
+        "nested-pi-shadow",
+        "let-body",
+        "let-type-not-self",
+        "let-value-not-self",
+        "let-shadow",
+        "let-outer-depth",
+        "let-does-not-leak"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "ascription",
+        "unknown-ascription",
+        "projection-label",
+        "projection-value",
+        "application-order",
+        "unknown-argument",
+        "empty-elim",
+        "arm-order"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "ascription",
+        "unknown-ascription",
+        "projection-label",
+        "projection-value",
+        "application-order",
+        "unknown-argument",
+        "empty-elim",
+        "arm-order"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "ascription",
+        "unknown-ascription",
+        "projection-label",
+        "projection-value",
+        "application-order",
+        "unknown-argument",
+        "empty-elim",
+        "arm-order"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "motive-binder",
+        "motive-outer-depth",
+        "motive-shadow-restored",
+        "motive-does-not-leak",
+        "motive-not-in-scrutinee",
+        "unknown-motive",
+        "arm-scope-isolated",
+        "arm-lambda"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "motive-binder",
+        "motive-outer-depth",
+        "motive-shadow-restored",
+        "motive-does-not-leak",
+        "motive-not-in-scrutinee",
+        "unknown-motive",
+        "arm-scope-isolated",
+        "arm-lambda"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "motive-binder",
+        "motive-outer-depth",
+        "motive-shadow-restored",
+        "motive-does-not-leak",
+        "motive-not-in-scrutinee",
+        "unknown-motive",
+        "arm-scope-isolated",
+        "arm-lambda"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "label-is-not-binder",
+        "record-needs-sugar",
+        "else-needs-sugar",
+        "else-after-arm",
+        "else-nested-arm",
+        "else-in-lambda",
+        "else-in-motive",
+        "syntax-forbidden-match"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "label-is-not-binder",
+        "record-needs-sugar",
+        "else-needs-sugar",
+        "else-after-arm",
+        "else-nested-arm",
+        "else-in-lambda",
+        "else-in-motive",
+        "syntax-forbidden-match"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "label-is-not-binder",
+        "record-needs-sugar",
+        "else-needs-sugar",
+        "else-after-arm",
+        "else-nested-arm",
+        "else-in-lambda",
+        "else-in-motive",
+        "syntax-forbidden-match"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "syntax-zero-parser-fuel",
+        "syntax-lexical-fuel",
+        "syntax-lexical-error",
+        "deep-binders"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "syntax-zero-parser-fuel",
+        "syntax-lexical-fuel",
+        "syntax-lexical-error",
+        "deep-binders"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "syntax-zero-parser-fuel",
+        "syntax-lexical-fuel",
+        "syntax-lexical-error",
+        "deep-binders"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "local-index",
+      "case": "outer-binding",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "duplicate-global",
+      "case": "duplicate-global",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "lambda-type-scope",
+      "case": "annotation-not-self",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "let-value-scope",
+      "case": "let-value-not-self",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "motive-scope",
+      "case": "motive-does-not-leak",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "anonymous-depth",
+      "case": "anonymous-arrow-depth",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "declaration-order",
+      "case": "declaration-order",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "arm-order",
+      "case": "arm-order",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "exhaustion",
+      "case": "zero-fuel",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.bend",
+        "-o",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "else-first-arm-only",
+      "case": "else-after-arm",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/sole-comb/dev/pin-check.py"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/pins-after.stdout",
+        "bytes": 134,
+        "sha256": "ff2317d4b167a24c91e1cbe17928ab9462647b1a35e9f194534e6d373539a87f"
+      },
+      "stderr": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/pins-after.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "generated": [
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.bend",
+      "bytes": 3709,
+      "sha256": "3912a1f26227fe0526db1e98cf8697e489cb7b4de4f4741f8a789e5571ab1c33"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.js",
+      "bytes": 106132,
+      "sha256": "ca1b3fce553d0b9cf4640ac5772eedbf718c6869c674589b476d0ae92145bc8e"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-0/tests.exe",
+      "bytes": 224200,
+      "sha256": "09f5dee5141249985174e56210a146d4009489e6771e9c21a776b99541b4dcfc"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.bend",
+      "bytes": 6905,
+      "sha256": "8e618f5cbad16de57a5c5960b0bb8f02a2f5f5443ac0dd0300588c2bd63cafe2"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.js",
+      "bytes": 113233,
+      "sha256": "68843e297c8e0945e6a3d0608c1e8a92f46381400eae769f78f3b4d5ed779956"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-1/tests.exe",
+      "bytes": 225592,
+      "sha256": "6661324b8e5308aa04c32a5da25c1d55d8694aa29a3d9d704ef7232e4edf304a"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.bend",
+      "bytes": 10125,
+      "sha256": "d1a1428cf5cc796fa29d8dfa2a044a9b81fc8e9cd9137cb07abed485f5a0536f"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.js",
+      "bytes": 121795,
+      "sha256": "037125631dabfe7f8a0cf9bf21e54cfa0cb2bb5f938e6bf4b9042da262d1f227"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-2/tests.exe",
+      "bytes": 242728,
+      "sha256": "0879139e298a63ecf3e8e5c6a8bb42a12e619e8a92aeabe89b977c80241124f6"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.bend",
+      "bytes": 13807,
+      "sha256": "0f9ccf6a425be21a741472dcd4e3e81388530b184f646723cedae3cbc877212e"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.js",
+      "bytes": 132318,
+      "sha256": "e7226cbf05af8b02e23d548948245825b536ccdaad7e73293d4ffa2901473d5c"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-3/tests.exe",
+      "bytes": 277256,
+      "sha256": "6a980a8ec584eb2d4c5b8f316f6263185b58396a9d91e0f5a65c119a196deeb2"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.bend",
+      "bytes": 9757,
+      "sha256": "fcba14d823479596045c8b18490a56ced01357b9611a55b370da22c59995a379"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.js",
+      "bytes": 122712,
+      "sha256": "8049d0978ce8b399cca7220982ba4be3b83b0eb2cdced35fb3c7b10e2feaa943"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-4/tests.exe",
+      "bytes": 242600,
+      "sha256": "4053646caaeb0a7ec734b2785fcfe1958dbe7bfe6e11451901974a0133acd6a3"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.bend",
+      "bytes": 11952,
+      "sha256": "6e6e1ca4a1afc893d9a66987ece27426c98d93f672b86555ad4cb93b76c419aa"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.js",
+      "bytes": 128623,
+      "sha256": "3fa990798fb6f8a473713fb222ea7e2d1d34efb68b80a25d45803ef845a23a64"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-5/tests.exe",
+      "bytes": 260008,
+      "sha256": "21976fb6f0ae911009b0c0ade60aa1c1f6109ad8f19b2aed5d9f56e1d345072f"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.bend",
+      "bytes": 12747,
+      "sha256": "2a886e511f1bd79899f978ac2a3ecce9512c335a1ebadca7a7e38f7ed75b8d0e"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.js",
+      "bytes": 129748,
+      "sha256": "98d9f7598bfd3e3addb4fd71729ca8f5657f84860017a5f54ecf96a575c4c24e"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-6/tests.exe",
+      "bytes": 260408,
+      "sha256": "fd2d08fe4f1c01a2f029b18fe6ca981ac22f20b9f41f87f282069db9106093ba"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.bend",
+      "bytes": 13972,
+      "sha256": "25140a35b4fb49736d6782dc25aa10d45af79a2f1dd6a567dd850f471e8e9d8d"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.js",
+      "bytes": 131052,
+      "sha256": "461b93b5ee8b8015c24496095e81609dcc8772f15e6025c6db6f5c8266c7a9a9"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-7/tests.exe",
+      "bytes": 277528,
+      "sha256": "75a4f8018d102e29803128cc1e3bb9faeb69f7343615379d9e3e4cf3abc1eae1"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.bend",
+      "bytes": 4720,
+      "sha256": "bb96f418f8c77cdebe00893c122dd3a61c661b7513743779e5c15939165d213c"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.js",
+      "bytes": 107154,
+      "sha256": "df81cc244a73768d5bc741725b1e84a47981d94940727a2ad0b3f7248118af8b"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-8/tests.exe",
+      "bytes": 224616,
+      "sha256": "70e282c70e0cc3f40588cbe87a8b2e7b62a140f9447d37ed55faa989fabb920c"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/resolver.bend",
+      "bytes": 13252,
+      "sha256": "89f1d9bff74d3dd9330f68c8584a81711c83539287c4dc1dd7d57d3a3d321628"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.bend",
+      "bytes": 48762,
+      "sha256": "248c9fdba37f6ffddd0957427da3e26a23f9b2cde87c50d39c5c3b7e885fad5e"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.js",
+      "bytes": 229186,
+      "sha256": "5b7efec2156ffff8e03aee07e233df727e05a9fbacda47f114283293626e23f6"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/batch-9/tests.exe",
+      "bytes": 415368,
+      "sha256": "8403e5fca32edce047b600bbadc44ef609a293a31f1ed186d3ce49213dd59502"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/resolver.bend",
+      "bytes": 13249,
+      "sha256": "c688e5b7d365de2cbca3d3b37241ed577e80a3289942311250521b3ac7301238"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.bend",
+      "bytes": 3466,
+      "sha256": "7d6b1f7f80eca7589c8e034d62d9b6b9b72c9f804eca235d0b3691e661104404"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-local-index/tests.js",
+      "bytes": 106127,
+      "sha256": "5dbc6784b1ca144867c19ec194d5f286a749812293939dcf41f7fad3a632e9ce"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/resolver.bend",
+      "bytes": 13250,
+      "sha256": "d991d548567f7adad6c8a9da5caf3f21b83eeb8a8c29efaffb75367fa66ef864"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.bend",
+      "bytes": 967,
+      "sha256": "c1fa1364b30f16ecbe5e0929efdd66727a8e7f6c749c1df26fff7804cccbbb50"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-duplicate-global/tests.js",
+      "bytes": 99143,
+      "sha256": "02a942916d68ca8c52452f670a6a37aeb9d8370245ac0d10aea1bbfa2b5f8750"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/resolver.bend",
+      "bytes": 13263,
+      "sha256": "16cb360383a2251a2eef711284b35670dd9554fdd275da2652ced6ba4e66cb54"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.bend",
+      "bytes": 967,
+      "sha256": "b59c674b29aa48e4092f4996c3d96d33caa2f4b90b6039e6f8bf9cc55de958a7"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-lambda-type-scope/tests.js",
+      "bytes": 99184,
+      "sha256": "348f403236749df7922bcd375a8cea6910eefbe6c836ed27b3cb3bba6e103488"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/resolver.bend",
+      "bytes": 13263,
+      "sha256": "de2cc3f26f760cafa9cbecb96044d022a25d5014ef744c1dc42139d433ccf746"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.bend",
+      "bytes": 970,
+      "sha256": "cbe6c91407c4460f067c1fab6a67fe42d15ce1538da6e7c0b01ddc8d19bf82bb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-let-value-scope/tests.js",
+      "bytes": 99187,
+      "sha256": "a26e836af2562854f89719867188241543fee0207c5bdadd686c04570f47be3b"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/resolver.bend",
+      "bytes": 13263,
+      "sha256": "c5b3cf86629c74c7ed5d72fb675e6174b3fe624b0d660e3f64885c1c97a6e1d7"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.bend",
+      "bytes": 980,
+      "sha256": "cfacc2fc9cb3019a9cab1f767b436568ebede3812c88b444dee68d2fda4504b6"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-motive-scope/tests.js",
+      "bytes": 99197,
+      "sha256": "2df0e0b0b95d79bdada3a47cc2cd77a91b5c0536528c2c0642e64e1ff90adf20"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/resolver.bend",
+      "bytes": 13313,
+      "sha256": "169f8bb8b36088f93045fb677723f51a4ae7b8d949f6f844b29c9f090e2958d6"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.bend",
+      "bytes": 4338,
+      "sha256": "725ea4686f633049eb563433fa13a92d6913ae2469c525faa729099a5ffa7b81"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-anonymous-depth/tests.js",
+      "bytes": 109290,
+      "sha256": "ede4e24c7a0d3ceb4700dcf41c63a34021f2a8c18ec896456e8c585cc5bffb28"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/resolver.bend",
+      "bytes": 13223,
+      "sha256": "327dd222e63041bf10828a62fd021740b2e4260c600fdf4bfd4f1a178ffad609"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.bend",
+      "bytes": 2949,
+      "sha256": "a51af10f81deb04c3f5de49310253e290954aaddf3c9cc05012e68f3660065a2"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-declaration-order/tests.js",
+      "bytes": 104218,
+      "sha256": "f1fa17db9fbeaf2d99bfb06b31c356bc5e63ec8477dd4d635fbd6a85b13eb296"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/resolver.bend",
+      "bytes": 13231,
+      "sha256": "f30320aa572ccdeae997f2d7d928dd36d0615418a0ac500fae0a9cdea8e63723"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.bend",
+      "bytes": 4624,
+      "sha256": "aa1f0874003871d1ed01c68a8b831932ca967ad21400d7159597c97e4168e37b"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-arm-order/tests.js",
+      "bytes": 108393,
+      "sha256": "2e1448eb4274e29c58fb7e6267babeee5f99a920a12fd09a07a36a19e585fa35"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/resolver.bend",
+      "bytes": 13246,
+      "sha256": "c48394b8b62f2cc8fbd6512f2e310352e3379de0ac0ca59e1887de32549d9840"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.bend",
+      "bytes": 860,
+      "sha256": "4cd29d2dedff815276fb93afdd82fc89474bd3d599cdcdee5f01b4f9f8f072f5"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-exhaustion/tests.js",
+      "bytes": 98967,
+      "sha256": "c7941583f4ebd8c8db4623a4a281d00bc48cd1bbf531336b1df6e95c2650dbd0"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/parser.bend",
+      "bytes": 28982,
+      "sha256": "f97c5edaeb02f6c206a5a8c2227631ba3abd8d17fb17deaa9dbf9b40b96fc1d4"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/resolver.bend",
+      "bytes": 13303,
+      "sha256": "f9672d5314731f8c728c74780dc3cc79d6ee320dc1f0411a5ef5733094bc1a02"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.bend",
+      "bytes": 978,
+      "sha256": "578b2043ea9e0b2751ecac4e662ede6a7dde7309d8aa80dabae08d0edc14dabe"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/mutant-else-first-arm-only/tests.js",
+      "bytes": 99393,
+      "sha256": "b4d9209d522945bb6d6f918bcdfabc2bcaa6ac43f2fa4b0efd2de04d5b690889"
+    }
+  ],
+  "endpoint": null,
+  "verdict": null,
+  "fixtures": {
+    "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/frontend/resolver-validation-003/cases.json",
+    "bytes": 77528,
+    "sha256": "90b2da5e7b753fb569e4d8deec51e7d4b5c93b9f57ecbc7cdea997c738395263"
+  },
+  "completed_at": "2026-09-27T03:14:26.945347+00:00"
+}

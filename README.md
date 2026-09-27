@@ -99,15 +99,22 @@ and refusal cases on the same three runtimes, with eight detected mutations.
 It builds explicit syntax trees for the documented probe subset, preserves
 arm and declaration order, and refuses pattern keywords. Its fuel-bounded
 state machine has no unsafe declarations. Name resolution, sugar expansion,
-typing, and conversion remain the scratch checker's responsibility.
+typing, and conversion belong to the scratch checker.
 
-S0-5 still needs the scratch checker, portable file input, and its two
-source twins, their preparation and informational native build, Bun and Node
-worker measurements, prebuilt-bundle startup measurements, and the GREEN
-repeat when required. Scratch compiler code belongs under
+The [scratch name resolver](dev/validation/s0-5-r2-resolver.md) passes 76
+exact-tree and refusal cases on those three runtimes, with ten detected
+mutations. It resolves local names to binder indices and checks ordered,
+nonrecursive global definitions. Record declarations and `else` arms
+explicitly require sugar expansion. This is the first checker pass; sugar
+expansion, typing, and conversion remain pending.
+
+S0-5 still needs the rest of the scratch checker, portable file input, and
+its two source twins, their preparation and informational native build, Bun
+and Node worker measurements, prebuilt-bundle startup measurements, and the
+GREEN repeat when required. Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
 verdict or runtime selection has been made. Extend the scratch grammar if
-the chosen twins require constructs outside the validated parser subset.
+the twins require constructs outside the validated parser subset.
 
 `make r2-report R2_MANIFEST=/absolute/path/to/manifest.json` verifies collected
 evidence and writes `dev/r2-risk.json`. Reports preserve raw samples, source

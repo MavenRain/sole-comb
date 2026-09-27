@@ -8,13 +8,18 @@ while the machine is above the benchmark load ceiling.
 The [scratch lexer](validation/s0-5-r2-lexer.md) has passed its byte-token
 correctness checks. The [scratch parser](validation/s0-5-r2-parser.md) has
 passed its syntax-tree and refusal checks for the documented subset.
-The checker, portable file-input boundary, and two source twins are still
-required, with grammar extensions if the twins need them. They belong
-outside this repository, under `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`.
-Lexer and parser fixtures are not qualified probe workloads.
-Preparation does not generate a compiler or
-establish semantic equivalence between twins. Review the chosen seed,
-translation, and rejection cases before using their timings.
+The [scratch name resolver](validation/s0-5-r2-resolver.md) has passed 76
+exact-tree and refusal cases on Bun, the pinned Node worker, and the
+informational native build. This is the first checker pass; it does not
+establish sugar expansion, typing, conversion, or twin correctness. The rest
+of the scratch checker (sugar expansion, typing, and conversion), the
+portable file-input boundary, and two source twins are still required, with
+grammar extensions if the twins need them. They belong outside this
+repository, under `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`.
+Lexer, parser, and resolver fixtures are not qualified probe workloads.
+Preparation does not generate a compiler or establish semantic equivalence
+between twins. Review the chosen seed, translation, and rejection cases
+before using their timings.
 
 ## Preparation plan
 
