@@ -111,9 +111,16 @@ The [scratch conversion engine](dev/validation/s0-5-r2-conversion.md) passes
 107 exact-normal-form, comparison, and refusal cases on all three runtimes,
 with twenty detected mutations. It implements capture-safe normalization
 and alpha/beta/delta/zeta conversion for the resolved function fragment.
-Conversion is untyped. Typing, type-directed conversion rules (eta and proof
-irrelevance), sugar expansion, and projection/elimination reduction remain
-pending.
+The conversion engine is untyped; the scratch typechecker supplies the
+function-fragment typing checks.
+
+The [scratch typechecker](dev/validation/s0-5-r2-typing.md) passes 96 exact
+signature and refusal cases on all three runtimes, with nineteen detected
+mutations. Its source entry point connects lexing, parsing, name resolution,
+and bidirectional typing for dependent functions, checked annotations and
+`let` bindings, exact universe levels, and impredicative `Prop` products.
+Type-directed conversion rules (eta and proof irrelevance), sugar expansion,
+and projection/elimination typing and reduction remain pending.
 
 S0-5 still needs the rest of the scratch checker, portable file input, and
 its two source twins, their preparation and informational native build, Bun

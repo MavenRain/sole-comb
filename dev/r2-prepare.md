@@ -16,14 +16,19 @@ The [scratch conversion engine](validation/s0-5-r2-conversion.md) has passed
 107 exact-normal-form, comparison, and refusal cases on those three runtimes,
 with twenty detected mutations. It implements capture-safe normalization and
 alpha/beta/delta/zeta conversion for the resolved function fragment.
-Conversion is untyped.
+The conversion engine is untyped. The
+[scratch typechecker](validation/s0-5-r2-typing.md) supplies function-fragment
+typing checks and has passed 96 exact signature and refusal cases on all
+three runtimes, with nineteen detected mutations. It checks dependent
+functions, annotations, `let` bindings, exact universes, and impredicative
+`Prop` products through a combined source entry point.
 
-Typing, type-directed conversion rules (eta and proof irrelevance), sugar
-expansion, and projection/elimination reduction are still required,
+Type-directed conversion rules (eta and proof irrelevance), sugar expansion,
+and projection/elimination typing and reduction are still required,
 alongside portable file input and two source twins, with grammar extensions
 if the twins need them. They belong outside this repository, under
-`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver, and
-conversion fixtures are not qualified probe workloads.
+`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`. Lexer, parser, resolver,
+conversion, and typing fixtures are not qualified probe workloads.
 Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
 before using their timings.
