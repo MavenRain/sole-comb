@@ -10,6 +10,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/foundation"
+EXPECTED_CASES = 219
 
 
 def quoted(text):
@@ -126,6 +127,9 @@ def main():
     spec.loader.exec_module(build)
     binary, _, _ = build.compiler(pins)
     checks = cases()
+    names = {name for name, _, _ in checks}
+    if len(checks) != EXPECTED_CASES or len(names) != len(checks):
+        raise RuntimeError(f"expected {EXPECTED_CASES} uniquely named cases, found {len(checks)} with {len(names)} names")
     imports = ["import Base", "import ../../test/foundation.bend as T"]
     for filename, alias in [("foundation", "F"), ("kernel_budget", "B"), ("kernel_error", "E"),
                             ("kernel_level", "L"), ("kernel_literal", "Lit")]:

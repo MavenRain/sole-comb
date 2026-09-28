@@ -14,6 +14,11 @@
       "path": "lib/foundation.bend",
       "function": "Bignum.show_loop",
       "reason": "Normalized nonnegative radix-32768 magnitude is divided by the literal 10 on each recursion. Trimming quotient limbs makes the magnitude strictly decrease to the empty zero representation."
+    },
+    {
+      "path": "lib/kernel_term.bend",
+      "function": "scan",
+      "reason": "Each worklist step removes one term node and prepends only its strict subterms. The total syntax-node count of the pending finite forest decreases by one. The stack preserves the pinned shape, address, scrutinee, motive and branch order. Bend cannot infer this measure through scan_term; type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

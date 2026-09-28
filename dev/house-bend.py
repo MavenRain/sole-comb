@@ -8,7 +8,11 @@ import re
 ROOT = Path(__file__).resolve().parent.parent
 LIMITS = {"lib/foundation.bend": 800, "lib/kernel_budget.bend": 40,
           "lib/kernel_error.bend": 130, "lib/kernel_level.bend": 30,
-          "lib/kernel_literal.bend": 20}
+          "lib/kernel_literal.bend": 20, "lib/kernel_term.bend": 180,
+          "lib/kernel_value.bend": 220, "lib/kernel_shape.bend": 90,
+          "lib/kernel_global.bend": 180, "lib/kernel_prim.bend": 200,
+          "lib/kernel_quantity.bend": 260, "lib/kernel_positivity.bend": 180,
+          "lib/kernel_rules.bend": 2100}
 HOST = ("bin", "lib", "surface", "erase", "wasm", "dev")
 PURE = {"lib", "erase", "wasm"}
 

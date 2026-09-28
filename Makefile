@@ -1,4 +1,4 @@
-.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare test-foundation house bench-preflight r2-report r2-run r2-prepare gates
+.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare test-foundation test-representation house bench-preflight r2-report r2-run r2-prepare gates
 
 R2_MANIFEST ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/manifest.json
 R2_TOOLCHAIN ?= dev/toolchain.json
@@ -12,10 +12,10 @@ R2_PREPARE_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/prepare-plan.jso
 build:
 	python3 -P dev/build.py
 
-check: house test-foundation
+check: house test-foundation test-representation
 	python3 -P dev/build.py --check
 
-test: build test-bench test-r2 test-r2-run test-r2-prepare house test-foundation
+test: build test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation
 	python3 -P dev/pin-check.py
 
 test-bench:
@@ -53,6 +53,9 @@ house:
 test-foundation:
 	python3 -P dev/test-foundation.py
 
-gates: test-bench test-r2 test-r2-run test-r2-prepare house test-foundation
+test-representation:
+	python3 -P dev/test-representation.py
+
+gates: test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation
 	python3 -P dev/pin-check.py
 	python3 -P dev/build.py --check

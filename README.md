@@ -5,18 +5,20 @@ sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
 
 The real Stage A kernel port has started under `lib/`. A.1 provides the
 foundation, finite budgets, typed errors, universe levels, and literals.
+A.2 adds terms, semantic values, shapes, globals, and the pinned Nat primitives.
 The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
-[Stage A entry decision](dev/stage-a-entry.md). A.2 representation is next.
+[Stage A entry decision](dev/stage-a-entry.md). A.3 evaluation is next.
 
 Run from this directory with the locally pinned tools:
 
 ```sh
 make build           # cached JavaScript build of the host entry
 make check           # host entry, library tests, and scoped source policies
-make test            # build, existing regressions, A.1 library checks, source policies, pins
-make gates           # existing regressions, A.1 library checks, source policies, pins
+make test            # build, existing regressions, A.1/A.2 checks, source policies, pins
+make gates           # existing regressions, A.1/A.2 checks, source policies, pins
 make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
-make house           # scoped source policies and A.1 physical line budgets
+make test-representation # real A.2 dependency closure on the same hosts
+make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```
 
@@ -26,7 +28,8 @@ launchers under `_build/endpoint/` and does not activate `./sole-comb` yet.
 No command installs tools or updates the pinned Bend checkout.
 
 The active work is the [Stage A compiler milestones](dev/stage-a-milestones.md).
-The [A.1 validation](dev/validation/stage-a-foundation.md) records its scope.
+The [A.1 validation](dev/validation/stage-a-foundation.md) and
+[A.2 validation](dev/validation/stage-a-representation.md) record their scope.
 The CLI is still a bootstrap host entry; the real library has its own build
 and behavioral tests. Full compiler checking is a later milestone.
 
