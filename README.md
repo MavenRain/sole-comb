@@ -3,17 +3,20 @@
 A language with Kan extensions as its type-forming primitives and one primitive
 sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
 
-The repository currently contains the Stage 0 host skeleton, toolchain pins and
-benchmark infrastructure. The kernel port has not started. The build plan is
-`../kan-elim-lang-m0/M0-PLAN.md`; the next stage is its S0-5 R2-RISK probe.
+The real Stage A kernel port has started under `lib/`. A.1 provides the
+foundation, finite budgets, typed errors, universe levels, and literals.
+The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
+[Stage A entry decision](dev/stage-a-entry.md). A.2 representation is next.
 
 Run from this directory with the locally pinned tools:
 
 ```sh
 make build           # cached JavaScript build of the host entry
-make check           # Bend checks the host entry
-make test            # build, benchmark regressions and pin checks
-make gates           # harness, build and pin-check regressions, pin checks, host check
+make check           # host entry, library tests, and scoped source policies
+make test            # build, existing regressions, A.1 library checks, source policies, pins
+make gates           # existing regressions, A.1 library checks, source policies, pins
+make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
+make house           # scoped source policies and A.1 physical line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```
 
@@ -22,16 +25,16 @@ worker using valid measurements. Consequently `make build` creates candidate
 launchers under `_build/endpoint/` and does not activate `./sole-comb` yet.
 No command installs tools or updates the pinned Bend checkout.
 
-The active next task is the [bounded S0-5 closeout](dev/s0-5-closeout.md).
-Its [frozen workload manifest](dev/r2-workloads.json) selects the plan's
-`smoke.bend` plus complete `core.bend` alternative and the complete core
-conversion workload with all four obligations. The complete sole
-translations exist and pass lexing and exact syntax-tree checks. Their
-source checker qualification remains pending. These workloads determine
-the remaining scratch features.
-After valid GREEN or AMBER evidence selects an eligible endpoint, the
-[Stage A milestones](dev/stage-a-milestones.md) introduce reviewed
-compiler-source commits while retaining the full integration gate.
+The active work is the [Stage A compiler milestones](dev/stage-a-milestones.md).
+The [A.1 validation](dev/validation/stage-a-foundation.md) records its scope.
+The CLI is still a bootstrap host entry; the real library has its own build
+and behavioral tests. Full compiler checking is a later milestone.
+
+R2 is pending and will qualify the operational compiler before M0 closure.
+The [workload manifest](dev/r2-workloads.json) and scratch validation records
+retain their evidence, but further scratch compiler features are retired.
+Complete source qualification and any language-alignment changes to the
+twins are required before timing. No runtime endpoint has been selected.
 
 ## Benchmark measurements
 
@@ -84,7 +87,7 @@ and 130 for interruption. Preflight reports `READY` or `NOT_READY` without
 waiting. Neither is an R2 verdict or evidence that the full load-wait budget
 elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict.
 
-## Remaining Stage 0 work
+## Historical Stage 0 evidence
 
 The [probe preparer](dev/r2-prepare.md),
 [serial measurement runner](dev/r2-run.md), and
@@ -160,14 +163,13 @@ telescopes, indexed motives, scratch literal syntax, and zero-arity
 sum/product/tuple forms. Source-derived data metadata, resolution of the
 new nodes, and their typing and reduction rules remain step 2 work.
 
-S0-5 still needs the checker subset that the
-[S0-5 closeout](dev/s0-5-closeout.md) requires, portable file input,
-the twins' preparation and informational native build, Bun
-and Node worker measurements, prebuilt-bundle startup measurements, and the
-GREEN repeat when required. Scratch compiler code belongs under
-`/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
-verdict or runtime selection has been made. The current workload grammar
-has parser evidence; complete source checker qualification remains next.
+The scratch checks above are historical evidence. The
+[entry decision](dev/stage-a-entry.md) retires further scratch feature work.
+Complete source qualification, preparation, informational native builds,
+Bun and Node worker measurements, startup measurements, and the required
+GREEN repeat remain pending against the operational real compiler.
+Scratch compiler code remains outside this tree. No R2 verdict or runtime
+selection has been made.
 
 `make r2-report R2_MANIFEST=/absolute/path/to/manifest.json` verifies collected
 evidence and writes `dev/r2-risk.json`. Reports preserve raw samples, source
@@ -175,6 +177,6 @@ and bundle hashes, pinned and observed tool hashes, startup shares, and the
 required GREEN confirmation. The runner never changes the pinned endpoint.
 
 The plan's load ceiling is 8.0 with a 3600-second wait budget. Endpoint
-selection and the Stage A kernel port remain pending until the probe has
-valid evidence. Saved preflight observations are historical;
+selection remains pending until R2 has valid evidence. Stage A is underway
+under the approved sequencing change. Saved preflight observations are historical;
 rerun `make bench-preflight` before measuring.

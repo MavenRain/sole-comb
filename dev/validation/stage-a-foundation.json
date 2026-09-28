@@ -1,0 +1,30 @@
+{
+  "milestone": "A.1",
+  "cases_per_endpoint": 219,
+  "endpoints": [
+    "bun",
+    "node-worker"
+  ],
+  "informational_endpoints": [
+    "native"
+  ],
+  "sources": {
+    "lib/foundation.bend": "492da0a013187f32680a9d365f4ad0538252253654c0481fc17eb403f47fdce9",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "test/foundation.bend": "cc647ec6407f2d39c30abc6f75b6abb9c92213dc600183bf3e112d5d1d20c533",
+    "dev/test-foundation.py": "33efe4183b26c27d024170436bb10a44ef9667f332fa9564be3a9fd8b8280b2a",
+    "dev/build.py": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991",
+    "dev/pin-check.py": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d",
+    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+    "dev/house-bend.py": "df05d091a52128d2e20ee41d0ee8ce3ff2de88f68f16189442c60db283b89671",
+    "dev/test-house.py": "fc167b2bcd9e5990c24f09fc9d490fc58d8d7d167aec15c5d7994f53388e5bd4",
+    "dev/bend-policy.json": "6e94de4f4dd234144ae7a3b397e1bef850c29658d052e8cc3018d050de98d4ab",
+    "Makefile": "d75742f545f0fb8250d8ea838dfdff71bd953ed690fdc655b5afcb336bcb917e"
+  },
+  "harness_sha256": "ef886bed1018ff25508b313b3628219289653c7f942b6ea6d53e491f739e0e39",
+  "r2_qualification": "pending",
+  "stage_a_oracle": "pending"
+}

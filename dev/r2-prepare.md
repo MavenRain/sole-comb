@@ -34,7 +34,10 @@ Bun detects. It checks non-indexed data types from caller metadata,
 constructor spines in checking mode, and `elim` with an explicit motive, and
 it applies K1 iota.
 
-The [S0-5 closeout](s0-5-closeout.md) sets the remaining scratch scope.
+The [Stage A entry decision](stage-a-entry.md) retires further scratch
+compiler features and starts the real kernel port. The scratch scope below
+is historical; its outstanding source-qualification requirements carry
+forward to R2 on the operational compiler.
 The [two complete source twins](validation/s0-5-r2-twins.md) now have a
 declaration map and passing lexical checks. The
 [workload parser extension](validation/s0-5-r2-workload-parser.md) also
@@ -57,12 +60,11 @@ Preparation does not generate a compiler or establish semantic equivalence
 between twins. Review the chosen seed, translation, and rejection cases
 before using their timings.
 
-The active work order is the [S0-5 closeout](s0-5-closeout.md), using the
-[frozen workload manifest](r2-workloads.json). It replaces the feature
-scope and ordering in earlier scratch checkpoints. Step 1 supplies the
-complete translations and their reviewed declaration map. Step 2 must
-check both inputs and their negative fixtures from source, preserving all
-four core obligations.
+The active work order is the [Stage A milestones](stage-a-milestones.md).
+The [workload manifest](r2-workloads.json) preserves the complete translations
+and their declaration map. Before real-compiler R2 timing, align the twins
+with the actual M0 language and check both inputs and their negative fixtures
+from source, preserving all four core obligations.
 The manifest records selected Bend inputs and unqualified sole translations.
 Source checker qualification, preparation, and measurements remain pending.
 It is not a `prepare-plan.json` or a

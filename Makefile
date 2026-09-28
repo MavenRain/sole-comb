@@ -1,4 +1,4 @@
-.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare bench-preflight r2-report r2-run r2-prepare gates
+.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare test-foundation house bench-preflight r2-report r2-run r2-prepare gates
 
 R2_MANIFEST ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/manifest.json
 R2_TOOLCHAIN ?= dev/toolchain.json
@@ -6,16 +6,16 @@ R2_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/run-plan.json
 R2_OUTPUT ?=
 R2_PREPARE_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/prepare-plan.json
 
-# Stage 0 validates the pinned host and benchmark harness. The compiler
-# suite and dev/gates.sh are added by later stages.
+# Stage A adds the real library closure alongside the pinned host and
+# benchmark harness. The complete compiler suite arrives with A.5.
 
 build:
 	python3 -P dev/build.py
 
-check:
+check: house test-foundation
 	python3 -P dev/build.py --check
 
-test: build test-bench test-r2 test-r2-run test-r2-prepare
+test: build test-bench test-r2 test-r2-run test-r2-prepare house test-foundation
 	python3 -P dev/pin-check.py
 
 test-bench:
@@ -46,6 +46,13 @@ r2-run:
 r2-report:
 	python3 -P dev/r2-risk.py --manifest "$(R2_MANIFEST)" --toolchain "$(R2_TOOLCHAIN)" --json dev/r2-risk.json
 
-gates: test-bench test-r2 test-r2-run test-r2-prepare
+house:
+	python3 -P dev/test-house.py
+	python3 -P dev/house-bend.py
+
+test-foundation:
+	python3 -P dev/test-foundation.py
+
+gates: test-bench test-r2 test-r2-run test-r2-prepare house test-foundation
 	python3 -P dev/pin-check.py
 	python3 -P dev/build.py --check

@@ -1,8 +1,10 @@
 # S0-5 closeout
 
-Adopted on 2026-09-27. This is the active scratch-work boundary. It supersedes
-the feature scope and ordering in earlier scratch checkpoints. Historical
-validation records retain their original scope and claims.
+Adopted on 2026-09-27. The subsequent [Stage A entry decision](stage-a-entry.md)
+supersedes this document's scratch-first work order. Further scratch compiler
+features are retired; real Stage A implementation is active under `lib/`.
+The bounded scope below records the former plan and the outstanding R2
+qualification requirements. Historical validation claims remain unchanged.
 
 ## Frozen workloads
 
@@ -93,12 +95,13 @@ permission to weaken the workload or gate.
 
 Keep the current child-CPU method, per-workload thresholds, load ceiling,
 sample count, startup measurements, and confirmation rules. A selected
-eligible endpoint with GREEN or AMBER evidence permits Stage A. GREEN is
-at most 0.45; AMBER is above 0.45 and at most 1.0. FAIL above 1.0 halts
-Stage A until the user rules in writing. Unmet measurement conditions, unresolved
-endpoint selection, and missing evidence remain unfinished.
+eligible endpoint with GREEN or AMBER evidence satisfies the R2 runtime gate.
+GREEN is at most 0.45; AMBER is above 0.45 and at most 1.0. FAIL above 1.0
+requires a written user ruling. Unmet measurement conditions, unresolved
+endpoint selection, and missing evidence remain unfinished. The entry
+decision moves this gate to the operational real compiler before M0 closure.
 
-After step 4, start the [Stage A compiler milestones](stage-a-milestones.md).
+Start the [Stage A compiler milestones](stage-a-milestones.md) now.
 The scratch implementation remains outside the repository. Stage A writes
 the actual pinned Kanon kernel port under `lib/`; later stages add the
 sole surface and Wasm backend.
