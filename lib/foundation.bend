@@ -14,6 +14,7 @@ type Bignum.t is Data:
 type Int63.t is Data:
   Int63.Int{negative: Bool, limbs: List<&2, U32>}
 
+
 def Bignum.trim_zero(h: U32, zero: Bool) -> List<&2, U32>:
   match zero:
     case True{}:
@@ -523,3 +524,49 @@ def Map.size(-A: Data, map: Map.t<A>) -> Nat:
       0n
     case Map.Bind{key, value, rest}:
       (1n + Map.size(A, rest) : Nat)
+
+# Signed host arithmetic wraps at 63 bits, as OCaml int at the pin.
+# wrap_sum is internal to add/sub: its input lies within one modulus.
+def Int63.zero() -> Int63.t: Int63.Int{False{}, []}
+
+def Int63.one() -> Int63.t: Int63.Int{False{}, [1]}
+
+def Int63.equal(a: Int63.t, b: Int63.t) -> Bool:
+  Bignum.equal(Bignum.of_int(a), Bignum.of_int(b))
+
+def Int63.compare(a: Int63.t, b: Int63.t) -> Cmp:
+  Bignum.compare(Bignum.of_int(a), Bignum.of_int(b))
+
+def Int63.raw(value: Bignum.t) -> Int63.t:
+  match value:
+    case Bignum.Int{negative, limbs}: Int63.Int{negative, limbs}
+
+def Int63.show(value: Int63.t) -> String: Bignum.to_string(Bignum.of_int(value))
+
+def Int63.wrap_high_order(value: Bignum.t, order: Cmp) -> Int63.t:
+  match order:
+    case LT{}: Int63.raw(value)
+    case EQ{}: Int63.raw(value)
+    case GT{}: Int63.raw(Bignum.add(value, Bignum.Int{True{}, [0, 0, 0, 0, 8]}))
+
+def Int63.wrap_high(+value: Bignum.t) -> Int63.t:
+  Int63.wrap_high_order(value, Bignum.compare(value, Bignum.Int{False{}, [32767, 32767, 32767, 32767, 3]}))
+
+def Int63.wrap_sum_order(value: Bignum.t, order: Cmp) -> Int63.t:
+  match order:
+    case LT{}: Int63.raw(Bignum.add(value, Bignum.Int{False{}, [0, 0, 0, 0, 8]}))
+    case EQ{}: Int63.raw(value)
+    case GT{}: Int63.wrap_high(value)
+
+def Int63.wrap_sum(+value: Bignum.t) -> Int63.t:
+  Int63.wrap_sum_order(value, Bignum.compare(value, Bignum.Int{True{}, [0, 0, 0, 0, 4]}))
+
+def Int63.add(a: Int63.t, b: Int63.t) -> Int63.t:
+  Int63.wrap_sum(Bignum.add(Bignum.of_int(a), Bignum.of_int(b)))
+
+def Int63.sub(a: Int63.t, b: Int63.t) -> Int63.t:
+  Int63.wrap_sum(Bignum.add(Bignum.of_int(a), Bignum.negate(Bignum.of_int(b))))
+
+def Int63.succ(value: Int63.t) -> Int63.t: Int63.add(value, Int63.one)
+
+def Int63.pred(value: Int63.t) -> Int63.t: Int63.sub(value, Int63.one)

@@ -6,8 +6,9 @@ sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
 The real Stage A kernel port has started under `lib/`. A.1 provides the
 foundation, finite budgets, typed errors, universe levels, and literals.
 A.2 adds terms, semantic values, shapes, globals, and the pinned Nat primitives.
+A.3 adds evaluation, readback, and typed conversion with focused oracle comparisons.
 The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
-[Stage A entry decision](dev/stage-a-entry.md). A.3 evaluation is next.
+[Stage A entry decision](dev/stage-a-entry.md). A.4 checking is next.
 
 Run from this directory with the locally pinned tools:
 
@@ -28,8 +29,9 @@ launchers under `_build/endpoint/` and does not activate `./sole-comb` yet.
 No command installs tools or updates the pinned Bend checkout.
 
 The active work is the [Stage A compiler milestones](dev/stage-a-milestones.md).
-The [A.1 validation](dev/validation/stage-a-foundation.md) and
-[A.2 validation](dev/validation/stage-a-representation.md) record their scope.
+The [A.1 validation](dev/validation/stage-a-foundation.md),
+[A.2 validation](dev/validation/stage-a-representation.md), and
+[A.3 validation](dev/validation/stage-a-evaluation.md) record their scope.
 The CLI is still a bootstrap host entry; the real library has its own build
 and behavioral tests. Full compiler checking is a later milestone.
 

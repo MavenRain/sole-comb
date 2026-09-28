@@ -19,6 +19,26 @@
       "path": "lib/kernel_term.bend",
       "function": "scan",
       "reason": "Each worklist step removes one term node and prepends only its strict subterms. The total syntax-node count of the pending finite forest decreases by one. The stack preserves the pinned shape, address, scrutinee, motive and branch order. Bend cannot infer this measure through scan_term; type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_rules.bend",
+      "function": "pbind",
+      "reason": "Linear suspended programs compose result continuations without mutually recursive Bend declarations. Recursive composition occurs only when a request resumes. Bend cannot establish the semantic decrease through the continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_rules.bend",
+      "function": "pcatch",
+      "reason": "The error handler is threaded through a linear suspended program so failed annotation probes are caught after nested requests finish. Recursive traversal is delayed in the continuation; Bend cannot prove its decrease. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_rules.bend",
+      "function": "run",
+      "reason": "The evaluator/converter executes typed requests and resumes their linear continuations. Semantic evaluation and readback decrease on the checked strongly normalizing fragment, a measure Bend cannot infer through closures. Unchecked raw terms may diverge as in the pinned OCaml evaluator; this declaration does not claim totality for arbitrary syntax. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_rules.bend",
+      "function": "coll_eta_loop",
+      "reason": "The signed collection width is checked nonnegative before this loop. Each step decrements its positive remaining count without wraparound. Bend cannot infer this numeric measure through Int63.pred; type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

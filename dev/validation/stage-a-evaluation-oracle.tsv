@@ -1,0 +1,251 @@
+universe	u4
+integer	lit:-17
+string	lit:string:hello
+variable--1	error:unbound: de Bruijn index -1 is outside the environment
+variable-0	lit:10
+variable-1	lit:20
+variable-2	lit:30
+variable-3	error:unbound: de Bruijn index 3 is outside the environment
+auto-refused	error:not yet: instances arrive at M2
+global-unbound	error:unbound: missing
+let-ignores-type	lit:12
+let-shadows	lit:37
+global-reducible	lit:41
+global-opaque	g:d
+global-axiom	g:a
+former-Lan-pi	lan(pi(w,x,u1),u2)
+former-Ran-pi	ran(pi(w,x,u1),u2)
+in-pi	in(pi(w,x,u1),ctor:c,[lit:1;lit:2;])
+section-pi	sec(pi(w,x,u1),[([1:x;],v0);])
+former-Lan-coll	lan(coll2,u2)
+former-Ran-coll	ran(coll2,u2)
+in-coll	in(coll2,ctor:c,[lit:1;lit:2;])
+section-coll	sec(coll2,[([1:x;],v0);])
+former-Lan-mu	lan(mu(F,[lit:8;]),u2)
+former-Ran-mu	ran(mu(F,[lit:8;]),u2)
+in-mu	in(mu(F,[lit:8;]),ctor:c,[lit:1;lit:2;])
+section-mu	sec(mu(F,[lit:8;]),[([1:x;],v0);])
+former-Lan-par	error:not yet: SPar arrives at M1
+former-Ran-par	error:not yet: SPar arrives at M1
+in-par	error:not yet: SPar arrives at M1
+section-par	error:not yet: SPar arrives at M1
+former-Lan-nu	error:not yet: SNu arrives at M2
+former-Ran-nu	error:not yet: SNu arrives at M2
+in-nu	error:not yet: SNu arrives at M2
+section-nu	error:not yet: SNu arrives at M2
+annotation-T.Univ{FT.number("3")}	ann(ran(coll0,u1),u3)
+annotation-T.Lit{Lit.LInt{FT.number("1")}}	ran(coll0,u1)
+annotation-T.Auto{}	ran(coll0,u1)
+annotation-T.Global{"missing"}	ran(coll0,u1)
+annotation-existing	ann(ran(coll0,u1),u3)
+annotation-nonformer	lit:2
+pi-beta-0	lit:7
+pi-beta-1	lit:13
+pi-beta-wrong-address	error:mismatch: an elimination met a value it cannot eliminate
+pi-beta-multiple-legs	error:mismatch: an elimination met a value it cannot eliminate
+coll-beta--1	error:mismatch: an elimination met a value it cannot eliminate
+coll-beta-0	lit:11
+coll-beta-1	lit:22
+coll-beta-2	error:mismatch: an elimination met a value it cannot eliminate
+coll-beta-wrong-address	error:mismatch: an elimination met a value it cannot eliminate
+out-canonical-refused	error:mismatch: an elimination met a value it cannot eliminate
+out-mu-refused	error:not yet: a right former at a mu shape arrives at M2
+pi-elim-order-0	lit:22
+pi-elim-order-1	lit:11
+pi-elim-order-2	lit:33
+pi-elim-arity	error:mismatch: an elimination met a value it cannot eliminate
+coll-elim-order-0	lit:30
+coll-elim-order-1	lit:20
+coll-elim-order-2	lit:10
+coll-elim-order-3	lit:40
+coll-elim-missing	error:mismatch: an elimination met a value it cannot eliminate
+coll-elim-first	lit:11
+mu-elim-order-0	lit:30
+mu-elim-order-1	lit:20
+mu-elim-order-2	lit:10
+mu-elim-order-3	lit:40
+mu-elim-missing	error:mismatch: an elimination met a value it cannot eliminate
+mu-elim-first	lit:11
+elim-canonical-refused	error:mismatch: an elimination met a value it cannot eliminate
+frozen-out-order	out(coll2,leg1,out(pi(w,x,u1),pt(1,lit:7),g:a))
+frozen-elim-capture	elim(coll2,g:a,w,some(none,[i;],self,v1),[leg1:([],v0);])
+primitive-natAdd-9-4	lit:13
+primitive-natAdd-4-9	lit:13
+primitive-natAdd-4-4	lit:8
+primitive-natAdd--1-3	out(pi(w,x,u1),pt(1,lit:3),out(pi(w,x,u1),pt(1,lit:-1),g:natAdd))
+primitive-natAdd-3--1	out(pi(w,x,u1),pt(1,lit:-1),out(pi(w,x,u1),pt(1,lit:3),g:natAdd))
+primitive-natAdd-10000000000000000000000000-7	lit:10000000000000000000000007
+primitive-natAdd-partial	out(pi(w,x,u1),pt(1,lit:3),g:natAdd)
+primitive-natSub-9-4	lit:5
+primitive-natSub-4-9	lit:0
+primitive-natSub-4-4	lit:0
+primitive-natSub--1-3	out(pi(w,x,u1),pt(1,lit:3),out(pi(w,x,u1),pt(1,lit:-1),g:natSub))
+primitive-natSub-3--1	out(pi(w,x,u1),pt(1,lit:-1),out(pi(w,x,u1),pt(1,lit:3),g:natSub))
+primitive-natSub-10000000000000000000000000-7	lit:9999999999999999999999993
+primitive-natSub-partial	out(pi(w,x,u1),pt(1,lit:3),g:natSub)
+primitive-natMul-9-4	lit:36
+primitive-natMul-4-9	lit:36
+primitive-natMul-4-4	lit:16
+primitive-natMul--1-3	out(pi(w,x,u1),pt(1,lit:3),out(pi(w,x,u1),pt(1,lit:-1),g:natMul))
+primitive-natMul-3--1	out(pi(w,x,u1),pt(1,lit:-1),out(pi(w,x,u1),pt(1,lit:3),g:natMul))
+primitive-natMul-10000000000000000000000000-7	lit:70000000000000000000000000
+primitive-natMul-partial	out(pi(w,x,u1),pt(1,lit:3),g:natMul)
+primitive-natEq-9-4	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natEq-4-9	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natEq-4-4	in(coll2,leg1,[sec(coll0,[]);])
+primitive-natEq--1-3	out(pi(w,x,u1),pt(1,lit:3),out(pi(w,x,u1),pt(1,lit:-1),g:natEq))
+primitive-natEq-3--1	out(pi(w,x,u1),pt(1,lit:-1),out(pi(w,x,u1),pt(1,lit:3),g:natEq))
+primitive-natEq-10000000000000000000000000-7	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natEq-partial	out(pi(w,x,u1),pt(1,lit:3),g:natEq)
+primitive-natLt-9-4	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natLt-4-9	in(coll2,leg1,[sec(coll0,[]);])
+primitive-natLt-4-4	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natLt--1-3	out(pi(w,x,u1),pt(1,lit:3),out(pi(w,x,u1),pt(1,lit:-1),g:natLt))
+primitive-natLt-3--1	out(pi(w,x,u1),pt(1,lit:-1),out(pi(w,x,u1),pt(1,lit:3),g:natLt))
+primitive-natLt-10000000000000000000000000-7	in(coll2,leg0,[sec(coll0,[]);])
+primitive-natLt-partial	out(pi(w,x,u1),pt(1,lit:3),g:natLt)
+primitive-overapplication	error:mismatch: an elimination met a value it cannot eliminate
+primitive-wrong-literal	out(pi(w,x,u1),pt(1,lit:4),out(pi(w,x,u1),pt(1,lit:string:s),g:natAdd))
+guard-0-first	lit:73
+guard-0-second	out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),out(pi(w,x,u1),pt(1,lit:2),g:rec))
+guard-0-neither	out(pi(w,x,u1),pt(1,lit:2),out(pi(w,x,u1),pt(1,lit:1),g:rec))
+guard-0-partial	sec(pi(w,x,u1),[([1:b;],lit:73);])
+guard-1-first	out(pi(w,x,u1),pt(1,lit:2),out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),g:rec))
+guard-1-second	lit:73
+guard-1-neither	out(pi(w,x,u1),pt(1,lit:2),out(pi(w,x,u1),pt(1,lit:1),g:rec))
+guard-1-partial	out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),g:rec)
+guard--1-first	out(pi(w,x,u1),pt(1,lit:2),out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),g:rec))
+guard--1-second	out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),out(pi(w,x,u1),pt(1,lit:2),g:rec))
+guard--1-neither	out(pi(w,x,u1),pt(1,lit:2),out(pi(w,x,u1),pt(1,lit:1),g:rec))
+guard--1-partial	out(pi(w,x,u1),pt(1,in(mu(F,[]),ctor:c,[])),g:rec)
+quote-local-0-0	v-1
+quote-local-3-0	v2
+quote-local-3-2	v0
+quote-local-0-1	v-2
+quote-local--4611686018427387904-4611686018427387903	v0
+quote-local-4611686018427387903--4611686018427387904	v-2
+quote-closure-two-binders	sec(coll1,[([0:a;w:b;],v1);])
+quote-captured-closure	sec(coll1,[([1:a;1:b;],lit:27);])
+quote-does-not-whnf	out(pi(w,x,u1),pt(1,lit:4),out(pi(w,x,u1),pt(1,lit:9),g:natSub))
+weak-primitive	lit:5
+structural-130	true
+structural-131	false
+structural-132	false
+structural-133	true
+structural-134	false
+proof-irrelevance	true
+probe-failure-falls-back	false
+budget-exhaustion	error:budget: evaluation-test
+former-level-Lan-0-None{}	true
+former-level-Lan-0-Some{FT.number("0")}	true
+former-level-Lan-0-Some{FT.number("2")}	false
+former-level-Lan-1-None{}	true
+former-level-Lan-1-Some{FT.number("0")}	true
+former-level-Lan-1-Some{FT.number("2")}	true
+former-binder-name-Lan	true
+former-binder-quantity-Lan	false
+former-domain-Lan	false
+former-captured-diagram-Lan	true
+former-level-Ran-0-None{}	true
+former-level-Ran-0-Some{FT.number("0")}	true
+former-level-Ran-0-Some{FT.number("2")}	false
+former-level-Ran-1-None{}	true
+former-level-Ran-1-Some{FT.number("0")}	true
+former-level-Ran-1-Some{FT.number("2")}	true
+former-binder-name-Ran	true
+former-binder-quantity-Ran	false
+former-domain-Ran	false
+former-captured-diagram-Ran	true
+in-structural-S.SColl{F.Int63.Int{False{}, []}}	true
+in-structural-S.SColl{F.Int63.Int{False{}, [2]}}	true
+in-structural-S.SPi{Q.Many{}, "x", V.VUniv{FT.number("1")}}	true
+in-structural-S.SMu{"F", [V.VUniv{FT.number("1")}]}	true
+in-structural-S.SPar{V.VUniv{FT.number("1")}, V.VUniv{FT.number("1")}}	error:not yet: SPar arrives at M1
+in-structural-S.SNu{"F", []}	error:not yet: SNu arrives at M2
+in-second-payload-V.VLit{Lit.LInt{FT.number("2")}}	true
+in-second-payload-V.VLit{Lit.LInt{FT.number("3")}}	false
+section-binder-names-quantities-ignored	true
+section-binder-count	false
+eta-empty-collection	true
+head-169	true
+head-170	false
+head-171	false
+head-172	false
+spine-point-quantity-Q.Zero{}	true
+spine-point-quantity-Q.One{}	true
+spine-point-quantity-Q.Many{}	true
+spine-point-value	false
+captured-elim-same	true
+captured-elim-env	false
+captured-elim-body	false
+captured-elim-motive-count	false
+captured-elim-scrut-quantity	false
+captured-elim-branch-count	false
+captured-elim-branch-address	false
+eta-pi-ran	true
+eta-pi-ran-different	false
+eta-pi-lan-same	true
+eta-pi-lan-point	false
+eta-pi-lan-fibre	false
+eta-collection	true
+eta-collection-same	true
+eta-collection-second	false
+subsingleton-empty	true
+subsingleton-erased	true
+subsingleton-runtime	false
+subsingleton-recursive	false
+subsingleton-two	false
+subsingleton-negative	false
+subsingleton-type	false
+subsingleton-provisional	false
+subsingleton-builtin	false
+subsingleton-absent	false
+captured-second-point-False	true
+captured-second-point-True	false
+short-circuit-shape-before-bad-diagram	false
+matching-shape-reports-bad-diagram	error:not yet: instances arrive at M2
+former-refusal-par	error:not yet: SPar arrives at M1
+former-refusal-nu	error:not yet: SNu arrives at M2
+former-mu-converts	true
+int63-add-4611686018427387903-1	-4611686018427387904
+int63-sub-4611686018427387903-1	4611686018427387902
+int63-add--4611686018427387904--1	4611686018427387903
+int63-sub--4611686018427387904--1	-4611686018427387903
+int63-add--4611686018427387904-4611686018427387903	-1
+int63-sub--4611686018427387904-4611686018427387903	1
+int63-add-32767-1	32768
+int63-sub-32767-1	32766
+int63-add--32768-1	-32767
+int63-sub--32768-1	-32769
+int63-add-4611686018427387903-4611686018427387903	-2
+int63-sub-4611686018427387903-4611686018427387903	0
+int63-add--4611686018427387904--4611686018427387904	0
+int63-sub--4611686018427387904--4611686018427387904	0
+int63-add-0--1	-1
+int63-sub-0--1	1
+int63-add--1-0	-1
+int63-sub--1-0	-1
+int63-add-557977153959118347--663591216101874628	-105614062142756281
+int63-sub-557977153959118347--663591216101874628	1221568370060992975
+int63-add--2865499156737171099-3586037003906813587	720537847169642488
+int63-sub--2865499156737171099-3586037003906813587	2771835876210791122
+int63-add-1878188378044580662-1576844756972254627	3455033135016835289
+int63-sub-1878188378044580662-1576844756972254627	301343621072326035
+int63-add-3923616997726311173-184523035090574081	4108140032816885254
+int63-sub-3923616997726311173-184523035090574081	3739093962635737092
+int63-add--2810246111965000972--229951994869651839	-3040198106834652811
+int63-sub--2810246111965000972--229951994869651839	-2580294117095349133
+int63-add--1421620412459328744--773553246900930293	-2195173659360259037
+int63-sub--1421620412459328744--773553246900930293	-648067165558398451
+int63-add--1301515489160650518--2755948186699899967	-4057463675860550485
+int63-sub--1301515489160650518--2755948186699899967	1454432697539249449
+int63-add--1526990224223236881-27491361340091258	-1499498862883145623
+int63-sub--1526990224223236881-27491361340091258	-1554481585563328139
+int63-add--4582740733049526155--3744725507505848766	895905796299400887
+int63-sub--4582740733049526155--3744725507505848766	-838015225543677389
+int63-add-3306784065617401639-2058335799659000616	-3858252171578373553
+int63-sub-3306784065617401639-2058335799659000616	1248448265958401023
+int63-add--1491990015681085136--2236194859094460740	-3728184874775545876
+int63-sub--1491990015681085136--2236194859094460740	744204843413375604
+int63-add--3448074967874695349-1945790117871285015	-1502284850003410334
+int63-sub--3448074967874695349-1945790117871285015	3829506951108795444

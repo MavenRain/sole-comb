@@ -13,11 +13,12 @@ now in the real compiler repository. Scratch feature development is retired.
 R2 stays pending and gates the operational compiler before M0 closure.
 This replaces the earlier scratch-first entry condition.
 
-A.1 foundation and A.2 representation are implemented. Their scoped checks
-and representation choices are recorded in
-[A.1 validation](validation/stage-a-foundation.md) and
-[A.2 validation](validation/stage-a-representation.md).
-The next implementation milestone is A.3 evaluation and conversion.
+A.1 foundation, A.2 representation, and A.3 evaluation and conversion are
+implemented. Their scoped checks and representation choices are recorded in
+[A.1 validation](validation/stage-a-foundation.md),
+[A.2 validation](validation/stage-a-representation.md), and
+[A.3 validation](validation/stage-a-evaluation.md).
+The next implementation milestone is A.4 checking.
 
 ## Compiler commits
 
@@ -25,7 +26,7 @@ The next implementation milestone is A.3 evaluation and conversion.
 |---|---|---|
 | A.1, foundation | A1: `lib/foundation.bend`, `kernel_budget.bend`, `kernel_error.bend`, `kernel_level.bend`, `kernel_literal.bend` | Pinned host checks/builds for the landed modules, source-policy checks, and focused foundation, budget, error, level, and literal checks. |
 | A.2, representation | A2: `kernel_term.bend`, `kernel_value.bend`, `kernel_shape.bend`, `kernel_global.bend`, `kernel_prim.bend`, plus the A.2 subsets of `kernel_quantity.bend` (tags), `kernel_positivity.bend` (records and constructor lookup), and `kernel_rules.bend` (arrow, unit, and boolean builders) | Build the landed dependency closure and exercise representation, lookup, and primitive contracts. |
-| A.3, evaluation | A3: `kernel_eval.bend`, `kernel_conv.bend` | Evaluation and conversion cases covering normal forms, refusal and budget exhaustion, plus comparisons with the pinned oracle wherever an adapter is available. |
+| A.3, evaluation | A3: `kernel_eval.bend`, `kernel_conv.bend`, the runtime and conversion subset of `kernel_rules.bend`, quantity equality, and signed host index arithmetic | Evaluation and conversion cases covering normal forms, refusal and budget exhaustion, plus comparisons with the pinned oracle wherever an adapter is available. |
 | A.4, checking | A4 through A6: the remaining rules, checking, positivity checking, the quantity algebra, printing, and specification counts | Focused acceptance/refusal, typing, shape, positivity, quantity, and printing checks, the specification counts, and earlier milestone regressions. |
 | A.5, oracle integration | A7 through A10: development gates and the pinned Kanon test frontend | Reproducible builds and a runnable differential harness over the complete pinned corpus and modes. |
 | A.close, Stage A acceptance | A11 through A13: full verification, fixes, and review close | Every Stage A gate and mutant check, complete KANON-DIFF under the existing divergence policy, HOUSE, and BUILD-TIME. R2-RISK-A moves to the operational-compiler gate under the entry decision. |
