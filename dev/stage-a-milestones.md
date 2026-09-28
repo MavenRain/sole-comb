@@ -13,12 +13,13 @@ now in the real compiler repository. Scratch feature development is retired.
 R2 stays pending and gates the operational compiler before M0 closure.
 This replaces the earlier scratch-first entry condition.
 
-A.1 foundation, A.2 representation, and A.3 evaluation and conversion are
-implemented. Their scoped checks and representation choices are recorded in
+A.1 foundation, A.2 representation, A.3 evaluation and conversion, and A.4
+checking are implemented. Their scoped checks and representation choices are recorded in
 [A.1 validation](validation/stage-a-foundation.md),
-[A.2 validation](validation/stage-a-representation.md), and
-[A.3 validation](validation/stage-a-evaluation.md).
-The next implementation milestone is A.4 checking.
+[A.2 validation](validation/stage-a-representation.md),
+[A.3 validation](validation/stage-a-evaluation.md), and
+[A.4 validation](validation/stage-a-checking.md).
+The next implementation milestone is A.5 oracle integration.
 
 ## Compiler commits
 

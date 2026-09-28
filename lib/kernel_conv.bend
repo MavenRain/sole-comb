@@ -81,8 +81,10 @@ def subsingleton(~C: Data, ~ops: R.ops<C>, ctx: C, ty: V.t) -> R.program<C, Bool
     case V.VSec{_, _}: R.Pure{False{}}
     case V.VNeutral{_, _}: R.Pure{False{}}
 
-def is_prop(~C: Data, ~ops: R.ops<C>, +ctx: C, ty: V.t) -> Bool:
-  prop_level(R.bind(T.t, L.t, R.o_quote(C, ops, ctx, ty), term => R.o_infer_univ(C, ops, ctx, term)))
+def is_prop(~C: Data, ~ops: R.ops<C>, +ctx: C, ty: V.t) -> R.program<C, Bool>:
+  R.pcatch(C, Bool,
+    R.pbind(C, T.t, Bool, R.lift(C, T.t, R.o_quote(C, ops, ctx, ty)), term =>
+      R.pmap(C, L.t, Bool, level => L.equal(level, L.zero), R.ask_univ(C, ctx, term))), _ => R.Pure{False{}})
 
 def conv_addr(~C: Data, ctx: C, ty: Maybe<&2, V.t>, a: V.vaddr, b: V.vaddr) -> R.program<C, Bool>:
   match a, b:
@@ -214,10 +216,11 @@ def eta_by_type(~C: Data, ~ops: R.ops<C>, ctx: C, ty: V.t, a: V.t, b: V.t) -> R.
     case V.VNeutral{_, _}: structural(C, ops, ctx, a, b)
 
 def conv_step(~C: Data, ~ops: R.ops<C>, +ctx: C, +ty: V.t, a: V.t, b: V.t) -> R.program<C, Bool>:
-  R.pchoose(C, Bool, is_prop(C, ops, ctx, ty), _ => R.Pure{True{}}, _ =>
+  R.pbind(C, Bool, Bool, is_prop(C, ops, ctx, ty), prop =>
+  R.pchoose(C, Bool, prop, _ => R.Pure{True{}}, _ =>
     R.pbind(C, V.t, Bool, R.lift(C, V.t, R.o_whnf(C, ops, ctx, ty)), +w =>
       R.pbind(C, Bool, Bool, subsingleton(C, ops, ctx, w), sub =>
-        R.pchoose(C, Bool, sub, _ => R.Pure{True{}}, _ => eta_by_type(C, ops, ctx, w, a, b)))))
+        R.pchoose(C, Bool, sub, _ => R.Pure{True{}}, _ => eta_by_type(C, ops, ctx, w, a, b))))))
 
 def dispatch(~C: Data, ~ops: R.ops<C>, job: R.task<C>) -> R.program<C, R.answer>:
   match job:
@@ -225,6 +228,9 @@ def dispatch(~C: Data, ~ops: R.ops<C>, job: R.task<C>) -> R.program<C, R.answer>
     case R.Evaluate{_, _, _}: R.Abort{E.Mismatch{"internal evaluation request in conversion"}}
     case R.Weak{_, _}: R.Abort{E.Mismatch{"internal evaluation request in conversion"}}
     case R.Readback{_, _, _}: R.Abort{E.Mismatch{"internal readback request in conversion"}}
+    case R.InferUniverse{ctx, term}: R.lift(C, R.answer, R.map_result(L.t, R.answer, l => R.LevelAnswer{l}, R.o_infer_univ(C, ops, ctx, term)))
+    case R.InferUses{_, _, _}: R.Abort{E.Mismatch{"internal checking request in conversion"}}
+    case R.CheckUses{_, _, _, _}: R.Abort{E.Mismatch{"internal checking request in conversion"}}
 
 def conv(~C: Data, ~ops: R.ops<C>, ctx: C, ty: V.t, a: V.t, b: V.t) -> R.result(Bool):
   R.run(C, job => dispatch(C, ops, job), Bool, R.ask_conv(C, ctx, ty, a, b))

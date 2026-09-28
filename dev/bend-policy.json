@@ -39,6 +39,16 @@
       "path": "lib/kernel_rules.bend",
       "function": "coll_eta_loop",
       "reason": "The signed collection width is checked nonnegative before this loop. Each step decrements its positive remaining count without wraparound. Bend cannot infer this numeric measure through Int63.pred; type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_pp.bend",
+      "function": "render",
+      "reason": "Each worklist expansion replaces one syntax node by its strict subterms and literal text. Text is consumed on the next step, so the finite pending syntax measure decreases. Bend cannot infer this measure through the expansion type; type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "lib/kernel_check.bend",
+      "function": "drive",
+      "reason": "The checker executes typed requests and resumes linear continuations. Every inference request consumes the shared remaining budget, including nested requests. Evaluation and conversion retain the pinned strongly normalizing checked-fragment assumption; arbitrary unchecked semantic values may diverge as in the oracle. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

@@ -338,6 +338,9 @@ def dispatch(job: R.task<G.t>) -> R.program<G.t, R.answer>:
     case R.Weak{globals, value}: R.pmap(G.t, V.t, R.answer, v => R.ValueAnswer{v}, whnf_step(globals, value))
     case R.Readback{globals, size, value}: R.pmap(G.t, T.t, R.answer, t => R.TermAnswer{t}, quote_step(globals, size, value))
     case R.Compare{_, _, _, _}: R.Abort{E.Mismatch{"internal conversion request in evaluation"}}
+    case R.InferUses{_, _, _}: R.Abort{E.Mismatch{"internal checking request in evaluation"}}
+    case R.CheckUses{_, _, _, _}: R.Abort{E.Mismatch{"internal checking request in evaluation"}}
+    case R.InferUniverse{_, _}: R.Abort{E.Mismatch{"internal checking request in evaluation"}}
 
 def eval(globals: G.t, env: List<&2, V.t>, term: T.t) -> R.result(V.t):
   R.run(G.t, dispatch, V.t, request_eval(globals, env, term))

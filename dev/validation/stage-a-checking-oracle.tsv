@@ -1,0 +1,291 @@
+quantity-add-0-0	0
+quantity-mul-0-0	0
+quantity-minimum-0-0	0
+quantity-maximum-0-0	0
+quantity-add-0-1	1
+quantity-mul-0-1	0
+quantity-minimum-0-1	0
+quantity-maximum-0-1	1
+quantity-add-0-2	w
+quantity-mul-0-2	0
+quantity-minimum-0-2	0
+quantity-maximum-0-2	w
+quantity-add-1-0	1
+quantity-mul-1-0	0
+quantity-minimum-1-0	0
+quantity-maximum-1-0	1
+quantity-add-1-1	w
+quantity-mul-1-1	1
+quantity-minimum-1-1	1
+quantity-maximum-1-1	1
+quantity-add-1-2	w
+quantity-mul-1-2	w
+quantity-minimum-1-2	1
+quantity-maximum-1-2	w
+quantity-add-2-0	w
+quantity-mul-2-0	0
+quantity-minimum-2-0	0
+quantity-maximum-2-0	w
+quantity-add-2-1	w
+quantity-mul-2-1	w
+quantity-minimum-2-1	1
+quantity-maximum-2-1	w
+quantity-add-2-2	w
+quantity-mul-2-2	w
+quantity-minimum-2-2	w
+quantity-maximum-2-2	w
+usage-empty	0:0,false,true,false
+usage-empty-absent	0:0,false,true,false
+usage-unreachable	1:1,true,true,false
+usage-unreachable-absent	1:1,true,true,false
+usage-once	1:1,true,true,true
+usage-once-absent	0:0,false,true,false
+usage-twice	w:w,false,false,true
+usage-twice-absent	0:0,false,true,false
+usage-optional	0:1,false,true,true
+usage-optional-absent	0:0,false,true,false
+usage-dead-sequence	1:1,true,true,true
+usage-dead-sequence-absent	1:1,true,true,false
+usage-dead-alternative	1:1,true,true,true
+usage-dead-alternative-absent	0:0,false,true,false
+usage-capture	1:1,true,true,true
+usage-capture-absent	0:0,false,true,false
+usage-remove	0:0,false,true,false
+usage-remove-absent	0:0,false,true,false
+usage-scale-0	0:0,false,true,false
+usage-scale-dead-0	0:0,false,true,false
+usage-scale-1	w:w,false,false,true
+usage-scale-dead-1	1:1,true,true,false
+usage-scale-w	w:w,false,false,true
+usage-scale-dead-w	1:1,true,true,false
+usage-range	0:w,false,false,true
+usage-two-keys-0	1:1,true,true,true
+usage-two-keys-1	1:1,true,true,true
+usage-two-keys-2	0:0,false,true,false
+usage-two-keys-reversed-0	1:1,true,true,true
+usage-two-keys-reversed-1	1:1,true,true,true
+usage-two-keys-reversed-2	0:0,false,true,false
+usage-disjoint-alternative-0	0:1,false,true,true
+usage-disjoint-alternative-1	0:1,false,true,true
+usage-disjoint-alternative-2	0:0,false,true,false
+usage-remove-first-0	0:0,false,true,false
+usage-remove-first-1	1:1,true,true,true
+usage-remove-first-2	0:0,false,true,false
+usage-remove-second-0	1:1,true,true,true
+usage-remove-second-1	0:0,false,true,false
+usage-remove-second-2	0:0,false,true,false
+print-universe	Type 1
+print-free	#3
+print-negative-var	#-1
+print-nat	123
+print-auto	auto
+print-global	x
+print-syntax-0	(Ran SPi w x Nat Nat)
+print-syntax-1	(Lan SPi w x Nat x)
+print-syntax-2	(Sec SPi w x Nat [x => x])
+print-syntax-3	(In SPi w x Nat (APt 1 3) [4])
+print-syntax-4	(Out SColl 1 (ALeg 0) outer)
+print-syntax-5	let x : Nat := 1 in x
+print-syntax-6	(1 : Nat)
+print-syntax-7	(Elim SMu F [] outer as self return i with | (ACtor c) x => x)
+print-syntax-8	(Ran SPar outer #1 Type 1)
+print-syntax-9	(Ran SNu F [outer] Type 1)
+print-syntax-10	(Sec SPi w x Nat [x y => y; z => outer])
+print-syntax-11	(In SPi w x Nat (APt 1 3) [4; 5])
+print-syntax-12	(Elim SMu F [outer; #1] outer as self return i with | (ACtor a) x => x | (ACtor b) x y => x)
+print-syntax-13	(Elim SMu F [] outer with | (ACtor a)  => outer | (ACtor b)  => #1)
+print-syntax-14	(Ran SNu F [outer; #1] Type 1)
+print-string-0	""
+print-string-1	"a\n\t\r\b\"\\"
+print-string-2	"\195\169\206\187\240\159\152\128"
+print-string-3	"\000\127"
+spec-count	formers 2: Lan Ran\nschema constructors 4: In Elim Sec Out\nshapes declared 5: SPi SColl SPar SMu SNu\nshapes admitted 3: SPi SColl SMu\nnamed rules declared 3: proof-irrelevance subsingleton-large-elimination literal-fast-path\nnamed rules present 3: proof-irrelevance subsingleton-large-elimination literal-fast-path\neta rows 3: Ran-SPi Lan-SPi Ran-SColl\nno eta 3: Lan-SColl Ran-SMu Lan-SMu\n
+positive-absent	ok
+self-rec-absent	false
+positive-self	ok
+self-rec-self	true
+positive-mu-self	ok
+self-rec-mu-self	true
+positive-positive-arrow	ok
+self-rec-positive-arrow	true
+positive-negative-arrow	error:not yet: a family that is not strictly positive arrives at M2
+self-rec-negative-arrow	true
+positive-annotated	error:not yet: a family that is not strictly positive arrives at M2
+self-rec-annotated	true
+positive-applied	ok
+self-rec-applied	true
+positive-foreign-mu-argument	error:not yet: a family that is not strictly positive arrives at M2
+self-rec-foreign-mu-argument	true
+infer-universe-0	ok:Type 1
+check-universe-0	ok
+infer-universe-1	ok:Type 2
+check-universe-1	ok
+infer-universe-2	ok:Type 3
+check-universe-2	ok
+infer-unbound	error:unbound: missing
+infer-var-negative	error:unbound: de Bruijn index -1 is outside the context
+infer-var-missing	error:unbound: de Bruijn index 0 is outside the context
+infer-auto	error:not yet: instances arrive at M2
+infer-negative-nat	error:mismatch: a Nat literal must be nonnegative
+infer-string	error:not yet: string types arrive at M1
+infer-nat	ok:Nat
+check-nat	ok
+check-not-cumulative	error:mismatch: the term has type Type 1 and the expected type is Type 2
+check-literal-is-not-type	error:mismatch: the term has type Nat and the expected type is Type 1
+univ-natural-refused	error:universe: a term used as a type is not a universe:  Nat
+univ-nat	ok:1
+infer-pi-form-0	ok:Type 1
+infer-sigma-form-0	ok:Type 1
+check-identity-0	error:quantity: the erased binder x is read in a runtime position
+check-constant-0	ok
+check-sigma-0	ok
+check-sigma-arity-0	error:mismatch: a pair carries one fibre element
+check-lambda-binders-0	error:mismatch: the leg binds the point once
+check-lambda-legs-0	error:mismatch: a section at the point shape has one leg
+infer-application-0	ok:Nat
+infer-pi-form-1	ok:Type 1
+infer-sigma-form-1	ok:Type 1
+check-identity-1	ok
+check-constant-1	error:quantity: the linear binder x must be used exactly once on every runtime path
+check-sigma-1	ok
+check-sigma-arity-1	error:mismatch: a pair carries one fibre element
+check-lambda-binders-1	error:mismatch: the leg binds the point once
+check-lambda-legs-1	error:mismatch: a section at the point shape has one leg
+infer-application-1	error:quantity: the linear binder x must be used exactly once on every runtime path
+infer-pi-form-w	ok:Type 1
+infer-sigma-form-w	ok:Type 1
+check-identity-w	ok
+check-constant-w	ok
+check-sigma-w	ok
+check-sigma-arity-w	error:mismatch: a pair carries one fibre element
+check-lambda-binders-w	error:mismatch: the leg binds the point once
+check-lambda-legs-w	error:mismatch: a section at the point shape has one leg
+infer-application-w	ok:Nat
+infer-product-0	ok:Type 0
+infer-sum-0	ok:Type 0
+check-tuple-0	ok
+check-tuple-short-0	error:mismatch: the tuple width and the type width differ
+check-sum-in-bounds-0	error:wrong leg: the leg address is outside the collection
+infer-product-1	ok:Type 1
+infer-sum-1	ok:Type 1
+check-tuple-1	ok
+check-tuple-short-1	error:mismatch: the tuple width and the type width differ
+check-sum-in-1-0	ok
+infer-projection-1-0	ok:Nat
+check-sum-in-bounds-1	error:wrong leg: the leg address is outside the collection
+infer-product-2	ok:Type 1
+infer-sum-2	ok:Type 1
+check-tuple-2	ok
+check-tuple-short-2	error:mismatch: the tuple width and the type width differ
+check-sum-in-2-0	ok
+infer-projection-2-0	ok:Nat
+check-sum-in-2-1	ok
+infer-projection-2-1	ok:Nat
+check-sum-in-bounds-2	error:wrong leg: the leg address is outside the collection
+infer-collection-negative	error:mismatch: the diagram is not a section of the declared width
+infer-collection-diagram-count	error:mismatch: the diagram is not a section of the declared width
+check-sum-elim-all	ok
+check-sum-elim-missing	error:missing branch: the case has 1 branches and the type has 2 legs
+check-sum-elim-duplicate	error:missing branch: no branch at leg 1
+check-sum-elim-wrong-address	error:missing branch: the case has 1 branches and the type has 2 legs
+infer-sum-elim-no-motive	error:cannot infer: an elimination without a motive needs an expected type
+infer-sum-elim-motive	ok:Nat
+infer-local-0	error:quantity: the erased binder x is read in a runtime position
+infer-local-erased-0	ok:Nat
+infer-local-1	ok:Nat
+infer-local-erased-1	ok:Nat
+infer-local-w	ok:Nat
+infer-local-erased-w	ok:Nat
+infer-let	ok:Nat
+infer-let-wrong-definition	error:mismatch: the term has type Type 2 and the expected type is Nat
+infer-annotation	ok:Nat
+infer-annotation-wrong	error:mismatch: the term has type Nat and the expected type is Type 1
+infer-budget-univ-0	error:budget: the check budget is exhausted
+infer-budget-let-0	error:budget: the check budget is exhausted
+infer-budget-univ-1	ok:Type 2
+infer-budget-let-1	error:budget: the check budget is exhausted
+infer-budget-univ-2	ok:Type 2
+infer-budget-let-2	error:budget: the check budget is exhausted
+infer-budget-univ-3	ok:Type 2
+infer-budget-let-3	error:budget: the check budget is exhausted
+infer-budget-univ-4	ok:Type 2
+infer-budget-let-4	error:budget: the check budget is exhausted
+infer-budget-univ-5	ok:Type 2
+infer-budget-let-5	ok:Nat
+infer-budget-univ-6	ok:Type 2
+infer-budget-let-6	ok:Nat
+infer-budget-univ-7	ok:Type 2
+infer-budget-let-7	ok:Nat
+infer-budget-univ-8	ok:Type 2
+infer-budget-let-8	ok:Nat
+decl-ordered	ok:a;b;
+decl-forward	error:unbound: a
+decl-postulate	ok:a;
+decl-missing-body	error:cannot infer: the definition a has no body
+decl-self	error:unbound: a
+decl-bad-type	error:universe: a term used as a type is not a universe:  Nat
+family-plain	ok
+family-parameter	ok
+family-index	ok
+family-index-runtime	error:index not zero: the index i of F is at quantity 1 and every index binder is at 0
+family-index-level	error:index above universe: the index i of F lives at 3 and F is declared at 1
+family-bad-parameter	error:universe: a term used as a type is not a universe:  Nat
+family-primitive-type-name	ok
+ctors-empty	ok
+ctors-nullary	ok
+ctors-natural-field	ok
+ctors-recursive	ok
+ctors-negative	error:not yet: a family that is not strictly positive arrives at M2
+ctors-field-universe	error:universe: a field of c exceeds its family universe
+ctors-missing-parameter	error:mismatch: the constructor c must preserve its family parameters
+ctors-preserved-parameter	ok
+ctors-changed-parameter	error:mismatch: the constructor c must preserve its family parameters
+ctors-index	ok
+ctors-missing-index	error:mismatch: c gives 0 result indices and F takes 1
+ctors-bad-index	error:mismatch: the term has type Type 2 and the expected type is Nat
+mu-formation	ok:Type 1
+mu-unknown-constructor	error:cannot infer: an injection has no type of its own;  it needs an expected type
+mu-introduction	ok:(Lan SMu F [] (Sec SColl 0 []))
+mu-elim-complete	ok
+mu-elim-missing	error:missing branch: the elimination of F has no branch at c
+mu-elim-duplicate	error:wrong leg: the elimination of F repeats the branch at c
+mu-elim-binder-count	error:missing branch: the branch at c binds 1 fields and c takes 0
+family-redeclare	error:mismatch: the family F is already declared
+family-reinstall	error:mismatch: the constructors of F are already installed
+family-provisional-formation	ok:Type 1
+family-provisional-elim	error:unbound: c is not a constructor of F
+mu-check-wrong-ctor	error:unbound: bad is not a constructor of F
+mu-check-arity	error:mismatch: c takes 0 arguments and the term gives 1
+mu-check-wrong-address	error:wrong leg: a constructor takes a constructor address
+mu-check-wrong-shape	error:mismatch: the rule pack does not match the shape of the term
+mu-motive-absent	error:cannot infer: an elimination at a mu shape needs a motive
+mu-motive-unnamed	error:mismatch: the motive of an elimination at F names no family
+mu-motive-wrong-family	error:mismatch: the motive is built for G and the scrutinee is at F
+mu-motive-wrong-indices	error:mismatch: the motive of F binds 1 indices and the family has 0
+mu-large-elim-singleton	ok:Nat
+mu-large-elim-two	error:universe: a large elimination out of a proposition needs a subsingleton family at F
+mu-large-elim-runtime-field	error:universe: a field of c exceeds its family universe
+mu-index-in-0	ok
+mu-index-in-1	error:mismatch: the constructor c of F gives the index 0 and the type asks for 1
+mu-index-absent	error:mismatch: the indices of F takes 1 arguments and the term gives 0
+mu-index-extra	error:mismatch: the indices of F takes 1 arguments and the term gives 2
+mu-index-illtyped	error:mismatch: the term has type Type 2 and the expected type is Nat
+mu-parameter-ok	ok
+mu-parameter-bad-field	error:mismatch: the term has type Type 2 and the expected type is Nat
+mu-parameter-missing-field	error:mismatch: c takes 1 arguments and the term gives 0
+check-pi-elim-ok	ok
+check-pi-elim-wrong-leg	error:wrong leg: the leg address is outside the collection
+check-pi-elim-binder-count	error:missing branch: the branch binds the point and the fibre element (D-M0-3)
+check-pi-elim-quantity	error:quantity: the branch binder x is marked 1 and the type marks it 0
+infer-pi-elim-motive	ok:Nat
+check-linear-product-duplicate	error:quantity: the linear binder x must be used exactly once on every runtime path
+check-linear-product-single	ok
+check-linear-alternatives-all	ok
+check-linear-alternatives-missing	error:quantity: the linear binder x must be used exactly once on every runtime path
+check-linear-alias-use	ok
+check-linear-alias-drop	ok
+check-linear-alias-duplicate	error:quantity: the linear alias alias may be used at most once
+check-linear-closure	ok
+conversion-proof	ok:P;p;q;F;x;y;
+conversion-natural	error:mismatch: the term has type (Out SPi w x Nat (APt w 0) F) and the expected type is (Out SPi w x Nat (APt w 1) F)
+check-empty-elimination	ok
