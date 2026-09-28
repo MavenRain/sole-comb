@@ -53,17 +53,27 @@ requirement in the frozen twins or a failing qualification case.
 | Step 4, measure and close | Run the existing serial measurement runner and evidence assembler on the qualified artifacts. | Valid per-workload samples, startup legs and shares, pinned hashes, endpoint selection, and any required GREEN confirmation are recorded. Produce `dev/r2-risk.json` before Stage A. |
 
 The existing lexer, parser, resolver, conversion, typing, arm, and data
-records are reusable component evidence. They do not complete steps 1
-through 4. The current data slice has no source data syntax and supports
-non-indexed caller metadata only, so indexed support remains a real step 2
-gap.
+records are reusable component evidence. The data checker still consumes
+non-indexed caller metadata. The workload parser now retains source data
+declarations and index telescopes, but checked metadata derivation and
+indexed checking remain step 2 gaps.
 
 Step 1 completed on 2026-09-27. Its [record](validation/s0-5-r2-twins.json)
 accounts for all 19 core declarations, the smoke main, and all four
-obligations. Both complete twins pass lexing; their intended ACCEPT verdicts
-and the three negative fixtures' intended REFUSE verdicts remain pending.
+obligations. Both complete twins pass lexing and exact syntax-tree checks;
+their intended ACCEPT verdicts and the three negative fixtures' intended
+REFUSE verdicts remain pending.
 Step 2 is the next unmet acceptance condition. Its concrete syntax and
 checker requirements are in the [translation review](validation/s0-5-r2-twins.md).
+
+The [workload parser record](validation/s0-5-r2-workload-parser.md) closes
+the grammar prerequisite of step 2. It preserves all 20 declarations in
+`core.sole`, all 22 in `smoke.sole`, and each appended negative declaration.
+These counts describe sole syntax; the step 1 map accounts for the 19 Bend
+core declarations. The next slice must first resolve the new syntax and
+derive checked data metadata from it. The step 2 row above and the
+translation review give the other step 2 requirements. All three negative
+fixtures intentionally parse.
 
 ## Deferred scratch work
 

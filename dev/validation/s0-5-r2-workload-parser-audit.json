@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "record": {
+    "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/validation.json",
+    "bytes": 169370,
+    "sha256": "214c10e40bdae36d1fa50789a45783718c3e39adf4d1f725cf0d605165305906"
+  },
+  "auditor": {
+    "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/audit-workload-parser.py",
+    "bytes": 7253,
+    "sha256": "3f6720332283175052453cbe0ebd33e76b607b91e5df6883e3cbc65d220dcd1e"
+  },
+  "verified_references": 446,
+  "retained_sources": [
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/lexer.bend",
+        "bytes": 7955,
+        "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/lexer.bend",
+        "bytes": 7955,
+        "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/parser.bend",
+        "bytes": 35892,
+        "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/parser.bend",
+        "bytes": 35892,
+        "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate.py",
+        "bytes": 12611,
+        "sha256": "8fb8ac0e10de2c79f811f929f9200559764936da2f85a6f056bbec06afd9bdd2"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/validate.py",
+        "bytes": 12611,
+        "sha256": "8fb8ac0e10de2c79f811f929f9200559764936da2f85a6f056bbec06afd9bdd2"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate-parser.py",
+        "bytes": 20866,
+        "sha256": "1022220b158593bed0ed803796300f231ea982367db856ff393dc26bd65b8807"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/validate-parser.py",
+        "bytes": 20866,
+        "sha256": "1022220b158593bed0ed803796300f231ea982367db856ff393dc26bd65b8807"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/parser-policy.json",
+        "bytes": 633,
+        "sha256": "b6d722baa39c1c480a1474ff7d65b620403acff8b9fdc097ca51eddb6009b626"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/parser-policy.json",
+        "bytes": 633,
+        "sha256": "b6d722baa39c1c480a1474ff7d65b620403acff8b9fdc097ca51eddb6009b626"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/order-parser.py",
+        "bytes": 706,
+        "sha256": "3e2c75b4223dae8d4e6e22d0335f2b61e5735a263fa6b60faa383d988911af49"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/order-parser.py",
+        "bytes": 706,
+        "sha256": "3e2c75b4223dae8d4e6e22d0335f2b61e5735a263fa6b60faa383d988911af49"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/workload-fixtures.py",
+        "bytes": 13367,
+        "sha256": "d6e6e10d85fc2b6924f65a815bca3590ef89dca6b07f486513204986164a6d4b"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/workload-fixtures.py",
+        "bytes": 13367,
+        "sha256": "d6e6e10d85fc2b6924f65a815bca3590ef89dca6b07f486513204986164a6d4b"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate-workload-parser.py",
+        "bytes": 2486,
+        "sha256": "f1bce9c82d6b1522b7fe4640b517ecf0b5b46f68e6d07ad9f644a61a3bed0521"
+      },
+      "retained": {
+        "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workload-parser-v2/validate-workload-parser.py",
+        "bytes": 2486,
+        "sha256": "f1bce9c82d6b1522b7fe4640b517ecf0b5b46f68e6d07ad9f644a61a3bed0521"
+      }
+    }
+  ],
+  "cases": 114,
+  "batches": 15,
+  "endpoint_runs": 45,
+  "mutations": 17,
+  "workload_declarations": {
+    "core": 20,
+    "smoke": 22,
+    "bad-bound": 21,
+    "bad-constructor": 21,
+    "false-law": 21
+  },
+  "source_checker_qualification": "pending",
+  "endpoint": null,
+  "r2_verdict": null
+}

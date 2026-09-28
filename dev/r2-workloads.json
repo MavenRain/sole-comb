@@ -74,10 +74,19 @@
   "measurement_status": "pending",
   "selected_endpoint": null,
   "r2_verdict": null,
-  "next_step": "Step 2 in s0-5-closeout.md: derive data metadata and check both complete twins and their negative fixtures from source",
+  "next_step": "Step 2 in s0-5-closeout.md: resolve the extended workload syntax, derive checked data metadata, and check both complete twins and their negative fixtures from source",
   "translation_evidence": {
     "path": "validation/s0-5-r2-twins.json",
     "sha256": "377f0f669ba52f5ec0443f3ea51b50dd32e688f45ce792e0490b087ca2cddcb2"
   },
-  "translation_review": "validation/s0-5-r2-twins.md"
+  "translation_review": "validation/s0-5-r2-twins.md",
+  "parser_evidence": {
+    "path": "validation/s0-5-r2-workload-parser.json",
+    "sha256": "214c10e40bdae36d1fa50789a45783718c3e39adf4d1f725cf0d605165305906"
+  },
+  "parser_audit": {
+    "path": "validation/s0-5-r2-workload-parser-audit.json",
+    "sha256": "54293906c7a8f83163b73c10ac8cc16a127c685f4ff0e35e26b215526d00e0d7"
+  },
+  "parser_review": "validation/s0-5-r2-workload-parser.md"
 }

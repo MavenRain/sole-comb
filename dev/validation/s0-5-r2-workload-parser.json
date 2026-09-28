@@ -1,0 +1,4301 @@
+{
+  "schema": 1,
+  "kind": "scratch-workload-parser-correctness",
+  "recorded_at": "2026-09-28T00:11:19.038476+00:00",
+  "status": "PASS",
+  "scope": "syntax trees and parser refusals only; no checking, twin qualification, or timing verdict",
+  "cases": [
+    "empty",
+    "comment-only",
+    "definition",
+    "declaration-order",
+    "application-left",
+    "application-parentheses",
+    "arrow-right",
+    "application-before-arrow",
+    "dependent-arrow",
+    "reserved-binder-ascription",
+    "group-binder-ascription",
+    "ascription",
+    "compound-ascription",
+    "binder-precedence",
+    "parenthesized-domain",
+    "universe-default",
+    "universe-text",
+    "prop",
+    "lambda-binders",
+    "typed-lambda",
+    "lambda-argument",
+    "let",
+    "nested-let",
+    "record-empty",
+    "record-order",
+    "projection",
+    "argument-projection",
+    "elim-positional",
+    "elim-label-order",
+    "elim-label-source-order",
+    "elim-else",
+    "elim-empty",
+    "elim-lambda",
+    "elim-motive",
+    "nested-elim",
+    "comment-crlf",
+    "identifier-apostrophe",
+    "exact-parser-fuel",
+    "surplus-lexer-fuel",
+    "zero-parser-fuel",
+    "short-parser-fuel",
+    "forbidden-match",
+    "forbidden-case",
+    "forbidden-declaration-name",
+    "forbidden-lambda-name",
+    "forbidden-record-field",
+    "forbidden-arm-label",
+    "forbidden-crlf-location",
+    "unsupported-axiom",
+    "mu-missing-body",
+    "unsupported-recursion",
+    "nonempty-sum-deferred",
+    "numeric-term",
+    "missing-value",
+    "missing-colon",
+    "missing-assignment",
+    "unclosed-group",
+    "empty-group",
+    "empty-lambda",
+    "missing-lambda-arrow",
+    "missing-let-in",
+    "record-trailing-comma",
+    "record-missing-type",
+    "elim-trailing-semi",
+    "elim-missing-arm",
+    "elim-pattern-binder",
+    "elim-missing-return",
+    "unclosed-elim",
+    "missing-projection",
+    "trailing-punctuation",
+    "else-outside-arm",
+    "lexical-error",
+    "lexical-fuel",
+    "long-application",
+    "deep-parentheses",
+    "full-core",
+    "full-smoke",
+    "full-bad-bound",
+    "full-bad-constructor",
+    "full-false-law",
+    "mu-nat",
+    "mu-indexed-id",
+    "mu-parameter-order",
+    "mu-empty",
+    "mu-definition-order",
+    "empty-forms",
+    "empty-ascription",
+    "empty-argument",
+    "literal-argument",
+    "literal-ascription",
+    "literal-range-is-typing",
+    "indexed-motive",
+    "indexed-empty-elimination",
+    "dependent-empty-elimination",
+    "mu-missing-name",
+    "mu-untyped-parameter",
+    "mu-open-parameter",
+    "mu-missing-constructor-colon",
+    "mu-missing-constructor-type",
+    "mu-trailing-semicolon",
+    "mu-constructor-comma",
+    "mu-missing-close",
+    "mu-keyword-name",
+    "empty-missing-open",
+    "empty-missing-close",
+    "nonempty-product-deferred",
+    "nonempty-tuple-deferred",
+    "indexed-missing-family",
+    "indexed-missing-return",
+    "indexed-missing-result",
+    "indexed-trailing-arm",
+    "mu-state-exhaustion",
+    "mu-constructor-state-exhaustion",
+    "indexed-state-exhaustion"
+  ],
+  "sources": [
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate.py",
+      "bytes": 12611,
+      "sha256": "8fb8ac0e10de2c79f811f929f9200559764936da2f85a6f056bbec06afd9bdd2"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate-parser.py",
+      "bytes": 20866,
+      "sha256": "1022220b158593bed0ed803796300f231ea982367db856ff393dc26bd65b8807"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/parser-policy.json",
+      "bytes": 633,
+      "sha256": "b6d722baa39c1c480a1474ff7d65b620403acff8b9fdc097ca51eddb6009b626"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/toolchain.json",
+      "bytes": 4892,
+      "sha256": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/build.py",
+      "bytes": 10807,
+      "sha256": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991"
+    },
+    {
+      "path": "/Users/oobi/Documents/sole-comb/dev/pin-check.py",
+      "bytes": 7261,
+      "sha256": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/validate-workload-parser.py",
+      "bytes": 2486,
+      "sha256": "f1bce9c82d6b1522b7fe4640b517ecf0b5b46f68e6d07ad9f644a61a3bed0521"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/workload-fixtures.py",
+      "bytes": 13367,
+      "sha256": "d6e6e10d85fc2b6924f65a815bca3590ef89dca6b07f486513204986164a6d4b"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/frontend/order-parser.py",
+      "bytes": 706,
+      "sha256": "3e2c75b4223dae8d4e6e22d0335f2b61e5735a263fa6b60faa383d988911af49"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/core.sole",
+      "bytes": 4129,
+      "sha256": "b443ac9a964a46e41d7c3fcd354a90f9f790512d6f98fc7fff09cbab090b8e27"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/smoke.sole",
+      "bytes": 4421,
+      "sha256": "277927406f2956d6c1e78b6debd390ea39d81c211142a1174ef615eda6d8e463"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/bad-bound.sole",
+      "bytes": 4178,
+      "sha256": "9a224435d0e320b4cdf4bad78a3f1907d7e4875f7fec868a7a09295c77e5bb57"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/bad-constructor.sole",
+      "bytes": 4179,
+      "sha256": "9f9c435d016c396a233b14064a1081a136bdc422cc4e63412796b15fb9b3842a"
+    },
+    {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/r2-risk/workloads-v1/false-law.sole",
+      "bytes": 4193,
+      "sha256": "a76a4dfb882ddeffbe1c48a2e0b55b366fdcd94ee46f37f9c44a60fbcf2d360e"
+    }
+  ],
+  "steps": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/sole-comb/dev/pin-check.py"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/pins-before.stdout",
+        "bytes": 134,
+        "sha256": "ff2317d4b167a24c91e1cbe17928ab9462647b1a35e9f194534e6d373539a87f"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/pins-before.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "empty",
+        "comment-only",
+        "definition",
+        "declaration-order",
+        "application-left",
+        "application-parentheses",
+        "arrow-right",
+        "application-before-arrow"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "empty",
+        "comment-only",
+        "definition",
+        "declaration-order",
+        "application-left",
+        "application-parentheses",
+        "arrow-right",
+        "application-before-arrow"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "empty",
+        "comment-only",
+        "definition",
+        "declaration-order",
+        "application-left",
+        "application-parentheses",
+        "arrow-right",
+        "application-before-arrow"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "dependent-arrow",
+        "reserved-binder-ascription",
+        "group-binder-ascription",
+        "ascription",
+        "compound-ascription",
+        "binder-precedence",
+        "parenthesized-domain",
+        "universe-default"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "dependent-arrow",
+        "reserved-binder-ascription",
+        "group-binder-ascription",
+        "ascription",
+        "compound-ascription",
+        "binder-precedence",
+        "parenthesized-domain",
+        "universe-default"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "dependent-arrow",
+        "reserved-binder-ascription",
+        "group-binder-ascription",
+        "ascription",
+        "compound-ascription",
+        "binder-precedence",
+        "parenthesized-domain",
+        "universe-default"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "universe-text",
+        "prop",
+        "lambda-binders",
+        "typed-lambda",
+        "lambda-argument",
+        "let",
+        "nested-let",
+        "record-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "universe-text",
+        "prop",
+        "lambda-binders",
+        "typed-lambda",
+        "lambda-argument",
+        "let",
+        "nested-let",
+        "record-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "universe-text",
+        "prop",
+        "lambda-binders",
+        "typed-lambda",
+        "lambda-argument",
+        "let",
+        "nested-let",
+        "record-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "record-order",
+        "projection",
+        "argument-projection",
+        "elim-positional",
+        "elim-label-order",
+        "elim-label-source-order",
+        "elim-else",
+        "elim-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "record-order",
+        "projection",
+        "argument-projection",
+        "elim-positional",
+        "elim-label-order",
+        "elim-label-source-order",
+        "elim-else",
+        "elim-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "record-order",
+        "projection",
+        "argument-projection",
+        "elim-positional",
+        "elim-label-order",
+        "elim-label-source-order",
+        "elim-else",
+        "elim-empty"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "elim-lambda",
+        "elim-motive",
+        "nested-elim",
+        "comment-crlf",
+        "identifier-apostrophe",
+        "exact-parser-fuel",
+        "surplus-lexer-fuel",
+        "zero-parser-fuel"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "elim-lambda",
+        "elim-motive",
+        "nested-elim",
+        "comment-crlf",
+        "identifier-apostrophe",
+        "exact-parser-fuel",
+        "surplus-lexer-fuel",
+        "zero-parser-fuel"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "elim-lambda",
+        "elim-motive",
+        "nested-elim",
+        "comment-crlf",
+        "identifier-apostrophe",
+        "exact-parser-fuel",
+        "surplus-lexer-fuel",
+        "zero-parser-fuel"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "short-parser-fuel",
+        "forbidden-match",
+        "forbidden-case",
+        "forbidden-declaration-name",
+        "forbidden-lambda-name",
+        "forbidden-record-field",
+        "forbidden-arm-label",
+        "forbidden-crlf-location"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "short-parser-fuel",
+        "forbidden-match",
+        "forbidden-case",
+        "forbidden-declaration-name",
+        "forbidden-lambda-name",
+        "forbidden-record-field",
+        "forbidden-arm-label",
+        "forbidden-crlf-location"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "short-parser-fuel",
+        "forbidden-match",
+        "forbidden-case",
+        "forbidden-declaration-name",
+        "forbidden-lambda-name",
+        "forbidden-record-field",
+        "forbidden-arm-label",
+        "forbidden-crlf-location"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "unsupported-axiom",
+        "mu-missing-body",
+        "unsupported-recursion",
+        "nonempty-sum-deferred",
+        "numeric-term",
+        "missing-value",
+        "missing-colon",
+        "missing-assignment"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "unsupported-axiom",
+        "mu-missing-body",
+        "unsupported-recursion",
+        "nonempty-sum-deferred",
+        "numeric-term",
+        "missing-value",
+        "missing-colon",
+        "missing-assignment"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "unsupported-axiom",
+        "mu-missing-body",
+        "unsupported-recursion",
+        "nonempty-sum-deferred",
+        "numeric-term",
+        "missing-value",
+        "missing-colon",
+        "missing-assignment"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "unclosed-group",
+        "empty-group",
+        "empty-lambda",
+        "missing-lambda-arrow",
+        "missing-let-in",
+        "record-trailing-comma",
+        "record-missing-type",
+        "elim-trailing-semi"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "unclosed-group",
+        "empty-group",
+        "empty-lambda",
+        "missing-lambda-arrow",
+        "missing-let-in",
+        "record-trailing-comma",
+        "record-missing-type",
+        "elim-trailing-semi"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "unclosed-group",
+        "empty-group",
+        "empty-lambda",
+        "missing-lambda-arrow",
+        "missing-let-in",
+        "record-trailing-comma",
+        "record-missing-type",
+        "elim-trailing-semi"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "elim-missing-arm",
+        "elim-pattern-binder",
+        "elim-missing-return",
+        "unclosed-elim",
+        "missing-projection",
+        "trailing-punctuation",
+        "else-outside-arm",
+        "lexical-error"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "elim-missing-arm",
+        "elim-pattern-binder",
+        "elim-missing-return",
+        "unclosed-elim",
+        "missing-projection",
+        "trailing-punctuation",
+        "else-outside-arm",
+        "lexical-error"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "elim-missing-arm",
+        "elim-pattern-binder",
+        "elim-missing-return",
+        "unclosed-elim",
+        "missing-projection",
+        "trailing-punctuation",
+        "else-outside-arm",
+        "lexical-error"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "lexical-fuel",
+        "long-application",
+        "deep-parentheses",
+        "full-core",
+        "full-smoke",
+        "full-bad-bound",
+        "full-bad-constructor",
+        "full-false-law"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "lexical-fuel",
+        "long-application",
+        "deep-parentheses",
+        "full-core",
+        "full-smoke",
+        "full-bad-bound",
+        "full-bad-constructor",
+        "full-false-law"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "lexical-fuel",
+        "long-application",
+        "deep-parentheses",
+        "full-core",
+        "full-smoke",
+        "full-bad-bound",
+        "full-bad-constructor",
+        "full-false-law"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "mu-nat",
+        "mu-indexed-id",
+        "mu-parameter-order",
+        "mu-empty",
+        "mu-definition-order",
+        "empty-forms",
+        "empty-ascription",
+        "empty-argument"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "mu-nat",
+        "mu-indexed-id",
+        "mu-parameter-order",
+        "mu-empty",
+        "mu-definition-order",
+        "empty-forms",
+        "empty-ascription",
+        "empty-argument"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "mu-nat",
+        "mu-indexed-id",
+        "mu-parameter-order",
+        "mu-empty",
+        "mu-definition-order",
+        "empty-forms",
+        "empty-ascription",
+        "empty-argument"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "literal-argument",
+        "literal-ascription",
+        "literal-range-is-typing",
+        "indexed-motive",
+        "indexed-empty-elimination",
+        "dependent-empty-elimination",
+        "mu-missing-name",
+        "mu-untyped-parameter"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "literal-argument",
+        "literal-ascription",
+        "literal-range-is-typing",
+        "indexed-motive",
+        "indexed-empty-elimination",
+        "dependent-empty-elimination",
+        "mu-missing-name",
+        "mu-untyped-parameter"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "literal-argument",
+        "literal-ascription",
+        "literal-range-is-typing",
+        "indexed-motive",
+        "indexed-empty-elimination",
+        "dependent-empty-elimination",
+        "mu-missing-name",
+        "mu-untyped-parameter"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "mu-open-parameter",
+        "mu-missing-constructor-colon",
+        "mu-missing-constructor-type",
+        "mu-trailing-semicolon",
+        "mu-constructor-comma",
+        "mu-missing-close",
+        "mu-keyword-name",
+        "empty-missing-open"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "mu-open-parameter",
+        "mu-missing-constructor-colon",
+        "mu-missing-constructor-type",
+        "mu-trailing-semicolon",
+        "mu-constructor-comma",
+        "mu-missing-close",
+        "mu-keyword-name",
+        "empty-missing-open"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "mu-open-parameter",
+        "mu-missing-constructor-colon",
+        "mu-missing-constructor-type",
+        "mu-trailing-semicolon",
+        "mu-constructor-comma",
+        "mu-missing-close",
+        "mu-keyword-name",
+        "empty-missing-open"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "empty-missing-close",
+        "nonempty-product-deferred",
+        "nonempty-tuple-deferred",
+        "indexed-missing-family",
+        "indexed-missing-return",
+        "indexed-missing-result",
+        "indexed-trailing-arm",
+        "mu-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "empty-missing-close",
+        "nonempty-product-deferred",
+        "nonempty-tuple-deferred",
+        "indexed-missing-family",
+        "indexed-missing-return",
+        "indexed-missing-result",
+        "indexed-trailing-arm",
+        "mu-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "empty-missing-close",
+        "nonempty-product-deferred",
+        "nonempty-tuple-deferred",
+        "indexed-missing-family",
+        "indexed-missing-return",
+        "indexed-missing-result",
+        "indexed-trailing-arm",
+        "mu-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/build-javascript.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/build-javascript.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/bun.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/bun.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "bun",
+      "cases": [
+        "mu-constructor-state-exhaustion",
+        "indexed-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "-e",
+        "const { Worker } = require('node:worker_threads'); const worker = new Worker(require('node:path').resolve(process.argv[1]), { argv: process.argv.slice(2), execArgv: [], resourceLimits: { stackSizeMb: 63.96484375 } }); worker.on('error', error => { process.stderr.write(String(error.stack || error) + '\\n'); process.exitCode = 1; }); worker.on('exit', code => { process.exitCode = code || process.exitCode || 0; });",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/node-worker.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/node-worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "node-worker",
+      "cases": [
+        "mu-constructor-state-exhaustion",
+        "indexed-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/build-native.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/build-native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.exe"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/native-info.stdout",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/native-info.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint": "native-info",
+      "cases": [
+        "mu-constructor-state-exhaustion",
+        "indexed-state-exhaustion"
+      ],
+      "failure_mask": "0",
+      "passed": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "application-order",
+      "case": "application-left",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "arrow-associativity",
+      "case": "arrow-right",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "declaration-order",
+      "case": "declaration-order",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "arm-order",
+      "case": "elim-label-order",
+      "replacements": 2,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "match-is-not-a-name",
+      "case": "forbidden-match",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "fuel-is-not-success",
+      "case": "zero-parser-fuel",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "binder-precedence",
+      "case": "binder-precedence",
+      "replacements": 2,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "projection-precedence",
+      "case": "argument-projection",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "mu-constructor-order",
+      "case": "mu-nat",
+      "replacements": 2,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "mu-parameter-order",
+      "case": "mu-parameter-order",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "mu-parameter-binder",
+      "case": "mu-indexed-id",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "mu-result-type",
+      "case": "mu-indexed-id",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "indexed-family-body",
+      "case": "indexed-motive",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "indexed-binder",
+      "case": "indexed-motive",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "literal-digits",
+      "case": "literal-argument",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "empty-sum-kind",
+      "case": "empty-forms",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.bend",
+        "--check-only"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/check.stdout",
+        "bytes": 17,
+        "sha256": "3155557f2fa6b6fe55b661347e56893dc0b52fa1977b6800a8d26dbff1d3db84"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/Documents/attest/_tools/bend/bin/bend",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.bend",
+        "-o",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.js"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/test.stdout",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": "mu-trailing-separator",
+      "case": "mu-trailing-semicolon",
+      "replacements": 1,
+      "failure_mask": "1",
+      "detected": true
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-P",
+        "/Users/oobi/Documents/sole-comb/dev/pin-check.py"
+      ],
+      "status": "FINISHED",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/pins-after.stdout",
+        "bytes": 134,
+        "sha256": "ff2317d4b167a24c91e1cbe17928ab9462647b1a35e9f194534e6d373539a87f"
+      },
+      "stderr": {
+        "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/pins-after.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "generated": [
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.bend",
+      "bytes": 13416,
+      "sha256": "50150261a479ff7a92abaad8682020cfcea145840f2130c6e5ba0d10bc5db8e0"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.js",
+      "bytes": 123823,
+      "sha256": "9d69a7bedde28760e25cfd8d8242c31e930c6cd919c8ed2a7cd617b09d95b945"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-0/tests.exe",
+      "bytes": 244216,
+      "sha256": "6946c935382723e868b1d5d51faccbb21dc1c4ea227a6f78ac7db3089f07163a"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.bend",
+      "bytes": 17415,
+      "sha256": "1f782e2563610f74a1ca1fdf39755d37a30012eb95d0fa3c696242d2b94e53cb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.js",
+      "bytes": 135387,
+      "sha256": "715b250e60979376a122fd77c88ad09bfce3610d5c3409aed4a7cfd7729dd82a"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-1/tests.exe",
+      "bytes": 261880,
+      "sha256": "e74583b1bc50dd2e70ac9e43142a8e338aebc7004225db37535cf0194b9801f7"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.bend",
+      "bytes": 17516,
+      "sha256": "5e419b9ec029972b5451d1729d0154bc8c816d7fdf3c7dfb085101c060c4f4b7"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.js",
+      "bytes": 134595,
+      "sha256": "c6e85cfaa04156b77c018d2b836b4a5fa8ce0ca93094de187f2ff11275aa8a39"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-2/tests.exe",
+      "bytes": 261800,
+      "sha256": "096a9c8718b7831708f5f4d8e8ee102f32d0cbd6befeab992e7da98b44ab1277"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.bend",
+      "bytes": 19945,
+      "sha256": "9dacd0df202fc5c15d541f96e24d5d7bafc136684ae3caab273a10de018b9c3f"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.js",
+      "bytes": 137916,
+      "sha256": "fd0fc6905ef7d3ca29f8c842768c368c7719cd087103c122cabb08a7c74e5829"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-3/tests.exe",
+      "bytes": 279960,
+      "sha256": "01cb3eb6b4426d92a4ecd4618fab64412e52a0ee2312bd65570586c6ae64e422"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.bend",
+      "bytes": 14743,
+      "sha256": "062a87f86e2e9fcf2b90763224bfe98dea05d581025b6c8cfccb38cdacc67c69"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.js",
+      "bytes": 124934,
+      "sha256": "f088150a24ec1fe1d92292f493d4a310a49bc66db660da903b3a2eb7fb72fc7d"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-4/tests.exe",
+      "bytes": 244632,
+      "sha256": "042c9c0f52cd8bddeee5d49b4caa69d196a47a2a1a2b978a2a7f2b91a151104c"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.bend",
+      "bytes": 6553,
+      "sha256": "cce38c8898bcbbaa17fef8edc78407ff6190133c1397d7b37f343b82f1d34ba8"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.js",
+      "bytes": 101185,
+      "sha256": "e8b89c3ec59960db257d9d2d3b426be0684a8b93e3d01faf325ec57c5c975905"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-5/tests.exe",
+      "bytes": 191800,
+      "sha256": "9a448b3a99d6a203c16b09cba75a277d68f04feca7b7da07a24acade4e1f673f"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.bend",
+      "bytes": 8363,
+      "sha256": "2432b079b49dd3edec1df1e47295ac279dab91c527e87a3cf532071ea9275556"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.js",
+      "bytes": 105705,
+      "sha256": "a990abceb456377f1806e09e19545acee248a5a7a972d12581eb6cd3da521dcc"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-6/tests.exe",
+      "bytes": 209080,
+      "sha256": "7d8b14ca8bdcd41dc612891f68fc541c3f20b43a3f6fc32a475d5d264b18349a"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.bend",
+      "bytes": 6942,
+      "sha256": "74ee50746dc9c5753778c4d1315acc290109722e431e9fe3ba2881c0ea03cab0"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.js",
+      "bytes": 101839,
+      "sha256": "5cba5e35eb3bcd23d3e96499428485553f586fc73715576dc6c3cff1fca70663"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-7/tests.exe",
+      "bytes": 208600,
+      "sha256": "f5a5fbc8fc175e5d7f398405f60cb4fd281890330b431c0d99198174fee885da"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.bend",
+      "bytes": 6701,
+      "sha256": "2d7d1830db43a9eff5259fe1126b6e0f78c5e6b4924c82872df0e2ab2d5e1667"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.js",
+      "bytes": 101472,
+      "sha256": "c7cd692d71f4149b5cd646272842cddb9b6459119fd363d7c3548f589360dab1"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-8/tests.exe",
+      "bytes": 191896,
+      "sha256": "ff0d846fb5c804355baba75c6722e8211faec035cf0e578fa56b8ab18587de7a"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.bend",
+      "bytes": 332184,
+      "sha256": "ef04ee4b6d69e7e91efac9c26a07f04765be7f36ade4fd10d61a6023c6997e9e"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.js",
+      "bytes": 993315,
+      "sha256": "fcd6fdd83810322dab34f09826407afa92b504bfc2a65661fb29e45be2b97c72"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-9/tests.exe",
+      "bytes": 1795992,
+      "sha256": "091819fa252d055526f225450d5da6bb91dab32692ab1b4999334e729749ffb6"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.bend",
+      "bytes": 26405,
+      "sha256": "5a92f0f3cd673e537b519062bc4307ea339b930e9979efde768666701ba14bd9"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.js",
+      "bytes": 156319,
+      "sha256": "afba5eef5eb9b28acf437e7098620ae773eb98375e66782975d5d3a56cb4e340"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-10/tests.exe",
+      "bytes": 298136,
+      "sha256": "0c2e9a8783df8536f9665538ad2c816cdf1685712113795ebbeb811a8c1b93c9"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.bend",
+      "bytes": 23808,
+      "sha256": "3ac2c5b60cf508fd4b56151d5736ca5d4c880318be830b5a2431f988fd47ea9c"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.js",
+      "bytes": 151131,
+      "sha256": "23c156712d540b5f0155fa5196f7d1b0e68df212cf8d1609b1f34059f0e2b758"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-11/tests.exe",
+      "bytes": 279656,
+      "sha256": "a6ffeeab1e7643823cfca662107f8ed89cea1c107d44337719d7428b0032551a"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.bend",
+      "bytes": 6284,
+      "sha256": "b20970d21c348ffd48aa0a1d3b9705150f5c49b698a6458125f2015ee4182c78"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.js",
+      "bytes": 100589,
+      "sha256": "16332130875570022e1e09eb22dccd424eacc08ac0b3f214b7c87bd584b787e3"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-12/tests.exe",
+      "bytes": 192008,
+      "sha256": "6cb15a452160499bfa896d0fc15cdbc95495fcd4db1a96dfd3e0d69dbe07f94b"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.bend",
+      "bytes": 6897,
+      "sha256": "562fc435f17f0b6e23939204624d40742f0c2e6c7e72534fad056e8eb2d92860"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.js",
+      "bytes": 101711,
+      "sha256": "7e64d1cc7da77ac5d001752e9db9b823229a5676c8221d451b66c6b6d0c3ebad"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-13/tests.exe",
+      "bytes": 208344,
+      "sha256": "e3effa85be38cf9dee4975f48ddc75cb6c52000bee13a6b9c08645593dbd49ac"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/parser.bend",
+      "bytes": 35892,
+      "sha256": "5fb8cc79329a7f8e76788aa07461c972b33dff7fe497381aa8e4e34d917895c5"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.bend",
+      "bytes": 1824,
+      "sha256": "cc7975fb7b874bd749cc32ea358942d52186523cd8cb99d043e4281495e620f3"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.js",
+      "bytes": 92125,
+      "sha256": "c18bed942ecfcdd894a5a7498dfc482c709733b63ef1e6fe87ad85259adfc117"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/batch-14/tests.exe",
+      "bytes": 190200,
+      "sha256": "c7d313b223d112489e991da6a07044e1ff5e73fcb87d376a1461cbc2a5b8c066"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/parser.bend",
+      "bytes": 35892,
+      "sha256": "e33dc145ca4b6b669cd8cc9c1e791dd1ab1265a1180dea031b3aa4fb6853abcf"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.bend",
+      "bytes": 4532,
+      "sha256": "8bdc933aeca2e7b629c01f1fb2847d46586acb6c9adc8618a178fb655cf1b204"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-application-order/tests.js",
+      "bytes": 101144,
+      "sha256": "143d151984777f31c5fc142f3b01e3807b8d6f3d2fb76299da92542e29d4878c"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/parser.bend",
+      "bytes": 35892,
+      "sha256": "1b59117624b13be23e85f85c9b64933414f4b11245c4430704b12c1b6ab62de7"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.bend",
+      "bytes": 4652,
+      "sha256": "7828c122cb564182e687fdc186f949b21445ead82316f106e49161622bfba1f7"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arrow-associativity/tests.js",
+      "bytes": 101345,
+      "sha256": "7ea4cb48fdd1b3c7d5a79318220e372e1337fcb0727274b94a8914fd66c63cbc"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/parser.bend",
+      "bytes": 35863,
+      "sha256": "2048b695eeaa1ed39e433aece0d6d60ec0f5c7a933474dbdccc8705a37092b80"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.bend",
+      "bytes": 3915,
+      "sha256": "c58a2c129417ab9a916275ee1fd947d3cb0252fc03520e06f7ecf7f6d942bff8"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-declaration-order/tests.js",
+      "bytes": 98459,
+      "sha256": "31611b737f43ff1510fd37cfb247f66e5293b2a2fe66f58825c584aa0632c720"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/parser.bend",
+      "bytes": 35850,
+      "sha256": "059d35e099f4009ce07f4f6bc66fa6f8f24ac206852154ce71b006b65424d287"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.bend",
+      "bytes": 5092,
+      "sha256": "9c28e5ce3bd169d533f5aabb5f30ea94dc7e0e3bfda55afeb52a6097371eacfa"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-arm-order/tests.js",
+      "bytes": 100916,
+      "sha256": "d4d41ff975b118bcf85282bc2b8bbd3a84e7b3f45bd0b09b48b64599e9394c5d"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/parser.bend",
+      "bytes": 35894,
+      "sha256": "84cbd429d35be69a35bceccc3efa6cc149b341d4f1d10479b4eabc258deeaefc"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.bend",
+      "bytes": 1114,
+      "sha256": "b20eb053aa1530b9406e479c9cf77a155b55ff6c4157e0b63170ae9588a52fb3"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-match-is-not-a-name/tests.js",
+      "bytes": 90779,
+      "sha256": "7794a20bed59845846db8b01e974af6aa7e905b6bed30b34e7549174bf3855cb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/parser.bend",
+      "bytes": 35865,
+      "sha256": "5e7786b11c4e6d40ea2f9fb22d46c66bd6e4de1f035c09e6a53bfc1cdb8a5552"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.bend",
+      "bytes": 940,
+      "sha256": "b9418446d973134f88e7d3730400f2687b446dad9bc6a396ec065f5e393a9565"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-fuel-is-not-success/tests.js",
+      "bytes": 88280,
+      "sha256": "470829fb9ae80eed000bac541b47a6f085efe6eab7fa21eb2ba0fc5f01215186"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/parser.bend",
+      "bytes": 35826,
+      "sha256": "9c08f6fe405d23146d725350cf8a5bda0d1a86aefa939ae5ccac60d1fa318ebe"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.bend",
+      "bytes": 5787,
+      "sha256": "f9e2dced45613e8dbcecc0c5fd768ff730956f9319cd91826319b4e55166bf06"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-binder-precedence/tests.js",
+      "bytes": 104671,
+      "sha256": "c938b5a92fdee76806aa8c6176f0e2958f97d3d474b5760dde12647c3386af52"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/parser.bend",
+      "bytes": 35925,
+      "sha256": "311caf6038f9a932af6d4cbdf0bb084fb7cb515d060c042903b5a14573c69de8"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.bend",
+      "bytes": 3999,
+      "sha256": "d9d0895b865ee403eeedfa08410d9111ba79ebbde16371819c000703a3b45751"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-projection-precedence/tests.js",
+      "bytes": 99529,
+      "sha256": "382b410cf407344bfec977dd5db26cec3b4f9cc30a3799289ff1ecf506cec3b4"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/parser.bend",
+      "bytes": 35846,
+      "sha256": "8a995fcfc6f4f8ba38134f50cd62c534ddf403e6f866590ee551a7022f3ce602"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.bend",
+      "bytes": 3725,
+      "sha256": "6a47bf6185f69d9e68c1f2999b3cf7d22b5a85cf3f0d50082646ac91e8661a89"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-constructor-order/tests.js",
+      "bytes": 97409,
+      "sha256": "2b4f0a2def4572b69c31715e2d1e7e96baf7ba18ce0b1b4fbe4e9ba5a500871c"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/parser.bend",
+      "bytes": 35869,
+      "sha256": "8ffa1bdc11cf2923b9e8b2407827e00dce48e6353c8b3aed8110a20e45873323"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.bend",
+      "bytes": 7259,
+      "sha256": "760cb4e4a1a3d5cb9c78067085808ce28617deddb8200810fc608633691d76d7"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-order/tests.js",
+      "bytes": 107205,
+      "sha256": "6d69523c7ef17c119c74cffeda088b3eeca08a33cdb7d5e171c78ef8589336cc"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/parser.bend",
+      "bytes": 35886,
+      "sha256": "226a7bf4a3d1a7ddac78e71996c820fbd360d6e0d1116881e6f020116c048063"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.bend",
+      "bytes": 7816,
+      "sha256": "a9411256f4009165efc52b5fa28891b06176c667461c6bf42291751877b0e33d"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-parameter-binder/tests.js",
+      "bytes": 109689,
+      "sha256": "6d3a4a43d5da0aacaf661c5a2e7d02df1316e0d7e54902b70e72197e897b77a2"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/parser.bend",
+      "bytes": 35900,
+      "sha256": "51a45716a5738ab2d0975648c7a10a73a272fc893a18e3095bf5a41c011fbb53"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.bend",
+      "bytes": 7816,
+      "sha256": "a9411256f4009165efc52b5fa28891b06176c667461c6bf42291751877b0e33d"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-result-type/tests.js",
+      "bytes": 109721,
+      "sha256": "23c93caf065b5f35fa85e8c1aa776c95349b4f59d5f1285747f1125aabf46b95"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/parser.bend",
+      "bytes": 35892,
+      "sha256": "5d146ea492f6fc4edd1bb93fe247d9916e7c0eadb54a5324b55658548d311f2e"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.bend",
+      "bytes": 9829,
+      "sha256": "b5632f1e3978c63dc9955ab382294b8bc98786d50e3f33bc086d9ccdec9a8591"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-family-body/tests.js",
+      "bytes": 115312,
+      "sha256": "9950a9bf1a88c66b80c38dae41611f6993b7996b2be082683e09e228f755810b"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/parser.bend",
+      "bytes": 35891,
+      "sha256": "79ac26b2e5498b33542308ad7d96dfcb35bb56ef188477267d5bc1647259e944"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.bend",
+      "bytes": 9829,
+      "sha256": "b5632f1e3978c63dc9955ab382294b8bc98786d50e3f33bc086d9ccdec9a8591"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-indexed-binder/tests.js",
+      "bytes": 115308,
+      "sha256": "76bfd4a4ca63bdb7f4e3919eb90eb7963e7c713c37e327f18c8a91222f644426"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/parser.bend",
+      "bytes": 35883,
+      "sha256": "a9b7609f8fba99f0f35d5ccc92c5ab1285fc4f89cb785650de4836aca8c40cbb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.bend",
+      "bytes": 4554,
+      "sha256": "bef624b79575cebd16f16e248ff95f3fe1119fdb42c4bfc1fb99621fef45c471"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-literal-digits/tests.js",
+      "bytes": 101135,
+      "sha256": "9e7540e060c3d11ebe4f4ff749e04bd4e8a069bbd88acebc869980ba20d11cd2"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/parser.bend",
+      "bytes": 35896,
+      "sha256": "7c8814f12a9abdd3df643cc8e12b5328c4aee822dbec5b095e3638f25eec4614"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.bend",
+      "bytes": 4701,
+      "sha256": "5d1025558b4238a3ea488d6658d3bacc1590cd647a4e36e54b1820695db6b648"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-empty-sum-kind/tests.js",
+      "bytes": 101146,
+      "sha256": "e4cfcd2d52e59684d84a0e872f75a8ca03370870971f2239667a3c2c4b7b83ec"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/lexer.bend",
+      "bytes": 7955,
+      "sha256": "ba451e10035ea64acc89efc881430561cf35e467038802a91abca95b4424d0eb"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/parser.bend",
+      "bytes": 35862,
+      "sha256": "c4104f13553c25cf87f5e114ab0bdaa5c0b1eaf7f47c79bb9e136f6f750e44b6"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.bend",
+      "bytes": 1129,
+      "sha256": "af6ca52e8de768bc99153b7399da710c09f18e8f6c2b1a9158e4acc1b38f65ff"
+    },
+    {
+      "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/mutant-mu-trailing-separator/tests.js",
+      "bytes": 90735,
+      "sha256": "8badde609005e8e98dbd41f03d8be9c76b69592663b269c95e154e0473219b43"
+    }
+  ],
+  "endpoint": null,
+  "verdict": null,
+  "fixtures": {
+    "path": "/private/tmp/sole-comb-step2-parser-20260927/validation-002/cases.json",
+    "bytes": 657511,
+    "sha256": "850ad674be98b68d538ea6752d8e45eaf54e09a99811fa8b21eb80fd0e7ce8b4"
+  },
+  "completed_at": "2026-09-28T00:13:43.519568+00:00"
+}

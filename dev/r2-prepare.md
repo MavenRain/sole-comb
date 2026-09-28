@@ -36,11 +36,16 @@ it applies K1 iota.
 
 The [S0-5 closeout](s0-5-closeout.md) sets the remaining scratch scope.
 The [two complete source twins](validation/s0-5-r2-twins.md) now have a
-declaration map and passing lexical checks. Step 2 must meet the source
-requirements in the twins record, including indexed families,
-source-derived data metadata, scratch U32 literals, zero-arity
-sum/prod/tuple with the zero-arm elimination of `sum ()`, K1/K1d recursion,
-and Id/reflexivity checking. Portable file input remains a step 3 item.
+declaration map and passing lexical checks. The
+[workload parser extension](validation/s0-5-r2-workload-parser.md) also
+preserves their complete syntax trees and the three negative fixtures.
+Step 2 must still meet the semantic source requirements in the twins
+record, including indexed families, source-derived data metadata, scratch
+U32 literals, zero-arity sum/prod/tuple with the zero-arm elimination of
+`sum ()`, K1/K1d recursion, and Id/reflexivity checking. Portable file
+input remains a step 3 item. The parser retains constructor signatures and
+indexed motives as syntax; it does not derive checked data metadata or
+compute the ACCEPT and REFUSE verdicts.
 Records, projections, `else` expansion with recursive sugar processing, and
 motive inference are deferred. By reading, the step 1 translations need no
 eta or proof-irrelevance rules, so these rules remain deferred. Scratch

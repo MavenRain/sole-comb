@@ -26,8 +26,9 @@ The active next task is the [bounded S0-5 closeout](dev/s0-5-closeout.md).
 Its [frozen workload manifest](dev/r2-workloads.json) selects the plan's
 `smoke.bend` plus complete `core.bend` alternative and the complete core
 conversion workload with all four obligations. The complete sole
-translations exist and pass lexing. Their source checker qualification
-remains pending. These workloads determine the remaining scratch features.
+translations exist and pass lexing and exact syntax-tree checks. Their
+source checker qualification remains pending. These workloads determine
+the remaining scratch features.
 After valid GREEN or AMBER evidence selects an eligible endpoint, the
 [Stage A milestones](dev/stage-a-milestones.md) introduce reviewed
 compiler-source commits while retaining the full integration gate.
@@ -152,14 +153,21 @@ all 19 core declarations and preserve all four obligations. Both full
 inputs pass lexing on Bun, the pinned Node worker, and native (INFO).
 Their source checker qualification remains pending.
 
+The [workload parser extension](dev/validation/s0-5-r2-workload-parser.md)
+preserves the complete syntax trees of both twins and all three negative
+fixtures. It adds brace-form `mu`, typed parameters and index
+telescopes, indexed motives, scratch literal syntax, and zero-arity
+sum/product/tuple forms. Source-derived data metadata, resolution of the
+new nodes, and their typing and reduction rules remain step 2 work.
+
 S0-5 still needs the checker subset that the
 [S0-5 closeout](dev/s0-5-closeout.md) requires, portable file input,
 the twins' preparation and informational native build, Bun
 and Node worker measurements, prebuilt-bundle startup measurements, and the
 GREEN repeat when required. Scratch compiler code belongs under
 `/private/tmp/claude/kan-elim-lang-m0/r2-risk/`, outside this tree. No R2
-verdict or runtime selection has been made. Extend the scratch grammar if
-the twins require constructs outside the validated parser subset.
+verdict or runtime selection has been made. The current workload grammar
+has parser evidence; complete source checker qualification remains next.
 
 `make r2-report R2_MANIFEST=/absolute/path/to/manifest.json` verifies collected
 evidence and writes `dev/r2-risk.json`. Reports preserve raw samples, source
