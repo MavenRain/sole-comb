@@ -33,6 +33,42 @@
       "function": "token_kind",
       "sites": 1,
       "reason": "Byte tokens include their full contents; every other token delegates to the exhaustive pinned token description."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "app_head",
+      "sites": 1,
+      "reason": "Recognizes named family or constructor application heads; other syntax has no named mutual-family reference."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "case_former",
+      "sites": 1,
+      "reason": "Recognizes collection and mutual-family eliminations; other formers receive the pinned explicit refusal."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "elab_chain",
+      "sites": 1,
+      "reason": "Collects successive arrow binders and returns the first non-arrow syntax as the result type."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "mu_result",
+      "sites": 1,
+      "reason": "Accepts the declared family as a constructor result and explicitly refuses other result types."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "spine_of",
+      "sites": 1,
+      "reason": "Recognizes applications while collecting a family result spine; other terms end the spine."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "universe_of",
+      "sites": 1,
+      "reason": "Extracts a universe level and explicitly refuses other checked family result types."
     }
   ],
   "unsafe": [
@@ -110,6 +146,21 @@
       "path": "test/pinfront/observe.bend",
       "function": "tree",
       "reason": "The test serializer traverses strict syntax subterms and shrinking lists. Node and sequence tasks add a finite rendering step per source node."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "none_list",
+      "reason": "Builds finite field placeholders by decrementing a positive signed count to zero; nonpositive counts terminate immediately."
+    },
+    {
+      "path": "test/pinfront/elab.bend",
+      "function": "drive",
+      "reason": "Interprets suspended recursive requests over pinned surface subterms and finite declaration telescopes. Kernel checking remains explicit and no recursive program admission is provided here."
+    },
+    {
+      "path": "test/pinfront/elab_program.bend",
+      "function": "bind",
+      "reason": "Composes a suspended elaboration continuation whose next program becomes available only after the requested subterm returns."
     }
   ]
 }

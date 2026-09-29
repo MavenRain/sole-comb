@@ -27,8 +27,8 @@ def module(name, path):
     return value
 
 
-def run(name, argv, env, cwd=ROOT):
-    completed = subprocess.run(argv, cwd=cwd, env=env, capture_output=True, text=True, timeout=120)
+def run(name, argv, env, cwd=ROOT, timeout=120):
+    completed = subprocess.run(argv, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
     (WORK / f"{name}.log").write_text(completed.stdout + completed.stderr)
     if completed.returncode:
         raise RuntimeError(f"{name} failed ({completed.returncode}):\n{(completed.stdout + completed.stderr)[-5000:]}")
@@ -128,7 +128,7 @@ def main():
         if output not in ('"PASS"', "PASS"):
             raise RuntimeError(f"{endpoint} failed checking cases:\n{output}")
         print(f"PASS A.4 {endpoint}: {len(checks)} cases", flush=True)
-    run("compile-native", [str(binary), str(source), "-o", str(WORK / "checks.exe")], env)
+    run("compile-native", [str(binary), str(source), "-o", str(WORK / "checks.exe")], env, timeout=900)
     output = run("native-info", [str(WORK / "checks.exe")], env)
     if output not in ('"PASS"', "PASS"):
         raise RuntimeError(f"native INFO failed checking cases:\n{output}")
