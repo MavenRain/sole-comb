@@ -454,76 +454,100 @@ def Text.compare(a: String, b: String) -> Cmp:
         case SCon{Chr{d}, rest}:
           Order.first(U32.cmp(c, d), Text.compare(tail, rest))
 
-# Persistent ordered bindings. Stage A uses linear traversal; no hash order
-# enters compiler output. Only these operations construct ordered maps.
+# Persistent character trie. Terminal bindings precede their extensions;
+# character branches traverse in codepoint order, preserving lexical order.
 type Map.t<-A: Data> is Data:
   Map.Empty{}
-  Map.Bind{key: String, value: A, rest: Map.t<A>}
+  Map.End{value: A, rest: Map.t<A>}
+  Map.Char{code: U32, less: Map.t<A>, same: Map.t<A>, greater: Map.t<A>}
 
 def Map.empty(-A: Data) -> Map.t<A>:
   Map.Empty{}
 
-def Map.get_order(-A: Data, order: Cmp, value: A, next: Maybe<&2, A>) -> Maybe<&2, A>:
+def Map.select(-A: Type, order: Cmp, lt: Unit -> A, eq: Unit -> A, gt: Unit -> A) -> A:
   match order:
-    case LT{}:
-      None{}
-    case EQ{}:
-      Some{value}
-    case GT{}:
-      next
+    case LT{}: lt(Unit{})
+    case EQ{}: eq(Unit{})
+    case GT{}: gt(Unit{})
 
-def Map.get(-A: Data, +key: String, map: Map.t<A>) -> Maybe<&2, A>:
+def Map.with_key(-A: Type, key: String, empty: Unit -> A, cons: U32 -> String -> A) -> A:
+  match key:
+    case SNil{}: empty(Unit{})
+    case SCon{Chr{code}, rest}: cons(code)(rest)
+
+def Map.singleton(-A: Data, key: String, value: A) -> Map.t<A>:
+  match key:
+    case SNil{}: Map.End{value, Map.Empty{}}
+    case SCon{Chr{code}, rest}: Map.Char{code, Map.Empty{}, Map.singleton(A, rest, value), Map.Empty{}}
+
+def Map.get_at(-A: Data, map: Map.t<A>, +key: String) -> Maybe<&2, A>:
   match map:
-    case Map.Empty{}:
-      None{}
-    case Map.Bind{k, value, rest}:
-      Map.get_order(A, Text.compare(key, k), value, Map.get(A, key, rest))
+    case Map.Empty{}: None{}
+    case Map.End{value, rest}:
+      Map.with_key(Maybe<&2, A>, key, _ => Some{value}, code => tail => Map.get_at(A, rest, SCon{Chr{code}, tail}))
+    case Map.Char{pivot, less, same, greater}:
+      Map.with_key(Maybe<&2, A>, key, _ => None{}, +code => +tail =>
+        Map.select(Maybe<&2, A>, U32.cmp(code, pivot),
+          _ => Map.get_at(A, less, SCon{Chr{code}, tail}),
+          _ => Map.get_at(A, same, tail),
+          _ => Map.get_at(A, greater, SCon{Chr{code}, tail})))
 
-def Map.insert_order(-A: Data, order: Cmp, key: String, value: A, old: String, previous: A, rest: Map.t<A>, next: Map.t<A>) -> Map.t<A>:
-  match order:
-    case LT{}:
-      Map.Bind{key, value, Map.Bind{old, previous, rest}}
-    case EQ{}:
-      Map.Bind{key, value, rest}
-    case GT{}:
-      Map.Bind{old, previous, next}
+def Map.get(-A: Data, key: String, map: Map.t<A>) -> Maybe<&2, A>:
+  Map.get_at(A, map, key)
 
-def Map.insert(-A: Data, +key: String, +value: A, map: Map.t<A>) -> Map.t<A>:
+def Map.insert_at(-A: Data, map: Map.t<A>, +key: String, +value: A) -> Map.t<A>:
   match map:
-    case Map.Empty{}:
-      Map.Bind{key, value, Map.Empty{}}
-    case Map.Bind{+old, previous, +rest}:
-      Map.insert_order(A, Text.compare(key, old), key, value, old, previous, rest, Map.insert(A, key, value, rest))
+    case Map.Empty{}: Map.singleton(A, key, value)
+    case Map.End{previous, +rest}:
+      Map.with_key(Map.t<A>, key, _ => Map.End{value, rest}, code => tail =>
+        Map.End{previous, Map.insert_at(A, rest, SCon{Chr{code}, tail}, value)})
+    case Map.Char{+pivot, +less, +same, +greater}:
+      Map.with_key(Map.t<A>, key, _ => Map.End{value, Map.Char{pivot, less, same, greater}}, +code => +tail =>
+        Map.select(Map.t<A>, U32.cmp(code, pivot),
+          _ => Map.Char{pivot, Map.insert_at(A, less, SCon{Chr{code}, tail}, value), same, greater},
+          _ => Map.Char{pivot, less, Map.insert_at(A, same, tail, value), greater},
+          _ => Map.Char{pivot, less, same, Map.insert_at(A, greater, SCon{Chr{code}, tail}, value)}))
 
-def Map.remove_order(-A: Data, order: Cmp, old: String, value: A, rest: Map.t<A>, next: Map.t<A>) -> Map.t<A>:
-  match order:
-    case LT{}:
-      Map.Bind{old, value, rest}
-    case EQ{}:
-      rest
-    case GT{}:
-      Map.Bind{old, value, next}
+def Map.insert(-A: Data, key: String, value: A, map: Map.t<A>) -> Map.t<A>:
+  Map.insert_at(A, map, key, value)
 
-def Map.remove(-A: Data, +key: String, map: Map.t<A>) -> Map.t<A>:
+def Map.remove_at(-A: Data, map: Map.t<A>, +key: String) -> Map.t<A>:
   match map:
-    case Map.Empty{}:
-      Map.Empty{}
-    case Map.Bind{+old, value, +rest}:
-      Map.remove_order(A, Text.compare(key, old), old, value, rest, Map.remove(A, key, rest))
+    case Map.Empty{}: Map.Empty{}
+    case Map.End{value, +rest}:
+      Map.with_key(Map.t<A>, key, _ => rest, code => tail => Map.End{value, Map.remove_at(A, rest, SCon{Chr{code}, tail})})
+    case Map.Char{+pivot, +less, +same, +greater}:
+      Map.with_key(Map.t<A>, key, _ => Map.Char{pivot, less, same, greater}, +code => +tail =>
+        Map.select(Map.t<A>, U32.cmp(code, pivot),
+          _ => Map.Char{pivot, Map.remove_at(A, less, SCon{Chr{code}, tail}), same, greater},
+          _ => Map.Char{pivot, less, Map.remove_at(A, same, tail), greater},
+          _ => Map.Char{pivot, less, same, Map.remove_at(A, greater, SCon{Chr{code}, tail})}))
+
+def Map.remove(-A: Data, key: String, map: Map.t<A>) -> Map.t<A>:
+  Map.remove_at(A, map, key)
+
+def Map.reverse(key: String, out: String) -> String:
+  match key:
+    case SNil{}: out
+    case SCon{code, rest}: Map.reverse(rest, SCon{code, out})
+
+def Map.bindings_prefix(-A: Data, map: Map.t<A>, +prefix: String) -> List<&2, Pair2<String, A>>:
+  match map:
+    case Map.Empty{}: []
+    case Map.End{value, rest}:
+      Pair2{Map.reverse(prefix, SNil{}), value} <> Map.bindings_prefix(A, rest, prefix)
+    case Map.Char{code, less, same, greater}:
+      List.append(&2, Pair2<String, A>, Map.bindings_prefix(A, less, prefix),
+        List.append(&2, Pair2<String, A>, Map.bindings_prefix(A, same, SCon{Chr{code}, prefix}), Map.bindings_prefix(A, greater, prefix)))
 
 def Map.bindings(-A: Data, map: Map.t<A>) -> List<&2, Pair2<String, A>>:
-  match map:
-    case Map.Empty{}:
-      []
-    case Map.Bind{key, value, rest}:
-      Con{Pair2{key, value}, Map.bindings(A, rest)}
+  Map.bindings_prefix(A, map, SNil{})
 
 def Map.size(-A: Data, map: Map.t<A>) -> Nat:
   match map:
-    case Map.Empty{}:
-      0n
-    case Map.Bind{key, value, rest}:
-      (1n + Map.size(A, rest) : Nat)
+    case Map.Empty{}: 0n
+    case Map.End{value, rest}: (1n + Map.size(A, rest) : Nat)
+    case Map.Char{code, less, same, greater}: (Map.size(A, less) + Map.size(A, same) + Map.size(A, greater) : Nat)
 
 # Signed host arithmetic wraps at 63 bits, as OCaml int at the pin.
 # wrap_sum is internal to add/sub: its input lies within one modulus.

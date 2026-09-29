@@ -14,17 +14,19 @@ and parser comparisons across the complete 146-file Kanon corpus.
 A.5b.1 adds expression elaboration, ordinary declarations, and mutual family
 admission, with exact declaration observations across the same corpus and
 75 focused probes. See the [elaboration evidence](dev/validation/stage-a-elaboration.md).
+A.5b.2 adds recursive groups, structural certificates, totality budgets, and
+whole-program check/print comparisons. See the [program evidence](dev/validation/stage-a-program.md).
 The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
-[Stage A entry decision](dev/stage-a-entry.md). Recursive program integration
-and the full kernel differential remain next.
+[Stage A entry decision](dev/stage-a-entry.md). Pinned erasure and the full
+kernel differential remain next.
 
 Run from this directory with the locally pinned tools:
 
 ```sh
 make build           # cached JavaScript build of the host entry
 make check           # host entry, library tests, and scoped source policies
-make test            # build, existing regressions, A.1 through A.5b.1 checks, policies, pins
-make gates           # existing regressions, A.1 through A.5b.1 checks, policies, pins
+make test            # build, existing regressions, A.1 through A.5b.2 checks, policies, pins
+make gates           # existing regressions, A.1 through A.5b.2 checks, policies, pins
 make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
 make test-representation # real A.2 dependency closure on the same hosts
 make test-evaluation # real A.3 evaluator and converter on the same hosts
@@ -34,6 +36,8 @@ make test-pinfront   # pinned lexer/parser comparisons on all three hosts
 make test-pinfront-mutations # parser comparisons and five isolated mutations
 make test-elaboration # expression/declaration comparisons on all three hosts
 make test-elaboration-mutations # elaboration comparisons and three isolated mutations
+make test-program     # whole-program check/print comparisons and direct contracts
+make test-program-mutations # program comparisons and three isolated mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```
@@ -48,11 +52,12 @@ The [A.1 validation](dev/validation/stage-a-foundation.md),
 [A.2 validation](dev/validation/stage-a-representation.md),
 [A.3 validation](dev/validation/stage-a-evaluation.md),
 [A.4 validation](dev/validation/stage-a-checking.md),
-[A.5a validation](dev/validation/stage-a-pinfront.md), and
-[A.5b.1 validation](dev/validation/stage-a-elaboration.md) record their scope.
+[A.5a validation](dev/validation/stage-a-pinfront.md),
+[A.5b.1 validation](dev/validation/stage-a-elaboration.md), and
+[A.5b.2 validation](dev/validation/stage-a-program.md) record their scope.
 The CLI is still a bootstrap host entry; the real library has its own build
-and behavioral tests. Recursive program support and the full corpus harness
-remain A.5b.2 work.
+and behavioral tests. The erased mode and complete KANON-DIFF remain A.5b.3
+work. Stage A acceptance remains pending.
 
 R2 is pending and will qualify the operational compiler before M0 closure.
 The [workload manifest](dev/r2-workloads.json) and scratch validation records

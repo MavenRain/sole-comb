@@ -99,7 +99,7 @@
     },
     {
       "path": "lib/kernel_rules.bend",
-      "function": "run",
+      "function": "Run.drive",
       "reason": "The evaluator/converter executes typed requests and resumes their linear continuations. Semantic evaluation and readback decrease on the checked strongly normalizing fragment, a measure Bend cannot infer through closures. Unchecked raw terms may diverge as in the pinned OCaml evaluator; this declaration does not claim totality for arbitrary syntax. Type, affine-use and exhaustive checks remain enabled."
     },
     {
@@ -161,6 +161,21 @@
       "path": "test/pinfront/elab_program.bend",
       "function": "bind",
       "reason": "Composes a suspended elaboration continuation whose next program becomes available only after the requested subterm returns."
+    },
+    {
+      "path": "test/pinfront/order.bend",
+      "function": "peel",
+      "reason": "The lambda view returns a strict body subterm of a section with one binder."
+    },
+    {
+      "path": "test/pinfront/order.bend",
+      "function": "spine",
+      "reason": "Each recursive step removes one point Out node from the application spine."
+    },
+    {
+      "path": "test/pinfront/order.bend",
+      "function": "walk",
+      "reason": "The work list visits strict subterms; a stopped non-point Out is expanded exactly once."
     }
   ]
 }

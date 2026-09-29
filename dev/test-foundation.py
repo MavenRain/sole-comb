@@ -10,7 +10,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/foundation"
-EXPECTED_CASES = 219
+EXPECTED_CASES = 275
 
 
 def quoted(text):
@@ -107,6 +107,30 @@ def cases():
     for key, expected in [("a", "=0;aa=3;m=5;z=9;"), ("", "a=2;aa=3;m=5;z=9;"),
                           ("z", "=0;a=2;aa=3;m=5;"), ("b", "=0;a=2;aa=3;m=5;z=9;")]:
         case(f"map-remove-{key}", f"T.bindings(F.Map.bindings(U32, F.Map.remove(U32, {quoted(key)}, {map_expr})))", expected)
+    keys = ["", "a", "aa", "ab", "b", "β", "βa", "\ufffd", "😀"]
+    for history, order in enumerate((keys, list(reversed(keys)))):
+        trie, model = "F.Map.empty(U32)", {}
+
+        def snapshot(label):
+            expected = "".join(f"{key}={model[key]};" for key in sorted(model))
+            case(f"map-trie-{history}-{label}", f"T.bindings(F.Map.bindings(U32, {trie}))", expected)
+
+        for step, key in enumerate(order):
+            model[key] = step + 1
+            trie = f"F.Map.insert(U32, {quoted(key)}, {step + 1}, {trie})"
+            snapshot(f"insert-{step}")
+        for step, key in enumerate(("a", "β")):
+            model[key] = 80 + step
+            trie = f"F.Map.insert(U32, {quoted(key)}, {80 + step}, {trie})"
+            snapshot(f"replace-{step}")
+        for step, key in enumerate(("", "aa", "βa", "βb", "😀")):
+            case(f"map-trie-{history}-get-{step}", f"T.map_value(F.Map.get(U32, {quoted(key)}, {trie}))", model.get(key, "none"))
+        for step, key in enumerate(("aa", "", "a", "ab", "β", "βa", "b", "\ufffd", "😀", "absent")):
+            model.pop(key, None)
+            trie = f"F.Map.remove(U32, {quoted(key)}, {trie})"
+            snapshot(f"remove-{step}")
+        case(f"map-trie-{history}-empty-get", f'T.map_value(F.Map.get(U32, "βa", {trie}))', "none")
+        case(f"map-trie-{history}-empty-size", f"F.Bignum.to_string(F.Bignum.from_nat(F.Map.size(U32, {trie})))", 0)
     return result
 
 
@@ -138,9 +162,16 @@ def main():
     # not from another invocation of the Bend implementation.
     definitions = [f"def case_{i}() -> String:\n  F.choose(String, String.eq({expr}, {quoted(expected)}), \"\", {quoted(name + chr(10))})"
                    for i, (name, expr, expected) in enumerate(checks)]
+    groups = []
+    for start in range(0, len(checks), 32):
+        body = '""'
+        for i in reversed(range(start, min(start + 32, len(checks)))):
+            body = f"String.append(case_{i}, {body})"
+        groups.append(f"group_{start}")
+        definitions.append(f"def group_{start}() -> String:\n  {body}")
     body = '"PASS"'
-    for i in reversed(range(len(checks))):
-        body = f"String.append(case_{i}, {body})"
+    for group in reversed(groups):
+        body = f"String.append({group}, {body})"
     source = WORK / "checks.bend"
     source.write_text("\n\n".join(imports + definitions + [f"def main() -> String:\n  {body}\n"]))
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))

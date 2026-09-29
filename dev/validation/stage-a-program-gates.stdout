@@ -1,0 +1,96 @@
+python3 -P dev/test-bench.py
+python3 -P dev/test-build.py
+python3 -P dev/test-pin-check.py
+python3 -P dev/test-r2-risk.py
+python3 -P dev/test-r2-run.py
+python3 -P dev/test-r2-prepare.py
+R2-PREPARE deadline
+R2-PREPARE cancel
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 29 files, 18 line budgets, 21 reviewed unsafe sites, 11 catchalls
+python3 -P dev/test-foundation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.1 bun: 275 cases
+PASS A.1 node-worker: 275 cases
+PASS A.1 native INFO: 275 cases
+python3 -P dev/test-representation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.2 bun: 465 cases
+PASS A.2 node-worker: 465 cases
+PASS A.2 native INFO: 465 cases
+python3 -P dev/test-evaluation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.3 pinned source oracle: 251 cases
+PASS A.3 bun: 251 cases
+PASS A.3 node-worker: 251 cases
+PASS A.3 native INFO: 251 cases
+python3 -P dev/test-checking.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.4 pinned source oracle: 291 cases
+PASS A.4 bun: 291 cases
+PASS A.4 node-worker: 291 cases
+PASS A.4 native INFO: 291 cases
+python3 -P dev/test-checking-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.4 mutation linear-close: rejected by check-constant-1, check-linear-product-duplicate, check-linear-alias-duplicate
+PASS A.4 mutation budget-refund: rejected by infer-budget-let-4
+PASS A.4 mutation negative-field: rejected by positive-negative-arrow, ctors-negative
+python3 -P dev/test-pinfront-harness.py
+python3 -P dev/test-pinfront.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.5a pinned parser oracle: 561 cases, 68 independent expectations
+PASS A.5a bun: 561 cases
+PASS A.5a node-worker: 561 cases
+PASS A.5a native INFO: 561 cases
+python3 -P dev/test-pinfront-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.5a mutation match-kind: killed by match-empty
+PASS A.5a mutation numeric-bound: killed by host-bound-overflow
+PASS A.5a mutation byte-position: killed by identity
+PASS A.5a mutation constructor-list: killed by second-constructor
+PASS A.5a mutation utf8-byte: killed by bytes-utf8
+python3 -P dev/test-elaboration.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.5b.1 oracle: 221 cases, 65 independent expectations
+PASS A.5b.1 bun: 221 cases
+PASS A.5b.1 node-worker: 221 cases
+PASS A.5b.1 native INFO: 221 cases
+python3 -P dev/test-elaboration-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.5b.1 mutation local-lookup: probe/local-shadow
+PASS A.5b.1 mutation second-projection: probe/pair-projection-2
+PASS A.5b.1 mutation field-annotation: probe/field-annotation-refused
+python3 -P dev/test-program-harness.py
+python3 -P dev/test-program.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS A.5b.2 oracle: 245 files, 2 modes
+CHECKED A.5b.2 bun large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 bun: 245 files, 2 modes
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 node-worker: 245 files, 2 modes
+CHECKED A.5b.2 native large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 native: 245 files, 2 modes
+python3 -P dev/test-program-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+PASS program mutation nondecreasing: program/unguarded
+PASS program mutation declaration-order: program/ordinary-after-group
+PASS program mutation missing-motive: contracts
+python3 -P dev/pin-check.py
+PINCHECK PASS groups=bend,kanon,tools,limits checks=35 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+python3 -P dev/build.py --check
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0929-stage-a-program/gates-copy-postfix3/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=0.069 child_cpu_s=0.193

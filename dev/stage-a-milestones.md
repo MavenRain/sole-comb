@@ -14,16 +14,17 @@ R2 stays pending and gates the operational compiler before M0 closure.
 This replaces the earlier scratch-first entry condition.
 
 A.1 foundation, A.2 representation, A.3 evaluation and conversion, A.4
-checking, A.5a test frontend parsing, and A.5b.1 expression/declaration
-elaboration are implemented. Their scoped checks and representation choices
+checking, A.5a test frontend parsing, A.5b.1 expression/declaration
+elaboration, and A.5b.2 recursive programs are implemented. Their scoped checks and representation choices
 are recorded in
 [A.1 validation](validation/stage-a-foundation.md),
 [A.2 validation](validation/stage-a-representation.md),
 [A.3 validation](validation/stage-a-evaluation.md),
 [A.4 validation](validation/stage-a-checking.md),
-[A.5a validation](validation/stage-a-pinfront.md), and
-[A.5b.1 validation](validation/stage-a-elaboration.md).
-The next implementation milestone is A.5b.2 recursive program and full oracle integration.
+[A.5a validation](validation/stage-a-pinfront.md),
+[A.5b.1 validation](validation/stage-a-elaboration.md), and
+[A.5b.2 validation](validation/stage-a-program.md).
+The next implementation milestone is A.5b.3 pinned erasure and full oracle integration.
 
 ## Compiler commits
 
@@ -35,7 +36,8 @@ The next implementation milestone is A.5b.2 recursive program and full oracle in
 | A.4, checking | A4 through A6: the remaining rules, checking, positivity checking, the quantity algebra, printing, and specification counts | Focused acceptance/refusal, typing, shape, positivity, quantity, and printing checks, the specification counts, and earlier milestone regressions. |
 | A.5a, test frontend parsing | A7 corpus and gate plumbing; A8 lexer, parser, and syntax printing in `test/pinfront/` | Every pinned corpus file and supplemental lexer/parser cases compared with freshly compiled pinned Kanon modules on Bun, Node worker, and native; malformed-output and isolated mutation checks. |
 | A.5b.1, elaboration entry points | A9 through A10 expression and declaration elaboration in `test/pinfront/`, ordinary declaration checking, and mutual family admission | Exact pinned declaration observations for all 146 corpus files and focused probes on Bun, Node worker, and native; isolated semantic mutations. Recursive groups exercise the declaration API refusal. |
-| A.5b.2, full oracle integration | Remaining A7 plumbing and A9 through A10 recursive program and frontend integration | Reproducible builds and a runnable kernel differential harness over the complete pinned corpus and modes. |
+| A.5b.2, recursive programs | A9 through A10 recursive program driver, order certificates, totality checking, and A7 check/print observation plumbing | Exact stdout, stderr, and exit observations for all 146 corpus files and focused probes on Bun, Node worker, and native; direct contracts and isolated mutations. |
+| A.5b.3, full oracle integration | Remaining A7 plumbing, pinned erasure dependency, and complete frontend integration | Reproducible builds and a runnable kernel differential harness over the complete pinned corpus and all required modes. |
 | A.close, Stage A acceptance | A11 through A13: full verification, fixes, and review close | Every Stage A gate and mutant check, complete KANON-DIFF under the existing divergence policy, HOUSE, and BUILD-TIME. R2-RISK-A moves to the operational-compiler gate under the entry decision. |
 
 Required build and test plumbing may accompany the first milestone that
@@ -51,7 +53,14 @@ program driver. It ports family and constructor elaboration, dependent
 motives, and field annotations. The reference invokes those same entry
 points in pinned Kanon, so recursive function groups produce their explicit
 declaration refusal. Totality/order translation, whole-program integration,
-CLI output/exit modes, and the full KANON-DIFF remain A.5b.2 and A.close work.
+CLI output/exit modes, and the full KANON-DIFF follow that increment.
+
+A.5b.2 ports the recursive driver and its order/totality dependencies, then
+compares whole-program check and print observations. The pinned CLI also
+supports `check --erased` (bin/kanon.ml:61-74), which needs the 1,484-line
+lib/erase.ml dependency absent from the landed Stage A port. A.5b.3 retains
+that dependency and the full mode integration as a separate review boundary.
+No corpus file or required mode is removed from Stage A acceptance.
 
 Each milestone must build its landed dependency closure, pass the applicable
 source policies and focused behavioral checks, and receive a bounded review

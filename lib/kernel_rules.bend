@@ -323,12 +323,36 @@ def bool_answer(-C: Data, response: result(answer)) -> program<C, Bool>:
     case Done{UsageAnswer{_}}: Abort{E.Mismatch{"internal conversion response kind"}}
     case Done{LevelAnswer{_}}: Abort{E.Mismatch{"internal conversion response kind"}}
 
+# Nested requests keep their continuations in data rather than the host stack.
+type Run.stack<-C: Data> is Type:
+  Run.Empty{}
+  Run.Frame{resume: result(answer) -> program<C, answer>, rest: Run.stack<C>}
+
+type Run.state<-C: Data, -A: Data> is Type:
+  Run.Top{value: program<C, A>}
+  Run.Task{value: program<C, answer>, stack: Run.stack<C>, finish: result(answer) -> program<C, A>}
+
+def Run.deliver(-C: Data, -A: Data, value: result(answer), stack: Run.stack<C>, finish: result(answer) -> program<C, A>) -> Run.state<C, A>:
+  match stack:
+    case Run.Empty{}: Run.Top{finish(value)}
+    case Run.Frame{resume, rest}: Run.Task{resume(value), rest, finish}
+
 @unsafe
+def Run.drive(~C: Data, ~dispatch: task<C> -> program<C, answer>, -A: Data, state: Run.state<C, A>) -> result(A):
+  match state:
+    case Run.Top{value}:
+      match value:
+        case Pure{x}: Done{x}
+        case Abort{e}: Fail{e}
+        case Request{job, resume}: Run.drive(~C, ~dispatch, A, Run.Task{dispatch(job), Run.Empty{}, resume})
+    case Run.Task{value, stack, finish}:
+      match value:
+        case Pure{x}: Run.drive(~C, ~dispatch, A, Run.deliver(C, A, Done{x}, stack, finish))
+        case Abort{e}: Run.drive(~C, ~dispatch, A, Run.deliver(C, A, Fail{e}, stack, finish))
+        case Request{job, resume}: Run.drive(~C, ~dispatch, A, Run.Task{dispatch(job), Run.Frame{resume, stack}, finish})
+
 def run(~C: Data, ~dispatch: task<C> -> program<C, answer>, -A: Data, value: program<C, A>) -> result(A):
-  match value:
-    case Pure{x}: Done{x}
-    case Abort{e}: Fail{e}
-    case Request{job, resume}: run(~C, ~dispatch, A, resume(run(~C, ~dispatch, answer, dispatch(job))))
+  Run.drive(~C, ~dispatch, A, Run.Top{value})
 
 def o_infer_univ(-C: Data, ops: ops<C>, ctx: C, term: T.t) -> result(L.t):
   match ops:

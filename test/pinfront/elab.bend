@@ -157,11 +157,14 @@ def expectations_loop(+c: K.ctx, +legs: List<&2, V.vleg>, items: List<&2, Maybe<
     case _ <> rest:
       M.bind(V.t, List<&2, Maybe<&2, V.t>>, run_check(V.t, c, R.coll_leg_ty(K.ctx, K.ops, c, legs, i)), ty =>
         M.map_result(List<&2, Maybe<&2, V.t>>, List<&2, Maybe<&2, V.t>>, tail => Some{ty} <> tail, expectations_loop(c, legs, rest, F.Int63.succ(i))))
-def find_ctor(+x: String, families: F.Map.t<P.family>) -> Maybe<&2, mu_ref>:
+def find_ctor_rows(+x: String, families: List<&2, F.Pair2<String, P.family>>) -> Maybe<&2, mu_ref>:
   match families:
-    case F.Map.Empty{}: None{}
-    case F.Map.Bind{_, +fam, rest}:
-      maybe(P.ctor, Maybe<&2, mu_ref>, P.ctor_of(x, fam), _ => find_ctor(x, rest), ct => Some{RCtor{fam, ct}})
+    case []: None{}
+    case F.Pair2{_, +fam} <> rest:
+      maybe(P.ctor, Maybe<&2, mu_ref>, P.ctor_of(x, fam), _ => find_ctor_rows(x, rest), ct => Some{RCtor{fam, ct}})
+
+def find_ctor(x: String, families: F.Map.t<P.family>) -> Maybe<&2, mu_ref>:
+  find_ctor_rows(x, F.Map.bindings(P.family, families))
 def split_at(-A: Data, xs: List<&2, A>, +n: F.Int63.t) -> F.Pair2<List<&2, A>, List<&2, A>>:
   match xs:
     case []: F.Pair2{[], []}

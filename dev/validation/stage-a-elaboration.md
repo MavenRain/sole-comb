@@ -85,7 +85,9 @@ Machine-readable observations and validation records are stored in
 Validated on 2026-09-28. All 221 elaboration observations agree on Bun,
 Node worker, and native C, with zero divergences. All three new mutations
 compile, execute, and disagree with the baseline as intended. The result and
-mutation records match the 39 recorded source hashes.
+mutation records matched the 39 recorded source hashes. Stage A.5b.2
+re-recorded both with 42, adding `test/pinfront/order.bend`,
+`test/pinfront/program.bend`, and `test/pinfront/totality.bend`.
 
 `make gates` passed on 2026-09-28 with these results, in one uninterrupted
 run on an isolated copy of the staged tree that keeps `.git`:

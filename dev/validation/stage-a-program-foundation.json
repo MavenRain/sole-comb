@@ -1,0 +1,43 @@
+{
+  "milestone": "A.1",
+  "cases_per_endpoint": 275,
+  "endpoints": [
+    "bun",
+    "node-worker"
+  ],
+  "informational_endpoints": [
+    "native"
+  ],
+  "sources": {
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "test/foundation.bend": "cc647ec6407f2d39c30abc6f75b6abb9c92213dc600183bf3e112d5d1d20c533",
+    "dev/test-foundation.py": "6d595a64fc950420dec48f96966c787be32f828573659da90f38a792df4d006b",
+    "dev/build.py": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991",
+    "dev/pin-check.py": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d",
+    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+    "dev/house-bend.py": "a965254f5092fc8d7901b6872bfcb8d502aad7f2f865095808331152e6b34dd2",
+    "dev/test-house.py": "7f3f5916cdf18e743d912f09ee61b1d8bea2a7947dbaa4a03dd718016e5237bd",
+    "dev/bend-policy.json": "fecc43a79cc6739ed60e2f5efdafa70482f811e90b1e8077c63abfd73a703e24",
+    "Makefile": "26b44053c9c2d74dee10da2d07a7f366320b0e431286eb3a07ba8804026cceee"
+  },
+  "harness_sha256": "66152ae414e41cbf742275e43f7996d6d912258a34ae6a1003cf126edc3adfcc",
+  "r2_qualification": "pending",
+  "stage_a_oracle": "pending"
+}
