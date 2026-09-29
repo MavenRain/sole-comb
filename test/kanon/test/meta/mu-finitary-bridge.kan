@@ -1,0 +1,10 @@
+-- Four constructor arities exercise the generic unindexed family bridge.
+mu Grove : Type 0 with
+| bud : Grove
+| shoot : Grove -> Grove
+| join : Grove -> Grove -> Grove
+| crown : Grove -> Grove -> Grove -> Grove
+
+def sample : Grove := crown bud (shoot bud) (join bud (shoot bud))
+def rec weight : Grove -> Nat := fun (t : Grove) => case t as x in Grove return Nat with | bud => 1 | shoot a => natAdd 1 (weight a) | join l r => natAdd (natMul 2 (weight l)) (natMul 3 (weight r)) | crown l m r => natAdd (natAdd (natMul 2 (weight l)) (natMul 3 (weight m))) (natMul 5 (weight r))
+def main : Nat := weight sample

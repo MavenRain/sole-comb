@@ -13,13 +13,14 @@ now in the real compiler repository. Scratch feature development is retired.
 R2 stays pending and gates the operational compiler before M0 closure.
 This replaces the earlier scratch-first entry condition.
 
-A.1 foundation, A.2 representation, A.3 evaluation and conversion, and A.4
-checking are implemented. Their scoped checks and representation choices are recorded in
+A.1 foundation, A.2 representation, A.3 evaluation and conversion, A.4
+checking, and A.5a test frontend parsing are implemented. Their scoped checks and representation choices are recorded in
 [A.1 validation](validation/stage-a-foundation.md),
 [A.2 validation](validation/stage-a-representation.md),
-[A.3 validation](validation/stage-a-evaluation.md), and
-[A.4 validation](validation/stage-a-checking.md).
-The next implementation milestone is A.5 oracle integration.
+[A.3 validation](validation/stage-a-evaluation.md),
+[A.4 validation](validation/stage-a-checking.md), and
+[A.5a validation](validation/stage-a-pinfront.md).
+The next implementation milestone is A.5b elaboration and full oracle integration.
 
 ## Compiler commits
 
@@ -29,12 +30,17 @@ The next implementation milestone is A.5 oracle integration.
 | A.2, representation | A2: `kernel_term.bend`, `kernel_value.bend`, `kernel_shape.bend`, `kernel_global.bend`, `kernel_prim.bend`, plus the A.2 subsets of `kernel_quantity.bend` (tags), `kernel_positivity.bend` (records and constructor lookup), and `kernel_rules.bend` (arrow, unit, and boolean builders) | Build the landed dependency closure and exercise representation, lookup, and primitive contracts. |
 | A.3, evaluation | A3: `kernel_eval.bend`, `kernel_conv.bend`, the runtime and conversion subset of `kernel_rules.bend`, quantity equality, and signed host index arithmetic | Evaluation and conversion cases covering normal forms, refusal and budget exhaustion, plus comparisons with the pinned oracle wherever an adapter is available. |
 | A.4, checking | A4 through A6: the remaining rules, checking, positivity checking, the quantity algebra, printing, and specification counts | Focused acceptance/refusal, typing, shape, positivity, quantity, and printing checks, the specification counts, and earlier milestone regressions. |
-| A.5, oracle integration | A7 through A10: development gates and the pinned Kanon test frontend | Reproducible builds and a runnable differential harness over the complete pinned corpus and modes. |
+| A.5a, test frontend parsing | A7 corpus and gate plumbing; A8 lexer, parser, and syntax printing in `test/pinfront/` | Every pinned corpus file and supplemental lexer/parser cases compared with freshly compiled pinned Kanon modules on Bun, Node worker, and native; malformed-output and isolated mutation checks. |
+| A.5b, full oracle integration | Remaining A7 plumbing and A9 through A10 elaboration and frontend integration | Reproducible builds and a runnable kernel differential harness over the complete pinned corpus and modes. |
 | A.close, Stage A acceptance | A11 through A13: full verification, fixes, and review close | Every Stage A gate and mutant check, complete KANON-DIFF under the existing divergence policy, HOUSE, and BUILD-TIME. R2-RISK-A moves to the operational-compiler gate under the entry decision. |
 
 Required build and test plumbing may accompany the first milestone that
 needs it, even when its original unit is A7. Record that dependency move;
 it does not remove A7's remaining deliverables or change any gate.
+A.5 is split at the parser boundary so its source and comparison harness can
+be reviewed before elaboration. A.5a retains all 146 pinned inputs and marks
+R4 survivor decisions pending. It does not complete KANON-DIFF, the check,
+print, or erased-mode kernel comparisons, or Stage A acceptance.
 
 Each milestone must build its landed dependency closure, pass the applicable
 source policies and focused behavioral checks, and receive a bounded review

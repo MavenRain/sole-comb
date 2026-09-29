@@ -1,0 +1,9 @@
+-- The checked natural family used by the Lean constructor bridge.
+mu N : Type 0 with
+| zero : N
+| succ : N -> N
+
+def three : N := succ (succ (succ zero))
+def rec double : N -> N := fun (n : N) => case n as x in N return N with | zero => zero | succ m => succ (succ (double m))
+def rec count : N -> Nat := fun (n : N) => case n as x in N return Nat with | zero => 0 | succ m => natAdd 1 (count m)
+def main : Nat := count (double three)

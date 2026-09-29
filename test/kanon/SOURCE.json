@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "files": 146,
+  "roots": [
+    "test",
+    "examples"
+  ],
+  "manifest": "SURVIVORS.tsv",
+  "stage_a": "all pinned files; R4 survivor analysis remains pending"
+}

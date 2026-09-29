@@ -1,0 +1,56 @@
+-- Resolve one path through the host, then print its answer.
+mu RealpathState : Type 0 with
+| resolving : Bytes -> RealpathState
+| writing : Nat -> Bytes -> Nat -> RealpathState
+| finished : Nat -> RealpathState
+
+def usageState : RealpathState :=
+  writing 7 b"usage: reactor-realpath PATH\n" 64
+
+def init : Words -> RealpathState := fun (argv : Words) =>
+  case argv as arguments in Words return RealpathState with
+  | wordsNil => usageState
+  | wordsCons path rest =>
+      case rest as remaining in Words return RealpathState with
+      | wordsNil => resolving path
+      | wordsCons extra tail => usageState
+
+def resume : RealpathState -> Nat -> Bytes -> RealpathState :=
+  fun (state : RealpathState) (status : Nat) (answer : Bytes) =>
+    case state as current in RealpathState return RealpathState with
+    | resolving path =>
+        (case (natEq status 0) with
+        | 0 (no : prod ()) => writing 7 (bytesAppend answer b"\n") 1
+        | 1 (yes : prod ()) => writing 6 (bytesAppend answer b"\n") 0)
+    | writing stream body result =>
+        (case (natEq status 0) with
+        | 0 (no : prod ()) =>
+            (case (natEq result 0) with
+            | 0 (nonzero : prod ()) => finished result
+            | 1 (zero : prod ()) => finished 1)
+        | 1 (yes : prod ()) => finished result)
+    | finished result => finished result
+
+def requestCode : RealpathState -> Nat := fun (state : RealpathState) =>
+  case state as current in RealpathState return Nat with
+  | resolving path => 8
+  | writing stream body result => stream
+  | finished result => 0
+
+def requestArgs : RealpathState -> Words := fun (state : RealpathState) =>
+  case state as current in RealpathState return Words with
+  | resolving path => wordsCons path wordsNil
+  | writing stream body result => wordsNil
+  | finished result => wordsNil
+
+def requestBody : RealpathState -> Bytes := fun (state : RealpathState) =>
+  case state as current in RealpathState return Bytes with
+  | resolving path => bytesNil
+  | writing stream body result => body
+  | finished result => bytesNil
+
+def exitCode : RealpathState -> Nat := fun (state : RealpathState) =>
+  case state as current in RealpathState return Nat with
+  | resolving path => 1
+  | writing stream body result => result
+  | finished result => result
