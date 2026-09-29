@@ -1,0 +1,221 @@
+print/negative	KVar -1
+vars/negative	[]
+vars-under/negative	[]
+shift/negative	KVar -1
+shift-under/negative	KVar -1
+reindex/negative	KVar -1
+identity/negative	KVar -1
+print/zero	KVar 0
+vars/zero	[0]
+vars-under/zero	[]
+shift/zero	KVar 3
+shift-under/zero	KVar 0
+reindex/zero	KVar 0
+identity/zero	KVar 0
+print/outer	KVar 3
+vars/outer	[3]
+vars-under/outer	[1]
+shift/outer	KVar 6
+shift-under/outer	KVar 1
+reindex/outer	KVar 6
+identity/outer	KVar 3
+print/literal	KLit 123456789012345678901234567890
+vars/literal	[]
+vars-under/literal	[]
+shift/literal	KLit 123456789012345678901234567890
+shift-under/literal	KLit 123456789012345678901234567890
+reindex/literal	KLit 123456789012345678901234567890
+identity/literal	KLit 123456789012345678901234567890
+print/string	KLit "\"\\\n\t"
+vars/string	[]
+vars-under/string	[]
+shift/string	KLit "\"\\\n\t"
+shift-under/string	KLit "\"\\\n\t"
+reindex/string	KLit "\"\\\n\t"
+identity/string	KLit "\"\\\n\t"
+print/global	KGlobal bare name
+vars/global	[]
+vars-under/global	[]
+shift/global	KGlobal bare name
+shift-under/global	KGlobal bare name
+reindex/global	KGlobal bare name
+identity/global	KGlobal bare name
+print/erased	KErased
+vars/erased	[]
+vars-under/erased	[]
+shift/erased	KErased
+shift-under/erased	KErased
+reindex/erased	KErased
+identity/erased	KErased
+print/let	KLet x (KVar 2) (KStruct pair [KVar 0; KVar 2; KVar 2])
+vars/let	[2; 1; 1]
+vars-under/let	[0]
+shift/let	KLet x (KVar 5) (KStruct pair [KVar 0; KVar 5; KVar 5])
+shift-under/let	KLet x (KVar 0) (KStruct pair [KVar 0; KVar 0; KVar 0])
+reindex/let	KLet x (KVar 4) (KStruct pair [KVar 0; KVar 3; KVar 3])
+identity/let	KLet x (KVar 2) (KStruct pair [KVar 0; KVar 2; KVar 2])
+print/nested-let	KLet x (KVar 2) (KLet y (KVar 0) (KApp (KVar 3) [KVar 0; KVar 1; KVar 4]))
+vars/nested-let	[2; 1; 2]
+vars-under/nested-let	[0; 0]
+shift/nested-let	KLet x (KVar 5) (KLet y (KVar 0) (KApp (KVar 6) [KVar 0; KVar 1; KVar 7]))
+shift-under/nested-let	KLet x (KVar 0) (KLet y (KVar 0) (KApp (KVar 1) [KVar 0; KVar 1; KVar 2]))
+reindex/nested-let	KLet x (KVar 4) (KLet y (KVar 0) (KApp (KVar 4) [KVar 0; KVar 1; KVar 6]))
+identity/nested-let	KLet x (KVar 2) (KLet y (KVar 0) (KApp (KVar 3) [KVar 0; KVar 1; KVar 4]))
+print/closure	KClos f#0 2 [KVar 1; KVar 0]
+vars/closure	[1; 0]
+vars-under/closure	[]
+shift/closure	KClos f#0 2 [KVar 4; KVar 3]
+shift-under/closure	KClos f#0 2 [KVar -1; KVar 0]
+reindex/closure	KClos f#0 2 [KVar 2; KVar 0]
+identity/closure	KClos f#0 2 [KVar 1; KVar 0]
+print/app	KApp (KVar 2) [KVar 0; KVar 2]
+vars/app	[2; 0; 2]
+vars-under/app	[0; 0]
+shift/app	KApp (KVar 5) [KVar 3; KVar 5]
+shift-under/app	KApp (KVar 0) [KVar 0; KVar 0]
+reindex/app	KApp (KVar 4) [KVar 0; KVar 4]
+identity/app	KApp (KVar 2) [KVar 0; KVar 2]
+print/tail	KTail (KVar 1) [KVar 2]
+vars/tail	[1; 2]
+vars-under/tail	[0]
+shift/tail	KTail (KVar 4) [KVar 5]
+shift-under/tail	KTail (KVar -1) [KVar 0]
+reindex/tail	KTail (KVar 2) [KVar 4]
+identity/tail	KTail (KVar 1) [KVar 2]
+print/struct	KStruct pair [KVar 0; KVar 2; KVar 2]
+vars/struct	[0; 2; 2]
+vars-under/struct	[0; 0]
+shift/struct	KStruct pair [KVar 3; KVar 5; KVar 5]
+shift-under/struct	KStruct pair [KVar 0; KVar 0; KVar 0]
+reindex/struct	KStruct pair [KVar 0; KVar 4; KVar 4]
+identity/struct	KStruct pair [KVar 0; KVar 2; KVar 2]
+print/projection	KProj pair 1 (KVar 2)
+vars/projection	[2]
+vars-under/projection	[0]
+shift/projection	KProj pair 1 (KVar 5)
+shift-under/projection	KProj pair 1 (KVar 0)
+reindex/projection	KProj pair 1 (KVar 4)
+identity/projection	KProj pair 1 (KVar 2)
+print/tag	KTag sum 2 [KVar 1; KVar 3]
+vars/tag	[1; 3]
+vars-under/tag	[1]
+shift/tag	KTag sum 2 [KVar 4; KVar 6]
+shift-under/tag	KTag sum 2 [KVar -1; KVar 1]
+reindex/tag	KTag sum 2 [KVar 2; KVar 6]
+identity/tag	KTag sum 2 [KVar 1; KVar 3]
+print/case	KCase sum (KVar 3) [{0 0 (KVar 2)}; {1 2 (KStruct pair [KVar 0; KVar 2; KVar 2])}; {2 1 (KLet z (KVar 1) (KVar 3))}]
+vars/case	[3; 2; 0; 0; 0; 1]
+vars-under/case	[1; 0]
+shift/case	KCase sum (KVar 6) [{0 0 (KVar 5)}; {1 2 (KStruct pair [KVar 0; KVar 5; KVar 5])}; {2 1 (KLet z (KVar 4) (KVar 6))}]
+shift-under/case	KCase sum (KVar 1) [{0 0 (KVar 0)}; {1 2 (KStruct pair [KVar 0; KVar 2; KVar 2])}; {2 1 (KLet z (KVar 1) (KVar 1))}]
+reindex/case	KCase sum (KVar 6) [{0 0 (KVar 4)}; {1 2 (KStruct pair [KVar 0; KVar 2; KVar 2])}; {2 1 (KLet z (KVar 1) (KVar 4))}]
+identity/case	KCase sum (KVar 3) [{0 0 (KVar 2)}; {1 2 (KStruct pair [KVar 0; KVar 2; KVar 2])}; {2 1 (KLet z (KVar 1) (KVar 3))}]
+print/delay	KDelay delayed [KVar 2; KVar 0]
+vars/delay	[2; 0]
+vars-under/delay	[0]
+shift/delay	KDelay delayed [KVar 5; KVar 3]
+shift-under/delay	KDelay delayed [KVar 0; KVar 0]
+reindex/delay	KDelay delayed [KVar 4; KVar 0]
+identity/delay	KDelay delayed [KVar 2; KVar 0]
+print/force	KForce (KVar 4)
+vars/force	[4]
+vars-under/force	[2]
+shift/force	KForce (KVar 7)
+shift-under/force	KForce (KVar 2)
+reindex/force	KForce (KVar 8)
+identity/force	KForce (KVar 4)
+print/empty-closure	KClos f 0 []
+vars/empty-closure	[]
+vars-under/empty-closure	[]
+shift/empty-closure	KClos f 0 []
+shift-under/empty-closure	KClos f 0 []
+reindex/empty-closure	KClos f 0 []
+identity/empty-closure	KClos f 0 []
+print/empty-app	KApp (KVar 1) []
+vars/empty-app	[1]
+vars-under/empty-app	[]
+shift/empty-app	KApp (KVar 4) []
+shift-under/empty-app	KApp (KVar -1) []
+reindex/empty-app	KApp (KVar 2) []
+identity/empty-app	KApp (KVar 1) []
+print/empty-tail	KTail (KVar 1) []
+vars/empty-tail	[1]
+vars-under/empty-tail	[]
+shift/empty-tail	KTail (KVar 4) []
+shift-under/empty-tail	KTail (KVar -1) []
+reindex/empty-tail	KTail (KVar 2) []
+identity/empty-tail	KTail (KVar 1) []
+print/empty-struct	KStruct unit []
+vars/empty-struct	[]
+vars-under/empty-struct	[]
+shift/empty-struct	KStruct unit []
+shift-under/empty-struct	KStruct unit []
+reindex/empty-struct	KStruct unit []
+identity/empty-struct	KStruct unit []
+print/empty-tag	KTag sum 0 []
+vars/empty-tag	[]
+vars-under/empty-tag	[]
+shift/empty-tag	KTag sum 0 []
+shift-under/empty-tag	KTag sum 0 []
+reindex/empty-tag	KTag sum 0 []
+identity/empty-tag	KTag sum 0 []
+print/empty-case	KCase empty (KVar 2) []
+vars/empty-case	[2]
+vars-under/empty-case	[0]
+shift/empty-case	KCase empty (KVar 5) []
+shift-under/empty-case	KCase empty (KVar 0) []
+reindex/empty-case	KCase empty (KVar 4) []
+identity/empty-case	KCase empty (KVar 2) []
+print/empty-delay	KDelay f []
+vars/empty-delay	[]
+vars-under/empty-delay	[]
+shift/empty-delay	KDelay f []
+shift-under/empty-delay	KDelay f []
+reindex/empty-delay	KDelay f []
+identity/empty-delay	KDelay f []
+deep/print-force	KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KVar 0))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+deep/vars-force	[0]
+deep/shift-force	KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KForce (KVar 3))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+deep/print-let	KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KVar 128))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+deep/vars-let	[0; 0]
+deep/shift-let	KLet x (KVar 3) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KLet x (KVar 0) (KVar 131))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+repr/0	i31
+repr/1	struct tag
+repr/2	union tag
+repr/3	func tag
+repr/4	thunk tag
+tid/0	
+fid/0	
+tid/1	raw name;[]
+fid/1	raw name;[]
+tid/2	λ😀
+fid/2	λ😀
+integer/0	KLit 0
+integer/-1	KLit -1
+integer/-1267650600228229401496703205376	KLit -1267650600228229401496703205376
+integer/1461501637330902918203684832716283019655932542976	KLit 1461501637330902918203684832716283019655932542976
+integer/4611686018427387903	KLit 4611686018427387903
+string/0	KLit ""
+string/1	KLit "a' z"
+string/2	KLit "\000\001\b\t\n\r\031\127"
+string/3	KLit "\195\169\206\187\226\130\172\240\159\152\128"
+host-index/-4611686018427387904	KVar -4611686018427387904
+host-index/4611686018427387903	KVar 4611686018427387903
+shift/wrap	KVar -4611686018427387904
+branch/negative	{-1 -2 (KVar -3)}
+decl/rec-empty	rec []
+decl/rec	rec [a; b]
+decl/fun	fun f (i31, struct tag, union tag, func tag, thunk tag) : i31 := KVar 0
+decl/no-params	fun g () : union any := KErased
+prune/none	[]|[]|KErased
+prune/parameter	[]|[]|KVar 1
+prune/first	[struct a]|[KGlobal a]|KVar 2
+prune/last	[struct c]|[KGlobal c]|KVar 2
+prune/middle	[struct b]|[KGlobal b]|KVar 2
+prune/gaps	[struct a; struct c]|[KGlobal a; KGlobal c]|KApp (KVar 3) [KVar 2; KVar 3; KVar 0]
+prune/nested-closure	[struct b]|[KGlobal b]|KClos f 9 [KVar 0]
+prune/nested-delay	[struct a; struct c]|[KGlobal a; KGlobal c]|KDelay f [KVar 1; KVar 0]
+prune/let	[struct a; struct c]|[KGlobal a; KGlobal c]|KLet x (KVar 1) (KVar 1)
+prune/branch	[struct b; struct c]|[KGlobal b; KGlobal c]|KCase s (KVar 0) [{0 2 (KVar 3)}]
+prune/outer	[]|[]|KVar 2
+prune/empty	[]|[]|KVar 0

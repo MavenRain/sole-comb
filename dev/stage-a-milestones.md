@@ -24,7 +24,9 @@ are recorded in
 [A.5a validation](validation/stage-a-pinfront.md),
 [A.5b.1 validation](validation/stage-a-elaboration.md), and
 [A.5b.2 validation](validation/stage-a-program.md).
-The next implementation milestone is A.5b.3 pinned erasure and full oracle integration.
+A.5b.3.1 adds the erased representation, printer, and runtime scope operations,
+with [erasure support validation](validation/stage-a-erasure.md).
+The next implementation milestone is A.5b.3.2 type-directed erasure and full oracle integration.
 
 ## Compiler commits
 
@@ -37,7 +39,8 @@ The next implementation milestone is A.5b.3 pinned erasure and full oracle integ
 | A.5a, test frontend parsing | A7 corpus and gate plumbing; A8 lexer, parser, and syntax printing in `test/pinfront/` | Every pinned corpus file and supplemental lexer/parser cases compared with freshly compiled pinned Kanon modules on Bun, Node worker, and native; malformed-output and isolated mutation checks. |
 | A.5b.1, elaboration entry points | A9 through A10 expression and declaration elaboration in `test/pinfront/`, ordinary declaration checking, and mutual family admission | Exact pinned declaration observations for all 146 corpus files and focused probes on Bun, Node worker, and native; isolated semantic mutations. Recursive groups exercise the declaration API refusal. |
 | A.5b.2, recursive programs | A9 through A10 recursive program driver, order certificates, totality checking, and A7 check/print observation plumbing | Exact stdout, stderr, and exit observations for all 146 corpus files and focused probes on Bun, Node worker, and native; direct contracts and isolated mutations. |
-| A.5b.3, full oracle integration | Remaining A7 plumbing, pinned erasure dependency, and complete frontend integration | Reproducible builds and a runnable kernel differential harness over the complete pinned corpus and all required modes. |
+| A.5b.3.1, erasure support | Pinned `lib/eterm.ml` representation and printer in `erase/eterm.bend`; runtime variable reindexing, collection, and capture pruning from `lib/erase.ml` in `erase/runtime.bend` | Exact pinned observations on Bun, Node worker, and native, independent binding and printer expectations, and isolated semantic mutations. |
+| A.5b.3.2, full oracle integration | Remaining A7 plumbing, the type-directed erasure pass, and complete frontend integration | Reproducible builds and a runnable kernel differential harness over the complete pinned corpus and all required modes. |
 | A.close, Stage A acceptance | A11 through A13: full verification, fixes, and review close | Every Stage A gate and mutant check, complete KANON-DIFF under the existing divergence policy, HOUSE, and BUILD-TIME. R2-RISK-A moves to the operational-compiler gate under the entry decision. |
 
 Required build and test plumbing may accompany the first milestone that
@@ -58,8 +61,9 @@ CLI output/exit modes, and the full KANON-DIFF follow that increment.
 A.5b.2 ports the recursive driver and its order/totality dependencies, then
 compares whole-program check and print observations. The pinned CLI also
 supports `check --erased` (bin/kanon.ml:61-74), which needs the 1,484-line
-lib/erase.ml dependency absent from the landed Stage A port. A.5b.3 retains
-that dependency and the full mode integration as a separate review boundary.
+lib/erase.ml dependency. A.5b.3.1 ports its runtime scope helpers and the
+erased representation as a bounded prerequisite. A.5b.3.2 retains the
+type-directed pass and full mode integration as the next review boundary.
 No corpus file or required mode is removed from Stage A acceptance.
 
 Each milestone must build its landed dependency closure, pass the applicable

@@ -1,4 +1,4 @@
-.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare test-foundation test-representation test-evaluation test-checking test-checking-mutations test-pinfront test-pinfront-mutations test-elaboration test-elaboration-mutations test-program test-program-mutations house bench-preflight r2-report r2-run r2-prepare gates
+.PHONY: build check test test-bench test-r2 test-r2-run test-r2-prepare test-foundation test-representation test-evaluation test-checking test-checking-mutations test-pinfront test-pinfront-mutations test-elaboration test-elaboration-mutations test-program test-program-mutations test-erasure test-erasure-mutations house bench-preflight r2-report r2-run r2-prepare gates
 
 R2_MANIFEST ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/manifest.json
 R2_TOOLCHAIN ?= dev/toolchain.json
@@ -12,10 +12,10 @@ R2_PREPARE_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/prepare-plan.jso
 build:
 	python3 -P dev/build.py
 
-check: house test-foundation test-representation test-evaluation test-checking test-pinfront test-elaboration test-program
+check: house test-foundation test-representation test-evaluation test-checking test-pinfront test-elaboration test-program test-erasure
 	python3 -P dev/build.py --check
 
-test: build test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations
+test: build test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations
 	python3 -P dev/pin-check.py
 
 test-bench:
@@ -85,6 +85,12 @@ test-program:
 test-program-mutations: test-program
 	python3 -P dev/test-program-mutations.py
 
-gates: test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations
+test-erasure:
+	python3 -P dev/test-erasure.py
+
+test-erasure-mutations: test-erasure
+	python3 -P dev/test-erasure-mutations.py
+
+gates: test-bench test-r2 test-r2-run test-r2-prepare house test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations
 	python3 -P dev/pin-check.py
 	python3 -P dev/build.py --check

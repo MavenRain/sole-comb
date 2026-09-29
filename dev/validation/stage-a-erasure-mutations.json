@@ -1,0 +1,82 @@
+{
+  "milestone": "A.5b.3.1",
+  "endpoint": "bun",
+  "mutants": [
+    {
+      "name": "branch-depth",
+      "path": "erase/runtime.bend",
+      "before_sha256": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+      "mutated_sha256": "28b821f360d33ae30eed192352db7aeb035e7740c817ba09e490d574229039b5",
+      "harness_sha256": "2da6b526da0b4e6abb7e2d894ccf4cf652ba9ded39d8a89e71402a67e90ea6dc",
+      "selected_cases": [
+        "shift/case",
+        "reindex/case"
+      ],
+      "killed_by": [
+        "shift/case",
+        "reindex/case"
+      ],
+      "control_sha256": "a8d740da852d5608e015185f4641392650bba482420b56cdf2997ad60c3c82a0",
+      "output_sha256": "3b1515e96711212dc0f313b0450258d59d67209f04234d278317f536c51f6171"
+    },
+    {
+      "name": "capture-order",
+      "path": "erase/runtime.bend",
+      "before_sha256": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+      "mutated_sha256": "32660a6642ebb93ffd2f537f60fdbc299bb10030346ab5e92575163041e997ef",
+      "harness_sha256": "83926f9c365867ecbb852d7f9a3be27abc53ff6d83788977e318fd11ccb57f90",
+      "selected_cases": [
+        "prune/first",
+        "prune/gaps"
+      ],
+      "killed_by": [
+        "prune/first",
+        "prune/gaps"
+      ],
+      "control_sha256": "a8d740da852d5608e015185f4641392650bba482420b56cdf2997ad60c3c82a0",
+      "output_sha256": "406bbf9d99a7918244fce1de443a684034a334441121bd2e81eaa8d113beb692"
+    },
+    {
+      "name": "nested-closure",
+      "path": "erase/runtime.bend",
+      "before_sha256": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+      "mutated_sha256": "9e9873b72d6175522400987c19418bd468e4794d77ea74da3ea7fb8e2f2c7496",
+      "harness_sha256": "4fe9c263d2f27757b1c6fcc7918c481f224c7040d9edc947a9ce63ec9245dfe0",
+      "selected_cases": [
+        "vars/closure",
+        "prune/nested-closure"
+      ],
+      "killed_by": [
+        "vars/closure",
+        "prune/nested-closure"
+      ],
+      "control_sha256": "a8d740da852d5608e015185f4641392650bba482420b56cdf2997ad60c3c82a0",
+      "output_sha256": "396c161e5588e17b186d1c063af518b128f497b85c543c204ffd85a486d58ea7"
+    }
+  ],
+  "erasure_evidence_sha256": "b7f60ccdb79343d666fe0d9dfc84813ce30b67f3b6387fce65f3d9390eca86f5",
+  "runner_sha256": "70156b0e12fe6b9592312c370f936c7e313842359a4d6a8db370066540991cc6",
+  "source_hashes": {
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "test/erasure.bend": "417882b638eb2b5bcf1288cb100f462d18c4a216df3adfcb3158d9400961a491",
+    "test/foundation.bend": "cc647ec6407f2d39c30abc6f75b6abb9c92213dc600183bf3e112d5d1d20c533",
+    "test/erasure-oracle.ml": "e2c8d32a73b31f510681db8bc76cb28537c793c02238988176fadaa0b7a24130",
+    "dev/erasure-cases.py": "e0336f4ca57ae82868d4c0a0744a6b492b701ffae3fc57313e82dcd1131406ae",
+    "dev/test-erasure.py": "bafc94d64c3fac980ce447fd1cbf719ec2bdea69b7973a2a6c51566b326b57f0",
+    "dev/test-erasure-mutations.py": "70156b0e12fe6b9592312c370f936c7e313842359a4d6a8db370066540991cc6",
+    "dev/build.py": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991",
+    "dev/pin-check.py": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d",
+    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+    "dev/house-bend.py": "5e9ac6c26aefb74dd6462110a025736d2b37d5da2a50f3b3463bdfb0afb5b9e4",
+    "dev/test-house.py": "7f3f5916cdf18e743d912f09ee61b1d8bea2a7947dbaa4a03dd718016e5237bd",
+    "dev/bend-policy.json": "8e8d9e3f356605d24667c36ff7dd017ca8bc639b8532215aba6d0580c25437a0",
+    "Makefile": "6599a66c54aa1c26e24c3021a19513912c4155db7e46066943b38a22a443747c"
+  }
+}

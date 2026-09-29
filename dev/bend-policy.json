@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "sole-comb HOST source only: the Bend 2 files under bin/, lib/, surface/, wasm/ and dev/. The sole-comb object language has no @unsafe (Q2+Q3). Test-only test/pinfront/ files use the same purity and site checks, and are excluded from the production import closure.",
+  "scope": "sole-comb HOST source only: the Bend 2 files under bin/, lib/, surface/, erase/, wasm/ and dev/. The sole-comb object language has no @unsafe (Q2+Q3). Test-only test/pinfront/ files use the same purity and site checks, and are excluded from the production import closure.",
   "unsafe_meaning": "These scoped host functions bypass Bend termination checking. Type, affine-use and exhaustiveness checks remain required. A new entry needs a reviewed registry change.",
   "catchall_meaning": "These named host functions use catch-all match rows for scalar dispatch, parser fallback or explicit refusal. The sites field is the exact number of catch-all rows in the function. A new row or function needs a reviewed registry change.",
   "catchalls": [
@@ -176,6 +176,21 @@
       "path": "test/pinfront/order.bend",
       "function": "walk",
       "reason": "The work list visits strict subterms; a stopped non-point Out is expanded exactly once."
+    },
+    {
+      "path": "erase/eterm.bend",
+      "function": "render",
+      "reason": "The explicit print work list visits a finite erased syntax tree and its delimiter pieces. Type, affine-use and exhaustiveness checks remain enabled."
+    },
+    {
+      "path": "erase/runtime.bend",
+      "function": "map_loop",
+      "reason": "Each finite erased term is visited once and rebuilt once on explicit work and value stacks. InvalidStack reports an internal invariant failure. Type, affine-use and exhaustiveness checks remain enabled."
+    },
+    {
+      "path": "erase/runtime.bend",
+      "function": "vars_loop",
+      "reason": "The pending list visits each node of a finite erased syntax tree once. Type, affine-use and exhaustiveness checks remain enabled."
     }
   ]
 }
