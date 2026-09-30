@@ -1,0 +1,18 @@
+-- Named, partially applied, local, and multi-binder function arms.
+axiom Nat : Type 0
+def Two : Type 0 := sum (Nat, Nat)
+def id : (x : Nat) -> Nat := fun (x : Nat) => x
+def plus : (a : Nat) -> (b : Nat) -> Nat := fun (a : Nat) (b : Nat) => natAdd a b
+def unwrap : (x : Two) -> Nat := fun (x : Two) => elim x { id; plus 1 }
+def local : (f : (n : Nat) -> Nat) -> (x : Two) -> Nat :=
+  fun (f : (n : Nat) -> Nat) (x : Two) => elim x { f; id }
+def motive : (x : Two) -> Nat := fun (x : Two) => elim x as value return Nat { id; plus 2; }
+def functions : (x : Two) -> (y : Nat) -> Nat :=
+  fun (x : Two) => elim x { fun (a : Nat) (b : Nat) => natAdd a b; plus }
+def answer : Nat := unwrap (inj 1 of 2 41)
+def linear : (1 x : Nat) -> Nat := fun (1 x : Nat) => x
+def linearArms : (x : Two) -> Nat := fun (x : Two) => elim x { linear; linear }
+def localLinear : (1 f : (n : Nat) -> Nat) -> (x : Two) -> Nat :=
+  fun (1 f : (n : Nat) -> Nat) (x : Two) => elim x { f; f }
+def nested : (x : Two) -> (y : Two) -> Nat :=
+  fun (x : Two) (y : Two) => elim x { plus (elim y { id; plus 1 }); id }

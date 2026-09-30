@@ -20,12 +20,13 @@ Production modules reuse the validated pinned parser and elaborator port under
 `elim` arms. Production imports still cannot reach `test/pinfront/`; the pinned
 oracle frontend remains independent. `surface/source.bend` rejects the deleted
 legacy forms. The finite-sum eliminator lowers to the existing checked kernel
-Elim. Each supported arm is a single-binder function, and its annotation is
-checked against the corresponding payload type. Motives are supported.
+Elim. Each supported arm is a function term. Lambda annotations and inferred
+function domains are checked against the corresponding payload type. Motives
+are supported.
 
 The supported prefix includes ordinary definitions, axioms, dependent
 functions, Nat primitives, sums, products, and finite-sum elimination.
-Recursive-family recursors, constructor-labelled arms, arbitrary arm terms,
+Recursive-family recursors, constructor-labelled arms,
 records, default arms, type-directed erasure, and WebAssembly build/run remain
 pending. Unsupported forms must fail, and native examples for them must enter
 the public suite when they become operational. The first increment's source

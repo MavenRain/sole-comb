@@ -327,9 +327,28 @@ def elab_group(~go: walker, c: K.ctx, b: Syn.binder, cod: Syn.t, left: Bool) -> 
 def checked_payload(~go: walker, +c: K.ctx, ty: V.t, annotation: Syn.t) -> M.result(Unit):
   M.bind(T.t, Unit, go(c, None{}, annotation), tm =>
     M.bind(V.t, Unit, eval_in(c, tm), declared => run_check(Unit, c, K.ensure(c, declared, ty))))
+# An empty binder list marks a native function-valued arm. The head is
+# elaborated once under the leg binder, which is named '$elim' so that no
+# source name can refer to it; T.Var is a de Bruijn index, so the head term
+# stays valid under a rebind of that binder at the same depth. The checks run
+# under the Pi binder name, so a mismatch message never shows '$elim'.
+def elab_arm(~go: walker, +c: K.ctx, +s: S.t<V.t>, +legs: List<&2, V.vleg>, +mo: Maybe<&2, T.motive>, +expected: Maybe<&2, V.t>, +k: F.Int63.t, +body: Syn.t) -> M.result(F.Pair2<T.addr, T.leg>):
+  M.bind(V.t, F.Pair2<T.addr, T.leg>, run_check(V.t, c, R.coll_leg_ty(K.ctx, K.ops, c, legs, k)), +ty =>
+    using(K.ctx, M.result(F.Pair2<T.addr, T.leg>), K.bind("$elim", Q.Zero{}, ty, c), +hidden =>
+      M.bind(T.t, F.Pair2<T.addr, T.leg>, go(hidden, None{}, body), +head =>
+        M.bind(V.t, F.Pair2<T.addr, T.leg>, type_of(hidden, head), w =>
+          M.bind(V.Former, F.Pair2<T.addr, T.leg>, need(V.Former, E.Mismatch{"an elim arm must be a function"}, V.as_ran(w)), former => with_former(M.result(F.Pair2<T.addr, T.leg>), former, shape => clo => _ =>
+            M.bind(R.Point, F.Pair2<T.addr, T.leg>, need(R.Point, E.Mismatch{"an elim arm must be a function"}, R.point_view(shape)), point => with_point(M.result(F.Pair2<T.addr, T.leg>), point, +q => +x => +dom =>
+              using(K.ctx, M.result(F.Pair2<T.addr, T.leg>), K.bind(x, q, ty, c), +named =>
+                M.bind(Unit, F.Pair2<T.addr, T.leg>, run_check(Unit, named, K.ensure(named, dom, ty)), _ =>
+                  M.bind(V.t, F.Pair2<T.addr, T.leg>, open_in(named, clo, [V.var(K.size(c))]), cod =>
+                    M.bind(Maybe<&2, V.t>, F.Pair2<T.addr, T.leg>, branch_target(c, mo, expected, V.VIn{s, V.VALeg{k}, [V.var(K.size(c))]}), target =>
+                      M.bind(Unit, F.Pair2<T.addr, T.leg>, maybe(V.t, M.result(Unit), target, _ => M.Pure{Unit{}}, t => run_check(Unit, named, K.ensure(named, cod, t))), _ =>
+                        M.map_result(T.t, F.Pair2<T.addr, T.leg>, dt => F.Pair2{T.ALeg{k}, T.Leg{[F.Pair2{q, "$elim"}], T.Out{S.SPi{q, x, dt}, T.APt{q, T.Var{F.Int63.zero}}, head}}}, quote_in(named, dom)))))))))))))))
 def elab_branch(~go: walker, +c: K.ctx, s: S.t<V.t>, legs: List<&2, V.vleg>, mo: Maybe<&2, T.motive>, expected: Maybe<&2, V.t>, br: Syn.branch) -> M.result(F.Pair2<T.addr, T.leg>):
   match br:
     case Syn.BrCtor{name, _, _}: M.Abort{E.Wrong_leg{Syn.cat(["the branch at ", name, " keys a constructor and a case at a collection keys a leg"])}}
+    case Syn.BrLeg{k, [], body}: elab_arm(go, c, s, legs, mo, expected, k, body)
     case Syn.BrLeg{+k, binders, body}:
       M.bind(Syn.binder, F.Pair2<T.addr, T.leg>, need(Syn.binder, E.Missing_branch{"each branch binds its payload once"}, R.one_of(Syn.binder, binders)), b => with_binder(M.result(F.Pair2<T.addr, T.leg>), b, +q => +x => annotation =>
             M.bind(V.t, F.Pair2<T.addr, T.leg>, run_check(V.t, c, R.coll_leg_ty(K.ctx, K.ops, c, legs, k)), +ty =>

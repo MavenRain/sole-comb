@@ -35,6 +35,10 @@ The public source-checking increment adds `bin/sole-comb.bend`, production
 `surface/` components, and a public-command suite over native examples and
 refusals. Next work expands that public compiler and completes A.5b.3.2
 type-directed erasure and full oracle integration before `build` and `run`.
+The function-arm increment extends native finite-sum elimination with named
+and local function values, partial applications, and multi-binder lambdas.
+Its public command suite includes domain, result, nonfunction, and quantity
+refusals. See [function-arm validation](validation/public-function-arms.md).
 
 ## Compiler commits
 

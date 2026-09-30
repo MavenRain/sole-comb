@@ -1,0 +1,3 @@
+axiom Nat : Type 0
+def Two : Type 0 := sum (Nat, Nat)
+def bad : (x : Two) -> Nat := fun (x : Two) => elim x { 1; fun (b : Nat) => b }

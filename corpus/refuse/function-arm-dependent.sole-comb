@@ -1,0 +1,5 @@
+axiom Nat : Type 0
+axiom P : (n : Nat) -> Type 0
+axiom g : (n : Nat) -> P n
+def Two : Type 0 := sum (Nat, Nat)
+def bad : (x : Two) -> Nat := fun (x : Two) => elim x { g; g }

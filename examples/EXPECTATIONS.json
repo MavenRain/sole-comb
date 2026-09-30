@@ -4,7 +4,8 @@
     "examples/identity.sole-comb": 3,
     "examples/arithmetic.sole-comb": 3,
     "examples/finite-elim.sole-comb": 6,
-    "examples/motive.sole-comb": 3
+    "examples/motive.sole-comb": 3,
+    "examples/function-arms.sole-comb": 13
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -16,6 +17,11 @@
     "corpus/refuse/wrong-arm-result.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
     "corpus/refuse/affine-duplication.sole-comb": "quantity: the linear binder x must be used exactly once",
     "corpus/refuse/recursive-family.sole-comb": "E-SOURCE-NOT-YET",
-    "corpus/refuse/unclosed-elim.sole-comb": "expected ';' or '}' after an elim arm"
+    "corpus/refuse/unclosed-elim.sole-comb": "expected ';' or '}' after an elim arm",
+    "corpus/refuse/nonfunction-arm.sole-comb": "an elim arm must be a function",
+    "corpus/refuse/function-arm-domain.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
+    "corpus/refuse/function-arm-result.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
+    "corpus/refuse/function-arm-duplication.sole-comb": "quantity: the linear binder f must be used exactly once",
+    "corpus/refuse/function-arm-dependent.sole-comb": "mismatch: the term has type (Out SPi w n Nat (APt w n) P) and the expected type is Nat"
   }
 }

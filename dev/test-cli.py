@@ -31,7 +31,7 @@ def main():
     selected = set(manifest["positive"]) | set(manifest["negative"])
     found = {str(p.relative_to(ROOT)) for directory in ("examples", "corpus/refuse")
              for p in (ROOT / directory).rglob("*.sole-comb")}
-    if manifest["schema"] != 1 or selected != found or len(selected) != 14 or not all(manifest["negative"].values()):
+    if manifest["schema"] != 1 or selected != found or len(selected) != 20 or not all(manifest["negative"].values()):
         raise RuntimeError("native example census changed; update and review the independent expectations")
     before = inputs()
     observations = []
@@ -71,7 +71,7 @@ def main():
             result = run(["check", "--host", host, path], 1, host)
             if "E-R4-MATCH" in result.stderr:
                 raise RuntimeError("reserved words inside a byte literal were treated as syntax")
-        print(f"PASS public {host}: 14 native files and 2 lexical boundary cases", flush=True)
+        print(f"PASS public {host}: 20 native files and 2 lexical boundary cases", flush=True)
 
     with tempfile.TemporaryDirectory(prefix="sole cli ") as folder:
         directory = Path(folder)
@@ -89,7 +89,7 @@ def main():
     work = ROOT / "_build/public"
     work.mkdir(parents=True, exist_ok=True)
     report = {"schema": 1, "scope": "public source-checking increment", "hosts": hosts,
-              "files": 14, "observations": len(observations), "sources": before, "results": observations}
+              "files": 20, "observations": len(observations), "sources": before, "results": observations}
     (work / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     print(f"PASS public compiler: {len(observations)} command observations; source hashes stable", flush=True)
 

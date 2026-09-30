@@ -440,8 +440,12 @@ def native_branch(+loc: T.loc, +body: S.t, acc: List<&2, S.branch>) -> L.result(
     case S.SFun{[binder], arm_body}:
       L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
         Done{S.BrLeg{key, [binder], arm_body}})
+    case S.SFun{binder <> rest, arm_body}:
+      L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
+        Done{S.BrLeg{key, [binder], S.SFun{rest, arm_body}}})
     case _:
-      L.error(S.branch, loc, "E-SOURCE-NOT-YET: each finite-sum elim arm must be a single-binder function")
+      L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
+        Done{S.BrLeg{key, [], body}})
 
 @unsafe
 def dispatch(job: task) -> answer:

@@ -1,0 +1,5 @@
+axiom Nat : Type 0
+def Two : Type 0 := sum (Nat, Nat)
+def bad : (1 f : (n : Nat) -> Nat) -> (x : Two) -> prod (Nat, Nat) :=
+  fun (1 f : (n : Nat) -> Nat) (x : Two) =>
+    tuple (elim x { f; f }, elim x { f; f })
