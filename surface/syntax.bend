@@ -18,6 +18,7 @@ type field_of<-A: Data> is Data:
 type branch_of<-A: Data> is Data:
   BrLeg{key: F.Int63.t, binders: List<&2, binder_of<A>>, body: A}
   BrCtor{name: String, fields: List<&2, field_of<A>>, body: A}
+  BrDefault{body: A}
 type fam_ctor_of<-A: Data> is Data:
   FamCtor{name: String, ty: A}
 type fam_of<-A: Data> is Data:
@@ -167,6 +168,7 @@ def render(job: render_job) -> String:
           cat([" | ", F.Int63.show(k), render(RenderJoin{"", jobs(~binder, ~(b => RenderPrefix{" ", RenderBinderText{b}}), bs)}), " => ", render(RenderAt{1n, body})])
         case BrCtor{c, fs, body}:
           cat([" | ", c, render(RenderJoin{"", jobs(~field, ~(f => RenderFieldText{f}), fs)}), " => ", render(RenderAt{1n, body})])
+        case BrDefault{body}: cat([" | else: ", render(RenderAt{0n, body})])
     case RenderMotiveText{mo}:
       match mo:
         case Motive{self, ind, idx, body}: cat([" as ", self, ind_text(ind, idx), " return ", render(RenderAt{1n, body})])

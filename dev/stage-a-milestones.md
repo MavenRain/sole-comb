@@ -39,6 +39,10 @@ The function-arm increment extends native finite-sum elimination with named
 and local function values, partial applications, and multi-binder lambdas.
 Its public command suite includes domain, result, nonfunction, and quantity
 refusals. See [function-arm validation](validation/public-function-arms.md).
+The default-arm increment adds final `else: term` sugar through
+`surface/sugar.bend`. Its public suite checks explicit kernel expansion equality
+and syntax, payload, result, and quantity refusals. See
+[default-arm validation](validation/public-default-arms.md).
 
 ## Compiler commits
 

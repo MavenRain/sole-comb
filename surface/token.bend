@@ -12,6 +12,7 @@ type kind is Data:
   RBrace{}
   Semicolon{}
   KElim{}
+  KElse{}
   Colon{}
   ColonEq{}
   Arrow{}
@@ -76,6 +77,7 @@ def describe(k: kind) -> String:
     case RBrace{}: "'}'"
     case Semicolon{}: "';'"
     case KElim{}: "'elim'"
+    case KElse{}: "'else'"
     case Colon{}: "':'"
     case ColonEq{}: "':='"
     case Arrow{}: "'->'"

@@ -10,7 +10,7 @@
     "test/kanon/SURVIVORS.tsv": "7516545ba947b1d4285208a5cf6760ce98910dc73bedc33423cc94a994e84307",
     "Makefile": "9c66e7aaacff5ea4f8d68a4492c648e2875ba1468dbe9e43cbeb82bf5b1e9950",
     "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
-    "dev/bend-policy.json": "b46c8451fb3b9554cd9fee968efd2009243b4dc1ac61bbc5610b0ff0556c8a34",
+    "dev/bend-policy.json": "1cc071211f388afa7d221074a9b2f13ad4086ed19b84d03c5fb5704a2403a2f4",
     "dev/house-bend.py": "df77ec6a4d047d8ecc09be230638375938992dd8e3cf1761151d5be00e9ce260",
     "dev/test-elaboration-mutations.py": "dc11c234514f610f7218343ed457cb8f257d2d59b3e6296084485bff3453cf36",
     "test/elaboration.bend": "122d15da2bcc8e68f7611bd54f50ca8b500344cd3d32c8e416087bfa9baf2d65",

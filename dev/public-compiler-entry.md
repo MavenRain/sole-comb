@@ -24,10 +24,18 @@ Elim. Each supported arm is a function term. Lambda annotations and inferred
 function domains are checked against the corresponding payload type. Motives
 are supported.
 
+The default-arm increment adds final `else: term` syntax to finite sums.
+`surface/sugar.bend` expands it into ordinary positional arms before branch
+elaboration. The checked scrutinee's collection determines the remaining
+payloads, and each expanded function is checked independently. Defaults must
+cover at least one remaining leg; duplicate or non-final defaults fail.
+The public suite compares default examples with independently written explicit
+expansions, including motives, local and linear functions, and nested captures.
+
 The supported prefix includes ordinary definitions, axioms, dependent
 functions, Nat primitives, sums, products, and finite-sum elimination.
 Recursive-family recursors, constructor-labelled arms,
-records, default arms, type-directed erasure, and WebAssembly build/run remain
+records, type-directed erasure, and WebAssembly build/run remain
 pending. Unsupported forms must fail, and native examples for them must enter
 the public suite when they become operational. The first increment's source
 transport accepts files up to 32768 bytes and reports larger inputs explicitly.

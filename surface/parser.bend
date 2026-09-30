@@ -7,6 +7,7 @@ import token.bend as T
 import source.bend as Source
 import lexer.bend as L
 import syntax.bend as S
+import sugar.bend as Sugar
 
 def tokens() -> Data: List<&2, T.t>
 def parsed(-A: Data) -> Data: L.result(F.Pair2<A, tokens>)
@@ -63,6 +64,7 @@ def kind_starts_atom(k: T.kind) -> Bool:
     case T.RBrace{}: False{}
     case T.Semicolon{}: False{}
     case T.KElim{}: False{}
+    case T.KElse{}: False{}
     case T.LParen{}: True{}
     case T.RParen{}: False{}
     case T.Colon{}: False{}
@@ -138,6 +140,8 @@ type task is Data:
   ParseMotiveWith{form: elimination, scrut: S.t, name: String, clause: index_clause, body: S.t, ts: tokens}
   ParseBranches{form: elimination, ts: tokens, acc: List<&2, S.branch>}
   ParseNativeArmClose{form: elimination, body: S.t, ts: tokens, acc: List<&2, S.branch>}
+  ParseDefaultBody{ts: tokens, acc: List<&2, S.branch>}
+  ParseDefaultArmClose{body: S.t, ts: tokens, acc: List<&2, S.branch>}
   ParseLegBody{form: elimination, key: F.Int63.t, bs: List<&2, S.binder>, ts: tokens, acc: List<&2, S.branch>}
   ParseCtorBody{form: elimination, name: String, fs: List<&2, S.field>, ts: tokens, acc: List<&2, S.branch>}
   ParseFields{ts: tokens, acc: List<&2, S.field>}
@@ -436,16 +440,7 @@ def arm_count(bs: List<&2, S.branch>) -> Nat:
     case []: 0n
     case _ <> rest: (1n + arm_count(rest) : Nat)
 def native_branch(+loc: T.loc, +body: S.t, acc: List<&2, S.branch>) -> L.result(S.branch):
-  match body:
-    case S.SFun{[binder], arm_body}:
-      L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
-        Done{S.BrLeg{key, [binder], arm_body}})
-    case S.SFun{binder <> rest, arm_body}:
-      L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
-        Done{S.BrLeg{key, [binder], S.SFun{rest, arm_body}}})
-    case _:
-      L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key =>
-        Done{S.BrLeg{key, [], body}})
+  L.bind(F.Int63.t, S.branch, bounded(loc, F.Bignum.from_nat(arm_count(acc))), key => Done{Sugar.arm(key, body)})
 
 @unsafe
 def dispatch(job: task) -> answer:
@@ -555,8 +550,25 @@ def dispatch(job: task) -> answer:
       match ts:
         case T.Token{T.RBrace{}, _} <> rest:
           Answer5{done(List<&2, S.branch>, L.reverse(S.branch, acc, []), rest)}
+        case T.Token{T.KElse{}, _} <> rest:
+          Answer5{read_5(dispatch(ParseDefaultBody{rest, acc}))}
         case _:
           Answer5{next(S.t, List<&2, S.branch>, read_0(dispatch(ParseTerm{ts})), body => tail => read_5(dispatch(ParseNativeArmClose{form, body, tail, acc})))}
+    case ParseDefaultBody{+ts, +acc}:
+      match ts:
+        case T.Token{T.Colon{}, _} <> rest:
+          Answer5{next(S.t, List<&2, S.branch>, read_0(dispatch(ParseTerm{rest})), body => tail => read_5(dispatch(ParseDefaultArmClose{body, tail, acc})))}
+        case _: Answer5{want(List<&2, S.branch>, "':' after 'else'", ts)}
+    case ParseDefaultArmClose{+body, +ts, +acc}:
+      match ts:
+        case T.Token{T.Semicolon{}, _} <> rest:
+          match rest:
+            case T.Token{T.RBrace{}, _} <> tail:
+              Answer5{done(List<&2, S.branch>, L.reverse(S.branch, S.BrDefault{body} <> acc, []), tail)}
+            case _: Answer5{want(List<&2, S.branch>, "'}' after the final default elim arm", rest)}
+        case T.Token{T.RBrace{}, _} <> rest:
+          Answer5{done(List<&2, S.branch>, L.reverse(S.branch, S.BrDefault{body} <> acc, []), rest)}
+        case _: Answer5{want(List<&2, S.branch>, "';' or '}' after the final default elim arm", ts)}
     case ParseNativeArmClose{+form, body, +ts, +acc}:
       match ts:
         case T.Token{T.Semicolon{}, +loc} <> rest:

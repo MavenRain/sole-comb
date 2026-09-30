@@ -1,0 +1,29 @@
+-- A final else arm fills the remaining positional sum legs.
+axiom Nat : Type 0
+def Three : Type 0 := sum (Nat, Nat, Nat)
+def id : (n : Nat) -> Nat := fun (n : Nat) => n
+def plus : (a : Nat) -> (b : Nat) -> Nat := fun (a : Nat) (b : Nat) => natAdd a b
+def all : (x : Three) -> Nat := fun (x : Three) => elim x { else: id }
+def suffix : (x : Three) -> Nat := fun (x : Three) => elim x { plus 10; else: id }
+def lambda : (x : Three) -> Nat := fun (x : Three) => elim x { else: fun (n : Nat) => n; }
+def partial : (x : Three) -> Nat := fun (x : Three) => elim x { id; else: plus 1 }
+def local : (f : (n : Nat) -> Nat) -> (x : Three) -> Nat :=
+  fun (f : (n : Nat) -> Nat) (x : Three) => elim x { id; else: f }
+def motive : (x : Three) -> Nat :=
+  fun (x : Three) => elim x as value return Nat { id; else: id; }
+def functions : (x : Three) -> (y : Nat) -> Nat :=
+  fun (x : Three) => elim x { else: fun (a : Nat) (b : Nat) => natAdd a b }
+def linear : (1 x : Nat) -> Nat := fun (1 x : Nat) => x
+def linearArms : (x : Three) -> Nat := fun (x : Three) => elim x { else: linear }
+def localLinear : (1 f : (n : Nat) -> Nat) -> (x : Three) -> Nat :=
+  fun (1 f : (n : Nat) -> Nat) (x : Three) => elim x { else: f }
+def captured : (n : Nat) -> (x : Three) -> Nat :=
+  fun (n : Nat) (x : Three) => elim x { else: fun (payload : Nat) => natAdd n payload }
+def scrutinee : (x : Three) -> Nat :=
+  fun (x : Three) => elim x { else: fun (payload : Nat) => elim x { else: id } }
+def nested : (x : Three) -> (y : Three) -> Nat :=
+  fun (x : Three) (y : Three) => elim x { plus (elim y { else: id }); else: id }
+def heterogeneous : (x : sum (Type 0, Nat, Nat)) -> Nat :=
+  fun (x : sum (Type 0, Nat, Nat)) => elim x { fun (ty : Type 0) => 0; else: id }
+def answer : Nat := suffix (inj 2 of 3 41)
+def one : (x : sum (Nat)) -> Nat := fun (x : sum (Nat)) => elim x { else: id }

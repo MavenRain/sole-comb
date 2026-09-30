@@ -17,6 +17,7 @@ import ../lib/kernel_eval.bend as Ev
 import ../lib/kernel_check.bend as K
 import syntax.bend as Syn
 import elab_program.bend as M
+import sugar.bend as Sugar
 
 def walker() -> Type: K.ctx -> Maybe<&2, V.t> -> Syn.t -> M.result(T.t)
 def choose(-A: Type, flag: Bool, yes: Unit -> A, no: Unit -> A) -> A:
@@ -347,6 +348,7 @@ def elab_arm(~go: walker, +c: K.ctx, +s: S.t<V.t>, +legs: List<&2, V.vleg>, +mo:
                         M.map_result(T.t, F.Pair2<T.addr, T.leg>, dt => F.Pair2{T.ALeg{k}, T.Leg{[F.Pair2{q, "$elim"}], T.Out{S.SPi{q, x, dt}, T.APt{q, T.Var{F.Int63.zero}}, head}}}, quote_in(named, dom)))))))))))))))
 def elab_branch(~go: walker, +c: K.ctx, s: S.t<V.t>, legs: List<&2, V.vleg>, mo: Maybe<&2, T.motive>, expected: Maybe<&2, V.t>, br: Syn.branch) -> M.result(F.Pair2<T.addr, T.leg>):
   match br:
+    case Syn.BrDefault{_}: M.Abort{E.Wrong_leg{"a default elim arm must be expanded before branch elaboration"}}
     case Syn.BrCtor{name, _, _}: M.Abort{E.Wrong_leg{Syn.cat(["the branch at ", name, " keys a constructor and a case at a collection keys a leg"])}}
     case Syn.BrLeg{k, [], body}: elab_arm(go, c, s, legs, mo, expected, k, body)
     case Syn.BrLeg{+k, binders, body}:
@@ -416,6 +418,7 @@ def elab_mu_motive(~go: walker, c: K.ctx, n: String, fam: P.family, clo: V.closu
   mu_motive_indices(go, c, n, family_indices(fam), clo, u, penv, mo)
 def elab_mu_branch(~go: walker, +c: K.ctx, +n: String, fam: P.family, mo: Maybe<&2, T.motive>, penv: List<&2, V.t>, expected: Maybe<&2, V.t>, br: Syn.branch) -> M.result(F.Pair2<T.addr, T.leg>):
   match br:
+    case Syn.BrDefault{_}: M.Abort{E.Wrong_leg{"default elim arms currently require a collection"}}
     case Syn.BrLeg{k, _, _}: M.Abort{E.Wrong_leg{Syn.cat(["the branch ", F.Int63.show(k), " keys a leg and a case at ", n, " keys a constructor"])}}
     case Syn.BrCtor{+name, +fields, body}:
       M.bind(P.ctor, F.Pair2<T.addr, T.leg>, need(P.ctor, E.Unbound{Syn.cat([name, " is not a constructor of ", n])}, P.ctor_of(name, fam)), ct => with_ctor(M.result(F.Pair2<T.addr, T.leg>), ct, _ => +args => indices => _ => _ =>
@@ -445,8 +448,9 @@ def elab_coll_case(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, scrut: T.t
   M.bind(F.Int63.t, T.t, need(F.Int63.t, E.Mismatch{"a case eliminates a collection"}, R.collection_view(s)), n =>
     M.bind(List<&2, V.vleg>, T.t, run_check(List<&2, V.vleg>, c, R.coll_legs_of(K.ctx, K.ops, c, clo)), +legs =>
       M.bind(Maybe<&2, T.motive>, T.t, elab_motive(go, c, mo, w), +motive =>
-        M.map_result(List<&2, F.Pair2<T.addr, T.leg>>, T.t, branches => T.Elim{T.Elimination{S.SColl{n}, scrut, Q.One{}, motive, branches}},
-          collect(Syn.branch, F.Pair2<T.addr, T.leg>, collection_environment, env => br => collection_branch(go, env, br), CollectionEnv{c, s, legs, motive, expected}, brs)))))
+        M.bind(List<&2, Syn.branch>, T.t, Sugar.expand(V.vleg, brs, F.Int63.zero, legs), expanded =>
+          M.map_result(List<&2, F.Pair2<T.addr, T.leg>>, T.t, branches => T.Elim{T.Elimination{S.SColl{n}, scrut, Q.One{}, motive, branches}},
+            collect(Syn.branch, F.Pair2<T.addr, T.leg>, collection_environment, env => br => collection_branch(go, env, br), CollectionEnv{c, s, legs, motive, expected}, expanded))))))
 def elab_mu_ref(~go: walker, c: K.ctx, r: mu_ref, args: List<&2, Syn.t>) -> M.result(T.t):
   match r:
     case RFam{f}: elab_fam_ref(go, c, f, args)

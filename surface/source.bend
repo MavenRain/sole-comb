@@ -19,7 +19,6 @@ def tokens(ts: List<&2, T.t>) -> L.result(List<&2, T.t>):
         case T.KNu{}: L.error(List<&2, T.t>, loc, "E-SOURCE-NOT-YET: nu declarations are not supported")
         case T.KMutual{}: L.error(List<&2, T.t>, loc, "E-SOURCE-NOT-YET: mutual families need the M0 recursor semantics")
         case T.Ident{"record"}: L.error(List<&2, T.t>, loc, "E-SOURCE-NOT-YET: record declarations are not supported")
-        case T.Ident{"else"}: L.error(List<&2, T.t>, loc, "E-SOURCE-NOT-YET: default elim arms are not supported")
         case T.KWith{}: L.bind(List<&2, T.t>, List<&2, T.t>, tokens(rest), tail => Done{T.Token{T.Ident{"with"}, loc} <> tail})
         case T.KAbsurd{}: L.bind(List<&2, T.t>, List<&2, T.t>, tokens(rest), tail => Done{T.Token{T.Ident{"absurd"}, loc} <> tail})
         case T.KEnd{}: L.bind(List<&2, T.t>, List<&2, T.t>, tokens(rest), tail => Done{T.Token{T.Ident{"end"}, loc} <> tail})

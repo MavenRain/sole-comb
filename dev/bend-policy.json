@@ -91,8 +91,8 @@
     {
       "path": "surface/parser.bend",
       "function": "dispatch",
-      "sites": 46,
-      "reason": "Production port: Pinned recursive-descent lookahead uses explicit refusal or returns the untouched suffix at named grammar boundaries. Result and task variants remain exhaustive."
+      "sites": 49,
+      "reason": "Production recursive-descent lookahead retains explicit refusal at grammar boundaries, including colon and final-arm delimiters for default elimination. Result and task variants remain exhaustive."
     },
     {
       "path": "surface/elab.bend",
@@ -137,16 +137,16 @@
       "reason": "Admits the remaining lexical tokens after explicit reserved-form and unsupported-feature refusals."
     },
     {
-      "path": "surface/parser.bend",
-      "function": "native_branch",
-      "sites": 1,
-      "reason": "Refuses every arm outside the supported single-binder function subset."
-    },
-    {
       "path": "bin/sole-comb.bend",
       "function": "run",
       "sites": 1,
       "reason": "Refuses malformed internal host arguments."
+    },
+    {
+      "path": "surface/sugar.bend",
+      "function": "arm",
+      "sites": 1,
+      "reason": "Lambda arms preserve their first payload binder and remaining binders; other terms are checked as function-valued arms."
     }
   ],
   "unsafe": [

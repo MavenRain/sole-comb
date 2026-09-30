@@ -154,7 +154,7 @@ def go(+loc: T.loc, +cs: List<&2, U32>, +acc: List<&2, T.t>) -> result(List<&2, 
             n => go(next, tail, T.Token{T.Number{n}, loc} <> acc))),
         _ => choose(result(List<&2, T.t>), ident_start(c),
           _ => with_span(result(List<&2, T.t>), span(~(c => ident_char(c)), loc, cs, ""),
-            +word => next => tail => go(next, tail, T.Token{F.choose(T.kind, String.eq(word, "elim"), T.KElim{}, T.ident_kind(word)), loc} <> acc)),
+            +word => next => tail => go(next, tail, T.Token{F.choose(T.kind, String.eq(word, "elim"), T.KElim{}, F.choose(T.kind, String.eq(word, "else"), T.KElse{}, T.ident_kind(word))), loc} <> acc)),
           _ => error(List<&2, T.t>, loc, String.append("unexpected character '", String.append(escaped_char(c), "'")))))
 
 # Bend strings contain Unicode scalars; positions count UTF-8 bytes.

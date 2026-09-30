@@ -5,7 +5,9 @@
     "examples/arithmetic.sole-comb": 3,
     "examples/finite-elim.sole-comb": 6,
     "examples/motive.sole-comb": 3,
-    "examples/function-arms.sole-comb": 13
+    "examples/function-arms.sole-comb": 13,
+    "examples/default-arms.sole-comb": 20,
+    "examples/default-arms-explicit.sole-comb": 20
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -22,6 +24,22 @@
     "corpus/refuse/function-arm-domain.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
     "corpus/refuse/function-arm-result.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
     "corpus/refuse/function-arm-duplication.sole-comb": "quantity: the linear binder f must be used exactly once",
-    "corpus/refuse/function-arm-dependent.sole-comb": "mismatch: the term has type (Out SPi w n Nat (APt w n) P) and the expected type is Nat"
+    "corpus/refuse/function-arm-dependent.sole-comb": "mismatch: the term has type (Out SPi w n Nat (APt w n) P) and the expected type is Nat",
+    "corpus/refuse/default-not-final.sole-comb": "expected '}' after the final default elim arm",
+    "corpus/refuse/default-duplicate.sole-comb": "expected '}' after the final default elim arm",
+    "corpus/refuse/default-colon.sole-comb": "expected ':' after 'else'",
+    "corpus/refuse/default-body.sole-comb": "found '}'",
+    "corpus/refuse/default-vacuous.sole-comb": "a default elim arm must cover at least one remaining leg",
+    "corpus/refuse/default-excess.sole-comb": "the leg address is outside the collection",
+    "corpus/refuse/default-empty.sole-comb": "a default elim arm must cover at least one remaining leg",
+    "corpus/refuse/default-nonfunction.sole-comb": "an elim arm must be a function",
+    "corpus/refuse/default-domain.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
+    "corpus/refuse/default-result.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
+    "corpus/refuse/default-heterogeneous.sole-comb": "mismatch: the term has type Nat and the expected type is Type 1",
+    "corpus/refuse/default-duplication.sole-comb": "quantity: the linear binder n must be used exactly once",
+    "corpus/refuse/default-unclosed.sole-comb": "expected ';' or '}' after the final default elim arm"
+  },
+  "equivalent": {
+    "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb"
   }
 }

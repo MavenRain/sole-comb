@@ -8,6 +8,7 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check examples/finite-elim.sole-comb
 ./sole-comb check examples/motive.sole-comb
 ./sole-comb check examples/function-arms.sole-comb
+./sole-comb check examples/default-arms.sole-comb
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
@@ -22,10 +23,21 @@ parameter receives the payload; remaining parameters form the result function.
 Arms occur in the order of the sum's legs; the compiler checks completeness,
 the parameter's payload type, the result type, and quantity use. A trailing
 semicolon is allowed.
+
+Write `else: function` as the final arm to fill every remaining positional leg.
+For example, `elim x { first; else: id }` keeps `first` at leg zero and uses
+`id` for each later leg. Defaults support the same functions and lambdas as
+explicit arms. Each generated arm is checked against its own payload and
+result types, including motives and quantity use. A default must cover at
+least one leg. A trailing semicolon is allowed.
+`default-arms` covers defaults with named, local, partially applied, linear,
+and multi-binder functions, nested eliminations, and scrutinee captures.
+`default-arms-explicit` independently writes every expanded positional arm;
+the public suite requires both files to print identical kernel definitions.
 Legacy `case`, `match`, `rec`, branch-binder syntax, `.1`, and `.2` are reserved
 and produce `E-R4-MATCH`. `with` and `absurd` remain ordinary identifiers.
 
-Run `make test-cli` for the public command suite on Bun and Node, or:
+Run `make test-cli` for the public command suite on all three hosts, or:
 
 ```sh
 python3 -P dev/test-cli.py --hosts bun,node-worker,native
@@ -36,6 +48,6 @@ The suite also invokes every file under `corpus/refuse/`, tests lexical
 boundaries, and checks command errors and file handling.
 
 The public command currently provides source checking. Wasm build/run,
-recursive families, records, constructor-labelled and default arms remain
+recursive families, records, and constructor-labelled arms remain
 pending. `check --print` displays checked kernel definitions rather than a
 source round trip. Files larger than 32768 bytes report `E-SOURCE-SIZE`.

@@ -13,7 +13,8 @@ make test-cli
 ```
 
 The [native examples](examples/README.md) cover dependent functions, Nat
-primitives, and finite-sum `elim` with optional motives. The public command
+primitives, and finite-sum `elim` with optional motives and final `else: function`
+defaults. Each default expands into checked positional arms. The public command
 builds its host compiler on demand and checks the file's exact bytes.
 `make check`, `make test`, and `make gates` include these public-command tests.
 The [public compiler decision](dev/public-compiler-entry.md) moves this work
