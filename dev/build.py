@@ -15,11 +15,11 @@ Copied from attest/dev/build.py and assay/dev/build.py (M0 plan S0-3, 8.3):
   that Bend reads. Content-addressed 0x<hash>/ imports are skipped.
 - js writes _build/sole-comb.js and the endpoint launchers _build/endpoint/bun
   and _build/endpoint/node-worker. native writes _build/native/sole-comb.exe
-  and _build/endpoint/native (INFO only: the full native build is not
-  validated, and the native path without the attest CC wrapper is UNVERIFIED).
-- ./sole-comb is written only when dev/toolchain.json names an endpoint, and
-  only for one of endpoint_candidates (bun, node-worker). native is INFO only
-  and is never activated. At Stage 0 the endpoint is null (S0-5 picks it).
+  and _build/endpoint/native. Native validation is informational for qualified
+  endpoint selection.
+- ./sole-comb is the public source driver. It builds its execution host on
+  demand, using the selected endpoint or Bun for development when it is null.
+  Explicit host overrides do not select the qualified endpoint.
 
 Exit codes: 0 built or cached, 1 failure, 3 UNMET (the build passed build_deadline_s).
 """
@@ -121,16 +121,12 @@ def activate(pins):
     launcher = ROOT / "sole-comb"
     endpoint = pins["endpoint"]
     chosen = ROOT / "_build/endpoint" / str(endpoint)
-    if endpoint is None:
-        launcher.unlink(missing_ok=True)
-        print("LAUNCHER ./sole-comb not written: endpoint is null in dev/toolchain.json (S0-5 picks it)", flush=True)
-    elif endpoint not in pins["endpoint_candidates"]:
+    if endpoint is not None and endpoint not in pins["endpoint_candidates"]:
         raise ValueError(f"endpoint {endpoint} is not one of endpoint_candidates {pins['endpoint_candidates']}")
-    elif not chosen.is_file():
+    if endpoint is not None and not chosen.is_file():
         raise ValueError(f"endpoint {endpoint} has no launcher; build its backend first")
-    else:
-        write_executable(launcher, '#!/bin/sh\nexec "$(dirname -- "$0")/_build/endpoint/' + endpoint + '" "$@"\n')
-        print(f"LAUNCHER ./sole-comb -> _build/endpoint/{endpoint}", flush=True)
+    write_executable(launcher, '#!/bin/sh\nexec python3 -P "$(dirname -- "$0")/dev/cli.py" "$@"\n')
+    print(f"LAUNCHER ./sole-comb: public source driver; qualified endpoint={endpoint}", flush=True)
 
 
 def fingerprint(pins, backend, sources, compiler_hash, revision):

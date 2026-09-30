@@ -1,5 +1,10 @@
 # Stage A compiler milestones
 
+The [public compiler entry decision](public-compiler-entry.md), adopted on
+2026-09-29, moves the real public driver and supported `.sole-comb` examples
+ahead of the former Stage C frontend timing. Public source checking now
+accompanies kernel work. The original complete semantic gates remain required.
+
 Adopted on 2026-09-27. This replaces the whole-Stage-A commit boundary in
 M0-PLAN section 11 and the matching user-commit schedule in section 12.
 The pinned Kanon semantics, original
@@ -26,7 +31,10 @@ are recorded in
 [A.5b.2 validation](validation/stage-a-program.md).
 A.5b.3.1 adds the erased representation, printer, and runtime scope operations,
 with [erasure support validation](validation/stage-a-erasure.md).
-The next implementation milestone is A.5b.3.2 type-directed erasure and full oracle integration.
+The public source-checking increment adds `bin/sole-comb.bend`, production
+`surface/` components, and a public-command suite over native examples and
+refusals. Next work expands that public compiler and completes A.5b.3.2
+type-directed erasure and full oracle integration before `build` and `run`.
 
 ## Compiler commits
 

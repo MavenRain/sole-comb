@@ -69,6 +69,84 @@
       "function": "universe_of",
       "sites": 1,
       "reason": "Extracts a universe level and explicitly refuses other checked family result types."
+    },
+    {
+      "path": "surface/lexer.bend",
+      "function": "simple_escape",
+      "sites": 1,
+      "reason": "Production port: Scalar byte dispatch refuses every unlisted escape."
+    },
+    {
+      "path": "surface/lexer.bend",
+      "function": "escaped_char",
+      "sites": 1,
+      "reason": "Production port: The remaining scalar bytes use the pinned printable or three-digit decimal escape rule."
+    },
+    {
+      "path": "surface/parser.bend",
+      "function": "mark_prefix",
+      "sites": 1,
+      "reason": "Production port: Only numeric zero and one consume a quantity mark; every other prefix is retained."
+    },
+    {
+      "path": "surface/parser.bend",
+      "function": "dispatch",
+      "sites": 46,
+      "reason": "Production port: Pinned recursive-descent lookahead uses explicit refusal or returns the untouched suffix at named grammar boundaries. Result and task variants remain exhaustive."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "app_head",
+      "sites": 1,
+      "reason": "Production port: Recognizes named family or constructor application heads; other syntax has no named mutual-family reference."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "case_former",
+      "sites": 1,
+      "reason": "Production port: Recognizes collection and mutual-family eliminations; other formers receive the pinned explicit refusal."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "elab_chain",
+      "sites": 1,
+      "reason": "Production port: Collects successive arrow binders and returns the first non-arrow syntax as the result type."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "mu_result",
+      "sites": 1,
+      "reason": "Production port: Accepts the declared family as a constructor result and explicitly refuses other result types."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "spine_of",
+      "sites": 1,
+      "reason": "Production port: Recognizes applications while collecting a family result spine; other terms end the spine."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "universe_of",
+      "sites": 1,
+      "reason": "Production port: Extracts a universe level and explicitly refuses other checked family result types."
+    },
+    {
+      "path": "surface/source.bend",
+      "function": "tokens",
+      "sites": 1,
+      "reason": "Admits the remaining lexical tokens after explicit reserved-form and unsupported-feature refusals."
+    },
+    {
+      "path": "surface/parser.bend",
+      "function": "native_branch",
+      "sites": 1,
+      "reason": "Refuses every arm outside the supported single-binder function subset."
+    },
+    {
+      "path": "bin/sole-comb.bend",
+      "function": "run",
+      "sites": 1,
+      "reason": "Refuses malformed internal host arguments."
     }
   ],
   "unsafe": [
@@ -191,6 +269,61 @@
       "path": "erase/runtime.bend",
       "function": "vars_loop",
       "reason": "The pending list visits each node of a finite erased syntax tree once. Type, affine-use and exhaustiveness checks remain enabled."
+    },
+    {
+      "path": "surface/lexer.bend",
+      "function": "span",
+      "reason": "Production port: The byte list decreases on every selected recursive branch; the location accumulator increases."
+    },
+    {
+      "path": "surface/lexer.bend",
+      "function": "byte_literal",
+      "reason": "Production port: Every recursive branch consumes source bytes before resuming the literal scan."
+    },
+    {
+      "path": "surface/lexer.bend",
+      "function": "go",
+      "reason": "Production port: Each selected lexical branch consumes bytes. Span and literal helpers return only the unconsumed suffix."
+    },
+    {
+      "path": "surface/syntax.bend",
+      "function": "render",
+      "reason": "Production port: Rendering tasks traverse strict syntax subterms or a shrinking list of pending rendering tasks."
+    },
+    {
+      "path": "surface/parser.bend",
+      "function": "dispatch",
+      "reason": "Production port: The immutable token parser follows the pinned recursive-descent grammar. Successful loops consume tokens; one failed speculative binder probe falls back to the ordinary parser at the same position."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "none_list",
+      "reason": "Production port: Builds finite field placeholders by decrementing a positive signed count to zero; nonpositive counts terminate immediately."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "drive",
+      "reason": "Production port: Interprets suspended recursive requests over pinned surface subterms and finite declaration telescopes. Kernel checking remains explicit and no recursive program admission is provided here."
+    },
+    {
+      "path": "surface/elab_program.bend",
+      "function": "bind",
+      "reason": "Production port: Composes a suspended elaboration continuation whose next program becomes available only after the requested subterm returns."
+    },
+    {
+      "path": "surface/order.bend",
+      "function": "peel",
+      "reason": "Production port: The lambda view returns a strict body subterm of a section with one binder."
+    },
+    {
+      "path": "surface/order.bend",
+      "function": "spine",
+      "reason": "Production port: Each recursive step removes one point Out node from the application spine."
+    },
+    {
+      "path": "surface/order.bend",
+      "function": "walk",
+      "reason": "Production port: The work list visits strict subterms; a stopped non-point Out is expanded exactly once."
     }
   ]
 }

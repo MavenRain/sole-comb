@@ -63,12 +63,25 @@ class LauncherTests(unittest.TestCase):
                 build.endpoint_launchers(pins, "js", output)
                 build.activate(pins)
             for command, cwd in [("./_build/endpoint/node-worker", root),
-                                 ("_build/endpoint/node-worker", root),
-                                 ("repo/sole-comb", root.parent)]:
+                                 ("_build/endpoint/node-worker", root)]:
                 with self.subTest(command=command):
                     result = self.launch(command, cwd)
                     self.assertEqual(result.returncode, 0, result.stderr.decode(errors="replace"))
                     self.assertIn(b"WORKER-OK", result.stdout)
+
+    def test_public_launcher_accepts_relative_paths_and_arguments(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve() / "repo with spaces"
+            (root / "dev").mkdir(parents=True)
+            (root / "dev/cli.py").write_text("import sys\nprint(repr(sys.argv[1:]))\n")
+            pins = {"endpoint": None, "endpoint_candidates": ["bun", "node-worker"]}
+            with patch.object(build, "ROOT", root), contextlib.redirect_stdout(io.StringIO()):
+                build.activate(pins)
+            command = str(root.relative_to(root.parent) / "sole-comb")
+            result = subprocess.run([command, "check", "file with spaces.sole-comb"],
+                                    cwd=root.parent, capture_output=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr.decode(errors="replace"))
+            self.assertEqual(result.stdout, b"['check', 'file with spaces.sole-comb']\n")
 
     def test_activate_refuses_info_only_native_endpoint(self):
         with tempfile.TemporaryDirectory() as folder:

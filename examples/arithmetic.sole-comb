@@ -1,0 +1,4 @@
+-- Natural-number primitives use the real kernel evaluator.
+axiom Nat : Type 0
+def answer : Nat := natAdd (natMul 6 7) 0
+def saturated : Nat := natSub 3 8

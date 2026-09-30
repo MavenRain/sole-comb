@@ -3,6 +3,22 @@
 A language with Kan extensions as its type-forming primitives and one primitive
 sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
 
+The public compiler now checks `.sole-comb` source files through production
+modules under `surface/` and the real kernel. Start with:
+
+```sh
+./sole-comb check examples/identity.sole-comb
+./sole-comb check examples/finite-elim.sole-comb
+make test-cli
+```
+
+The [native examples](examples/README.md) cover dependent functions, Nat
+primitives, and finite-sum `elim` with optional motives. The public command
+builds its host compiler on demand and checks the file's exact bytes.
+`make check`, `make test`, and `make gates` include these public-command tests.
+The [public compiler decision](dev/public-compiler-entry.md) moves this work
+ahead of the former Stage C frontend timing.
+
 The real Stage A kernel port has started under `lib/`. A.1 provides the
 foundation, finite budgets, typed errors, universe levels, and literals.
 A.2 adds terms, semantic values, shapes, globals, and the pinned Nat primitives.
@@ -47,8 +63,10 @@ make bench-preflight # pins and current load; no benchmark samples
 ```
 
 `dev/toolchain.json` retains `endpoint: null` until S0-5 selects Bun or the Node
-worker using valid measurements. Consequently `make build` creates candidate
-launchers under `_build/endpoint/` and does not activate `./sole-comb` yet.
+worker using valid measurements. `./sole-comb` is a tracked public source
+driver. It uses Bun for development while the endpoint is unset, or the selected
+endpoint afterward. `check --host bun|node-worker|native` overrides that host
+for validation. A development default does not select the qualified endpoint.
 No command installs tools or updates the pinned Bend checkout.
 
 The active work is the [Stage A compiler milestones](dev/stage-a-milestones.md).
@@ -60,9 +78,10 @@ The [A.1 validation](dev/validation/stage-a-foundation.md),
 [A.5b.1 validation](dev/validation/stage-a-elaboration.md),
 [A.5b.2 validation](dev/validation/stage-a-program.md), and
 [A.5b.3.1 validation](dev/validation/stage-a-erasure.md) record their scope.
-The CLI is still a bootstrap host entry; the real library has its own build
-and behavioral tests. The erased mode and complete KANON-DIFF remain A.5b.3.2
-work. Stage A acceptance remains pending.
+The CLI now reaches production parsing, elaboration, and kernel checking.
+`build` and `run`, recursive families, records, and default arms still require
+later compiler work and fail explicitly. The erased mode and complete
+KANON-DIFF remain A.5b.3.2 work. Stage A acceptance remains pending.
 
 R2 is pending and will qualify the operational compiler before M0 closure.
 The [workload manifest](dev/r2-workloads.json) and scratch validation records

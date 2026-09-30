@@ -1,0 +1,11 @@
+-- Native elim syntax. Arms follow the order of the sum's legs.
+axiom Nat : Type 0
+def Two : Type 0 := sum (Nat, Nat)
+def left : Two := inj 0 of 2 7
+def right : Two := inj 1 of 2 42
+def unwrap : (x : Two) -> Nat :=
+  fun (x : Two) => elim x {
+    fun (a : Nat) => a;
+    fun (b : Nat) => b
+  }
+def answer : Nat := unwrap right

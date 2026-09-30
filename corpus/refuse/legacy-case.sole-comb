@@ -1,0 +1,2 @@
+axiom Nat : Type 0
+def rejected : Nat := case 0

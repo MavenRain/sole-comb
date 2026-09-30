@@ -1,0 +1,5 @@
+-- Dependent functions and ordinary application.
+axiom Nat : Type 0
+def identity : (0 A : Type 0) -> (x : A) -> A :=
+  fun (0 A : Type 0) (x : A) => x
+def answer : Nat := identity Nat 42

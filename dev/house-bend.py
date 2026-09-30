@@ -16,7 +16,13 @@ LIMITS = {"lib/foundation.bend": 800, "lib/kernel_budget.bend": 40,
           "lib/kernel_rules.bend": 2100, "lib/kernel_eval.bend": 520,
           "lib/kernel_conv.bend": 600, "lib/kernel_check.bend": 800,
           "lib/kernel_pp.bend": 150, "lib/kernel_spec_count.bend": 90,
-          "erase/eterm.bend": 170, "erase/runtime.bend": 300}
+          "erase/eterm.bend": 170, "erase/runtime.bend": 300,
+          "surface/token.bend": 160, "surface/lexer.bend": 200,
+          "surface/syntax.bend": 260, "surface/parser.bend": 900,
+          "surface/elab.bend": 600, "surface/elab_program.bend": 40,
+          "surface/order.bend": 340, "surface/totality.bend": 50,
+          "surface/program.bend": 140, "surface/source.bend": 50,
+          "surface/check.bend": 40, "bin/sole-comb.bend": 60}
 HOST = ("bin", "lib", "surface", "erase", "wasm", "dev", "test/pinfront")
 PRODUCTION = ("bin", "lib", "surface", "erase", "wasm")
 PURE = {"lib", "erase", "wasm"}
