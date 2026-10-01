@@ -1,0 +1,1 @@
+record Package : Type 1 { kind : Type 0; item : kind }

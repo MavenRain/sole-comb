@@ -1,0 +1,3 @@
+axiom Nat : Type 0
+record Pair : Type 0 { first : Nat }
+def invalid : (1 p : Pair) -> Nat := fun (1 p : Pair) => p.first

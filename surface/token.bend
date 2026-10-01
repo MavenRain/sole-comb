@@ -13,6 +13,7 @@ type kind is Data:
   Semicolon{}
   KElim{}
   KElse{}
+  KRecord{}
   Colon{}
   ColonEq{}
   Arrow{}
@@ -78,6 +79,7 @@ def describe(k: kind) -> String:
     case Semicolon{}: "';'"
     case KElim{}: "'elim'"
     case KElse{}: "'else'"
+    case KRecord{}: "'record'"
     case Colon{}: "':'"
     case ColonEq{}: "':='"
     case Arrow{}: "'->'"
@@ -124,8 +126,11 @@ def describe(k: kind) -> String:
     case Bytes{_}: "byte literal"
     case Eof{}: "end of input"
 
-def keywords() -> List<&2, F.Pair2<String, kind>>:
+def core_keywords() -> List<&2, F.Pair2<String, kind>>:
   [F.Pair2{"def", KDef{}}, F.Pair2{"axiom", KAxiom{}}, F.Pair2{"fun", KFun{}}, F.Pair2{"inj", KInj{}}, F.Pair2{"of", KOf{}}, F.Pair2{"case", KCase{}}, F.Pair2{"match", KMatch{}}, F.Pair2{"as", KAs{}}, F.Pair2{"return", KReturn{}}, F.Pair2{"with", KWith{}}, F.Pair2{"tuple", KTuple{}}, F.Pair2{"sum", KSum{}}, F.Pair2{"prod", KProd{}}, F.Pair2{"absurd", KAbsurd{}}, F.Pair2{"Prop", KProp{}}, F.Pair2{"Type", KType{}}, F.Pair2{"let", KLet{}}, F.Pair2{"in", KIn{}}, F.Pair2{"auto", KAuto{}}, F.Pair2{"mu", KMu{}}, F.Pair2{"mutual", KMutual{}}, F.Pair2{"end", KEnd{}}, F.Pair2{"nu", KNu{}}, F.Pair2{"and", KAnd{}}, F.Pair2{"rec", KRec{}}, F.Pair2{"natAdd", KNatAdd{}}, F.Pair2{"natSub", KNatSub{}}, F.Pair2{"natMul", KNatMul{}}, F.Pair2{"natEq", KNatEq{}}, F.Pair2{"natLt", KNatLt{}}]
+
+def keywords() -> List<&2, F.Pair2<String, kind>>:
+  F.Pair2{"record", KRecord{}} <> core_keywords
 
 def lookup(+s: String, words: List<&2, F.Pair2<String, kind>>) -> kind:
   match words:

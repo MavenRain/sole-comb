@@ -9,6 +9,7 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check examples/motive.sole-comb
 ./sole-comb check examples/function-arms.sole-comb
 ./sole-comb check examples/default-arms.sole-comb
+./sole-comb check examples/records.sole-comb --print
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
@@ -37,6 +38,23 @@ the public suite requires both files to print identical kernel definitions.
 Legacy `case`, `match`, `rec`, branch-binder syntax, `.1`, and `.2` are reserved
 and produce `E-R4-MATCH`. `with` and `absurd` remain ordinary identifiers.
 
+Declare a closed record with `record Pair : Type 0 { first : Nat; second : Nat }`.
+Construct a value with `tuple(10, 20)` at type `Pair`, and apply `Pair.first` or
+`Pair.second` to it. The declaration expands to a Ran product alias and one
+checked Out getter per field. Getters are ordinary functions and can be passed
+as `elim` arms. Each getter consumes its record once, so it accepts linear
+record values. Labels are scoped by the record name. An empty record uses
+`{}` and `tuple()`. A trailing semicolon is allowed.
+
+Field types may reference preceding globals, including other records. They
+are independent of the record's other fields; dependent fields, recursive
+fields, and record parameters remain pending. Record types use the existing
+structural product equality. Use the qualified getter form `Pair.first p`.
+`records` covers multiple fields, nesting, functions, universes, and name
+capture. `record-expansion` and `record-expansion-explicit` must print the same
+kernel definitions after renaming the generated binder; `records.kernel` records the reviewed field-index and
+type expectations for the larger example.
+
 Run `make test-cli` for the public command suite on all three hosts, or:
 
 ```sh
@@ -48,6 +66,6 @@ The suite also invokes every file under `corpus/refuse/`, tests lexical
 boundaries, and checks command errors and file handling.
 
 The public command currently provides source checking. Wasm build/run,
-recursive families, records, and constructor-labelled arms remain
+recursive families, dependent or parameterized records, and constructor-labelled arms remain
 pending. `check --print` displays checked kernel definitions rather than a
 source round trip. Files larger than 32768 bytes report `E-SOURCE-SIZE`.

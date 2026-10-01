@@ -13,8 +13,9 @@ make test-cli
 ```
 
 The [native examples](examples/README.md) cover dependent functions, Nat
-primitives, and finite-sum `elim` with optional motives and final `else: function`
-defaults. Each default expands into checked positional arms. The public command
+primitives, closed records with qualified getters, and finite-sum `elim` with
+optional motives and final `else: function` defaults. Records expand to Ran
+products and Out projections; each default expands into checked positional arms. The public command
 builds its host compiler on demand and checks the file's exact bytes.
 `make check`, `make test`, and `make gates` include these public-command tests.
 The [public compiler decision](dev/public-compiler-entry.md) moves this work
@@ -80,7 +81,7 @@ The [A.1 validation](dev/validation/stage-a-foundation.md),
 [A.5b.2 validation](dev/validation/stage-a-program.md), and
 [A.5b.3.1 validation](dev/validation/stage-a-erasure.md) record their scope.
 The CLI now reaches production parsing, elaboration, and kernel checking.
-`build` and `run`, recursive families, records, and default arms still require
+`build` and `run`, recursive families, and dependent or parameterized records require
 later compiler work and fail explicitly. The erased mode and complete
 KANON-DIFF remain A.5b.3.2 work. Stage A acceptance remains pending.
 

@@ -43,6 +43,9 @@ The default-arm increment adds final `else: term` sugar through
 `surface/sugar.bend`. Its public suite checks explicit kernel expansion equality
 and syntax, payload, result, and quantity refusals. See
 [default-arm validation](validation/public-default-arms.md).
+The closed-record increment adds product declarations and qualified field
+getters, with [record validation](validation/public-records.md). It preserves
+the pending type-directed erasure and complete oracle integration boundary.
 
 ## Compiler commits
 

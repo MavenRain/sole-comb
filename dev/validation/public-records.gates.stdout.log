@@ -1,0 +1,151 @@
+python3 -P dev/test-bench.py
+python3 -P dev/test-build.py
+python3 -P dev/test-pin-check.py
+python3 -P dev/test-r2-risk.py
+python3 -P dev/test-r2-run.py
+python3 -P dev/test-r2-prepare.py
+R2-PREPARE deadline
+R2-PREPARE cancel
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 44 files, 33 line budgets, 37 reviewed unsafe sites, 29 catchalls
+python3 -P dev/test-foundation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.1 bun: 275 cases
+PASS A.1 node-worker: 275 cases
+PASS A.1 native INFO: 275 cases
+python3 -P dev/test-representation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.2 bun: 465 cases
+PASS A.2 node-worker: 465 cases
+PASS A.2 native INFO: 465 cases
+python3 -P dev/test-evaluation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.3 pinned source oracle: 251 cases
+PASS A.3 bun: 251 cases
+PASS A.3 node-worker: 251 cases
+PASS A.3 native INFO: 251 cases
+python3 -P dev/test-checking.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.4 pinned source oracle: 291 cases
+PASS A.4 bun: 291 cases
+PASS A.4 node-worker: 291 cases
+PASS A.4 native INFO: 291 cases
+python3 -P dev/test-checking-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.4 mutation linear-close: rejected by check-constant-1, check-linear-product-duplicate, check-linear-alias-duplicate
+PASS A.4 mutation budget-refund: rejected by infer-budget-let-4
+PASS A.4 mutation negative-field: rejected by positive-negative-arrow, ctors-negative
+python3 -P dev/test-pinfront-harness.py
+python3 -P dev/test-pinfront.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5a pinned parser oracle: 561 cases, 68 independent expectations
+PASS A.5a bun: 561 cases
+PASS A.5a node-worker: 561 cases
+PASS A.5a native INFO: 561 cases
+python3 -P dev/test-pinfront-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5a mutation match-kind: killed by match-empty
+PASS A.5a mutation numeric-bound: killed by host-bound-overflow
+PASS A.5a mutation byte-position: killed by identity
+PASS A.5a mutation constructor-list: killed by second-constructor
+PASS A.5a mutation utf8-byte: killed by bytes-utf8
+python3 -P dev/test-elaboration.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5b.1 oracle: 221 cases, 65 independent expectations
+PASS A.5b.1 bun: 221 cases
+PASS A.5b.1 node-worker: 221 cases
+PASS A.5b.1 native INFO: 221 cases
+python3 -P dev/test-elaboration-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5b.1 mutation local-lookup: probe/local-shadow
+PASS A.5b.1 mutation second-projection: probe/pair-projection-2
+PASS A.5b.1 mutation field-annotation: probe/field-annotation-refused
+python3 -P dev/test-program-harness.py
+python3 -P dev/test-program.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5b.2 oracle: 245 files, 2 modes
+CHECKED A.5b.2 bun large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 bun large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 bun: 245 files, 2 modes
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 node-worker large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 node-worker: 245 files, 2 modes
+CHECKED A.5b.2 native large input test/agreement/agreement-natAdd.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natEq.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natLt.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natMul.kan
+CHECKED A.5b.2 native large input test/agreement/agreement-natSub.kan
+PASS A.5b.2 native: 245 files, 2 modes
+python3 -P dev/test-program-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS program mutation nondecreasing: program/unguarded
+PASS program mutation declaration-order: program/ordinary-after-group
+PASS program mutation missing-motive: contracts
+python3 -P dev/test-erasure.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5b.3.1 pinned source oracle: 221 cases
+PASS A.5b.3.1 bun: 221 cases
+PASS A.5b.3.1 node-worker: 221 cases
+PASS A.5b.3.1 native INFO: 221 cases
+python3 -P dev/test-erasure-mutations.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+PASS A.5b.3.1 mutation branch-depth: rejected by shift/case, reindex/case
+PASS A.5b.3.1 mutation capture-order: rejected by prune/first, prune/gaps
+PASS A.5b.3.1 mutation nested-closure: rejected by vars/closure, prune/nested-closure
+python3 -P dev/test-cli.py
+PASS public bun: examples/identity.sole-comb
+PASS public bun: examples/arithmetic.sole-comb
+PASS public bun: examples/finite-elim.sole-comb
+PASS public bun: examples/motive.sole-comb
+PASS public bun: examples/function-arms.sole-comb
+PASS public bun: examples/default-arms.sole-comb
+PASS public bun: examples/default-arms-explicit.sole-comb
+PASS public bun: examples/records.sole-comb
+PASS public bun: examples/record-expansion.sole-comb
+PASS public bun: examples/record-expansion-explicit.sole-comb
+PASS public bun: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public bun: record field types, indices, namespaces and binder hygiene
+PASS public bun: 53 native files and 2 lexical boundary cases
+PASS public node-worker: examples/identity.sole-comb
+PASS public node-worker: examples/arithmetic.sole-comb
+PASS public node-worker: examples/finite-elim.sole-comb
+PASS public node-worker: examples/motive.sole-comb
+PASS public node-worker: examples/function-arms.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb
+PASS public node-worker: examples/default-arms-explicit.sole-comb
+PASS public node-worker: examples/records.sole-comb
+PASS public node-worker: examples/record-expansion.sole-comb
+PASS public node-worker: examples/record-expansion-explicit.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public node-worker: record field types, indices, namespaces and binder hygiene
+PASS public node-worker: 53 native files and 2 lexical boundary cases
+PASS public native: examples/identity.sole-comb
+PASS public native: examples/arithmetic.sole-comb
+PASS public native: examples/finite-elim.sole-comb
+PASS public native: examples/motive.sole-comb
+PASS public native: examples/function-arms.sole-comb
+PASS public native: examples/default-arms.sole-comb
+PASS public native: examples/default-arms-explicit.sole-comb
+PASS public native: examples/records.sole-comb
+PASS public native: examples/record-expansion.sole-comb
+PASS public native: examples/record-expansion-explicit.sole-comb
+PASS public native: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public native: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public native: record field types, indices, namespaces and binder hygiene
+PASS public native: 53 native files and 2 lexical boundary cases
+PASS public compiler: 172 command observations; source hashes stable
+python3 -P dev/pin-check.py
+PINCHECK PASS groups=bend,kanon,tools,limits checks=35 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+python3 -P dev/build.py --check
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-0930-records/gates-copy-final/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=12.174 child_cpu_s=6.456

@@ -7,7 +7,10 @@
     "examples/motive.sole-comb": 3,
     "examples/function-arms.sole-comb": 13,
     "examples/default-arms.sole-comb": 20,
-    "examples/default-arms-explicit.sole-comb": 20
+    "examples/default-arms-explicit.sole-comb": 20,
+    "examples/records.sole-comb": 32,
+    "examples/record-expansion.sole-comb": 7,
+    "examples/record-expansion-explicit.sole-comb": 7
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -37,9 +40,25 @@
     "corpus/refuse/default-result.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
     "corpus/refuse/default-heterogeneous.sole-comb": "mismatch: the term has type Nat and the expected type is Type 1",
     "corpus/refuse/default-duplication.sole-comb": "quantity: the linear binder n must be used exactly once",
-    "corpus/refuse/default-unclosed.sole-comb": "expected ';' or '}' after the final default elim arm"
+    "corpus/refuse/default-unclosed.sole-comb": "expected ';' or '}' after the final default elim arm",
+    "corpus/refuse/record-duplicate-field.sole-comb": "E-RECORD-FIELD: duplicate field item",
+    "corpus/refuse/record-field-colon.sole-comb": "expected a record field 'name : type' or '}'",
+    "corpus/refuse/record-field-type.sole-comb": "universe: a term used as a type is not a universe:  Nat",
+    "corpus/refuse/record-missing-type.sole-comb": "expected a term, found '}'",
+    "corpus/refuse/record-unclosed.sole-comb": "expected ';' or '}' after a record field, found end of input",
+    "corpus/refuse/record-delimiter.sole-comb": "expected ';' or '}' after a record field, found ','",
+    "corpus/refuse/record-sort.sole-comb": "universe: a type former is checked against a type that is not a universe:  Nat",
+    "corpus/refuse/record-universe.sole-comb": "universe: the former lives at 2 and the expected universe is 1",
+    "corpus/refuse/record-recursive.sole-comb": "unbound: Loop",
+    "corpus/refuse/record-dependent.sole-comb": "unbound: kind",
+    "corpus/refuse/record-unknown-field.sole-comb": "unbound: Box.missing",
+    "corpus/refuse/record-projection-target.sole-comb": "E-RECORD-PROJECTION",
+    "corpus/refuse/record-local-projection.sole-comb": "E-RECORD-PROJECTION",
+    "corpus/refuse/record-wrong-field.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
+    "corpus/refuse/record-duplication.sole-comb": "quantity: the linear binder p must be used exactly once"
   },
   "equivalent": {
-    "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb"
+    "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",
+    "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb"
   }
 }

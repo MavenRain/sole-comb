@@ -1,0 +1,1 @@
+record Loop : Type 0 { next : Loop }

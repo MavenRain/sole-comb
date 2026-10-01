@@ -32,10 +32,17 @@ cover at least one remaining leg; duplicate or non-final defaults fail.
 The public suite compares default examples with independently written explicit
 expansions, including motives, local and linear functions, and nested captures.
 
+The closed-record increment adds `record Name : Type i { field : T; ... }`.
+It expands to a product alias and qualified getter definitions such as
+`Name.field`. Apply a getter to a tuple or record value to project its field.
+Field types use the preceding global scope. Empty, nested, heterogeneous,
+and higher-universe products are supported; each generated definition goes
+through the ordinary elaborator and kernel checker.
+
 The supported prefix includes ordinary definitions, axioms, dependent
-functions, Nat primitives, sums, products, and finite-sum elimination.
+functions, Nat primitives, sums, products, closed records, and finite-sum elimination.
 Recursive-family recursors, constructor-labelled arms,
-records, type-directed erasure, and WebAssembly build/run remain
+dependent or parameterized records, type-directed erasure, and WebAssembly build/run remain
 pending. Unsupported forms must fail, and native examples for them must enter
 the public suite when they become operational. The first increment's source
 transport accepts files up to 32768 bytes and reports larger inputs explicitly.

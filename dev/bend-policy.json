@@ -91,7 +91,7 @@
     {
       "path": "surface/parser.bend",
       "function": "dispatch",
-      "sites": 49,
+      "sites": 48,
       "reason": "Production recursive-descent lookahead retains explicit refusal at grammar boundaries, including colon and final-arm delimiters for default elimination. Result and task variants remain exhaustive."
     },
     {
@@ -147,6 +147,36 @@
       "function": "arm",
       "sites": 1,
       "reason": "Lambda arms preserve their first payload binder and remaining binders; other terms are checked as function-valued arms."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "fields",
+      "sites": 2,
+      "reason": "Record lookahead refuses malformed fields and delimiters. Recursive field parsing consumes finite fuel."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "declaration",
+      "sites": 1,
+      "reason": "Record lookahead requires a name and annotation; other forms fail explicitly."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "declaration_sort",
+      "sites": 1,
+      "reason": "A record annotation must be followed by an opening brace; other suffixes fail explicitly."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "qualify",
+      "sites": 1,
+      "reason": "Only a name can qualify a record getter. Other term forms receive an explicit projection diagnostic."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "declarations",
+      "sites": 1,
+      "reason": "A record keyword uses record expansion; other declarations use the existing production parser with explicit refusal."
     }
   ],
   "unsafe": [
@@ -324,6 +354,16 @@
       "path": "surface/order.bend",
       "function": "walk",
       "reason": "Production port: The work list visits strict subterms; a stopped non-point Out is expanded exactly once."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "fields",
+      "reason": "The field parser executes typed continuation states. Every ReadFields step spends finite token-count fuel; the other two states either return or re-enter ReadFields. Bend cannot prove that measure through the parse callback. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "surface/record.bend",
+      "function": "declarations",
+      "reason": "The declaration loop spends finite token-count fuel before calling the production parser and resumes through typed continuations. Bend cannot prove the decrease through those callbacks. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

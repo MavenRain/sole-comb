@@ -8,6 +8,7 @@ import source.bend as Source
 import lexer.bend as L
 import syntax.bend as S
 import sugar.bend as Sugar
+import record.bend as Record
 
 def tokens() -> Data: List<&2, T.t>
 def parsed(-A: Data) -> Data: L.result(F.Pair2<A, tokens>)
@@ -65,6 +66,7 @@ def kind_starts_atom(k: T.kind) -> Bool:
     case T.Semicolon{}: False{}
     case T.KElim{}: False{}
     case T.KElse{}: False{}
+    case T.KRecord{}: False{}
     case T.LParen{}: True{}
     case T.RParen{}: False{}
     case T.Colon{}: False{}
@@ -165,7 +167,6 @@ type task is Data:
   ParseItemsBody{word: String, ts: tokens}
   ParseItemsRest{word: String, ts: tokens, acc: List<&2, S.t>}
   ParseItemsTail{word: String, ts: tokens, acc: List<&2, S.t>}
-  ParseDecls{ts: tokens, acc: List<&2, S.decl>}
   ParseDecl{ts: tokens}
   ParseDefBody{name: String, ty: S.t, ts: tokens}
   ParseRecGroup{ts: tokens, acc: List<&2, S.rec_def>}
@@ -188,7 +189,6 @@ type answer is Data:
   Answer4{value: parsed(List<&2, String>)}
   Answer5{value: parsed(List<&2, S.branch>)}
   Answer6{value: parsed(List<&2, S.field>)}
-  Answer7{value: parsed(List<&2, S.decl>)}
   Answer8{value: parsed(S.decl)}
   Answer9{value: parsed(List<&2, S.rec_def>)}
   Answer10{value: parsed(S.rec_def)}
@@ -205,7 +205,6 @@ def read_0(value: answer) -> parsed(S.t):
     case Answer4{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
@@ -222,7 +221,6 @@ def read_1(value: answer) -> parsed(List<&2, S.binder>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
@@ -239,7 +237,6 @@ def read_2(value: answer) -> parsed(S.binder):
     case Answer4{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
@@ -256,7 +253,6 @@ def read_3(value: answer) -> parsed(index_clause):
     case Answer4{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
@@ -273,7 +269,6 @@ def read_4(value: answer) -> parsed(List<&2, String>):
     case Answer4{value}: value
     case Answer5{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
@@ -290,7 +285,6 @@ def read_5(value: answer) -> parsed(List<&2, S.branch>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer5{value}: value
     case Answer6{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
@@ -307,30 +301,12 @@ def read_6(value: answer) -> parsed(List<&2, S.field>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer6{value}: value
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer13{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
-
-def read_7(value: answer) -> parsed(List<&2, S.decl>):
-  match value:
-    case Answer0{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer1{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer2{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer3{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer4{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer5{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer6{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer7{value}: value
-    case Answer8{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer9{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer10{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer11{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer12{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.decl>, tokens>, T.start, "internal parser result kind")
 
 def read_8(value: answer) -> parsed(S.decl):
   match value:
@@ -341,7 +317,6 @@ def read_8(value: answer) -> parsed(S.decl):
     case Answer4{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer8{value}: value
     case Answer9{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
@@ -358,7 +333,6 @@ def read_9(value: answer) -> parsed(List<&2, S.rec_def>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer9{value}: value
     case Answer10{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
@@ -375,7 +349,6 @@ def read_10(value: answer) -> parsed(S.rec_def):
     case Answer4{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer10{value}: value
@@ -392,7 +365,6 @@ def read_11(value: answer) -> parsed(List<&2, S.fam>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
@@ -409,7 +381,6 @@ def read_12(value: answer) -> parsed(S.fam):
     case Answer4{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
@@ -426,7 +397,6 @@ def read_13(value: answer) -> parsed(List<&2, S.fam_ctor>):
     case Answer4{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
     case Answer5{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
     case Answer6{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer7{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
     case Answer8{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
     case Answer9{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
     case Answer10{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
@@ -671,8 +641,10 @@ def dispatch(job: task) -> answer:
           Answer0{read_0(dispatch(ParsePostfix{S.SProj{a, F.Int63.succ(F.Int63.one)}, rest}))}
         case T.Token{T.Dot{}, _} <> T.Token{T.Number{k}, loc} <> rest:
           Answer0{L.bind(F.Int63.t, F.Pair2<S.t, tokens>, bounded(loc, k), key => read_0(dispatch(ParsePostfix{S.SProj{a, key}, rest})))}
+        case T.Token{T.Dot{}, loc} <> T.Token{T.Ident{field}, _} <> rest:
+          Answer0{L.bind(S.t, F.Pair2<S.t, tokens>, Record.qualify(a, field, loc), name => read_0(dispatch(ParsePostfix{name, rest})))}
         case T.Token{T.Dot{}, loc} <> _:
-          Answer0{L.error(F.Pair2<S.t, tokens>, loc, "expected a leg number after '.'")}
+          Answer0{L.error(F.Pair2<S.t, tokens>, loc, "expected a field name or leg number after '.'")}
         case _:
           Answer0{done(S.t, a, ts)}
     case ParseAtomHead{+ts}:
@@ -761,14 +733,12 @@ def dispatch(job: task) -> answer:
           Answer0{done(S.t, collection(word, L.reverse(S.t, acc, [])), rest)}
         case _:
           Answer0{want(S.t, "',' or ')'", ts)}
-    case ParseDecls{+ts, +acc}:
-      match ts:
-        case T.Token{T.Eof{}, _} <> rest:
-          Answer7{done(List<&2, S.decl>, L.reverse(S.decl, acc, []), rest)}
-        case _:
-          Answer7{next(S.decl, List<&2, S.decl>, read_8(dispatch(ParseDecl{ts})), d => rest => read_7(dispatch(ParseDecls{rest, d <> acc})))}
     case ParseDecl{+ts}:
       match ts:
+        case T.Token{T.KDef{}, _} <> T.Token{T.Ident{namespace}, _} <> T.Token{T.Dot{}, _} <> T.Token{T.Ident{field}, _} <> T.Token{T.Colon{}, _} <> rest:
+          Answer8{next(S.t, S.decl, read_0(dispatch(ParseTerm{rest})), ty => tail => read_8(dispatch(ParseDefBody{S.cat([namespace, ".", field]), ty, tail})))}
+        case T.Token{T.KAxiom{}, _} <> T.Token{T.Ident{namespace}, _} <> T.Token{T.Dot{}, _} <> T.Token{T.Ident{field}, _} <> T.Token{T.Colon{}, _} <> rest:
+          Answer8{next(S.t, S.decl, read_0(dispatch(ParseTerm{rest})), ty => tail => done(S.decl, S.DAxiom{S.cat([namespace, ".", field]), ty}, tail))}
         case T.Token{T.KDef{}, _} <> T.Token{T.KRec{}, _} <> rest:
           Answer8{next(List<&2, S.rec_def>, S.decl, read_9(dispatch(ParseRecGroup{rest, []})), ms => tail => done(S.decl, S.DRec{ms}, tail))}
         case T.Token{T.KDef{}, _} <> T.Token{T.Ident{name}, _} <> T.Token{T.Colon{}, _} <> rest:
@@ -782,7 +752,7 @@ def dispatch(job: task) -> answer:
         case T.Token{T.KNu{}, loc} <> _:
           Answer8{L.error(F.Pair2<S.decl, tokens>, loc, "nu arrives at M2")}
         case _:
-          Answer8{want(S.decl, "'def NAME :', 'def rec NAME :', 'axiom NAME :', 'mu NAME' or 'mutual'", ts)}
+          Answer8{want(S.decl, "'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual'", ts)}
     case ParseDefBody{+name, +ty, +ts}:
       match ts:
         case T.Token{T.ColonEq{}, _} <> rest:
@@ -870,8 +840,10 @@ def finish(value: parsed(List<&2, S.decl>)) -> L.result(List<&2, S.decl>):
   match value:
     case Fail{e}: Fail{e}
     case Done{F.Pair2{ds, _}}: Done{ds}
+def parse_admitted(+ts: tokens) -> L.result(List<&2, S.decl>):
+  finish(Record.declarations(~(tail => read_0(dispatch(ParseTerm{tail}))), ~(tail => read_8(dispatch(ParseDecl{tail}))), Record.length(ts), ts, []))
 def parse_tokens(ts: tokens) -> L.result(List<&2, S.decl>):
-  L.bind(tokens, List<&2, S.decl>, Source.tokens(ts), admitted => finish(read_7(dispatch(ParseDecls{admitted, []}))))
+  L.bind(tokens, List<&2, S.decl>, Source.tokens(ts), admitted => parse_admitted(admitted))
 def parse_bytes(source: List<&2, U32>) -> L.result(List<&2, S.decl>):
   L.bind(tokens, List<&2, S.decl>, L.lex_bytes(source), ts => parse_tokens(ts))
 def parse(source: String) -> L.result(List<&2, S.decl>):

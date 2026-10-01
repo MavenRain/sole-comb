@@ -22,7 +22,8 @@ LIMITS = {"lib/foundation.bend": 800, "lib/kernel_budget.bend": 40,
           "surface/elab.bend": 600, "surface/elab_program.bend": 40,
           "surface/order.bend": 340, "surface/totality.bend": 50,
           "surface/program.bend": 140, "surface/source.bend": 50,
-          "surface/check.bend": 40, "bin/sole-comb.bend": 60}
+          "surface/check.bend": 40, "surface/record.bend": 150,
+          "bin/sole-comb.bend": 60}
 HOST = ("bin", "lib", "surface", "erase", "wasm", "dev", "test/pinfront")
 PRODUCTION = ("bin", "lib", "surface", "erase", "wasm")
 PURE = {"lib", "erase", "wasm"}

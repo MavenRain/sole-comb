@@ -1,0 +1,1 @@
+record Box : Type 0 { item : }

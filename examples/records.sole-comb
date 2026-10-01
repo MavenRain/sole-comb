@@ -1,0 +1,35 @@
+-- Records are closed Ran products. Qualified getters lower to Out.
+axiom Nat : Type 0
+record Pair : Type 0 { first : Nat; second : Nat; }
+def pair : Pair := tuple(10, 20)
+def first : Nat := Pair.first pair
+def second : Nat := Pair.second pair
+def linearFirst : (1 p : Pair) -> Nat := fun (1 p : Pair) => Pair.first p
+
+-- Field labels are scoped by the record name. Empty products are supported.
+record Empty : Type 0 {}
+def empty : Empty := tuple()
+record Other : Type 0 { first : Nat }
+def other : Other := tuple(30)
+def otherFirst : Nat := Other.first other
+
+-- Nested and heterogeneous fields retain their independent kernel types.
+record Packet : Type 1 { kind : Type 0; payload : Pair; handler : Nat -> Nat; count : Nat }
+def packet : Packet := tuple(Nat, pair, fun (n : Nat) => natAdd n 1, 40)
+def payload : Pair := Packet.payload packet
+def handled : Nat := Packet.handler packet (Pair.first payload)
+def count : Nat := Packet.count packet
+def kind : Type 0 := Packet.kind packet
+
+-- A generated binder must not capture free names in field types.
+def value : Type 0 := Nat
+record Capture : Type 0 { item : value }
+def capture : Capture := tuple(50)
+def captured : value := Capture.item capture
+
+-- A qualified getter is an ordinary function, including as an elim arm.
+def picked : Nat := elim (inj 1 of 2 other : sum(Other, Other)) { Other.first; else: Other.first }
+
+-- A qualified axiom declares a record value without a definition.
+axiom Other.zero : Other
+def zeroFirst : Nat := Other.first Other.zero

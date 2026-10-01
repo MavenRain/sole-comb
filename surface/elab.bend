@@ -141,6 +141,15 @@ def index_of(+x: String, names: List<&2, String>) -> Maybe<&2, F.Int63.t>:
     case []: None{}
     case y <> rest:
       choose(Maybe<&2, F.Int63.t>, String.eq(x, y), _ => Some{F.Int63.zero}, _ => index_next(index_of(x, rest)))
+# The text before the first '.' of a dotted name; a name without a dot has none.
+def qualifier(+name: String) -> Maybe<&2, String>:
+  match name:
+    case SNil{}: None{}
+    case SCon{Chr{+c}, tail}:
+      choose(Maybe<&2, String>, Bool.and((c >= 46 : U32), (c <= 46 : U32)), _ => Some{SNil{}}, _ => maybe(String, Maybe<&2, String>, qualifier(tail), _ => None{}, rest => Some{SCon{Chr{c}, rest}}))
+# Records have no field projection, so a local binder cannot qualify a name.
+def local_projection(+c: K.ctx, +x: String) -> Bool:
+  maybe(String, Bool, qualifier(x), _ => False{}, q => maybe(F.Int63.t, Bool, index_of(q, K.local_names(K.locals(c))), _ => False{}, _ => True{}))
 def type_of(+c: K.ctx, tm: T.t) -> M.result(V.t): M.bind(V.t, V.t, M.lift(V.t, K.infer(c, Q.Zero{}, tm)), value => whnf_in(c, value))
 def open_in(c: K.ctx, clo: V.closure, args: List<&2, V.t>) -> M.result(V.t): run_eval(V.t, R.open_closure(G.t, Ev.ev(K.globals(c)), clo, args))
 def univ_of_int(+n: F.Int63.t) -> M.result(T.t):
@@ -522,7 +531,8 @@ def elab_case(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, scrut: Syn.t, mo
 def elab_node(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, s: Syn.t) -> M.result(T.t):
   match s:
     case Syn.SVar{+x}:
-      maybe(mu_ref, M.result(T.t), mu_ref_of(c, x), _ => M.Pure{local_or_global(c, x)}, r => elab_mu_ref(go, c, r, []))
+      choose(M.result(T.t), local_projection(c, x), _ => M.Abort{E.Mismatch{"E-RECORD-PROJECTION: use a qualified getter such as Pair.first value"}},
+        _ => maybe(mu_ref, M.result(T.t), mu_ref_of(c, x), _ => M.Pure{local_or_global(c, x)}, r => elab_mu_ref(go, c, r, [])))
     case Syn.SNat{n}: M.Pure{T.Lit{Lit.LInt{n}}}
     case Syn.SProp{}: M.Pure{T.Univ{L.zero}}
     case Syn.SType{n}: univ_of_int(F.Int63.succ(n))
