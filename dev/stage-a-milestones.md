@@ -52,7 +52,9 @@ A.5b.3.2b increment extends it to collection tuples and closed records, with
 [product erasure validation](validation/stage-a-product-erasure.md). The
 A.5b.3.2c increment extends it to finite-sum layouts, injections and case
 elimination, with [sum erasure validation](validation/stage-a-sum-erasure.md).
-The full A.5b.3.2 boundary remains pending for dependent pairs, recursive
+The A.5b.3.2d increment adds dependent-pair layouts, introductions and native
+two-binder elimination, with [pair erasure validation](validation/stage-a-pair-erasure.md).
+The full A.5b.3.2 boundary remains pending for recursive families, recursive
 definitions, complete corpus integration and WebAssembly build/run.
 
 ## Compiler commits

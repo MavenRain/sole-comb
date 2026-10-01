@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require ordinary, product and sum erasure tests to reject isolated semantic mutants."""
+"""Require ordinary, product, sum and pair erasure tests to reject isolated semantic mutants."""
 import json
 from pathlib import Path
 import shutil
@@ -28,7 +28,13 @@ MUTANTS = (
     ("case-leg-selection", "erase/sum.bend", "F.Int63.equal(k, index)",
      "Bool.or(F.Int63.equal(k, index), Bool.and(F.Int63.equal(k, F.Int63.zero), F.Int63.equal(index, F.Int63.succ(F.Int63.one))))"),
     ("case-tail-lost", "erase/core.bend", "term_request(added(c, q, x, dom, keep), s, tail, Some{target}, body)",
-     "term_request(added(c, q, x, dom, keep), s, False{}, Some{target}, body)"),
+      "term_request(added(c, q, x, dom, keep), s, False{}, Some{target}, body)"),
+    ("pair-fibre-offset", "erase/core.bend", "K.KProj{tid, offset, K.KVar{offset}}",
+     "K.KProj{tid, F.Int63.zero, K.KVar{offset}}"),
+    ("pair-synthetic-slot", "erase/core.bend", "Extra{} <> slots", "Drop{} <> slots"),
+    ("pair-capture-frame", "erase/core.bend", "case Extra{} <> rest: framed(rest, caps, ix)",
+     "case Extra{} <> rest: Drop{} <> framed(rest, caps, F.Int63.succ(ix))"),
+    ("pair-fibre-type", "erase/pair.bend", "Ty.opened(c, d, [pv])", "Ty.opened(c, d, [dom])"),
 )
 
 

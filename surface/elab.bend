@@ -510,11 +510,45 @@ def define_families(fams: List<&2, Syn.fam>, +budget: B.t, +group: List<&2, Stri
       M.bind(telescope_result, G.t, elab_telescope(params, K.make(globals, budget)), tele => with_telescope(M.result(G.t), tele, _ => +cp =>
             M.bind(List<&2, K.ctor_decl>, G.t, collect(Syn.fam_ctor, K.ctor_decl, F.Pair2<K.ctx, String>, ctor_environment, F.Pair2{cp, name}, ctors), cds =>
               M.bind(G.t, G.t, M.lift(G.t, K.define_ctors(globals, budget, group, name, cds)), g => define_families(rest, budget, group, g)))))
+def with_pair(~A: Data, ~B: Data, -Out: Type, value: F.Pair2<A, B>, next: A -> B -> Out) -> Out:
+  match value:
+    case F.Pair2{a, b}: next(a, b)
+def pair_second(first: Syn.binder, body: Syn.t) -> M.result(F.Pair2<Syn.binder, F.Pair2<Syn.binder, Syn.t>>):
+  match body:
+    case Syn.SFun{bs, value}:
+      M.map_result(Syn.binder, F.Pair2<Syn.binder, F.Pair2<Syn.binder, Syn.t>>, second => F.Pair2{first, F.Pair2{second, value}}, need(Syn.binder, E.Missing_branch{"a pair elim arm must be a two-binder lambda"}, R.one_of(Syn.binder, bs)))
+    case other: M.Abort{E.Missing_branch{"a pair elim arm must be a two-binder lambda"}}
+def pair_arm(br: Syn.branch) -> M.result(F.Pair2<Syn.binder, F.Pair2<Syn.binder, Syn.t>>):
+  match br:
+    case Syn.BrDefault{_}: M.Abort{E.Wrong_leg{"a pair elim requires an explicit arm"}}
+    case Syn.BrCtor{_, _, _}: M.Abort{E.Wrong_leg{"a pair elim arm cannot key a constructor"}}
+    case Syn.BrLeg{_, binders, body}:
+      M.bind(Syn.binder, F.Pair2<Syn.binder, F.Pair2<Syn.binder, Syn.t>>, need(Syn.binder, E.Missing_branch{"a pair elim arm must be a two-binder lambda"}, R.one_of(Syn.binder, binders)), first => pair_second(first, body))
+def pair_body(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, +s: S.t<V.t>, +clo: V.closure, +mo: Maybe<&2, T.motive>, q: Q.t, +dom: V.t, second: Syn.binder, body: Syn.t, first: Syn.binder) -> M.result(T.leg):
+  with_binder(M.result(T.leg), first, +q1 => +x1 => annotation =>
+    M.bind(Unit, T.leg, checked_payload(go, c, dom, annotation), _ =>
+      M.bind(V.t, T.leg, open_in(c, clo, [V.var(K.size(c))]), +cod =>
+        with_binder(M.result(T.leg), second, +q2 => +x2 => annotation2 =>
+          using(K.ctx, M.result(T.leg), K.bind(x1, q1, dom, c), +inner =>
+            M.bind(Unit, T.leg, checked_payload(go, inner, cod, annotation2), _ =>
+              M.bind(Maybe<&2, V.t>, T.leg, branch_target(c, mo, expected, V.VIn{s, V.VAPt{q, V.var(K.size(c))}, [V.var(F.Int63.succ(K.size(c)))]}), target =>
+                M.map_result(T.t, T.leg, tm => T.Leg{[F.Pair2{q1, x1}, F.Pair2{q2, x2}], tm}, go(K.bind(x2, q2, cod, inner), target, body)))))))))
+def elab_pair_case(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, scrut: T.t, w: V.t, +q: Q.t, +x: String, +dom: V.t, +clo: V.closure, mo: Maybe<&2, Syn.motive>, brs: List<&2, Syn.branch>) -> M.result(T.t):
+  M.bind(Syn.branch, T.t, need(Syn.branch, E.Missing_branch{"a pair elim takes exactly one arm"}, R.one_of(Syn.branch, brs)), br =>
+    M.bind(F.Pair2<Syn.binder, F.Pair2<Syn.binder, Syn.t>>, T.t, pair_arm(br), value =>
+      with_pair(Syn.binder, F.Pair2<Syn.binder, Syn.t>, M.result(T.t), value, first => rest =>
+        with_pair(Syn.binder, Syn.t, M.result(T.t), rest, second => body =>
+          M.bind(Maybe<&2, T.motive>, T.t, elab_motive(go, c, mo, w), +motive =>
+            M.bind(T.leg, T.t, pair_body(go, c, expected, S.SPi{q, x, dom}, clo, motive, q, dom, second, body, first), leg =>
+              M.map_result(T.t, T.t, dt => T.Elim{T.Elimination{S.SPi{q, x, dt}, scrut, Q.One{}, motive, [F.Pair2{T.ALeg{F.Int63.zero}, leg}]}}, quote_in(c, dom))))))))
 def case_former(~go: walker, c: K.ctx, expected: Maybe<&2, V.t>, scrut: T.t, w: V.t, former: V.Former, mo: Maybe<&2, Syn.motive>, brs: List<&2, Syn.branch>, only_mu: Bool) -> M.result(T.t):
   match former:
     case V.Former{s, clo, u}:
       match s:
         case S.SMu{n, ix}: elab_mu_case(go, c, expected, scrut, n, ix, clo, u, mo, brs)
+        case S.SPi{q, x, dom}:
+          choose(M.result(T.t), only_mu, _ => M.Abort{E.Mismatch{"a match needs a mu family as the type of its scrutinee"}},
+            _ => elab_pair_case(go, c, expected, scrut, w, q, x, dom, clo, mo, brs))
         case other:
           choose(M.result(T.t), only_mu, _ => M.Abort{E.Mismatch{"a match needs a mu family as the type of its scrutinee"}},
             _ => elab_coll_case(go, c, expected, scrut, w, other, clo, mo, brs))

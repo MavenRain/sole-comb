@@ -12,6 +12,7 @@ modules under `surface/` and the real kernel. Start with:
 ./sole-comb check --erased examples/erasure.sole-comb
 ./sole-comb check --erased examples/product-erasure.sole-comb
 ./sole-comb check --erased examples/sum-erasure.sole-comb
+./sole-comb check --erased examples/pair-erasure.sole-comb
 make test-cli
 ```
 
@@ -50,7 +51,11 @@ fields, nested products and function fields. See the
 A.5b.3.2c adds finite-sum layouts, injections and case erasure, including erased
 payloads, default arms and captured branch closures. See the
 [sum erasure evidence](dev/validation/stage-a-sum-erasure.md).
-Dependent pairs, recursive definitions and the full kernel differential remain pending.
+A.5b.3.2d adds dependent-pair layouts, introductions, and native `elim` with one
+two-binder lambda arm. Erasure drops type and proof fields, evaluates the
+scrutinee once, and preserves runtime indices through nested pairs and closures.
+See the [pair erasure evidence](dev/validation/stage-a-pair-erasure.md).
+Recursive families, recursive definitions and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 

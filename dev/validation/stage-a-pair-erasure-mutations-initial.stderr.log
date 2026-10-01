@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/oobi/Documents/gpt5/sole-comb-pairs/dev/test-core-erasure-mutations.py", line 69, in <module>
+    main()
+    ~~~~^^
+  File "/Users/oobi/Documents/gpt5/sole-comb-pairs/dev/test-core-erasure-mutations.py", line 62, in main
+    raise RuntimeError(f"{name}: mutant did not fail a semantic comparison\n{error}")
+RuntimeError: pair-fibre-type: mutant did not fail a semantic comparison
+Traceback (most recent call last):
+  File "/Users/oobi/Documents/gpt5/sole-comb-pairs/_build/core-erasure-mutations/pair-fibre-type/dev/test-core-erasure.py", line 247, in <module>
+    main()
+    ~~~~^^
+  File "/Users/oobi/Documents/gpt5/sole-comb-pairs/_build/core-erasure-mutations/pair-fibre-type/dev/test-core-erasure.py", line 215, in main
+    result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env)
+  File "/Users/oobi/Documents/gpt5/sole-comb-pairs/_build/core-erasure-mutations/pair-fibre-type/dev/test-core-erasure.py", line 103, in run
+    raise RuntimeError(f"{name}: expected exit {expected}, got {result.returncode}\n"
+                       + (result.stdout + result.stderr).decode(errors="replace"))
+RuntimeError: public-bun-7: expected exit 0, got 1
+CHECK examples/pair-erasure.sole-comb FAIL budget: type-directed erasure

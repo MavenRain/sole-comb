@@ -13,7 +13,8 @@
     "examples/record-expansion-explicit.sole-comb": 7,
     "examples/erasure.sole-comb": 19,
     "examples/product-erasure.sole-comb": 40,
-    "examples/sum-erasure.sole-comb": 29
+    "examples/sum-erasure.sole-comb": 29,
+    "examples/pair-erasure.sole-comb": 33
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -58,7 +59,18 @@
     "corpus/refuse/record-projection-target.sole-comb": "E-RECORD-PROJECTION",
     "corpus/refuse/record-local-projection.sole-comb": "E-RECORD-PROJECTION",
     "corpus/refuse/record-wrong-field.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
-    "corpus/refuse/record-duplication.sole-comb": "quantity: the linear binder p must be used exactly once"
+    "corpus/refuse/record-duplication.sole-comb": "quantity: the linear binder p must be used exactly once",
+    "corpus/refuse/pair-arm-count.sole-comb": "a pair elim takes exactly one arm",
+    "corpus/refuse/pair-arm-arity.sole-comb": "a pair elim arm must be a two-binder lambda",
+    "corpus/refuse/pair-arm-point.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
+    "corpus/refuse/pair-arm-fibre.sole-comb": "mismatch: the term has type Type 1 and the expected type is Nat",
+    "corpus/refuse/pair-arm-result.sole-comb": "mismatch: the term has type Type 2 and the expected type is Nat",
+    "corpus/refuse/pair-arm-quantity.sole-comb": "quantity: the branch binder x is marked 1 and the type marks it w",
+    "corpus/refuse/pair-arm-duplication.sole-comb": "quantity: the linear binder x must be used exactly once on every runtime path",
+    "corpus/refuse/pair-projection.sole-comb": "E-R4-MATCH",
+    "corpus/refuse/pair-default.sole-comb": "a pair elim requires an explicit arm",
+    "corpus/refuse/pair-named-arm.sole-comb": "a pair elim arm must be a two-binder lambda",
+    "corpus/refuse/pair-arm-three.sole-comb": "a pair elim arm must be a two-binder lambda"
   },
   "equivalent": {
     "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",

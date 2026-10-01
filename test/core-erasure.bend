@@ -15,6 +15,7 @@ import ../erase/core.bend as Erase
 import ../erase/type.bend as Ty
 import ../erase/eterm.bend as K
 import ../erase/sum.bend as Sum
+import ../erase/pair.bend as Pair
 
 def check(+name: String, +want: String, +got: String) -> String:
   F.choose(String, String.eq(want, got), "", String.concat([name, " expected=", want, " actual=", got, "\n"]))
@@ -68,6 +69,24 @@ def repr_text(value: R.result(K.repr)) -> String:
     case Fail{error}: E.to_string(error)
     case Done{repr}: K.print_repr(repr)
 def sum_repr() -> String: repr_text(Ty.repr_of(context, sum_value))
+def pair_term() -> T.t: T.Lan{S.SPi{Q.Many{}, "x", T.Global{"Nat"}}, T.Global{"Nat"}}
+def pair_value() -> V.t: V.VLan{S.SPi{Q.Many{}, "x", nat}, V.close([], T.Global{"Nat"}), Some{L.one}}
+def pair_context() -> C.ctx: C.make(G.add("pair", G.Axiom{G.Postulate{pair_term}}, G.initial), B.create(16384n))
+def malformed_pair(binders: List<&2, F.Pair2<Q.t, String>>) -> String:
+  result_error(Pair.branch, Pair.elimination(pair_context, nat, S.SPi{Q.Many{}, "x", T.Global{"Nat"}}, T.Global{"pair"}, None{},
+    [F.Pair2{T.ALeg{F.Int63.zero}, T.Leg{binders, literal(10n)}}]))
+def synthetic_variable() -> String:
+  term_text(Erase.term(Erase.Context{context, [Erase.Keep{}, Erase.Keep{}, Erase.Extra{}, Erase.Keep{}], "probe"},
+    Erase.State{0n, [], B.create(16384n)}, False{}, Some{nat}, T.Var{two}))
+def synthetic_frame() -> String:
+  term_text(Erase.term(Erase.Context{context, Erase.framed([Erase.Keep{}, Erase.Extra{}, Erase.Keep{}], [F.Int63.one], F.Int63.zero), "probe"},
+    Erase.State{0n, [], B.create(16384n)}, False{}, Some{nat}, T.Var{F.Int63.one}))
+def pair_closure() -> String:
+  term_text(Erase.term(Erase.Context{C.bind("outer", Q.Many{}, nat, pair_context), [Erase.Keep{}], "probe"},
+    Erase.State{0n, [], B.create(16384n)}, True{}, Some{V.VRan{S.SPi{Q.Many{}, "n", nat}, V.close([], T.Global{"Nat"}), Some{L.one}}},
+    T.Elim{T.Elimination{S.SPi{Q.Many{}, "x", T.Global{"Nat"}}, T.Global{"pair"}, Q.One{}, None{},
+      [F.Pair2{T.ALeg{F.Int63.zero}, T.Leg{[F.Pair2{Q.Many{}, "x"}, F.Pair2{Q.Many{}, "y"}],
+        T.Sec{S.SPi{Q.Many{}, "n", T.Global{"Nat"}}, [T.Leg{[F.Pair2{Q.Many{}, "n"}], T.Var{F.Int63.succ(two)}}]}}}]}}))
 def main() -> String:
   String.concat([
     check("proof", "false", proof),
@@ -78,6 +97,15 @@ def main() -> String:
     check("budget", "budget: type-directed erasure", exhausted),
     check("representation-budget", "budget: erasure type representation", repr_exhausted),
     check("sum-layout", "union sum<union nat|union nat>", sum_repr),
+    check("pair-layout", "struct pair<union nat,union nat>", repr_text(Ty.repr_of(context, pair_value))),
+    check("pair-address", "mismatch: a pair takes a point address", result_error(List<&2, Pair.field>, Pair.introduction(context, pair_value, T.ALeg{F.Int63.zero}, [literal(1n)]))),
+    check("pair-no-fibre", "mismatch: a pair takes one fibre", result_error(List<&2, Pair.field>, Pair.introduction(context, pair_value, T.APt{Q.Many{}, literal(1n)}, []))),
+    check("pair-two-fibres", "mismatch: a pair takes one fibre", result_error(List<&2, Pair.field>, Pair.introduction(context, pair_value, T.APt{Q.Many{}, literal(1n)}, [literal(1n), literal(2n)]))),
+    check("pair-no-binders", "mismatch: a pair branch takes two binders", malformed_pair([])),
+    check("pair-one-binder", "mismatch: a pair branch takes two binders", malformed_pair([F.Pair2{Q.Many{}, "x"}])),
+    check("synthetic-index", "KVar 3", synthetic_variable),
+    check("synthetic-frame", "KVar 0", synthetic_frame),
+    check("pair-closure", "KLet scrut (KGlobal pair) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KClos probe$0 1 [KVar 3])))", pair_closure),
     check("reordered-branches", "KCase sum<union nat|union nat> (KGlobal tag) [{0 1 (KLit 10)}; {1 1 (KLit 20)}]", reordered),
     check("injection-address", "mismatch: an injection takes a leg address", result_error(Sum.tag, Sum.injection(context, sum_value, T.ACtor{"bad"}, [literal(1n)]))),
     check("injection-negative", "mismatch: the leg address is outside the collection", result_error(Sum.tag, Sum.injection(context, sum_value, T.ALeg{F.Int63.Int{True{}, [1]}}, [literal(1n)]))),

@@ -12,6 +12,7 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check examples/records.sole-comb --print
 ./sole-comb check --erased examples/product-erasure.sole-comb
 ./sole-comb check --erased examples/sum-erasure.sole-comb
+./sole-comb check --erased examples/pair-erasure.sole-comb
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
@@ -23,7 +24,16 @@ Each file is self-contained and declares its Nat postulate where needed.
 It also covers nested product/sum layouts, function payloads, captured branch
 closures, zero-quantity binders, explicit motives and empty case dispatch.
 
-An `elim` arm is a function term. Named functions, partial applications, local
+`pair-erasure` covers dependent-pair construction, erased components, nested
+pairs, polymorphic fibres and closures. Eliminate a pair with one inline lambda
+that binds both components: `elim p { fun (x : Nat) (y : Nat) => x }`.
+The first binder's quantity matches the pair type. The second annotation can
+refer to the first binder, as in `fun (0 A : Type 0) (value : A) => (A, value)`.
+An explicit `as self return Type` motive supports an elimination used where
+the result type needs to be inferred. Pair defaults and named pair arms
+currently receive explicit refusals.
+
+A finite-sum `elim` arm is a function term. Named functions, partial applications, local
 function values, and lambdas with multiple binders are supported. The first
 parameter receives the payload; remaining parameters form the result function.
 `function-arms` covers these forms, explicit motives, and linear functions.

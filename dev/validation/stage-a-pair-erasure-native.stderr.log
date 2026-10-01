@@ -1,0 +1,9 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-pairs/dev/toolchain.json
+BUILD sole-comb native compile: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/native/sole-comb.building.exe
+All terms check, but 4 defs rely on unsafe or foreign code:
+- checked_source
+- erased_source
+- run
+- main
+BUILD FAIL: sole-comb native exit=-9; log=.gatework/build/sole-comb-native.log
+E-BUILD: the public compiler could not be built

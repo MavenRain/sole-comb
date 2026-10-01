@@ -1,0 +1,34 @@
+-- Dependent pairs retain runtime fields and evaluate projection scrutinees once.
+axiom Nat : Type 0
+axiom P : Prop
+axiom proof : P
+def Both : Type 0 := (x : Nat) * Nat
+def both : Both := (11, 6)
+def first : Nat := both.1
+def second : Nat := both.2
+def make : Nat -> Both := fun (n : Nat) => (n, natAdd n 1)
+def returned : Nat := (make 4).2
+def PointOnly : Type 0 := Nat * P
+def pointOnly : PointOnly := (3, proof)
+def pointValue : Nat := pointOnly.1
+def droppedProof : P := pointOnly.2
+def FibreOnly : Type 0 := (0 x : Nat) * Nat
+def fibreOnly : FibreOnly := (10, 20)
+def fibreValue : Nat := fibreOnly.2
+def Neither : Type 1 := Type 0 * P
+def neither : Neither := (Nat, proof)
+def droppedType : Type 0 := neither.1
+def Dependent : Type 1 := (0 A : Type 0) * A
+def dependent : Dependent := (Nat, 7)
+def box : (0 A : Type 0) -> (x : A) -> (0 T : Type 0) * T := fun (0 A : Type 0) (x : A) => (A, x)
+def unbox : (0 A : Type 0) -> ((0 T : Type 0) * T) -> Nat := fun (0 A : Type 0) (p : (0 T : Type 0) * T) => 9
+def Nested : Type 0 := Nat * Both
+def nested : Nested := (8, both)
+def nestedValue : Nat := nested.2.1
+def FunctionPair : Type 0 := Nat * (Nat -> Nat)
+def capture : Nat -> FunctionPair := fun (outer : Nat) => (outer, fun (n : Nat) => natAdd outer n)
+def applyPair : FunctionPair -> Nat := fun (p : FunctionPair) => p.2 5
+def outerAfter : Nat -> Both -> Nat := fun (outer : Nat) (p : Both) => natAdd outer p.2
+def capturedAfter : Nat -> Both -> (Nat -> Nat) := fun (outer : Nat) (p : Both) => let value : Nat := p.2 in fun (n : Nat) => natAdd outer (natAdd value n)
+def poly : (0 A : Type 0) -> (x : A) -> (a : A) * A := fun (0 A : Type 0) (x : A) => (x, x)
+def polyValue : Nat := (poly Nat 5).1

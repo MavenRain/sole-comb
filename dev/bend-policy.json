@@ -177,6 +177,12 @@
       "function": "declarations",
       "sites": 1,
       "reason": "A record keyword uses record expansion; other declarations use the existing production parser with explicit refusal."
+    },
+    {
+      "path": "surface/elab.bend",
+      "function": "pair_second",
+      "sites": 1,
+      "reason": "An inline pair arm must end in exactly one fibre binder. Every other expression gets an explicit missing-branch refusal."
     }
   ],
   "unsafe": [
@@ -459,6 +465,11 @@
       "path": "erase/core.bend",
       "function": "case_branches",
       "reason": "Each recursive call consumes one leg from the finite collection and erases its body through the fuel-spending term trampoline. Bend cannot prove the decrease through the suspended computation continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "repr_text",
+      "reason": "A retained pair component delegates to repr_visit, which spends the explicit erasure type budget before examining a proper component type. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

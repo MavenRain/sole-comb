@@ -1,6 +1,6 @@
 # Bounded ordinary-definition erasure from Kanon 69f3be51 lib/erase.ml.
-# Finite collection products and sums are supported; dependent pairs, recursive families
-# and recursive definitions remain pending.
+# Finite collection products, sums and dependent pairs are supported.
+# Recursive families and recursive definitions remain pending.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -18,10 +18,12 @@ import runtime.bend as RT
 import type.bend as Ty
 import dependencies.bend as Dep
 import sum.bend as Sum
+import pair.bend as Pair
 
 type slot is Data:
   Drop{}
   Keep{}
+  Extra{}
 type state is Data:
   State{next: Nat, lifted: List<&2, K.kdecl>, fuel: B.t}
 type entry is Data:
@@ -123,6 +125,7 @@ def with_found(-Out: Type, value: found, found: F.Int63.t -> Out, gone: Unit -> 
 def lookup(+ix: F.Int63.t, slots: List<&2, slot>, +seen: F.Int63.t) -> found:
   match slots:
     case []: Missing{}
+    case Extra{} <> rest: lookup(ix, rest, F.Int63.succ(seen))
     case Keep{} <> +rest:
       Ty.inspect(Bool, found, F.Int63.equal(ix, F.Int63.zero), +view0 => Ty.boolean(found, view0, _ =>
 Found{seen}, _ =>
@@ -155,6 +158,7 @@ def free_legs(+depth: F.Int63.t, ls: List<&2, T.leg>) -> List<&2, F.Pair2<F.Int6
 def framed(slots: List<&2, slot>, +caps: List<&2, F.Int63.t>, +ix: F.Int63.t) -> List<&2, slot>:
   match slots:
     case []: []
+    case Extra{} <> rest: framed(rest, caps, ix)
     case Drop{} <> +rest: Drop{} <> framed(rest, caps, F.Int63.succ(ix))
     case Keep{} <> +rest: F.choose(slot, RT.member(ix, caps), Keep{}, Drop{}) <> framed(rest, caps, F.Int63.succ(ix))
 def with_capture(-Out: Type, value: capture, next: List<&2, K.repr> -> List<&2, K.ktm> -> Out) -> Out:
@@ -546,10 +550,31 @@ def tag_plan(c: ctx, +s: state, plan: Sum.tag) -> computation<answer>:
       Ty.maybe(Sum.payload, computation<answer>, payload,
         _ => Pure{F.Pair2{K.KTag{tid, index, []}, s}},
         +value => tag_body(c, s, tid, index, value))
-def injection_shape(+c: ctx, +s: state, ty: V.t, shape: S.t<T.t>, address: T.addr, args: List<&2, T.t>) -> computation<answer>:
+def pair_jobs(fields: List<&2, Pair.field>) -> List<&2, job>:
+  match fields:
+    case []: []
+    case Pair.Field{ty, body} <> rest: Job{ty, body} <> pair_jobs(rest)
+def pair_fields(+c: ctx, s: state, +ty: V.t, fields: List<&2, Pair.field>) -> computation<answer>:
+  bind(arguments, answer, erase_jobs(c, s, pair_jobs(fields), []), value => tuple_finish(c, ty, value))
+def extra(c: ctx) -> ctx:
+  match c:
+    case Context{check, slots, self}: Context{check, Extra{} <> slots, self}
+def pair_lets(+tid: K.tid, x: String, second: String, +keep1: Bool, keep2: Bool, +body: K.ktm) -> K.ktm:
+  Ty.inspect(F.Int63.t, K.ktm, F.choose(F.Int63.t, keep1, F.Int63.one, F.Int63.zero), +offset =>
+    Ty.inspect(K.ktm, K.ktm, F.choose(K.ktm, keep2, K.KLet{second, K.KProj{tid, offset, K.KVar{offset}}, body}, body), +inner =>
+      F.choose(K.ktm, keep1, K.KLet{x, K.KProj{tid, F.Int63.zero, K.KVar{F.Int63.zero}}, inner}, inner)))
+def pair_branch(+c: ctx, s: state, tail: Bool, scrut: T.t, plan: Pair.branch) -> computation<answer>:
+  match plan:
+    case Pair.Branch{sty, +tid, q, +x, dom, +keep1, +second, cod, +keep2, target, body}:
+      Ty.inspect(ctx, computation<answer>, added(added(extra(c), q, x, dom, keep1), Q.Many{}, second, cod, keep2), +c2 =>
+        bind(answer, answer, term_request(c, s, False{}, Some{sty}, scrut), value =>
+          with_answer(computation<answer>, value, +kscrut => +s1 =>
+            map_result(answer, answer, result => with_answer(answer, result, +ktm => +s2 =>
+              F.Pair2{K.KLet{"scrut", kscrut, pair_lets(tid, x, second, keep1, keep2, ktm)}, s2}), term_request(c2, s1, tail, Some{target}, body)))))
+def injection_shape(+c: ctx, +s: state, +ty: V.t, shape: S.t<T.t>, address: T.addr, args: List<&2, T.t>) -> computation<answer>:
   match shape:
     case S.SColl{_}: bind(Sum.tag, answer, lift_result(Sum.tag, Sum.injection(checker(c), ty, address, args)), plan => tag_plan(c, s, plan))
-    case S.SPi{_, _, _}: Abort{E.Not_yet{"dependent pairs in type-directed erasure"}}
+    case S.SPi{_, _, _}: bind(List<&2, Pair.field>, answer, lift_result(List<&2, Pair.field>, Pair.introduction(checker(c), ty, address, args)), fields => pair_fields(c, s, ty, fields))
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
     case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
@@ -580,7 +605,7 @@ def case_plan(+c: ctx, s: state, +tail: Bool, +ty: V.t, scrut: T.t, +motive: May
 def elimination_shape(+c: ctx, +s: state, +tail: Bool, +ty: V.t, shape: S.t<T.t>, +scrut: T.t, motive: Maybe<&2, T.motive>, branches: List<&2, F.Pair2<T.addr, T.leg>>) -> computation<answer>:
   match shape:
     case S.SColl{_}: bind(Sum.case_plan, answer, lift_result(Sum.case_plan, Sum.case_of(checker(c), scrut)), plan => case_plan(c, s, tail, ty, scrut, motive, branches, plan))
-    case S.SPi{_, _, _}: Abort{E.Not_yet{"dependent pair elimination in type-directed erasure"}}
+    case S.SPi{q, x, dom}: bind(Pair.branch, answer, lift_result(Pair.branch, Pair.elimination(checker(c), ty, S.SPi{q, x, dom}, scrut, motive, branches)), plan => pair_branch(c, s, tail, scrut, plan))
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
     case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}

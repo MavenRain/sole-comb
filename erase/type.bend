@@ -1,6 +1,6 @@
 # Type-directed runtime admission and function layouts from Kanon 69f3be51.
 # Collection products omit erased fields; sums retain every tag and layout leg.
-# Dependent-pair and recursive-family layouts remain pending.
+# Dependent pairs omit erased components; recursive-family layouts remain pending.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -78,6 +78,8 @@ def runtime_weak(c: C.ctx, +ty: V.t) -> R.result(Bool):
       _ => Done{False{}}, _ => proof_free(c, ty)), _ => Done{False{}})
 def runtime_ty(+c: C.ctx, ty: V.t) -> R.result(Bool):
   R.bind(V.t, Bool, EV.whnf(C.globals(c), ty), +w => runtime_weak(c, w))
+def point_runtime(c: C.ctx, q: Q.t, ty: V.t) -> R.result(Bool):
+  boolean(R.result(Bool), Q.equal(q, Q.Zero{}), _ => Done{False{}}, _ => runtime_ty(c, ty))
 def count(~A: Data, xs: List<&2, A>) -> F.Int63.t:
   match xs:
     case []: F.Int63.zero
@@ -125,10 +127,26 @@ def product_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V
   match former:
     case V.Former{shape, diagram, _}:
       maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => tuple_repr(loop, c, n, diagram, b))
-def sum_former_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V.t, former: V.Former, b: B.t) -> R.result(K.repr):
+@unsafe
+def repr_text(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V.t, keep: Bool, b: B.t) -> R.result(List<&2, String>):
+  boolean(R.result(List<&2, String>), keep,
+    _ => R.map_result(K.repr, List<&2, String>, +r => [K.print_repr(r)], loop(c, ty, b)), _ => Done{[]})
+def pair_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, point: arrow, +b: B.t) -> R.result(K.repr):
+  match point:
+    case Arrow{+q, x, +dom, d}:
+      R.bind(Bool, K.repr, point_runtime(c, q, dom), keep1 =>
+        R.bind(List<&2, String>, K.repr, repr_text(loop, c, dom, keep1, b), +first =>
+          R.bind(F.Pair2<C.ctx, V.t>, K.repr, under(c, q, x, dom, d), value =>
+            pair(C.ctx, V.t, R.result(K.repr), value, +c1 => +cod =>
+              R.bind(Bool, K.repr, runtime_ty(c1, cod), keep2 =>
+                R.map_result(List<&2, String>, K.repr, +second =>
+                  K.RStruct{K.Tid{String.concat(["pair<", K.join(",", List.append(&2, String, first, second)), ">"])}}, repr_text(loop, c1, cod, keep2, b)))))))
+def sum_former_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, ty: V.t, former: V.Former, +b: B.t) -> R.result(K.repr):
   match former:
-    case V.Former{shape, diagram, _}:
-      maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => sum_repr(loop, c, n, diagram, b))
+    case V.Former{+shape, +diagram, _}:
+      maybe(arrow, R.result(K.repr), point_arrow(diagram, R.point_view(shape)),
+        _ => maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => sum_repr(loop, c, n, diagram, b)),
+        point => pair_repr(loop, c, point, b))
 def structural_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
   maybe(V.Former, R.result(K.repr), V.as_ran(ty),
     _ => maybe(V.Former, R.result(K.repr), V.as_lan(ty), _ => refused_repr(ty), former => sum_former_repr(loop, c, ty, former, b)),
@@ -136,8 +154,6 @@ def structural_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +
 def nonfunction_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
   maybe(F.Pair2<V.head, List<&2, V.spine>>, R.result(K.repr), V.as_neutral(ty), _ => structural_repr(loop, c, ty, b),
     +value => pair(V.head, List<&2, V.spine>, R.result(K.repr), value, +head => +spine => Done{neutral_repr(head, spine)}))
-def point_runtime(c: C.ctx, q: Q.t, ty: V.t) -> R.result(Bool):
-  boolean(R.result(Bool), Q.equal(q, Q.Zero{}), _ => Done{False{}}, _ => runtime_ty(c, ty))
 def arity_arrow(loop: C.ctx -> V.t -> F.Int63.t -> B.t -> R.result(F.Int63.t), +c: C.ctx, +n: F.Int63.t, a: arrow, b: B.t) -> R.result(F.Int63.t):
   match a:
     case Arrow{+q, x, +dom, d}:
