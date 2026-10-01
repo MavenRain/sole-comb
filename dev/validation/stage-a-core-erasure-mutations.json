@@ -1,0 +1,28 @@
+{
+  "mutants": [
+    {
+      "name": "zero-kept",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "proof-kept",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "index-shift",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "capture-not-pruned",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    }
+  ]
+}

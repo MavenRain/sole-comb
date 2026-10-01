@@ -10,7 +10,8 @@
     "examples/default-arms-explicit.sole-comb": 20,
     "examples/records.sole-comb": 32,
     "examples/record-expansion.sole-comb": 7,
-    "examples/record-expansion-explicit.sole-comb": 7
+    "examples/record-expansion-explicit.sole-comb": 7,
+    "examples/erasure.sole-comb": 19
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",

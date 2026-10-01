@@ -46,6 +46,10 @@ and syntax, payload, result, and quantity refusals. See
 The closed-record increment adds product declarations and qualified field
 getters, with [record validation](validation/public-records.md). It preserves
 the pending type-directed erasure and complete oracle integration boundary.
+The A.5b.3.2a increment adds ordinary type-directed erasure to `check --erased`,
+with [core erasure validation](validation/stage-a-core-erasure.md). The full
+A.5b.3.2 boundary remains pending for structural runtime layouts, recursive
+definitions, complete corpus integration and WebAssembly build/run.
 
 ## Compiler commits
 

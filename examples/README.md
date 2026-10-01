@@ -65,7 +65,14 @@ python3 -P dev/test-cli.py --hosts bun,node-worker,native
 The suite also invokes every file under `corpus/refuse/`, tests lexical
 boundaries, and checks command errors and file handling.
 
-The public command currently provides source checking. Wasm build/run,
+`check --erased` prints type-directed erased code for Nat values and ordinary
+functions. `erasure` covers ghost arguments, partial applications, eta
+expansion, captured and unused runtime variables, and linear parameters.
+Universes, proof positions and empty products, such as its `Unit`, disappear.
+Nonempty structural runtime layouts and recursive definitions report an
+explicit erasure refusal.
+
+The public command provides source checking and ordinary erasure. Wasm build/run,
 recursive families, dependent or parameterized records, and constructor-labelled arms remain
 pending. `check --print` displays checked kernel definitions rather than a
 source round trip. Files larger than 32768 bytes report `E-SOURCE-SIZE`.

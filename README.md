@@ -9,6 +9,7 @@ modules under `surface/` and the real kernel. Start with:
 ```sh
 ./sole-comb check examples/identity.sole-comb
 ./sole-comb check examples/finite-elim.sole-comb
+./sole-comb check --erased examples/erasure.sole-comb
 make test-cli
 ```
 
@@ -37,16 +38,19 @@ whole-program check/print comparisons. See the [program evidence](dev/validation
 A.5b.3.1 adds the erased representation, exact printer, and runtime scope
 and capture operations. See the [erasure support evidence](dev/validation/stage-a-erasure.md).
 The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
-[Stage A entry decision](dev/stage-a-entry.md). Type-directed erasure and the full
-kernel differential remain next.
+[Stage A entry decision](dev/stage-a-entry.md). A.5b.3.2a adds type-directed
+erasure for Nat values and ordinary functions through `check --erased`, including
+ghost arguments, eta expansion and closure capture pruning. See the
+[core erasure evidence](dev/validation/stage-a-core-erasure.md). Structural
+runtime layouts, recursive definitions and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 
 ```sh
 make build           # cached JavaScript build of the host entry
 make check           # host entry, library tests, and scoped source policies
-make test            # build, existing regressions, A.1 through A.5b.3.1 checks, policies, pins
-make gates           # existing regressions, A.1 through A.5b.3.1 checks, policies, pins
+make test            # build, existing regressions, landed Stage A checks, policies, pins
+make gates           # existing regressions, landed Stage A checks, policies, pins
 make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
 make test-representation # real A.2 dependency closure on the same hosts
 make test-evaluation # real A.3 evaluator and converter on the same hosts
@@ -60,6 +64,8 @@ make test-program     # whole-program check/print comparisons and direct contrac
 make test-program-mutations # program comparisons and three isolated mutations
 make test-erasure     # erased representation and runtime scope against pinned Kanon
 make test-erasure-mutations # erasure support comparisons and three isolated mutations
+make test-core-erasure # public ordinary erasure against a fresh pinned oracle
+make test-core-erasure-mutations # quantity, proof, index and capture mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```

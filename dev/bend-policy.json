@@ -364,6 +364,56 @@
       "path": "surface/record.bend",
       "function": "declarations",
       "reason": "The declaration loop spends finite token-count fuel before calling the production parser and resumes through typed continuations. Bend cannot prove the decrease through those callbacks. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "arity",
+      "reason": "The arrow traversal spends finite erasure fuel before opening the next dependent codomain. Bend cannot prove the decrease through the checked value continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "signature_of",
+      "reason": "The signature traversal spends finite erasure fuel before opening each arrow codomain. Bend cannot prove the decrease through the checked value continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "eta_vars",
+      "reason": "Each recursive call increments the eta index toward the finite runtime arity, decreasing the remaining distance. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "lookup",
+      "reason": "Each recursive call consumes one slot from the finite lexical context. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "spine",
+      "reason": "Each recursive call consumes the function subterm of an application in the finite checked syntax tree. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "free_loop",
+      "reason": "The work list traverses finite checked subterms without expanding globals. Bend cannot prove the structural measure through the explicit work list. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "bind",
+      "reason": "This port composes typed suspended continuations. Internal requests come from fuel-bounded term and lambda traversals or finite argument and declaration lists. Bend cannot derive these measures across callbacks. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "erase_jobs",
+      "reason": "Each recursive call consumes one finite application argument job. Term requests spend the shared finite erasure fuel. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "program_loop",
+      "reason": "Each recursive call consumes one row from the finite checked declaration list. Runtime bodies are erased with finite term fuel. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "drive",
+      "reason": "The typed request interpreter resumes checked term, lambda-chain and argument-job computations. Term and lambda-chain steps spend finite fuel, and argument jobs and declaration traversal consume finite lists. Bend cannot prove these measures across suspended continuations. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

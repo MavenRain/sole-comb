@@ -42,7 +42,7 @@ through the ordinary elaborator and kernel checker.
 The supported prefix includes ordinary definitions, axioms, dependent
 functions, Nat primitives, sums, products, closed records, and finite-sum elimination.
 Recursive-family recursors, constructor-labelled arms,
-dependent or parameterized records, type-directed erasure, and WebAssembly build/run remain
+dependent or parameterized records, complete type-directed erasure, and WebAssembly build/run remain
 pending. Unsupported forms must fail, and native examples for them must enter
 the public suite when they become operational. The first increment's source
 transport accepts files up to 32768 bytes and reports larger inputs explicitly.
@@ -52,6 +52,15 @@ and relevant refusal cases. Its validation must invoke `./sole-comb`, including
 actual stdout, stderr, and exit status. The native example census is explicit;
 adding a file requires an expectation. `make check`, `make test`, and
 `make gates` run this suite. The pinned `.kan` differential continues separately.
+
+The ordinary-erasure increment adds `check --erased` to this public path.
+It checks the source first, then erases Nat values and ordinary functions using
+the checked types. It drops ghost parameters, universes, proofs and empty
+products, handles eta expansion and partial applications, lifts closures and
+prunes unused captures. Structural runtime layouts and recursive definitions
+report explicit refusals. Fresh pinned-oracle comparisons and direct contracts
+run on Bun, Node worker and native; four isolated semantic mutations exercise
+the new gate. See [core erasure validation](validation/stage-a-core-erasure.md).
 
 Next compiler work should extend this public path: complete erasure and the
 backend for build/run, implement the M0 recursor semantics before enabling

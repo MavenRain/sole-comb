@@ -29,6 +29,7 @@ def main():
     check = commands.add_parser("check", help="parse and type-check a source file")
     check.add_argument("file", type=Path)
     check.add_argument("--print", action="store_true", help="also print the checked kernel definitions")
+    check.add_argument("--erased", action="store_true", help="print type-directed erased definitions (ordinary functions and Nat)")
     check.add_argument("--host", choices=("bun", "node-worker", "native"), help="override the development execution host")
     for verb in ("build", "run"):
         pending = commands.add_parser(verb, help="pending the erasure and WebAssembly backend")
@@ -63,7 +64,7 @@ def main():
             sys.stderr.buffer.write(built.stdout + built.stderr)
             return fail(2, "E-BUILD: the public compiler could not be built")
         launcher = ROOT / "_build/endpoint" / host
-        result = subprocess.run([str(launcher), "check", source.hex()], cwd=ROOT, env=env,
+        result = subprocess.run([str(launcher), "erased" if args.erased else "check", source.hex()], cwd=ROOT, env=env,
                                 capture_output=True, timeout=120)
     except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as error:
         return fail(2, f"E-HOST: {error}")
@@ -84,7 +85,7 @@ def main():
     if len(parts) != 3 or parts[0] != "OK" or not re.fullmatch(r"0|[1-9][0-9]*", parts[1]):
         return fail(2, "E-HOST: malformed compiler response")
     print(f"CHECK {path} defs={parts[1]} ok")
-    if args.print:
+    if args.print or args.erased:
         sys.stdout.write(parts[2])
     return 0
 
