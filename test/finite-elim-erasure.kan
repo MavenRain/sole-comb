@@ -1,0 +1,9 @@
+-- Independent pinned-syntax expansion of the native finite-elim example.
+axiom Nat : Type 0
+def Two : Type 0 := sum(Nat, Nat)
+def left : Two := inj 0 of 2 7
+def right : Two := inj 1 of 2 42
+def unwrap : Two -> Nat := fun (x : Two) => case x with
+  | 0 (a : Nat) => a
+  | 1 (b : Nat) => b
+def answer : Nat := unwrap right

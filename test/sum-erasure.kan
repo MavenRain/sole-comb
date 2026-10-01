@@ -1,0 +1,50 @@
+-- Independent explicit expansion of the public finite-sum erasure example.
+axiom Nat : Type 0
+def Unit : Type 0 := prod()
+def unit : Unit := tuple()
+def Mixed : Type 0 := sum(Unit, Nat, Unit)
+def first : Mixed := inj 0 of 3 unit
+def middle : Mixed := inj 1 of 3 42
+def last : Mixed := inj 2 of 3 unit
+def unwrap : Mixed -> Nat := fun (x : Mixed) => case x with
+  | 0 (u : Unit) => 1
+  | 1 (n : Nat) => n
+  | 2 (u : Unit) => 3
+def answer : Nat := unwrap middle
+def Types : Type 1 := sum(Type 0, Nat)
+def typeTag : Types := inj 0 of 2 Nat
+def natTag : Types := inj 1 of 2 7
+def typeUnwrap : Types -> Nat := fun (x : Types) => case x with
+  | 0 (0 A : Type 0) => 9
+  | 1 (n : Nat) => n
+def Pair : Type 0 := prod(Nat, Nat)
+def Nested : Type 0 := sum(Pair, Mixed)
+def pairTag : Nested := inj 0 of 2 tuple(10, 20)
+def sumTag : Nested := inj 1 of 2 middle
+def nestedUnwrap : Nested -> Nat := fun (x : Nested) => case x with
+  | 0 (p : Pair) => unwrap middle
+  | 1 (v : Mixed) => unwrap v
+def WithFunction : Type 0 := sum(Nat -> Nat, Unit)
+def functionTag : WithFunction := inj 0 of 2 (fun (n : Nat) => natAdd n 1)
+def applyTag : WithFunction -> Nat := fun (x : WithFunction) => case x with
+  | 0 (f : Nat -> Nat) => f 5
+  | 1 (u : Unit) => 0
+def choose : Nat -> Mixed -> Nat -> Nat := fun (base : Nat) (x : Mixed) => case x with
+  | 0 (u : Unit) => fun (n : Nat) => natAdd base n
+  | 1 (v : Nat) => fun (n : Nat) => natAdd v (natAdd base n)
+  | 2 (u : Unit) => fun (n : Nat) => base
+def chosen : Nat := choose 10 middle 2
+def defaulted : sum(Nat, Nat, Nat) -> Nat := fun (x : sum(Nat, Nat, Nat)) => case x with
+  | 0 (n : Nat) => n
+  | 1 (n : Nat) => 99
+  | 2 (n : Nat) => 99
+def Empty : Type 0 := sum()
+axiom impossible : Empty
+def emptyCase : Empty -> Nat := fun (x : Empty) => case x with
+def erasedBinder : sum(Nat, Nat) -> Nat := fun (x : sum(Nat, Nat)) => case x with
+  | 0 (0 n : Nat) => 10
+  | 1 (0 n : Nat) => 20
+def withMotive : Mixed -> Nat := fun (x : Mixed) => case x as value return Nat with
+  | 0 (u : Unit) => 0
+  | 1 (n : Nat) => natAdd n 1
+  | 2 (u : Unit) => 2

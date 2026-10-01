@@ -1,5 +1,6 @@
 # Type-directed runtime admission and function layouts from Kanon 69f3be51.
-# Collection products omit erased fields; other structural layouts remain pending.
+# Collection products omit erased fields; sums retain every tag and layout leg.
+# Dependent-pair and recursive-family layouts remain pending.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -100,6 +101,19 @@ def tuple_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +n: F.
   boolean(R.result(K.repr), F.Int63.equal(n, F.Int63.zero), _ => Done{any_repr}, _ =>
     R.bind(List<&2, V.t>, K.repr, leg_types(c, n, diagram), +tys =>
       R.map_result(List<&2, String>, K.repr, +texts => K.RStruct{K.Tid{String.concat(["tuple<", K.join(",", texts), ">"])}}, tuple_texts(loop, c, tys, b))))
+@unsafe
+def sum_texts(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, tys: List<&2, V.t>, +b: B.t) -> R.result(List<&2, String>):
+  match tys:
+    case []: Done{[]}
+    case +ty <> rest:
+      R.bind(Bool, List<&2, String>, runtime_ty(c, ty), keep =>
+        R.bind(String, List<&2, String>, boolean(R.result(String), keep,
+          _ => R.map_result(K.repr, String, K.print_repr, loop(c, ty, b)), _ => Done{"unit"}), +text =>
+          R.map_result(List<&2, String>, List<&2, String>, +tail => text <> tail, sum_texts(loop, c, rest, b))))
+def sum_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +n: F.Int63.t, diagram: V.closure, +b: B.t) -> R.result(K.repr):
+  boolean(R.result(K.repr), F.Int63.equal(n, F.Int63.zero), _ => Done{any_repr}, _ =>
+    R.bind(List<&2, V.t>, K.repr, leg_types(c, n, diagram), +tys =>
+      R.map_result(List<&2, String>, K.repr, +texts => K.RUnion{K.Tid{String.concat(["sum<", K.join("|", texts), ">"])}}, sum_texts(loop, c, tys, b))))
 def refused_repr(+ty: V.t) -> R.result(K.repr):
   boolean(R.result(K.repr), Bool.or(has(V.Former, V.as_lan(ty)), has(V.Former, V.as_ran(ty))),
     _ => boolean(R.result(K.repr), Bool.or(empty_former(V.as_lan(ty)), empty_former(V.as_ran(ty))),
@@ -111,8 +125,14 @@ def product_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V
   match former:
     case V.Former{shape, diagram, _}:
       maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => tuple_repr(loop, c, n, diagram, b))
+def sum_former_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V.t, former: V.Former, b: B.t) -> R.result(K.repr):
+  match former:
+    case V.Former{shape, diagram, _}:
+      maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => sum_repr(loop, c, n, diagram, b))
 def structural_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
-  maybe(V.Former, R.result(K.repr), V.as_ran(ty), _ => refused_repr(ty), former => product_repr(loop, c, ty, former, b))
+  maybe(V.Former, R.result(K.repr), V.as_ran(ty),
+    _ => maybe(V.Former, R.result(K.repr), V.as_lan(ty), _ => refused_repr(ty), former => sum_former_repr(loop, c, ty, former, b)),
+    former => product_repr(loop, c, ty, former, b))
 def nonfunction_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
   maybe(F.Pair2<V.head, List<&2, V.spine>>, R.result(K.repr), V.as_neutral(ty), _ => structural_repr(loop, c, ty, b),
     +value => pair(V.head, List<&2, V.spine>, R.result(K.repr), value, +head => +spine => Done{neutral_repr(head, spine)}))

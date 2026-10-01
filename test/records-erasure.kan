@@ -1,0 +1,35 @@
+-- Independent product, getter and case expansion of the public records example.
+axiom Nat : Type 0
+def Pair : Type 0 := prod(Nat, Nat)
+def Pair_first : (1 recordArg : Pair) -> Nat := fun (1 recordArg : Pair) => recordArg.0
+def Pair_second : (1 recordArg : Pair) -> Nat := fun (1 recordArg : Pair) => recordArg.1
+def pair : Pair := tuple(10, 20)
+def first : Nat := Pair_first pair
+def second : Nat := Pair_second pair
+def linearFirst : (1 p : Pair) -> Nat := fun (1 p : Pair) => Pair_first p
+def Empty : Type 0 := prod()
+def empty : Empty := tuple()
+def Other : Type 0 := prod(Nat)
+def Other_first : (1 recordArg : Other) -> Nat := fun (1 recordArg : Other) => recordArg.0
+def other : Other := tuple(30)
+def otherFirst : Nat := Other_first other
+def Packet : Type 1 := prod(Type 0, Pair, Nat -> Nat, Nat)
+def Packet_kind : (1 recordArg : Packet) -> Type 0 := fun (1 recordArg : Packet) => recordArg.0
+def Packet_payload : (1 recordArg : Packet) -> Pair := fun (1 recordArg : Packet) => recordArg.1
+def Packet_handler : (1 recordArg : Packet) -> Nat -> Nat := fun (1 recordArg : Packet) => recordArg.2
+def Packet_count : (1 recordArg : Packet) -> Nat := fun (1 recordArg : Packet) => recordArg.3
+def packet : Packet := tuple(Nat, pair, fun (n : Nat) => natAdd n 1, 40)
+def payload : Pair := Packet_payload packet
+def handled : Nat := Packet_handler packet (Pair_first payload)
+def count : Nat := Packet_count packet
+def kind : Type 0 := Packet_kind packet
+def value : Type 0 := Nat
+def Capture : Type 0 := prod(value)
+def Capture_item : (1 recordArg : Capture) -> value := fun (1 recordArg : Capture) => recordArg.0
+def capture : Capture := tuple(50)
+def captured : value := Capture_item capture
+def picked : Nat := case (inj 1 of 2 other : sum(Other, Other)) with
+  | 0 (1 r : Other) => Other_first r
+  | 1 (1 r : Other) => Other_first r
+axiom Other_zero : Other
+def zeroFirst : Nat := Other_first Other_zero

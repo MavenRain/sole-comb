@@ -1,0 +1,67 @@
+-- Tags retain leg numbers after proof payloads erase.
+axiom Nat : Type 0
+def Unit : Type 0 := prod()
+def unit : Unit := tuple()
+def Mixed : Type 0 := sum(Unit, Nat, Unit)
+def first : Mixed := inj 0 of 3 unit
+def middle : Mixed := inj 1 of 3 42
+def last : Mixed := inj 2 of 3 unit
+def unwrap : Mixed -> Nat := fun (x : Mixed) => elim x {
+  fun (u : Unit) => 1;
+  fun (n : Nat) => n;
+  fun (u : Unit) => 3
+}
+def answer : Nat := unwrap middle
+
+-- Type payloads drop without renumbering the remaining runtime leg.
+def Types : Type 1 := sum(Type 0, Nat)
+def typeTag : Types := inj 0 of 2 Nat
+def natTag : Types := inj 1 of 2 7
+def typeUnwrap : Types -> Nat := fun (x : Types) => elim x {
+  fun (0 A : Type 0) => 9;
+  fun (n : Nat) => n
+}
+
+-- Products, sums and functions contribute their nested layouts.
+def Pair : Type 0 := prod(Nat, Nat)
+def Nested : Type 0 := sum(Pair, Mixed)
+def pairTag : Nested := inj 0 of 2 tuple(10, 20)
+def sumTag : Nested := inj 1 of 2 middle
+def nestedUnwrap : Nested -> Nat := fun (x : Nested) => elim x {
+  fun (p : Pair) => unwrap middle;
+  unwrap
+}
+def WithFunction : Type 0 := sum(Nat -> Nat, Unit)
+def functionTag : WithFunction := inj 0 of 2 (fun (n : Nat) => natAdd n 1)
+def applyTag : WithFunction -> Nat := fun (x : WithFunction) => elim x {
+  fun (f : Nat -> Nat) => f 5;
+  else: fun (u : Unit) => 0
+}
+
+-- A branch result can close over both its payload and an outer binder.
+def choose : Nat -> Mixed -> Nat -> Nat := fun (base : Nat) (x : Mixed) => elim x {
+  fun (u : Unit) => fun (n : Nat) => natAdd base n;
+  fun (v : Nat) => fun (n : Nat) => natAdd v (natAdd base n);
+  fun (u : Unit) => fun (n : Nat) => base
+}
+def chosen : Nat := choose 10 middle 2
+def defaulted : sum(Nat, Nat, Nat) -> Nat := fun (x : sum(Nat, Nat, Nat)) => elim x {
+  fun (n : Nat) => n;
+  else: fun (n : Nat) => 99
+}
+
+-- Empty sums carry no runtime value, but an absurd case keeps its empty dispatch.
+def Empty : Type 0 := sum()
+axiom impossible : Empty
+def emptyCase : Empty -> Nat := fun (x : Empty) => elim x {}
+
+-- A zero-quantity binder drops a runtime payload inside the branch.
+def erasedBinder : sum(Nat, Nat) -> Nat := fun (x : sum(Nat, Nat)) => elim x {
+  fun (0 n : Nat) => 10;
+  fun (0 n : Nat) => 20
+}
+def withMotive : Mixed -> Nat := fun (x : Mixed) => elim x as value return Nat {
+  fun (u : Unit) => 0;
+  fun (n : Nat) => natAdd n 1;
+  fun (u : Unit) => 2
+}

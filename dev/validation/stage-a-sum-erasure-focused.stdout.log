@@ -1,0 +1,21 @@
+python3 -P dev/test-core-erasure.py
+PASS public erasure bun: 7 oracle comparisons, 1 refusal
+PASS public erasure node-worker: 7 oracle comparisons, 1 refusal
+PASS public erasure native: 7 oracle comparisons, 1 refusal
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-1001-sum-erasure/gates-copy-postfix/dev/toolchain.json
+PASS ordinary, product and sum erasure: public observations, direct contracts, source hashes stable
+python3 -P dev/test-core-erasure-mutations.py
+PASS erasure mutant: zero-kept
+PASS erasure mutant: proof-kept
+PASS erasure mutant: index-shift
+PASS erasure mutant: capture-not-pruned
+PASS erasure mutant: tuple-field-order
+PASS erasure mutant: projection-unfiltered
+PASS erasure mutant: tuple-layout
+PASS erasure mutant: body-layout-dependencies
+PASS erasure mutant: sum-layout
+PASS erasure mutant: sum-tag-number
+PASS erasure mutant: sum-erased-payload
+PASS erasure mutant: case-payload-arity
+PASS erasure mutant: case-leg-selection
+PASS erasure mutant: case-tail-lost

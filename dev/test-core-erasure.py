@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare public ordinary and product erasure with fresh pinned Kanon and goldens."""
+"""Compare public ordinary, product and sum erasure with fresh pinned Kanon and goldens."""
 import argparse
 import hashlib
 import importlib.util
@@ -14,13 +14,19 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/core-erasure"
 POSITIVE = ("examples/identity.sole-comb", "examples/arithmetic.sole-comb", "examples/erasure.sole-comb",
-            "examples/product-erasure.sole-comb")
-REFUSED = ("examples/finite-elim.sole-comb", "examples/records.sole-comb")
-ORACLE_SOURCES = {"examples/product-erasure.sole-comb": "test/product-erasure.kan"}
+            "examples/product-erasure.sole-comb", "examples/finite-elim.sole-comb",
+            "examples/sum-erasure.sole-comb", "examples/records.sole-comb")
+COUNTS = dict(zip(POSITIVE, (3, 3, 19, 40, 6, 29, 32), strict=True))
+ORACLE_SOURCES = {"examples/product-erasure.sole-comb": "test/product-erasure.kan",
+                  "examples/finite-elim.sole-comb": "test/finite-elim-erasure.kan",
+                  "examples/sum-erasure.sole-comb": "test/sum-erasure.kan",
+                  "examples/records.sole-comb": "test/records-erasure.kan"}
 ORACLE_NAMES = {f"{record}_{field}": f"{record}.{field}"
                 for record, fields in (("Pair", ("first", "second")),
                     ("Mixed", ("kind", "witness", "first", "second", "callback", "nested", "trailing")),
-                    ("AllErased", ("kind", "witness")), ("Outer", ("erased", "kept")))
+                    ("AllErased", ("kind", "witness")), ("Outer", ("erased", "kept")),
+                    ("Other", ("first", "zero")), ("Packet", ("kind", "payload", "handler", "count")),
+                    ("Capture", ("item",)))
                 for field in fields}
 ORACLE_NAME_PATTERN = re.compile(r"(?<![\w'.$])(?:" + "|".join(map(re.escape, ORACLE_NAMES)) + r")(?![\w'])")
 PRODUCT_LAYOUT = "tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>"
@@ -31,6 +37,20 @@ PRODUCT_GOLDENS = (
     f"fun Mixed.nested (struct {PRODUCT_LAYOUT}) : struct tuple<union nat,union nat> := KProj {PRODUCT_LAYOUT} 3 (KVar 0)",
     "fun allErased () : struct tuple<> := KErased",
     f"rec [nat; {PRODUCT_LAYOUT}; tuple<union nat,union nat>]",
+)
+SUM_GOLDENS = (
+    "fun first () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 0 []",
+    "fun middle () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 1 [KLit 42]",
+    "fun last () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 2 []",
+    "fun unwrap (union sum<unit|union nat|unit>) : union nat := KCase sum<unit|union nat|unit> (KVar 0) [{0 0 (KLit 1)}; {1 1 (KVar 0)}; {2 0 (KLit 3)}]",
+    "fun typeTag () : union sum<unit|union nat> := KTag sum<unit|union nat> 0 []",
+    "fun typeUnwrap (union sum<unit|union nat>) : union nat := KCase sum<unit|union nat> (KVar 0) [{0 0 (KLit 9)}; {1 1 (KVar 0)}]",
+    "rec [nat; sum<func fn<1>|unit>]",
+    "fun functionTag () : union sum<func fn<1>|unit> := KTag sum<func fn<1>|unit> 0 [KClos functionTag$0 1 []]",
+    "fun applyTag (union sum<func fn<1>|unit>) : union nat := KCase sum<func fn<1>|unit> (KVar 0) [{0 1 (KTail (KVar 0) [KLit 5])}; {1 0 (KLit 0)}]",
+    "erased impossible",
+    "fun emptyCase () : union nat := KCase any (KErased) []",
+    "fun erasedBinder (union sum<union nat|union nat>) : union nat := KCase sum<union nat|union nat> (KVar 0) [{0 0 (KLit 10)}; {1 0 (KLit 20)}]",
 )
 APPLIED = WORK / "applied-erased-arity.sole-comb"
 APPLIED_SOURCE = """axiom Nat : Type 0
@@ -69,7 +89,7 @@ def sources():
              "dev/house-bend.py", "dev/toolchain.json", "test/core-erasure.bend", "test/core-erasure-oracle.ml")]
     for directory in ("lib", "surface", "erase", "bin"):
         paths.extend((ROOT / directory).glob("*.bend"))
-    paths.extend(ROOT / name for name in POSITIVE + REFUSED)
+    paths.extend(ROOT / name for name in POSITIVE)
     paths.extend(ROOT / name for name in ORACLE_SOURCES.values())
     return {str(p.relative_to(ROOT)): digest(p) for p in sorted(set(paths))}
 
@@ -116,8 +136,10 @@ def oracle(pins, env):
             # The pin has no qualified surface names. Restore this fixture's namespaces.
             # Rename whole identifiers only, so no key rewrites part of a longer name.
             output = ORACLE_NAME_PATTERN.sub(lambda match: ORACLE_NAMES[match.group(0)], output)
-        if path in ORACLE_SOURCES and any(line not in output.splitlines() for line in PRODUCT_GOLDENS):
+        if path == "examples/product-erasure.sole-comb" and any(line not in output.splitlines() for line in PRODUCT_GOLDENS):
             raise RuntimeError("pinned oracle differs from independent product erasure goldens")
+        if path == "examples/sum-erasure.sole-comb" and any(line not in output.splitlines() for line in SUM_GOLDENS):
+            raise RuntimeError("pinned oracle differs from independent sum erasure goldens")
         expected[path] = output
     pin()
     return expected, {"revision": revision, "sources": hashes, "adapter_sha256": digest(dest / "oracle_adapter.ml"),
@@ -167,18 +189,9 @@ def main():
         for i, path in enumerate(POSITIVE):
             result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env)
             actual = result["stdout"].partition("\n")[2]
-            count = {POSITIVE[0]: 3, POSITIVE[1]: 3, POSITIVE[2]: 19, POSITIVE[3]: 40}[path]
+            count = COUNTS[path]
             if result["stderr"] or result["stdout"].splitlines()[0] != f"CHECK {path} defs={count} ok" or actual != expected[path]:
                 raise RuntimeError(f"{host} {path}: erased public output differs from the pinned oracle\n{actual}")
-            observations.append({"host": host, "file": path, **result})
-        for i, path in enumerate(REFUSED):
-            # These checked programs still require pending sum erasure.
-            checked = run(f"checked-{host}-{i}", [ROOT / "sole-comb", "check", "--host", host, path], env)
-            if checked["stderr"]:
-                raise RuntimeError(f"{host} {path}: malformed checking success")
-            result = run(f"refused-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env, expected=1)
-            if result["stdout"] or "not yet:" not in result["stderr"] or "in type-directed erasure" not in result["stderr"]:
-                raise RuntimeError(f"{host} {path}: missing erasure refusal: {result}")
             observations.append({"host": host, "file": path, **result})
         # An application whose remaining parameters all erase must refuse, not saturate.
         checked = run(f"checked-{host}-applied", [ROOT / "sole-comb", "check", "--host", host, APPLIED], env)
@@ -188,16 +201,17 @@ def main():
         if result["stdout"] or "not yet:" not in result["stderr"] or APPLIED_REFUSAL not in result["stderr"]:
             raise RuntimeError(f"{host} {APPLIED}: missing erasure refusal: {result}")
         observations.append({"host": host, "file": "applied-erased-arity", **result})
-        print(f"PASS ordinary erasure {host}: {len(POSITIVE)} oracle comparisons, {len(REFUSED) + 1} refusals", flush=True)
+        print(f"PASS public erasure {host}: {len(POSITIVE)} oracle comparisons, 1 refusal", flush=True)
     contract_results = contracts(pins, hosts, env)
     if sources() != before:
         raise RuntimeError("erasure sources changed during validation")
-    record = {"milestone": "A.5b.3.2b", "scope": "ordinary definitions, function closures, Nat, collection products and erased positions",
+    record = {"milestone": "A.5b.3.2c", "scope": "ordinary definitions, function closures, Nat, collection products and sums, erased positions",
               "hosts": hosts, "sources": before, "oracle": provenance, "oracle_results": expected,
               "public_observations": observations, "contracts": contract_results,
-              "structural_erasure": "pending", "full_erased_corpus": "pending", "wasm": "pending"}
+              "independent_goldens": {"product": len(PRODUCT_GOLDENS), "sum": len(SUM_GOLDENS)},
+              "structural_erasure": "finite collections supported; dependent pairs and recursive families pending", "full_erased_corpus": "pending", "wasm": "pending"}
     (WORK / "result.json").write_text(json.dumps(record, indent=2) + "\n")
-    print("PASS ordinary and product erasure: public observations, seven contracts, source hashes stable", flush=True)
+    print("PASS ordinary, product and sum erasure: public observations, direct contracts, source hashes stable", flush=True)
 
 
 if __name__ == "__main__":

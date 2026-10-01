@@ -11,6 +11,7 @@ modules under `surface/` and the real kernel. Start with:
 ./sole-comb check examples/finite-elim.sole-comb
 ./sole-comb check --erased examples/erasure.sole-comb
 ./sole-comb check --erased examples/product-erasure.sole-comb
+./sole-comb check --erased examples/sum-erasure.sole-comb
 make test-cli
 ```
 
@@ -46,7 +47,10 @@ ghost arguments, eta expansion and closure capture pruning. See the
 collection tuples, closed-record layouts and field projections, including erased
 fields, nested products and function fields. See the
 [product erasure evidence](dev/validation/stage-a-product-erasure.md).
-Sum layouts, recursive definitions and the full kernel differential remain pending.
+A.5b.3.2c adds finite-sum layouts, injections and case erasure, including erased
+payloads, default arms and captured branch closures. See the
+[sum erasure evidence](dev/validation/stage-a-sum-erasure.md).
+Dependent pairs, recursive definitions and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 

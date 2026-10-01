@@ -12,7 +12,8 @@
     "examples/record-expansion.sole-comb": 7,
     "examples/record-expansion-explicit.sole-comb": 7,
     "examples/erasure.sole-comb": 19,
-    "examples/product-erasure.sole-comb": 40
+    "examples/product-erasure.sole-comb": 40,
+    "examples/sum-erasure.sole-comb": 29
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",

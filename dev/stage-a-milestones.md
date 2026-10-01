@@ -49,8 +49,10 @@ the pending type-directed erasure and complete oracle integration boundary.
 The A.5b.3.2a increment adds ordinary type-directed erasure to `check --erased`,
 with [core erasure validation](validation/stage-a-core-erasure.md). The
 A.5b.3.2b increment extends it to collection tuples and closed records, with
-[product erasure validation](validation/stage-a-product-erasure.md). The full
-A.5b.3.2 boundary remains pending for sum layouts and elimination, recursive
+[product erasure validation](validation/stage-a-product-erasure.md). The
+A.5b.3.2c increment extends it to finite-sum layouts, injections and case
+elimination, with [sum erasure validation](validation/stage-a-sum-erasure.md).
+The full A.5b.3.2 boundary remains pending for dependent pairs, recursive
 definitions, complete corpus integration and WebAssembly build/run.
 
 ## Compiler commits

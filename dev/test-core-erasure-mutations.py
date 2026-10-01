@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require ordinary and product erasure tests to reject isolated semantic mutants."""
+"""Require ordinary, product and sum erasure tests to reject isolated semantic mutants."""
 import json
 from pathlib import Path
 import shutil
@@ -21,6 +21,14 @@ MUTANTS = (
     ("tuple-layout", "erase/type.bend", 'String.concat(["tuple<", K.join(",", texts), ">"])',
      'String.concat(["tuple<", K.join(";", texts), ">"])'),
     ("body-layout-dependencies", "erase/core.bend", "Dep.term(body)", "[]"),
+    ("sum-layout", "erase/type.bend", 'K.join("|", texts)', 'K.join(",", texts)'),
+    ("sum-tag-number", "erase/core.bend", "K.KTag{tid, index, [field]}", "K.KTag{tid, F.Int63.succ(index), [field]}"),
+    ("sum-erased-payload", "erase/sum.bend", "F.choose(Maybe<&2, payload>, keep, Some{Payload{lty, body}}, None{})", "Some{Payload{lty, body}}"),
+    ("case-payload-arity", "erase/core.bend", "F.choose(F.Int63.t, keep, F.Int63.one, F.Int63.zero)", "F.Int63.one"),
+    ("case-leg-selection", "erase/sum.bend", "F.Int63.equal(k, index)",
+     "Bool.or(F.Int63.equal(k, index), Bool.and(F.Int63.equal(k, F.Int63.zero), F.Int63.equal(index, F.Int63.succ(F.Int63.one))))"),
+    ("case-tail-lost", "erase/core.bend", "term_request(added(c, q, x, dom, keep), s, tail, Some{target}, body)",
+     "term_request(added(c, q, x, dom, keep), s, False{}, Some{target}, body)"),
 )
 
 
@@ -47,7 +55,7 @@ def main():
                 "erased public output differs from the pinned oracle", "erasure contracts failed")):
             raise RuntimeError(f"{name}: mutant did not fail a semantic comparison\n{error}")
         rows.append({"name": name, "path": path, "exit": result.returncode, "semantic_rejection": True})
-        print(f"PASS ordinary erasure mutant: {name}", flush=True)
+        print(f"PASS erasure mutant: {name}", flush=True)
     (WORK / "result.json").write_text(json.dumps({"mutants": rows}, indent=2) + "\n")
 
 

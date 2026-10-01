@@ -1,6 +1,6 @@
 # Bounded ordinary-definition erasure from Kanon 69f3be51 lib/erase.ml.
-# Collection tuples and projections are supported; recursive definitions remain pending.
-# Other runtime structural values, eliminations and sum layouts still fail explicitly.
+# Finite collection products and sums are supported; dependent pairs, recursive families
+# and recursive definitions remain pending.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -17,6 +17,7 @@ import eterm.bend as K
 import runtime.bend as RT
 import type.bend as Ty
 import dependencies.bend as Dep
+import sum.bend as Sum
 
 type slot is Data:
   Drop{}
@@ -535,6 +536,57 @@ def program_loop(+g: G.t, +b: B.t, entries: List<&2, F.Pair2<String, G.entry>>, 
     case []: Pure{R.rev_append(F.Pair2<String, entry>, acc, [])}
     case F.Pair2{+name, +en} <> rest:
       bind(entry, rows, declaration_program(g, b, name, en), +erased => program_loop(G.add(name, en, g), b, rest, F.Pair2{name, erased} <> acc))
+def tag_body(c: ctx, s: state, +tid: K.tid, +index: F.Int63.t, value: Sum.payload) -> computation<answer>:
+  match value:
+    case Sum.Payload{ty, body}:
+      map_result(answer, answer, +pair => with_answer(answer, pair, +field => +s1 => F.Pair2{K.KTag{tid, index, [field]}, s1}), term_request(c, s, False{}, Some{ty}, body))
+def tag_plan(c: ctx, +s: state, plan: Sum.tag) -> computation<answer>:
+  match plan:
+    case Sum.Tag{+tid, +index, payload}:
+      Ty.maybe(Sum.payload, computation<answer>, payload,
+        _ => Pure{F.Pair2{K.KTag{tid, index, []}, s}},
+        +value => tag_body(c, s, tid, index, value))
+def injection_shape(+c: ctx, +s: state, ty: V.t, shape: S.t<T.t>, address: T.addr, args: List<&2, T.t>) -> computation<answer>:
+  match shape:
+    case S.SColl{_}: bind(Sum.tag, answer, lift_result(Sum.tag, Sum.injection(checker(c), ty, address, args)), plan => tag_plan(c, s, plan))
+    case S.SPi{_, _, _}: Abort{E.Not_yet{"dependent pairs in type-directed erasure"}}
+    case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
+    case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
+    case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
+type branches_answer is Data:
+  Branches{branches: List<&2, K.kbranch>, state: state}
+def branch_body(c: ctx, s: state, tail: Bool, +index: F.Int63.t, value: Sum.branch) -> computation<F.Pair2<K.kbranch, state>>:
+  match value:
+    case Sum.Branch{q, x, dom, +keep, target, body}:
+      map_result(answer, F.Pair2<K.kbranch, state>, +pair => with_answer(F.Pair2<K.kbranch, state>, pair, +ktm => +s1 =>
+        F.Pair2{K.Branch{index, F.choose(F.Int63.t, keep, F.Int63.one, F.Int63.zero), ktm}, s1}), term_request(added(c, q, x, dom, keep), s, tail, Some{target}, body))
+@unsafe
+def case_branches(+c: ctx, +s: state, +tail: Bool, +ty: V.t, +motive: Maybe<&2, T.motive>, +tys: List<&2, V.t>, remaining: List<&2, V.t>, +index: F.Int63.t, +source: List<&2, F.Pair2<T.addr, T.leg>>, +acc: List<&2, K.kbranch>) -> computation<branches_answer>:
+  match remaining:
+    case []: Pure{Branches{R.rev_append(K.kbranch, acc, []), s}}
+    case _ <> rest:
+      bind(Sum.branch, branches_answer, lift_result(Sum.branch, Sum.branch_of(checker(c), ty, motive, tys, index, source)), plan =>
+        bind(F.Pair2<K.kbranch, state>, branches_answer, branch_body(c, s, tail, index, plan), value =>
+          Ty.pair(K.kbranch, state, computation<branches_answer>, value, +branch => +s1 =>
+            case_branches(c, s1, tail, ty, motive, tys, rest, F.Int63.succ(index), source, branch <> acc))))
+def case_finish(+tid: K.tid, +scrut: K.ktm, value: branches_answer) -> answer:
+  match value:
+    case Branches{branches, s}: F.Pair2{K.KCase{tid, scrut, branches}, s}
+def case_plan(+c: ctx, s: state, +tail: Bool, +ty: V.t, scrut: T.t, +motive: Maybe<&2, T.motive>, +branches: List<&2, F.Pair2<T.addr, T.leg>>, plan: Sum.case_plan) -> computation<answer>:
+  match plan:
+    case Sum.Case{sty, +tid, +tys}:
+      bind(answer, answer, term_request(c, s, False{}, Some{sty}, scrut), +pair => with_answer(computation<answer>, pair, +kscrut => +s1 =>
+        map_result(branches_answer, answer, value => case_finish(tid, kscrut, value), case_branches(c, s1, tail, ty, motive, tys, tys, F.Int63.zero, branches, []))))
+def elimination_shape(+c: ctx, +s: state, +tail: Bool, +ty: V.t, shape: S.t<T.t>, +scrut: T.t, motive: Maybe<&2, T.motive>, branches: List<&2, F.Pair2<T.addr, T.leg>>) -> computation<answer>:
+  match shape:
+    case S.SColl{_}: bind(Sum.case_plan, answer, lift_result(Sum.case_plan, Sum.case_of(checker(c), scrut)), plan => case_plan(c, s, tail, ty, scrut, motive, branches, plan))
+    case S.SPi{_, _, _}: Abort{E.Not_yet{"dependent pair elimination in type-directed erasure"}}
+    case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
+    case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
+    case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
+def elimination(c: ctx, s: state, tail: Bool, ty: V.t, value: T.elim) -> computation<answer>:
+  match value:
+    case T.Elimination{shape, scrut, _, motive, branches}: elimination_shape(c, s, tail, ty, shape, scrut, motive, branches)
 def node(+c: ctx, +s: state, +tail: Bool, +ty: V.t, +tm: T.t) -> computation<answer>:
   match tm:
     case T.Var{ix}: variable(c, s, ix)
@@ -547,8 +599,8 @@ def node(+c: ctx, +s: state, +tail: Bool, +ty: V.t, +tm: T.t) -> computation<ans
     case T.Let{x, lty, value, +body}: let_term(c, s, tail, ty, x, lty, value, body)
     case T.Sec{shape, legs}: section(c, s, ty, shape, legs)
     case T.Out{shape, address, head}: application_shape(c, s, tail, ty, shape, address, head)
-    case T.In{_, _, _}: Abort{E.Not_yet{"structural values in type-directed erasure"}}
-    case T.Elim{_}: Abort{E.Not_yet{"elimination in type-directed erasure"}}
+    case T.In{shape, address, args}: injection_shape(c, s, ty, shape, address, args)
+    case T.Elim{elim}: elimination(c, s, tail, ty, elim)
     case T.Auto{}: Abort{E.Not_yet{R.auto_word}}
 def term_step(+c: ctx, s: state, tail: Bool, expected: Maybe<&2, V.t>, +tm: T.t) -> computation<answer>:
   bind(state, answer, tick(s), +s1 =>

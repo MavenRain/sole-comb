@@ -11,12 +11,17 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check examples/default-arms.sole-comb
 ./sole-comb check examples/records.sole-comb --print
 ./sole-comb check --erased examples/product-erasure.sole-comb
+./sole-comb check --erased examples/sum-erasure.sole-comb
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
 checks Nat primitives. `finite-elim` uses native braces and semicolon-separated
 arms to eliminate a two-leg sum. `motive` provides an explicit return type.
 Each file is self-contained and declares its Nat postulate where needed.
+
+`sum-erasure` preserves tag numbers while dropping type and empty-product payloads.
+It also covers nested product/sum layouts, function payloads, captured branch
+closures, zero-quantity binders, explicit motives and empty case dispatch.
 
 An `elim` arm is a function term. Named functions, partial applications, local
 function values, and lambdas with multiple binders are supported. The first
@@ -67,16 +72,16 @@ The suite also invokes every file under `corpus/refuse/`, tests lexical
 boundaries, and checks command errors and file handling.
 
 `check --erased` prints type-directed erased code for Nat values and ordinary
-functions and collection products. `erasure` covers ghost arguments, partial applications, eta
+functions, collection products and finite sums. `erasure` covers ghost arguments, partial applications, eta
 expansion, captured and unused runtime variables, and linear parameters.
 Universes, proof positions and empty products, such as its `Unit`, disappear.
 `product-erasure` covers closed-record getters, erased type and proof fields,
 runtime projection indices, nested products, function fields, linear parameters,
-captured variables, and empty or entirely erased tuples. Sum layouts,
-elimination and recursive definitions report an
+captured variables, and empty or entirely erased tuples. Dependent pairs,
+recursive families and recursive definitions report an
 explicit erasure refusal.
 
-The public command provides source checking and ordinary and product erasure. Wasm build/run,
+The public command provides source checking and ordinary, product and sum erasure. Wasm build/run,
 recursive families, dependent or parameterized records, and constructor-labelled arms remain
 pending. `check --print` displays checked kernel definitions rather than a
 source round trip. Files larger than 32768 bytes report `E-SOURCE-SIZE`.

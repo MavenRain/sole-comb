@@ -444,6 +444,21 @@
       "path": "erase/dependencies.bend",
       "function": "loop",
       "reason": "The explicit work list visits every node of a finite erased term once in depth first order. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "sum_texts",
+      "reason": "Each recursive call consumes one leg type from the finite collection. Nested representation visits spend finite fuel. Bend cannot prove the decrease through the checked-result continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/sum.bend",
+      "function": "find_branch",
+      "reason": "Each recursive call consumes one branch from the finite checked branch list. Bend cannot prove the decrease through the address-view continuation. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "case_branches",
+      "reason": "Each recursive call consumes one leg from the finite collection and erases its body through the fuel-spending term trampoline. Bend cannot prove the decrease through the suspended computation continuation. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }
