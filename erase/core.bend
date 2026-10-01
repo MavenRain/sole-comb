@@ -1,5 +1,6 @@
 # Bounded ordinary-definition erasure from Kanon 69f3be51 lib/erase.ml.
-# Runtime structural values and recursive definitions fail explicitly here.
+# Collection tuples and projections are supported; recursive definitions remain pending.
+# Other runtime structural values, eliminations and sum layouts still fail explicitly.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -15,6 +16,7 @@ import ../lib/kernel_value.bend as V
 import eterm.bend as K
 import runtime.bend as RT
 import type.bend as Ty
+import dependencies.bend as Dep
 
 type slot is Data:
   Drop{}
@@ -175,7 +177,7 @@ None{}))))
 def decl_tids(ds: List<&2, K.kdecl>) -> List<&2, K.tid>:
   match ds:
     case []: []
-    case K.KFun{_, ps, ret, _} <> +rest: List.append(&2, K.tid, repr_tids(List.append(&2, K.repr, ps, [ret])), decl_tids(rest))
+    case K.KFun{_, ps, ret, body} <> +rest: List.append(&2, K.tid, repr_tids(List.append(&2, K.repr, ps, [ret])), List.append(&2, K.tid, Dep.term(body), decl_tids(rest)))
     case K.KRec{ts} <> +rest: List.append(&2, K.tid, ts, decl_tids(rest))
 def unique_tids(ts: List<&2, K.tid>, +acc: List<&2, K.tid>) -> List<&2, K.tid>:
   match ts:
@@ -440,17 +442,68 @@ def lift_closure(c: ctx, s: state, ty: V.t, +tm: T.t) -> computation<answer>:
                 bind(chain_result, answer, chain_request(Context{check, framed(slots, caps, F.Int63.zero), self}, State{(n + 1n : Nat), ds, b}, [], ty, tm), result =>
                   with_chain(computation<answer>, result, +params => ret => body => s1 =>
                     lifted(fid, params, ret, s1, RT.prune_captures(ps, args, count(K.repr, params), body)))))))))
-def section(c: ctx, s: state, ty: V.t, shape: S.t<T.t>, tm: T.t) -> computation<answer>:
+@unsafe
+def tuple_jobs(+c: C.ctx, legs: List<&2, T.leg>, tys: List<&2, V.t>) -> R.result(List<&2, job>):
+  match legs, tys:
+    case [], []: Done{[]}
+    case lg <> rest, +ty <> tail:
+      R.bind(Bool, List<&2, job>, Ty.runtime_ty(c, ty), +keep =>
+        R.map_result(List<&2, job>, List<&2, job>, +jobs => with_leg(List<&2, job>, lg, _ => +body =>
+          F.choose(List<&2, job>, keep, Job{ty, body} <> jobs, jobs)), tuple_jobs(c, rest, tail)))
+    case [], _ <> _: Fail{E.Mismatch{"a tuple has the wrong number of legs"}}
+    case _ <> _, []: Fail{E.Mismatch{"a tuple has the wrong number of legs"}}
+def tuple_finish(c: ctx, ty: V.t, value: arguments) -> computation<answer>:
+  match value:
+    case Arguments{+fields, +s}:
+      Ty.boolean(computation<answer>, Ty.empty(K.ktm, fields), _ => Pure{F.Pair2{K.KErased{}, s}}, _ =>
+        map_result(K.tid, answer, +tid => F.Pair2{K.KStruct{tid, fields}, s}, lift_result(K.tid, Ty.tid_of(checker(c), ty))))
+def tuple_former(+c: ctx, s: state, +ty: V.t, n: F.Int63.t, +legs: List<&2, T.leg>, former: V.Former) -> computation<answer>:
+  match former:
+    case V.Former{_, diagram, _}:
+      bind(List<&2, V.t>, answer, lift_result(List<&2, V.t>, Ty.leg_types(checker(c), n, diagram)), tys =>
+        bind(List<&2, job>, answer, lift_result(List<&2, job>, tuple_jobs(checker(c), legs, tys)), jobs =>
+          bind(arguments, answer, erase_jobs(c, s, jobs, []), value => tuple_finish(c, ty, value))))
+def tuple(+c: ctx, s: state, +ty: V.t, +n: F.Int63.t, +legs: List<&2, T.leg>) -> computation<answer>:
+  bind(V.t, answer, lift_result(V.t, EV.whnf(C.globals(checker(c)), ty)), +w =>
+    Ty.maybe(V.Former, computation<answer>, V.as_ran(w), _ => Abort{E.Mismatch{"a tuple stands at a type that is not a right former"}}, former => tuple_former(c, s, ty, n, legs, former)))
+@unsafe
+def projection_flags(+c: C.ctx, tys: List<&2, V.t>, +before: F.Int63.t) -> R.result(F.Int63.t):
+  match tys:
+    case []: Done{before}
+    case ty <> rest: R.bind(Bool, F.Int63.t, Ty.runtime_ty(c, ty), _ => projection_flags(c, rest, before))
+# Kanon flags every leg in leg order, so a later leg can also fail the projection.
+@unsafe
+def projection_offset(+c: C.ctx, tys: List<&2, V.t>, +index: F.Int63.t, +before: F.Int63.t) -> R.result(F.Int63.t):
+  match tys:
+    case []: Fail{E.Wrong_leg{R.leg_msg}}
+    case ty <> +rest:
+      R.bind(Bool, F.Int63.t, Ty.runtime_ty(c, ty), keep =>
+        Ty.boolean(R.result(F.Int63.t), F.Int63.equal(index, F.Int63.zero), _ => projection_flags(c, rest, before), _ =>
+          projection_offset(c, rest, F.Int63.pred(index), F.choose(F.Int63.t, keep, F.Int63.succ(before), before))))
+def projection_former(+c: ctx, s: state, +sty: V.t, n: F.Int63.t, +index: F.Int63.t, head: T.t, former: V.Former) -> computation<answer>:
+  match former:
+    case V.Former{_, diagram, _}:
+      bind(List<&2, V.t>, answer, lift_result(List<&2, V.t>, Ty.leg_types(checker(c), n, diagram)), tys =>
+        bind(F.Int63.t, answer, lift_result(F.Int63.t, projection_offset(checker(c), tys, index, F.Int63.zero)), +before =>
+          bind(answer, answer, term_request(c, s, False{}, Some{sty}, head), pair =>
+            with_answer(computation<answer>, pair, +scrut => +s1 =>
+              map_result(K.tid, answer, +tid => F.Pair2{K.KProj{tid, before, scrut}, s1}, lift_result(K.tid, Ty.tid_of(checker(c), sty)))))))
+def projection(+c: ctx, s: state, +n: F.Int63.t, address: T.addr, +head: T.t) -> computation<answer>:
+  bind(F.Int63.t, answer, lift_result(F.Int63.t, R.require(F.Int63.t, T.as_aleg(address), E.Mismatch{"a projection takes a leg address"})), +index =>
+    bind(V.t, answer, lift_result(V.t, C.infer(checker(c), Q.Many{}, head)), +sty =>
+      bind(V.t, answer, lift_result(V.t, EV.whnf(C.globals(checker(c)), sty)), w =>
+        Ty.maybe(V.Former, computation<answer>, V.as_ran(w), _ => Abort{E.Mismatch{"a projection stands on a value that is not a right former"}}, former => projection_former(c, s, sty, n, index, head, former)))))
+def section(c: ctx, s: state, ty: V.t, shape: S.t<T.t>, legs: List<&2, T.leg>) -> computation<answer>:
   match shape:
-    case S.SPi{_, _, _}: lift_closure(c, s, ty, tm)
-    case S.SColl{_}: Abort{E.Not_yet{"tuples in type-directed erasure"}}
+    case S.SPi{q, x, dom}: lift_closure(c, s, ty, T.Sec{S.SPi{q, x, dom}, legs})
+    case S.SColl{n}: tuple(c, s, ty, n, legs)
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
     case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
-def application_shape(c: ctx, s: state, tail: Bool, ty: V.t, shape: S.t<T.t>, tm: T.t) -> computation<answer>:
+def application_shape(c: ctx, s: state, tail: Bool, ty: V.t, shape: S.t<T.t>, address: T.addr, head: T.t) -> computation<answer>:
   match shape:
-    case S.SPi{_, _, _}: app(c, s, tail, ty, spine(tm, []))
-    case S.SColl{_}: Abort{E.Not_yet{"projections in type-directed erasure"}}
+    case S.SPi{q, x, dom}: app(c, s, tail, ty, spine(T.Out{S.SPi{q, x, dom}, address, head}, []))
+    case S.SColl{n}: projection(c, s, n, address, head)
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
     case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
@@ -492,8 +545,8 @@ def node(+c: ctx, +s: state, +tail: Bool, +ty: V.t, +tm: T.t) -> computation<ans
     case T.Lit{lit}: Pure{F.Pair2{K.KLit{lit}, s}}
     case T.Ann{+body, _}: term_request(c, s, tail, Some{ty}, body)
     case T.Let{x, lty, value, +body}: let_term(c, s, tail, ty, x, lty, value, body)
-    case T.Sec{+shape, _}: section(c, s, ty, shape, tm)
-    case T.Out{+shape, _, _}: application_shape(c, s, tail, ty, shape, tm)
+    case T.Sec{shape, legs}: section(c, s, ty, shape, legs)
+    case T.Out{shape, address, head}: application_shape(c, s, tail, ty, shape, address, head)
     case T.In{_, _, _}: Abort{E.Not_yet{"structural values in type-directed erasure"}}
     case T.Elim{_}: Abort{E.Not_yet{"elimination in type-directed erasure"}}
     case T.Auto{}: Abort{E.Not_yet{R.auto_word}}

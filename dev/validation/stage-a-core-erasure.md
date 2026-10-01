@@ -1,5 +1,10 @@
 # Stage A.5b.3.2a: public ordinary erasure
 
+The later [product increment](stage-a-product-erasure.md) extends this milestone
+to nonempty collection tuples and closed-record projections. The JSON record
+of this milestone pins the A.5b.3.2a sources; the product record pins the
+current erasure and test sources.
+
 `./sole-comb check --erased examples/erasure.sole-comb` checks native source
 and prints type-directed erased definitions. This bounded increment covers
 Nat values, axioms, definitions, ordinary functions, partial applications,

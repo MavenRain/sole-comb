@@ -1,0 +1,41 @@
+-- Independent expansion of examples/product-erasure.sole-comb for the pinned oracle.
+axiom Nat : Type 0
+axiom P : Prop
+axiom proof : P
+def Pair : Type 0 := prod(Nat, Nat)
+def Pair_first : (1 recordArg : Pair) -> Nat := fun (1 recordArg : Pair) => recordArg.0
+def Pair_second : (1 recordArg : Pair) -> Nat := fun (1 recordArg : Pair) => recordArg.1
+def pair : Pair := tuple(10, 20)
+def Mixed : Type 1 := prod(Type 0, P, Nat, Nat, Nat -> Nat, Pair, Type 0)
+def Mixed_kind : (1 recordArg : Mixed) -> Type 0 := fun (1 recordArg : Mixed) => recordArg.0
+def Mixed_witness : (1 recordArg : Mixed) -> P := fun (1 recordArg : Mixed) => recordArg.1
+def Mixed_first : (1 recordArg : Mixed) -> Nat := fun (1 recordArg : Mixed) => recordArg.2
+def Mixed_second : (1 recordArg : Mixed) -> Nat := fun (1 recordArg : Mixed) => recordArg.3
+def Mixed_callback : (1 recordArg : Mixed) -> (Nat -> Nat) := fun (1 recordArg : Mixed) => recordArg.4
+def Mixed_nested : (1 recordArg : Mixed) -> Pair := fun (1 recordArg : Mixed) => recordArg.5
+def Mixed_trailing : (1 recordArg : Mixed) -> Type 0 := fun (1 recordArg : Mixed) => recordArg.6
+def mixed : Mixed := tuple(Nat, proof, 30, 40, fun (n : Nat) => natAdd n 1, pair, Nat)
+def first : Nat := Mixed_first mixed
+def second : Nat := Mixed_second mixed
+def called : Nat := Mixed_callback mixed (Mixed_second mixed)
+def nested : Pair := Mixed_nested mixed
+def inner : Nat := Pair_second nested
+def kind : Type 0 := Mixed_kind mixed
+def witness : P := Mixed_witness mixed
+def trailing : Type 0 := Mixed_trailing mixed
+def captured : (n : Nat) -> Mixed := fun (n : Nat) => tuple(Nat, proof, n, n, fun (m : Nat) => natAdd n m, tuple(n, n), Nat)
+def linearFirst : (1 p : Pair) -> Nat := fun (1 p : Pair) => Pair_first p
+axiom external : Mixed
+def externalSecond : Nat := Mixed_second external
+def Empty : Type 0 := prod()
+def empty : Empty := tuple()
+def AllErased : Type 1 := prod(Type 0, P)
+def AllErased_kind : (1 recordArg : AllErased) -> Type 0 := fun (1 recordArg : AllErased) => recordArg.0
+def AllErased_witness : (1 recordArg : AllErased) -> P := fun (1 recordArg : AllErased) => recordArg.1
+def allErased : AllErased := tuple(Nat, proof)
+def ignore : AllErased -> Nat := fun (a : AllErased) => 7
+def Outer : Type 1 := prod(AllErased, Mixed)
+def Outer_erased : (1 recordArg : Outer) -> AllErased := fun (1 recordArg : Outer) => recordArg.0
+def Outer_kept : (1 recordArg : Outer) -> Mixed := fun (1 recordArg : Outer) => recordArg.1
+def outer : Outer := tuple(allErased, mixed)
+def outerKept : Mixed := Outer_kept outer

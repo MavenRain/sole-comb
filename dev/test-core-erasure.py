@@ -1,19 +1,37 @@
 #!/usr/bin/env python3
-"""Compare public ordinary erasure with fresh pinned Kanon and binding goldens."""
+"""Compare public ordinary and product erasure with fresh pinned Kanon and goldens."""
 import argparse
 import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/core-erasure"
-POSITIVE = ("examples/identity.sole-comb", "examples/arithmetic.sole-comb", "examples/erasure.sole-comb")
+POSITIVE = ("examples/identity.sole-comb", "examples/arithmetic.sole-comb", "examples/erasure.sole-comb",
+            "examples/product-erasure.sole-comb")
 REFUSED = ("examples/finite-elim.sole-comb", "examples/records.sole-comb")
+ORACLE_SOURCES = {"examples/product-erasure.sole-comb": "test/product-erasure.kan"}
+ORACLE_NAMES = {f"{record}_{field}": f"{record}.{field}"
+                for record, fields in (("Pair", ("first", "second")),
+                    ("Mixed", ("kind", "witness", "first", "second", "callback", "nested", "trailing")),
+                    ("AllErased", ("kind", "witness")), ("Outer", ("erased", "kept")))
+                for field in fields}
+ORACLE_NAME_PATTERN = re.compile(r"(?<![\w'.$])(?:" + "|".join(map(re.escape, ORACLE_NAMES)) + r")(?![\w'])")
+PRODUCT_LAYOUT = "tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>"
+PRODUCT_GOLDENS = (
+    "erased proof", "erased Mixed.witness",
+    f"fun Mixed.first (struct {PRODUCT_LAYOUT}) : union nat := KProj {PRODUCT_LAYOUT} 0 (KVar 0)",
+    f"fun Mixed.second (struct {PRODUCT_LAYOUT}) : union nat := KProj {PRODUCT_LAYOUT} 1 (KVar 0)",
+    f"fun Mixed.nested (struct {PRODUCT_LAYOUT}) : struct tuple<union nat,union nat> := KProj {PRODUCT_LAYOUT} 3 (KVar 0)",
+    "fun allErased () : struct tuple<> := KErased",
+    f"rec [nat; {PRODUCT_LAYOUT}; tuple<union nat,union nat>]",
+)
 APPLIED = WORK / "applied-erased-arity.sole-comb"
 APPLIED_SOURCE = """axiom Nat : Type 0
 def g : (0 A : Type 0) -> (n : Nat) -> (0 B : Type 0) -> Nat := fun (0 A : Type 0) (n : Nat) (0 B : Type 0) => n
@@ -52,6 +70,7 @@ def sources():
     for directory in ("lib", "surface", "erase", "bin"):
         paths.extend((ROOT / directory).glob("*.bend"))
     paths.extend(ROOT / name for name in POSITIVE + REFUSED)
+    paths.extend(ROOT / name for name in ORACLE_SOURCES.values())
     return {str(p.relative_to(ROOT)): digest(p) for p in sorted(set(paths))}
 
 
@@ -89,13 +108,21 @@ def oracle(pins, env):
                           "oracle_adapter.ml", "-o", "oracle.exe"], env, dest)
     expected = {}
     for i, path in enumerate(POSITIVE):
-        result = run(f"oracle-{i}", [dest / "oracle.exe", ROOT / path], env)
+        result = run(f"oracle-{i}", [dest / "oracle.exe", ROOT / ORACLE_SOURCES.get(path, path)], env)
         if result["stderr"] or not result["stdout"]:
             raise RuntimeError(f"oracle produced malformed success for {path}")
-        expected[path] = result["stdout"]
+        output = result["stdout"]
+        if path in ORACLE_SOURCES:
+            # The pin has no qualified surface names. Restore this fixture's namespaces.
+            # Rename whole identifiers only, so no key rewrites part of a longer name.
+            output = ORACLE_NAME_PATTERN.sub(lambda match: ORACLE_NAMES[match.group(0)], output)
+        if path in ORACLE_SOURCES and any(line not in output.splitlines() for line in PRODUCT_GOLDENS):
+            raise RuntimeError("pinned oracle differs from independent product erasure goldens")
+        expected[path] = output
     pin()
     return expected, {"revision": revision, "sources": hashes, "adapter_sha256": digest(dest / "oracle_adapter.ml"),
-                      "compiler": run("oracle-version", ["ocamlc", "-version"], env)["stdout"].strip()}
+                      "compiler": run("oracle-version", ["ocamlc", "-version"], env)["stdout"].strip(),
+                      "source_overrides": ORACLE_SOURCES, "name_overrides": ORACLE_NAMES}
 
 
 def contracts(pins, hosts, env):
@@ -140,12 +167,12 @@ def main():
         for i, path in enumerate(POSITIVE):
             result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env)
             actual = result["stdout"].partition("\n")[2]
-            count = {POSITIVE[0]: 3, POSITIVE[1]: 3, POSITIVE[2]: 19}[path]
+            count = {POSITIVE[0]: 3, POSITIVE[1]: 3, POSITIVE[2]: 19, POSITIVE[3]: 40}[path]
             if result["stderr"] or result["stdout"].splitlines()[0] != f"CHECK {path} defs={count} ok" or actual != expected[path]:
                 raise RuntimeError(f"{host} {path}: erased public output differs from the pinned oracle\n{actual}")
             observations.append({"host": host, "file": path, **result})
         for i, path in enumerate(REFUSED):
-            # A successfully checked structural program must refuse erasure explicitly.
+            # These checked programs still require pending sum erasure.
             checked = run(f"checked-{host}-{i}", [ROOT / "sole-comb", "check", "--host", host, path], env)
             if checked["stderr"]:
                 raise RuntimeError(f"{host} {path}: malformed checking success")
@@ -165,12 +192,12 @@ def main():
     contract_results = contracts(pins, hosts, env)
     if sources() != before:
         raise RuntimeError("erasure sources changed during validation")
-    record = {"milestone": "A.5b.3.2a", "scope": "ordinary definitions, function closures, Nat and erased positions",
+    record = {"milestone": "A.5b.3.2b", "scope": "ordinary definitions, function closures, Nat, collection products and erased positions",
               "hosts": hosts, "sources": before, "oracle": provenance, "oracle_results": expected,
               "public_observations": observations, "contracts": contract_results,
               "structural_erasure": "pending", "full_erased_corpus": "pending", "wasm": "pending"}
     (WORK / "result.json").write_text(json.dumps(record, indent=2) + "\n")
-    print("PASS ordinary erasure: public observations, six contracts, source hashes stable", flush=True)
+    print("PASS ordinary and product erasure: public observations, seven contracts, source hashes stable", flush=True)
 
 
 if __name__ == "__main__":

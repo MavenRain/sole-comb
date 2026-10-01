@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require ordinary erasure tests to reject isolated semantic mutants."""
+"""Require ordinary and product erasure tests to reject isolated semantic mutants."""
 import json
 from pathlib import Path
 import shutil
@@ -14,6 +14,13 @@ MUTANTS = (
     ("index-shift", "erase/core.bend", "K.KVar{i}", "K.KVar{F.Int63.succ(i)}"),
     ("capture-not-pruned", "erase/core.bend", "RT.prune_captures(ps, args, count(K.repr, params), body)",
      "RT.Done{RT.Pruned{ps, args, body}}"),
+    ("tuple-field-order", "erase/core.bend", "K.KStruct{tid, fields}",
+     "K.KStruct{tid, R.rev_append(K.ktm, fields, [])}"),
+    ("projection-unfiltered", "erase/core.bend", "projection_offset(checker(c), tys, index, F.Int63.zero)",
+     "Done{index}"),
+    ("tuple-layout", "erase/type.bend", 'String.concat(["tuple<", K.join(",", texts), ">"])',
+     'String.concat(["tuple<", K.join(";", texts), ">"])'),
+    ("body-layout-dependencies", "erase/core.bend", "Dep.term(body)", "[]"),
 )
 
 

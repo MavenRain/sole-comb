@@ -1,0 +1,295 @@
+{
+  "milestone": "A.5b.3.2b",
+  "scope": "ordinary definitions, function closures, Nat, collection products and erased positions",
+  "hosts": [
+    "bun",
+    "node-worker",
+    "native"
+  ],
+  "sources": {
+    "Makefile": "19aa0e7e94130ae8af920667cd8a0ada71748f02af3e51db9a3308a976c36ffd",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/bend-policy.json": "bf69b909d4d617eef3ec8bdf497090b86c729fda9d40a8e1d9725b72a9908f71",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "6924418c85e5181e8e9c8b10a7f2c55b404db7511c32e2997e8079b2e27ce85a",
+    "dev/test-core-erasure-mutations.py": "f266707596c6edef0f9c114b569b6aff5f453167e5a953bbfe1de9c3fe48f474",
+    "dev/test-core-erasure.py": "83015fed1c6ddbb0d40f75800fa6acf4dbd2dada8da68d893da36a2f58ac7148",
+    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+    "erase/core.bend": "93d7afb55c61a869c22ef84b327149abfe0a3a10cf2a72c98a0e6bcbbc9c0efc",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/type.bend": "58a5e1802950caaf827d2114d2f36190ca7114ff80890c650b2815b117ef2f60",
+    "examples/arithmetic.sole-comb": "1ead9e3f8c1a443d97d96d52f5edace4e419c365f70804315302c84ed6e0e22f",
+    "examples/erasure.sole-comb": "dd2facd96825aea117c8ecfcf1033416512e452ae983688960d13eca4831a4fe",
+    "examples/finite-elim.sole-comb": "3d1f94e8637cd6bece43fec32e3cd201299fcf05138e3492516c46a1ebbbb345",
+    "examples/identity.sole-comb": "abb67ea5136a550581d9883b98202c52e2a9438dd38c4a376190362d0d57d43b",
+    "examples/product-erasure.sole-comb": "7ecc30756f5952f456bbe208b64e0c95226e6c69d18264b50e9c3e555ae2d46c",
+    "examples/records.sole-comb": "728499d68434b2273d598f99092fa51a89862ab7204ceea58d8ffe3d0316b4de",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "a31725fb96942161455573c9e236fa9da8d50ca7e6ca336666d91d7f45b10cc6",
+    "surface/elab.bend": "ee36a11b87855d3c31d0464ef8e0713b937e5df8860eb4573dc45bd7c589691f",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "b976fb4527776b05282f2408f98f955bdf084ce23839f1cb848e94f734dde8ab",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "e97b5622ceadcb88c1a86f91c9b4224f963968147ecd283be2f18de07d448d54",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/core-erasure-oracle.ml": "1479e89ca7eaa04fe42f2915f31be17679290eb2b120367a75d3ccd1b6998f47",
+    "test/core-erasure.bend": "a58c55a023b5c3a77aac3dfd7702b63b5bc2c98bd055882dc1af62cdc930d545",
+    "test/product-erasure.kan": "17b0d0ffa8caa2d4cc4d282d85519033d48cad007da43ae1b012e21aa5e12614"
+  },
+  "oracle": {
+    "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "sources": {
+      "lib/bignum.ml": "7159dd7e75fa08a5fc272cba76a8ec6214c7d190151dabf7db1a13bf5ecddd72",
+      "lib/budget.ml": "7d8b2afc86883415c892d6fea0e56c2115e4d859b6b6daa21c611b4e9517f028",
+      "lib/check.ml": "cdc3712bf5ed0fa49d8dae34ea946d85a195ea94b25235c821b155570010e335",
+      "lib/conv.ml": "e73e707bcdac54808d8f8a1d9e9a174062edf0afd970972dee2c6d024f6bbe39",
+      "lib/erase.ml": "a6d03447ab9dfedf8e53bceff26cd7da57f113bb4b5d1453aecd618fac508a88",
+      "lib/error.ml": "44c9c263479575ec04db5056404a5940d6bb5514a5b9e1ec6215385c6eccb5b6",
+      "lib/eterm.ml": "028ff6e790f9c391463b961f7a3eac12e105d484285cfde1597e52c5b9ac69c7",
+      "lib/eval.ml": "155ddf7578d4ad68352505064616bed6afa7a260a88f3ddf1722b95fa6a6bd18",
+      "lib/global.ml": "2e5d2d932dfddcb329bcfdf237df87a70f2d79820470dc236e337ec6d275c329",
+      "lib/level.ml": "344bb9819870d8c459154ac8109ba1d69a4ee4312670f3887c6ed30d3dbca448",
+      "lib/literal.ml": "80554b1d98c8dde3b474023a01ac57cc4abcaba2a5f20b707041cc5f0361b617",
+      "lib/order.ml": "d2cc3258fde25b61ba33093eaf19112c319329dc5b46ba029b3f042c14388e94",
+      "lib/positivity.ml": "97cb5fc9484ecaec360b4be1ac42f0668ae767aad25efc10ddbc1d4143185471",
+      "lib/pp.ml": "69618578ebb33a3d9803e604760252c77c64681aef2d847f3e1b40f9464e3895",
+      "lib/prim.ml": "5224df4f75e499b8fb962fad2a256b31086fcc9de5ab2f353eb90f61a8408aaa",
+      "lib/quantity.ml": "bf3f633c40a0dbb362cf85ca41b798ae0c9e1d4eca7e09f9b6f482bab2bfbb8b",
+      "lib/rules.ml": "b625cec31061ca79f77669889039e4ae2658393911e39076dc65189022f702ab",
+      "lib/shape.ml": "dafd7741b4332dcab6faba9cb9afb131fb3654172e0d375b1edd1046e69f7f7b",
+      "lib/spec_count.ml": "9a4cb97373ddbabb6156b04f92cc41803ee1b714391ccb669cf38e60d36437e6",
+      "lib/term.ml": "2de6729958bfbc3af10ed2e9c51d6591ab40fa16bd19b7acea1fbf37adf60690",
+      "lib/totality.ml": "046c608584ac21d465d46b05119a89dca5488a15113359eea30ed318a3f7c028",
+      "lib/value.ml": "997f4634df60744c49555e896c1de8d60e51a1086e731e547b48450def9c68c7",
+      "lib/budget.mli": "b830149c9eb6d9362786d2e92c2dc8322f4d31f7b4cfc960ac6e1681d385578f",
+      "lib/level.mli": "c143b2b97e417724a81f8e83548b946d3339917488758b4d5fbf9da9e72e6811",
+      "surface/token.ml": "cd93b520f023f2aa80f42a4e352b47e63fd0c05e399f4c2344af898054fbb6db",
+      "surface/syntax.ml": "774c0c713f2cdfe493656131b446eb10614e9415ef4d3a0d7cf8a64d2da04c5a",
+      "surface/lexer.ml": "bb524f0202a01ab0b7a2e94745c9af50c5eede2a4c7d3fa450be785e2eb14254",
+      "surface/parser.ml": "107bb45cfba1335a41cf0268e6c28e05dbb961c1c454c47ef364683d6e04d977",
+      "surface/elab.ml": "657b134e25e495e6edc5435bb3c9335bc48637915045fba91da9a595d2e3280d"
+    },
+    "adapter_sha256": "1479e89ca7eaa04fe42f2915f31be17679290eb2b120367a75d3ccd1b6998f47",
+    "compiler": "5.2.1",
+    "source_overrides": {
+      "examples/product-erasure.sole-comb": "test/product-erasure.kan"
+    },
+    "name_overrides": {
+      "Pair_first": "Pair.first",
+      "Pair_second": "Pair.second",
+      "Mixed_kind": "Mixed.kind",
+      "Mixed_witness": "Mixed.witness",
+      "Mixed_first": "Mixed.first",
+      "Mixed_second": "Mixed.second",
+      "Mixed_callback": "Mixed.callback",
+      "Mixed_nested": "Mixed.nested",
+      "Mixed_trailing": "Mixed.trailing",
+      "AllErased_kind": "AllErased.kind",
+      "AllErased_witness": "AllErased.witness",
+      "Outer_erased": "Outer.erased",
+      "Outer_kept": "Outer.kept"
+    }
+  },
+  "oracle_results": {
+    "examples/identity.sole-comb": "erased Nat\nrec [any]\nfun identity (union any) : union any := KVar 0\nrec [nat]\nfun answer () : union nat := KTail (KGlobal identity) [KLit 42]\n",
+    "examples/arithmetic.sole-comb": "erased Nat\nrec [nat]\nfun answer () : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natMul) [KLit 6; KLit 7]; KLit 0]\nrec [nat]\nfun saturated () : union nat := KTail (KGlobal natSub) [KLit 3; KLit 8]\n",
+    "examples/erasure.sole-comb": "erased Nat\nerased Natural\naxiom opaque : union nat\nrec [nat]\nfun id (union nat) : union nat := KVar 0\nrec [nat]\nfun alias (union nat) : union nat := KTail (KGlobal id) [KVar 0]\nrec [nat]\nfun zero () : union nat := KLit 7\nrec [nat]\nfun ghostFunction () : union nat := KLit 9\nrec [nat]\nfun zeroCall () : union nat := KTail (KGlobal zero) []\nrec [nat]\nfun partial (union nat) : union nat := KTail (KApp (KGlobal natAdd) [KLit 10]) [KVar 0]\nrec [fn<1>; nat]\nfun apply (func fn<1>) : union nat := KTail (KVar 0) [KLit 2]\nrec [nat]\nfun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun capture (union nat) : union nat := KTail (KGlobal apply) [KClos capture$0 1 [KVar 0]]\nrec [nat]\nfun deadCapture$0 (union nat) : union nat := KTail (KGlobal zero) []\nfun deadCapture (union nat) : union nat := KTail (KGlobal apply) [KClos deadCapture$0 1 []]\nrec [nat]\nfun captureOrder$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natAdd) [KVar 2; KVar 1]; KVar 0]\nfun captureOrder (union nat, union nat) : union nat := KTail (KGlobal apply) [KClos captureOrder$0 1 [KVar 1; KVar 0]]\nrec [nat]\nfun linear (union nat) : union nat := KVar 0\nerased Unit\nerased unit\nrec [nat]\nfun dropUnit () : union nat := KLit 11\nrec [nat]\nfun unitCall () : union nat := KTail (KGlobal dropUnit) []\nrec [nat]\nfun answer () : union nat := KTail (KGlobal captureOrder) [KApp (KGlobal alias) [KLit 20]; KApp (KGlobal partial) [KLit 10]]\n",
+    "examples/product-erasure.sole-comb": "erased Nat\nerased P\nerased proof\nerased Pair\nrec [tuple<union nat,union nat>; nat]\nfun Pair.first (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 0 (KVar 0)\nrec [tuple<union nat,union nat>; nat]\nfun Pair.second (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 1 (KVar 0)\nrec [tuple<union nat,union nat>]\nfun pair () : struct tuple<union nat,union nat> := KStruct tuple<union nat,union nat> [KLit 10; KLit 20]\nerased Mixed\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.kind (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nerased Mixed.witness\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.first (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 0 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.second (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 1 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.callback (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>, union nat) : union nat := KTail (KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 2 (KVar 1)) [KVar 0]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun Mixed.nested (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : struct tuple<union nat,union nat> := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 3 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.trailing (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun mixed$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]\nfun mixed () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KLit 30; KLit 40; KClos mixed$0 1 []; KGlobal pair]\nrec [nat]\nfun first () : union nat := KTail (KGlobal Mixed.first) [KGlobal mixed]\nrec [nat]\nfun second () : union nat := KTail (KGlobal Mixed.second) [KGlobal mixed]\nrec [nat]\nfun called () : union nat := KTail (KGlobal Mixed.callback) [KGlobal mixed; KApp (KGlobal Mixed.second) [KGlobal mixed]]\nrec [tuple<union nat,union nat>]\nfun nested () : struct tuple<union nat,union nat> := KTail (KGlobal Mixed.nested) [KGlobal mixed]\nrec [nat]\nfun inner () : union nat := KTail (KGlobal Pair.second) [KGlobal nested]\nerased kind\nerased witness\nerased trailing\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun captured$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun captured (union nat) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KVar 0; KVar 0; KClos captured$0 1 [KVar 0]; KStruct tuple<union nat,union nat> [KVar 0; KVar 0]]\nrec [tuple<union nat,union nat>; nat]\nfun linearFirst (struct tuple<union nat,union nat>) : union nat := KTail (KGlobal Pair.first) [KVar 0]\naxiom external : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>\nrec [nat]\nfun externalSecond () : union nat := KTail (KGlobal Mixed.second) [KGlobal external]\nerased Empty\nerased empty\nerased AllErased\nrec [tuple<>; any]\nfun AllErased.kind (struct tuple<>) : union any := KErased\nerased AllErased.witness\nrec [tuple<>]\nfun allErased () : struct tuple<> := KErased\nrec [tuple<>; nat]\nfun ignore (struct tuple<>) : union nat := KLit 7\nerased Outer\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<>]\nfun Outer.erased (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 0 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun Outer.kept (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 1 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>]\nfun outer () : struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> := KStruct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> [KGlobal allErased; KGlobal mixed]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun outerKept () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KTail (KGlobal Outer.kept) [KGlobal outer]\n"
+  },
+  "public_observations": [
+    {
+      "host": "bun",
+      "file": "examples/identity.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/identity.sole-comb defs=3 ok\nerased Nat\nrec [any]\nfun identity (union any) : union any := KVar 0\nrec [nat]\nfun answer () : union nat := KTail (KGlobal identity) [KLit 42]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "file": "examples/arithmetic.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/arithmetic.sole-comb defs=3 ok\nerased Nat\nrec [nat]\nfun answer () : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natMul) [KLit 6; KLit 7]; KLit 0]\nrec [nat]\nfun saturated () : union nat := KTail (KGlobal natSub) [KLit 3; KLit 8]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "file": "examples/erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/erasure.sole-comb defs=19 ok\nerased Nat\nerased Natural\naxiom opaque : union nat\nrec [nat]\nfun id (union nat) : union nat := KVar 0\nrec [nat]\nfun alias (union nat) : union nat := KTail (KGlobal id) [KVar 0]\nrec [nat]\nfun zero () : union nat := KLit 7\nrec [nat]\nfun ghostFunction () : union nat := KLit 9\nrec [nat]\nfun zeroCall () : union nat := KTail (KGlobal zero) []\nrec [nat]\nfun partial (union nat) : union nat := KTail (KApp (KGlobal natAdd) [KLit 10]) [KVar 0]\nrec [fn<1>; nat]\nfun apply (func fn<1>) : union nat := KTail (KVar 0) [KLit 2]\nrec [nat]\nfun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun capture (union nat) : union nat := KTail (KGlobal apply) [KClos capture$0 1 [KVar 0]]\nrec [nat]\nfun deadCapture$0 (union nat) : union nat := KTail (KGlobal zero) []\nfun deadCapture (union nat) : union nat := KTail (KGlobal apply) [KClos deadCapture$0 1 []]\nrec [nat]\nfun captureOrder$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natAdd) [KVar 2; KVar 1]; KVar 0]\nfun captureOrder (union nat, union nat) : union nat := KTail (KGlobal apply) [KClos captureOrder$0 1 [KVar 1; KVar 0]]\nrec [nat]\nfun linear (union nat) : union nat := KVar 0\nerased Unit\nerased unit\nrec [nat]\nfun dropUnit () : union nat := KLit 11\nrec [nat]\nfun unitCall () : union nat := KTail (KGlobal dropUnit) []\nrec [nat]\nfun answer () : union nat := KTail (KGlobal captureOrder) [KApp (KGlobal alias) [KLit 20]; KApp (KGlobal partial) [KLit 10]]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "file": "examples/product-erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/product-erasure.sole-comb defs=40 ok\nerased Nat\nerased P\nerased proof\nerased Pair\nrec [tuple<union nat,union nat>; nat]\nfun Pair.first (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 0 (KVar 0)\nrec [tuple<union nat,union nat>; nat]\nfun Pair.second (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 1 (KVar 0)\nrec [tuple<union nat,union nat>]\nfun pair () : struct tuple<union nat,union nat> := KStruct tuple<union nat,union nat> [KLit 10; KLit 20]\nerased Mixed\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.kind (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nerased Mixed.witness\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.first (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 0 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.second (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 1 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.callback (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>, union nat) : union nat := KTail (KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 2 (KVar 1)) [KVar 0]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun Mixed.nested (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : struct tuple<union nat,union nat> := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 3 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.trailing (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun mixed$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]\nfun mixed () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KLit 30; KLit 40; KClos mixed$0 1 []; KGlobal pair]\nrec [nat]\nfun first () : union nat := KTail (KGlobal Mixed.first) [KGlobal mixed]\nrec [nat]\nfun second () : union nat := KTail (KGlobal Mixed.second) [KGlobal mixed]\nrec [nat]\nfun called () : union nat := KTail (KGlobal Mixed.callback) [KGlobal mixed; KApp (KGlobal Mixed.second) [KGlobal mixed]]\nrec [tuple<union nat,union nat>]\nfun nested () : struct tuple<union nat,union nat> := KTail (KGlobal Mixed.nested) [KGlobal mixed]\nrec [nat]\nfun inner () : union nat := KTail (KGlobal Pair.second) [KGlobal nested]\nerased kind\nerased witness\nerased trailing\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun captured$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun captured (union nat) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KVar 0; KVar 0; KClos captured$0 1 [KVar 0]; KStruct tuple<union nat,union nat> [KVar 0; KVar 0]]\nrec [tuple<union nat,union nat>; nat]\nfun linearFirst (struct tuple<union nat,union nat>) : union nat := KTail (KGlobal Pair.first) [KVar 0]\naxiom external : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>\nrec [nat]\nfun externalSecond () : union nat := KTail (KGlobal Mixed.second) [KGlobal external]\nerased Empty\nerased empty\nerased AllErased\nrec [tuple<>; any]\nfun AllErased.kind (struct tuple<>) : union any := KErased\nerased AllErased.witness\nrec [tuple<>]\nfun allErased () : struct tuple<> := KErased\nrec [tuple<>; nat]\nfun ignore (struct tuple<>) : union nat := KLit 7\nerased Outer\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<>]\nfun Outer.erased (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 0 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun Outer.kept (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 1 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>]\nfun outer () : struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> := KStruct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> [KGlobal allErased; KGlobal mixed]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun outerKept () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KTail (KGlobal Outer.kept) [KGlobal outer]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "file": "examples/finite-elim.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/finite-elim.sole-comb FAIL not yet: structural layouts in type-directed erasure\n"
+    },
+    {
+      "host": "bun",
+      "file": "examples/records.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/records.sole-comb FAIL not yet: elimination in type-directed erasure\n"
+    },
+    {
+      "host": "bun",
+      "file": "applied-erased-arity",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1001-product-erasure/gates-copy-postfix/_build/core-erasure/applied-erased-arity.sole-comb FAIL not yet: applications whose remaining parameters all erase in type-directed erasure\n"
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/identity.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/identity.sole-comb defs=3 ok\nerased Nat\nrec [any]\nfun identity (union any) : union any := KVar 0\nrec [nat]\nfun answer () : union nat := KTail (KGlobal identity) [KLit 42]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/arithmetic.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/arithmetic.sole-comb defs=3 ok\nerased Nat\nrec [nat]\nfun answer () : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natMul) [KLit 6; KLit 7]; KLit 0]\nrec [nat]\nfun saturated () : union nat := KTail (KGlobal natSub) [KLit 3; KLit 8]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/erasure.sole-comb defs=19 ok\nerased Nat\nerased Natural\naxiom opaque : union nat\nrec [nat]\nfun id (union nat) : union nat := KVar 0\nrec [nat]\nfun alias (union nat) : union nat := KTail (KGlobal id) [KVar 0]\nrec [nat]\nfun zero () : union nat := KLit 7\nrec [nat]\nfun ghostFunction () : union nat := KLit 9\nrec [nat]\nfun zeroCall () : union nat := KTail (KGlobal zero) []\nrec [nat]\nfun partial (union nat) : union nat := KTail (KApp (KGlobal natAdd) [KLit 10]) [KVar 0]\nrec [fn<1>; nat]\nfun apply (func fn<1>) : union nat := KTail (KVar 0) [KLit 2]\nrec [nat]\nfun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun capture (union nat) : union nat := KTail (KGlobal apply) [KClos capture$0 1 [KVar 0]]\nrec [nat]\nfun deadCapture$0 (union nat) : union nat := KTail (KGlobal zero) []\nfun deadCapture (union nat) : union nat := KTail (KGlobal apply) [KClos deadCapture$0 1 []]\nrec [nat]\nfun captureOrder$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natAdd) [KVar 2; KVar 1]; KVar 0]\nfun captureOrder (union nat, union nat) : union nat := KTail (KGlobal apply) [KClos captureOrder$0 1 [KVar 1; KVar 0]]\nrec [nat]\nfun linear (union nat) : union nat := KVar 0\nerased Unit\nerased unit\nrec [nat]\nfun dropUnit () : union nat := KLit 11\nrec [nat]\nfun unitCall () : union nat := KTail (KGlobal dropUnit) []\nrec [nat]\nfun answer () : union nat := KTail (KGlobal captureOrder) [KApp (KGlobal alias) [KLit 20]; KApp (KGlobal partial) [KLit 10]]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/product-erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/product-erasure.sole-comb defs=40 ok\nerased Nat\nerased P\nerased proof\nerased Pair\nrec [tuple<union nat,union nat>; nat]\nfun Pair.first (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 0 (KVar 0)\nrec [tuple<union nat,union nat>; nat]\nfun Pair.second (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 1 (KVar 0)\nrec [tuple<union nat,union nat>]\nfun pair () : struct tuple<union nat,union nat> := KStruct tuple<union nat,union nat> [KLit 10; KLit 20]\nerased Mixed\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.kind (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nerased Mixed.witness\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.first (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 0 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.second (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 1 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.callback (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>, union nat) : union nat := KTail (KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 2 (KVar 1)) [KVar 0]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun Mixed.nested (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : struct tuple<union nat,union nat> := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 3 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.trailing (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun mixed$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]\nfun mixed () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KLit 30; KLit 40; KClos mixed$0 1 []; KGlobal pair]\nrec [nat]\nfun first () : union nat := KTail (KGlobal Mixed.first) [KGlobal mixed]\nrec [nat]\nfun second () : union nat := KTail (KGlobal Mixed.second) [KGlobal mixed]\nrec [nat]\nfun called () : union nat := KTail (KGlobal Mixed.callback) [KGlobal mixed; KApp (KGlobal Mixed.second) [KGlobal mixed]]\nrec [tuple<union nat,union nat>]\nfun nested () : struct tuple<union nat,union nat> := KTail (KGlobal Mixed.nested) [KGlobal mixed]\nrec [nat]\nfun inner () : union nat := KTail (KGlobal Pair.second) [KGlobal nested]\nerased kind\nerased witness\nerased trailing\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun captured$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun captured (union nat) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KVar 0; KVar 0; KClos captured$0 1 [KVar 0]; KStruct tuple<union nat,union nat> [KVar 0; KVar 0]]\nrec [tuple<union nat,union nat>; nat]\nfun linearFirst (struct tuple<union nat,union nat>) : union nat := KTail (KGlobal Pair.first) [KVar 0]\naxiom external : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>\nrec [nat]\nfun externalSecond () : union nat := KTail (KGlobal Mixed.second) [KGlobal external]\nerased Empty\nerased empty\nerased AllErased\nrec [tuple<>; any]\nfun AllErased.kind (struct tuple<>) : union any := KErased\nerased AllErased.witness\nrec [tuple<>]\nfun allErased () : struct tuple<> := KErased\nrec [tuple<>; nat]\nfun ignore (struct tuple<>) : union nat := KLit 7\nerased Outer\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<>]\nfun Outer.erased (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 0 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun Outer.kept (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 1 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>]\nfun outer () : struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> := KStruct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> [KGlobal allErased; KGlobal mixed]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun outerKept () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KTail (KGlobal Outer.kept) [KGlobal outer]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/finite-elim.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/finite-elim.sole-comb FAIL not yet: structural layouts in type-directed erasure\n"
+    },
+    {
+      "host": "node-worker",
+      "file": "examples/records.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/records.sole-comb FAIL not yet: elimination in type-directed erasure\n"
+    },
+    {
+      "host": "node-worker",
+      "file": "applied-erased-arity",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1001-product-erasure/gates-copy-postfix/_build/core-erasure/applied-erased-arity.sole-comb FAIL not yet: applications whose remaining parameters all erase in type-directed erasure\n"
+    },
+    {
+      "host": "native",
+      "file": "examples/identity.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/identity.sole-comb defs=3 ok\nerased Nat\nrec [any]\nfun identity (union any) : union any := KVar 0\nrec [nat]\nfun answer () : union nat := KTail (KGlobal identity) [KLit 42]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "file": "examples/arithmetic.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/arithmetic.sole-comb defs=3 ok\nerased Nat\nrec [nat]\nfun answer () : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natMul) [KLit 6; KLit 7]; KLit 0]\nrec [nat]\nfun saturated () : union nat := KTail (KGlobal natSub) [KLit 3; KLit 8]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "file": "examples/erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/erasure.sole-comb defs=19 ok\nerased Nat\nerased Natural\naxiom opaque : union nat\nrec [nat]\nfun id (union nat) : union nat := KVar 0\nrec [nat]\nfun alias (union nat) : union nat := KTail (KGlobal id) [KVar 0]\nrec [nat]\nfun zero () : union nat := KLit 7\nrec [nat]\nfun ghostFunction () : union nat := KLit 9\nrec [nat]\nfun zeroCall () : union nat := KTail (KGlobal zero) []\nrec [nat]\nfun partial (union nat) : union nat := KTail (KApp (KGlobal natAdd) [KLit 10]) [KVar 0]\nrec [fn<1>; nat]\nfun apply (func fn<1>) : union nat := KTail (KVar 0) [KLit 2]\nrec [nat]\nfun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun capture (union nat) : union nat := KTail (KGlobal apply) [KClos capture$0 1 [KVar 0]]\nrec [nat]\nfun deadCapture$0 (union nat) : union nat := KTail (KGlobal zero) []\nfun deadCapture (union nat) : union nat := KTail (KGlobal apply) [KClos deadCapture$0 1 []]\nrec [nat]\nfun captureOrder$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natAdd) [KVar 2; KVar 1]; KVar 0]\nfun captureOrder (union nat, union nat) : union nat := KTail (KGlobal apply) [KClos captureOrder$0 1 [KVar 1; KVar 0]]\nrec [nat]\nfun linear (union nat) : union nat := KVar 0\nerased Unit\nerased unit\nrec [nat]\nfun dropUnit () : union nat := KLit 11\nrec [nat]\nfun unitCall () : union nat := KTail (KGlobal dropUnit) []\nrec [nat]\nfun answer () : union nat := KTail (KGlobal captureOrder) [KApp (KGlobal alias) [KLit 20]; KApp (KGlobal partial) [KLit 10]]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "file": "examples/product-erasure.sole-comb",
+      "exit": 0,
+      "stdout": "CHECK examples/product-erasure.sole-comb defs=40 ok\nerased Nat\nerased P\nerased proof\nerased Pair\nrec [tuple<union nat,union nat>; nat]\nfun Pair.first (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 0 (KVar 0)\nrec [tuple<union nat,union nat>; nat]\nfun Pair.second (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 1 (KVar 0)\nrec [tuple<union nat,union nat>]\nfun pair () : struct tuple<union nat,union nat> := KStruct tuple<union nat,union nat> [KLit 10; KLit 20]\nerased Mixed\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.kind (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nerased Mixed.witness\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.first (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 0 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.second (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union nat := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 1 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; nat]\nfun Mixed.callback (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>, union nat) : union nat := KTail (KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 2 (KVar 1)) [KVar 0]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun Mixed.nested (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : struct tuple<union nat,union nat> := KProj tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> 3 (KVar 0)\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; any]\nfun Mixed.trailing (struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>) : union any := KErased\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun mixed$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]\nfun mixed () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KLit 30; KLit 40; KClos mixed$0 1 []; KGlobal pair]\nrec [nat]\nfun first () : union nat := KTail (KGlobal Mixed.first) [KGlobal mixed]\nrec [nat]\nfun second () : union nat := KTail (KGlobal Mixed.second) [KGlobal mixed]\nrec [nat]\nfun called () : union nat := KTail (KGlobal Mixed.callback) [KGlobal mixed; KApp (KGlobal Mixed.second) [KGlobal mixed]]\nrec [tuple<union nat,union nat>]\nfun nested () : struct tuple<union nat,union nat> := KTail (KGlobal Mixed.nested) [KGlobal mixed]\nrec [nat]\nfun inner () : union nat := KTail (KGlobal Pair.second) [KGlobal nested]\nerased kind\nerased witness\nerased trailing\nrec [nat; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>; tuple<union nat,union nat>]\nfun captured$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun captured (union nat) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KStruct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> [KVar 0; KVar 0; KClos captured$0 1 [KVar 0]; KStruct tuple<union nat,union nat> [KVar 0; KVar 0]]\nrec [tuple<union nat,union nat>; nat]\nfun linearFirst (struct tuple<union nat,union nat>) : union nat := KTail (KGlobal Pair.first) [KVar 0]\naxiom external : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>\nrec [nat]\nfun externalSecond () : union nat := KTail (KGlobal Mixed.second) [KGlobal external]\nerased Empty\nerased empty\nerased AllErased\nrec [tuple<>; any]\nfun AllErased.kind (struct tuple<>) : union any := KErased\nerased AllErased.witness\nrec [tuple<>]\nfun allErased () : struct tuple<> := KErased\nrec [tuple<>; nat]\nfun ignore (struct tuple<>) : union nat := KLit 7\nerased Outer\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<>]\nfun Outer.erased (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 0 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>; tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun Outer.kept (struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>) : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KProj tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> 1 (KVar 0)\nrec [tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>>]\nfun outer () : struct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> := KStruct tuple<struct tuple<>,struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>> [KGlobal allErased; KGlobal mixed]\nrec [tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>]\nfun outerKept () : struct tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>> := KTail (KGlobal Outer.kept) [KGlobal outer]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "file": "examples/finite-elim.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/finite-elim.sole-comb FAIL not yet: structural layouts in type-directed erasure\n"
+    },
+    {
+      "host": "native",
+      "file": "examples/records.sole-comb",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK examples/records.sole-comb FAIL not yet: elimination in type-directed erasure\n"
+    },
+    {
+      "host": "native",
+      "file": "applied-erased-arity",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1001-product-erasure/gates-copy-postfix/_build/core-erasure/applied-erased-arity.sole-comb FAIL not yet: applications whose remaining parameters all erase in type-directed erasure\n"
+    }
+  ],
+  "contracts": {
+    "bun": {
+      "exit": 0,
+      "stdout": "\"PASS\"\n",
+      "stderr": ""
+    },
+    "node-worker": {
+      "exit": 0,
+      "stdout": "\"PASS\"\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "\"PASS\"\n",
+      "stderr": ""
+    }
+  },
+  "structural_erasure": "pending",
+  "full_erased_corpus": "pending",
+  "wasm": "pending"
+}

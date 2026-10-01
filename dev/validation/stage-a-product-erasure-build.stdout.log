@@ -1,0 +1,3 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-comb-product-erasure-20261001/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=34.046 child_cpu_s=8.486

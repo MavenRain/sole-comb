@@ -414,6 +414,36 @@
       "path": "erase/core.bend",
       "function": "drive",
       "reason": "The typed request interpreter resumes checked term, lambda-chain and argument-job computations. Term and lambda-chain steps spend finite fuel, and argument jobs and declaration traversal consume finite lists. Bend cannot prove these measures across suspended continuations. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "tuple_texts",
+      "reason": "Each step consumes one field of the finite checked product. Nested representations spend finite representation fuel. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/type.bend",
+      "function": "repr_visit",
+      "reason": "Every nested type representation spends finite fuel before inspecting the checked type. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "tuple_jobs",
+      "reason": "Each step consumes one leg and one field type from finite checked lists. Erased fields produce no term requests. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "projection_offset",
+      "reason": "Each step consumes one field type while decreasing the checked projection index. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "projection_flags",
+      "reason": "Each step consumes one field type from the finite leg list. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/dependencies.bend",
+      "function": "loop",
+      "reason": "The explicit work list visits every node of a finite erased term once in depth first order. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

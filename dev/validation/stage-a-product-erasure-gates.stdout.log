@@ -1,0 +1,20 @@
+python3 -P dev/test-bench.py
+python3 -P dev/test-build.py
+python3 -P dev/test-pin-check.py
+python3 -P dev/test-r2-risk.py
+python3 -P dev/test-r2-run.py
+python3 -P dev/test-r2-prepare.py
+R2-PREPARE deadline
+R2-PREPARE cancel
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 47 files, 36 line budgets, 52 reviewed unsafe sites, 29 catchalls
+python3 -P dev/test-foundation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-comb-product-erasure-20261001/dev/toolchain.json
+PASS A.1 bun: 275 cases
+PASS A.1 node-worker: 275 cases
+PASS A.1 native INFO: 275 cases
+python3 -P dev/test-representation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-comb-product-erasure-20261001/dev/toolchain.json
+PASS A.2 bun: 465 cases
+PASS A.2 node-worker: 465 cases

@@ -10,6 +10,7 @@ modules under `surface/` and the real kernel. Start with:
 ./sole-comb check examples/identity.sole-comb
 ./sole-comb check examples/finite-elim.sole-comb
 ./sole-comb check --erased examples/erasure.sole-comb
+./sole-comb check --erased examples/product-erasure.sole-comb
 make test-cli
 ```
 
@@ -41,8 +42,11 @@ The build plan is `../kan-elim-lang-m0/M0-PLAN.md`, with the approved
 [Stage A entry decision](dev/stage-a-entry.md). A.5b.3.2a adds type-directed
 erasure for Nat values and ordinary functions through `check --erased`, including
 ghost arguments, eta expansion and closure capture pruning. See the
-[core erasure evidence](dev/validation/stage-a-core-erasure.md). Structural
-runtime layouts, recursive definitions and the full kernel differential remain pending.
+[core erasure evidence](dev/validation/stage-a-core-erasure.md). A.5b.3.2b adds
+collection tuples, closed-record layouts and field projections, including erased
+fields, nested products and function fields. See the
+[product erasure evidence](dev/validation/stage-a-product-erasure.md).
+Sum layouts, recursive definitions and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 
@@ -64,8 +68,8 @@ make test-program     # whole-program check/print comparisons and direct contrac
 make test-program-mutations # program comparisons and three isolated mutations
 make test-erasure     # erased representation and runtime scope against pinned Kanon
 make test-erasure-mutations # erasure support comparisons and three isolated mutations
-make test-core-erasure # public ordinary erasure against a fresh pinned oracle
-make test-core-erasure-mutations # quantity, proof, index and capture mutations
+make test-core-erasure # ordinary and product erasure against a fresh pinned oracle
+make test-core-erasure-mutations # quantity, binding, layout and projection mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```
@@ -88,7 +92,7 @@ The [A.1 validation](dev/validation/stage-a-foundation.md),
 [A.5b.3.1 validation](dev/validation/stage-a-erasure.md) record their scope.
 The CLI now reaches production parsing, elaboration, and kernel checking.
 `build` and `run`, recursive families, and dependent or parameterized records require
-later compiler work and fail explicitly. The erased mode and complete
+later compiler work and fail explicitly. Complete erasure and
 KANON-DIFF remain A.5b.3.2 work. Stage A acceptance remains pending.
 
 R2 is pending and will qualify the operational compiler before M0 closure.

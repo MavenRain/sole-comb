@@ -1,5 +1,5 @@
 # Type-directed runtime admission and function layouts from Kanon 69f3be51.
-# Structural layouts and recursive families belong to the next erasure slice.
+# Collection products omit erased fields; other structural layouts remain pending.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -75,17 +75,46 @@ def runtime_weak(c: C.ctx, +ty: V.t) -> R.result(Bool):
   maybe(L.t, R.result(Bool), V.as_univ(ty), _ =>
     boolean(R.result(Bool), Bool.or(empty_former(V.as_lan(ty)), empty_former(V.as_ran(ty))),
       _ => Done{False{}}, _ => proof_free(c, ty)), _ => Done{False{}})
-def structural_repr(+ty: V.t) -> R.result(K.repr):
+def runtime_ty(+c: C.ctx, ty: V.t) -> R.result(Bool):
+  R.bind(V.t, Bool, EV.whnf(C.globals(c), ty), +w => runtime_weak(c, w))
+def count(~A: Data, xs: List<&2, A>) -> F.Int63.t:
+  match xs:
+    case []: F.Int63.zero
+    case _ <> rest: F.Int63.succ(count(A, rest))
+# Kanon takes the first n legs and fails only with fewer. This port needs exactly n, which a checked diagram has, so a mismatch fails closed.
+def leg_types(+c: C.ctx, +n: F.Int63.t, diagram: V.closure) -> R.result(List<&2, V.t>):
+  R.bind(List<&2, V.vleg>, List<&2, V.t>, C.result_of(List<&2, V.vleg>, C.drive(List<&2, V.vleg>, R.coll_legs_of(C.ctx, C.ops, c, diagram), C.budget(c))), +legs =>
+    boolean(R.result(List<&2, V.t>), F.Int63.equal(count(V.vleg, legs), n),
+      _ => C.result_of(List<&2, V.t>, C.drive(List<&2, V.t>, R.map_list(C.ctx, V.vleg, V.t, C.ctx, +ctx => +leg => R.c_open_leg(C.ctx, C.ops, ctx, leg), c, legs), C.budget(c))),
+      _ => Fail{E.Mismatch{"a collection diagram has the wrong number of legs"}}))
+@unsafe
+def tuple_texts(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, tys: List<&2, V.t>, +b: B.t) -> R.result(List<&2, String>):
+  match tys:
+    case []: Done{[]}
+    case +ty <> rest:
+      R.bind(Bool, List<&2, String>, runtime_ty(c, ty), keep =>
+        R.bind(List<&2, String>, List<&2, String>, boolean(R.result(List<&2, String>), keep,
+          _ => R.map_result(K.repr, List<&2, String>, +r => [K.print_repr(r)], loop(c, ty, b)), _ => Done{[]}), +texts =>
+          R.map_result(List<&2, String>, List<&2, String>, +tail => List.append(&2, String, texts, tail), tuple_texts(loop, c, rest, b))))
+def tuple_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +n: F.Int63.t, diagram: V.closure, +b: B.t) -> R.result(K.repr):
+  boolean(R.result(K.repr), F.Int63.equal(n, F.Int63.zero), _ => Done{any_repr}, _ =>
+    R.bind(List<&2, V.t>, K.repr, leg_types(c, n, diagram), +tys =>
+      R.map_result(List<&2, String>, K.repr, +texts => K.RStruct{K.Tid{String.concat(["tuple<", K.join(",", texts), ">"])}}, tuple_texts(loop, c, tys, b))))
+def refused_repr(+ty: V.t) -> R.result(K.repr):
   boolean(R.result(K.repr), Bool.or(has(V.Former, V.as_lan(ty)), has(V.Former, V.as_ran(ty))),
     _ => boolean(R.result(K.repr), Bool.or(empty_former(V.as_lan(ty)), empty_former(V.as_ran(ty))),
       _ => Done{any_repr}, _ => Fail{E.Not_yet{"structural layouts in type-directed erasure"}}),
     _ => Done{any_repr})
 def arrow_of(value: V.t) -> Maybe<&2, arrow>:
   maybe(V.Former, Maybe<&2, arrow>, V.as_ran(value), _ => None{}, former_arrow)
-def runtime_ty(+c: C.ctx, ty: V.t) -> R.result(Bool):
-  R.bind(V.t, Bool, EV.whnf(C.globals(c), ty), +w => runtime_weak(c, w))
-def nonfunction_repr(+ty: V.t) -> R.result(K.repr):
-  maybe(F.Pair2<V.head, List<&2, V.spine>>, R.result(K.repr), V.as_neutral(ty), _ => structural_repr(ty),
+def product_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), c: C.ctx, ty: V.t, former: V.Former, b: B.t) -> R.result(K.repr):
+  match former:
+    case V.Former{shape, diagram, _}:
+      maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => tuple_repr(loop, c, n, diagram, b))
+def structural_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
+  maybe(V.Former, R.result(K.repr), V.as_ran(ty), _ => refused_repr(ty), former => product_repr(loop, c, ty, former, b))
+def nonfunction_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
+  maybe(F.Pair2<V.head, List<&2, V.spine>>, R.result(K.repr), V.as_neutral(ty), _ => structural_repr(loop, c, ty, b),
     +value => pair(V.head, List<&2, V.spine>, R.result(K.repr), value, +head => +spine => Done{neutral_repr(head, spine)}))
 def point_runtime(c: C.ctx, q: Q.t, ty: V.t) -> R.result(Bool):
   boolean(R.result(Bool), Q.equal(q, Q.Zero{}), _ => Done{False{}}, _ => runtime_ty(c, ty))
@@ -102,11 +131,23 @@ def arity_weak(loop: C.ctx -> V.t -> F.Int63.t -> B.t -> R.result(F.Int63.t), c:
 def arity(+c: C.ctx, ty: V.t, n: F.Int63.t, b: B.t) -> R.result(F.Int63.t):
   R.bind(B.t, F.Int63.t, B.spend("erasure function arity", b), +rest =>
     R.bind(V.t, F.Int63.t, EV.whnf(C.globals(c), ty), +w => arity_weak(+cc => +tt => +nn => +bb => arity(cc, tt, nn, bb), c, w, n, rest)))
-def ordinary_repr(+c: C.ctx, +ty: V.t, b: B.t) -> R.result(K.repr):
-  maybe(arrow, R.result(K.repr), arrow_of(ty), _ => nonfunction_repr(ty), _ =>
+def ordinary_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
+  maybe(arrow, R.result(K.repr), arrow_of(ty), _ => nonfunction_repr(loop, c, ty, b), _ =>
     R.map_result(F.Int63.t, K.repr, +n => K.RFunc{K.Tid{String.concat(["fn<", F.Int63.show(n), ">"])}}, arity(c, ty, F.Int63.zero, b)))
-def repr_of(+c: C.ctx, ty: V.t) -> R.result(K.repr):
-  R.bind(V.t, K.repr, EV.whnf(C.globals(c), ty), +w => ordinary_repr(c, w, C.budget(c)))
+@unsafe
+def repr_visit(+c: C.ctx, ty: V.t, b: B.t) -> R.result(K.repr):
+  R.bind(B.t, K.repr, B.spend("erasure type representation", b), +rest =>
+    R.bind(V.t, K.repr, EV.whnf(C.globals(c), ty), +w => ordinary_repr(+cc => +tt => +bb => repr_visit(cc, tt, bb), c, w, rest)))
+def repr_of(+c: C.ctx, ty: V.t) -> R.result(K.repr): repr_visit(c, ty, C.budget(c))
+def repr_tid(repr: K.repr) -> R.result(K.tid):
+  match repr:
+    case K.RI31{}: Fail{E.Mismatch{"a structured value stands at a type whose repr is i31"}}
+    case K.RStruct{tid}: Done{tid}
+    case K.RUnion{tid}: Done{tid}
+    case K.RFunc{tid}: Done{tid}
+    case K.RThunk{tid}: Done{tid}
+def tid_of(c: C.ctx, ty: V.t) -> R.result(K.tid):
+  R.bind(K.repr, K.tid, repr_of(c, ty), +repr => repr_tid(repr))
 def parameter(+c: C.ctx, q: Q.t, +dom: V.t) -> R.result(List<&2, K.repr>):
   R.bind(Bool, List<&2, K.repr>, point_runtime(c, q, dom), +keep =>
     boolean(R.result(List<&2, K.repr>), keep, _ => R.map_result(K.repr, List<&2, K.repr>, +r => [r], repr_of(c, dom)), _ => Done{[]}))
