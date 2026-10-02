@@ -32,7 +32,7 @@ def main():
     selected = set(manifest["positive"]) | set(manifest["negative"])
     found = {str(p.relative_to(ROOT)) for directory in ("examples", "corpus/refuse")
              for p in (ROOT / directory).rglob("*.sole-comb")}
-    if manifest["schema"] != 1 or selected != found or len(selected) != 68 or not all(manifest["negative"].values()):
+    if manifest["schema"] != 1 or selected != found or len(selected) != 89 or not all(manifest["negative"].values()):
         raise RuntimeError("native example census changed; update and review the independent expectations")
     equivalents = manifest["equivalent"]
     if equivalents != {"examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",
@@ -105,7 +105,7 @@ def main():
         raise RuntimeError("public compiler sources changed during validation")
     work = ROOT / "_build/public"
     work.mkdir(parents=True, exist_ok=True)
-    report = {"schema": 1, "scope": "public checking with native function arms, default arms, closed records and ordinary, product, sum and pair erasure examples", "hosts": hosts,
+    report = {"schema": 1, "scope": "public checking with native function arms, default arms, closed records, recursive families and ordinary, product, sum and pair erasure examples", "hosts": hosts,
               "files": len(selected), "equivalences": equivalents, "observations": len(observations), "sources": before, "results": observations}
     (work / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     print(f"PASS public compiler: {len(observations)} command observations; source hashes stable", flush=True)

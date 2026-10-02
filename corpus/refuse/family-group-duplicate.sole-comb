@@ -1,0 +1,1 @@
+mu A : Type 0 { mk : A } and B : Type 0 { mk : B }

@@ -1,0 +1,5 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+BUILD sole-comb js compile: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/sole-comb.building.js
+BUILD sole-comb js OK wall_s=17.025 child_cpu_s=16.002 output=_build/sole-comb.js sha256=878964323de53a8ac0acda9528b50ee5fdcd7c3e0e10f125675f63a8924a9d27
+ENDPOINTS bun node-worker
+LAUNCHER ./sole-comb: public source driver; qualified endpoint=None

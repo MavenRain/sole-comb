@@ -18,6 +18,7 @@ import ../lib/kernel_check.bend as K
 import syntax.bend as Syn
 import elab_program.bend as M
 import sugar.bend as Sugar
+import family.bend as Family
 
 def walker() -> Type: K.ctx -> Maybe<&2, V.t> -> Syn.t -> M.result(T.t)
 def choose(-A: Type, flag: Bool, yes: Unit -> A, no: Unit -> A) -> A:
@@ -495,10 +496,11 @@ def ctor_environment(environment: F.Pair2<K.ctx, String>, ct: Syn.fam_ctor) -> M
     case F.Pair2{c, name}: elab_ctor_decl(c, name, ct)
 def elab_mu_case(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, scrut: T.t, +n: String, ixv: List<&2, V.t>, +clo: V.closure, u: Maybe<&2, L.t>, mo: Maybe<&2, Syn.motive>, brs: List<&2, Syn.branch>) -> M.result(T.t):
   M.bind(P.family, T.t, need(P.family, E.Unbound{Syn.cat(["the family ", n, " is not declared"])}, G.find_family(n, K.globals(c))), +fam =>
+    M.bind(List<&2, Syn.branch>, T.t, Family.expanded(fam, brs), brs =>
     M.bind(List<&2, V.t>, T.t, run_check(List<&2, V.t>, c, R.mu_param_env(K.ctx, K.ops, c, clo)), +penv =>
       M.bind(Maybe<&2, T.motive>, T.t, elab_mu_motive(go, c, n, fam, clo, u, penv, mo), +motive =>
         M.bind(List<&2, F.Pair2<T.addr, T.leg>>, T.t, collect(Syn.branch, F.Pair2<T.addr, T.leg>, family_environment, env => br => family_branch(go, env, br), FamilyEnv{c, n, fam, motive, penv, expected}, brs), branches =>
-          M.map_result(List<&2, T.t>, T.t, ix => T.Elim{T.Elimination{S.SMu{n, ix}, scrut, Q.One{}, motive, branches}}, collect(V.t, T.t, K.ctx, ctx => v => quote_in(ctx, v), c, ixv))))))
+          M.map_result(List<&2, T.t>, T.t, ix => T.Elim{T.Elimination{S.SMu{n, ix}, scrut, Q.One{}, motive, branches}}, collect(V.t, T.t, K.ctx, ctx => v => quote_in(ctx, v), c, ixv)))))))
 def app_spine(~go: walker, +c: K.ctx, f: Syn.t, a: Syn.t, spine: F.Pair2<Syn.t, List<&2, Syn.t>>) -> M.result(T.t):
   match spine:
     case F.Pair2{head, args}:
@@ -554,8 +556,21 @@ def case_former(~go: walker, c: K.ctx, expected: Maybe<&2, V.t>, scrut: T.t, w: 
             _ => elab_coll_case(go, c, expected, scrut, w, other, clo, mo, brs))
 def elab_app(~go: walker, +c: K.ctx, +f: Syn.t, +a: Syn.t) -> M.result(T.t):
   app_spine(go, c, f, a, spine_of(Syn.SApp{f, a}, []))
+# A constructor name must differ from each family of its group and from each earlier family or constructor.
+def taken(+x: String, +g: G.t, +group: List<&2, String>) -> Bool:
+  Bool.or(Family.known(x, group), maybe(P.family, Bool, G.find_family(x, g), _ => maybe(mu_ref, Bool, family_ctor(x, g), _ => False{}, _ => True{}), _ => True{}))
+def clash(+g: G.t, +group: List<&2, String>, cs: List<&2, Syn.fam_ctor>) -> Maybe<&2, String>:
+  match cs:
+    case []: None{}
+    case Syn.FamCtor{+x, _} <> rest: choose(Maybe<&2, String>, taken(x, g, group), _ => Some{x}, _ => clash(g, group, rest))
+def fresh_group(+g: G.t, +group: List<&2, String>, fams: List<&2, Syn.fam>) -> M.result(G.t):
+  match fams:
+    case []: M.Pure{g}
+    case Syn.Fam{_, _, _, cs} <> rest:
+      maybe(String, M.result(G.t), clash(g, group, cs), _ => fresh_group(g, group, rest), x => M.Abort{E.Mismatch{Syn.cat(["E-FAMILY-CTOR: duplicate constructor ", x])}})
 def elab_mu_group_program(+budget: B.t, globals: G.t, +fams: List<&2, Syn.fam>) -> M.result(G.t):
-  M.bind(G.t, G.t, declare_families(fams, budget, globals), g => define_families(fams, budget, map(Syn.fam, String, fam_name, fams), g))
+  M.bind(G.t, G.t, fresh_group(globals, map(Syn.fam, String, fam_name, fams), fams), start =>
+    M.bind(G.t, G.t, declare_families(fams, budget, start), g => define_families(fams, budget, map(Syn.fam, String, fam_name, fams), g)))
 
 # The driver recursively answers surface requests and propagates typed errors.
 def elab_case(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, scrut: Syn.t, mo: Maybe<&2, Syn.motive>, brs: List<&2, Syn.branch>, +only_mu: Bool) -> M.result(T.t):

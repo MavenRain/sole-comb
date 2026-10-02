@@ -91,7 +91,7 @@
     {
       "path": "surface/parser.bend",
       "function": "dispatch",
-      "sites": 48,
+      "sites": 46,
       "reason": "Production recursive-descent lookahead retains explicit refusal at grammar boundaries, including colon and final-arm delimiters for default elimination. Result and task variants remain exhaustive."
     },
     {
@@ -183,6 +183,18 @@
       "function": "pair_second",
       "sites": 1,
       "reason": "An inline pair arm must end in exactly one fibre binder. Every other expression gets an explicit missing-branch refusal."
+    },
+    {
+      "path": "surface/family.bend",
+      "function": "constructors",
+      "sites": 2,
+      "reason": "Native constructor declarations require explicit braces and delimiters; other token rows fail with a source location."
+    },
+    {
+      "path": "surface/family.bend",
+      "function": "fields",
+      "sites": 1,
+      "reason": "A positional family arm must supply a lambda for each constructor field; other expressions explicitly refuse a missing field."
     }
   ],
   "unsafe": [
@@ -475,6 +487,16 @@
       "path": "erase/core.bend",
       "function": "mu_branches",
       "reason": "Each recursive call consumes one constructor from the finite completed family. Branch term requests spend the shared erasure fuel. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "surface/family.bend",
+      "function": "constructors",
+      "reason": "Each constructor spends the finite token-count fuel. Typed continuations resume the parser at the constructor delimiter; type, affine-use and exhaustive checks stay enabled."
+    },
+    {
+      "path": "surface/family.bend",
+      "function": "fields",
+      "reason": "Consumes the finite constructor telescope or descends into a lambda body. Bend cannot infer the combined structural measure; type, affine-use and exhaustive checks stay enabled."
     }
   ]
 }

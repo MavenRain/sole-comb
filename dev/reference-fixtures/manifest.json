@@ -35,6 +35,10 @@
     "family-erasure": {
       "path": "family-erasure.json",
       "sha256": "f169068d9c2e2e1ce1a42417aec976c9cef5d78d45e883f7e70752f534b41157"
+    },
+    "public-family": {
+      "path": "public-family.json",
+      "sha256": "d29332c055626be7a481481b363fb5d3945d0d23f1e1f44ccf2bd7f83b9b6b82"
     }
   },
   "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",

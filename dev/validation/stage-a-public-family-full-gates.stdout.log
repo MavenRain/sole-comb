@@ -1,0 +1,16 @@
+python3 -P dev/test-bench.py
+python3 -P dev/test-build.py
+python3 -P dev/test-pin-check.py
+python3 -P dev/test-r2-risk.py
+python3 -P dev/test-r2-run.py
+python3 -P dev/test-r2-prepare.py
+R2-PREPARE deadline
+R2-PREPARE cancel
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 52 files, 41 line budgets, 60 reviewed unsafe sites, 32 catchalls
+python3 -P dev/test-reference-fixtures.py
+python3 -P dev/test-foundation.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-public-family/dev/toolchain.json
+PASS A.1 bun: 275 cases
+PASS A.1 node-worker: 275 cases

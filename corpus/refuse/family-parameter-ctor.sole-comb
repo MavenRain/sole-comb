@@ -1,0 +1,2 @@
+mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
+def value : Box Nat := box 7

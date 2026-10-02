@@ -1,0 +1,7 @@
+PASS public families bun: exact erased output, 16 literal goldens, exact order probe
+PASS public families node-worker: exact erased output, 16 literal goldens, exact order probe
+PASS public family mutant: constructor-order (output-changed)
+PASS public family mutant: field-order (output-changed)
+PASS public family mutant: result-lambda (refused)
+PASS public family mutant: field-annotation (admitted)
+PUBLIC-FAMILY PASS hosts=bun,node-worker goldens=16 mutants=4

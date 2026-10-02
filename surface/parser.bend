@@ -9,6 +9,7 @@ import lexer.bend as L
 import syntax.bend as S
 import sugar.bend as Sugar
 import record.bend as Record
+import family.bend as Family
 
 def tokens() -> Data: List<&2, T.t>
 def parsed(-A: Data) -> Data: L.result(F.Pair2<A, tokens>)
@@ -41,10 +42,6 @@ def bytes_term(bytes: List<&2, U32>) -> S.t:
   match bytes:
     case []: S.SVar{"bytesNil"}
     case b <> rest: S.SApp{S.SApp{S.SVar{"bytesCons"}, S.SNat{F.Bignum.from_u32(b)}}, bytes_term(rest)}
-def arrows(bs: List<&2, S.binder>, body: S.t) -> S.t:
-  match bs:
-    case []: body
-    case b <> rest: S.SArrow{b, arrows(rest, body)}
 type elimination is Data:
   LegacyCase{}
   FiberedMatch{}
@@ -176,11 +173,9 @@ type task is Data:
   ParseFamGroup{ts: tokens, acc: List<&2, S.fam>}
   ParseFamTail{ts: tokens, acc: List<&2, S.fam>}
   ParseMutualGroup{ts: tokens, acc: List<&2, S.fam>}
-  ParseFam{ts: tokens}
-  ParseFamType{name: String, params: List<&2, S.binder>, ts: tokens}
-  ParseFamConstructors{name: String, params: List<&2, S.binder>, ty: S.t, ts: tokens}
-  ParseFamCtors{ts: tokens, acc: List<&2, S.fam_ctor>}
-  ParseFamCtorType{name: String, bs: List<&2, S.binder>, ts: tokens, acc: List<&2, S.fam_ctor>}
+  ParseFam{ts: tokens, seen: List<&2, String>}
+  ParseFamType{name: String, params: List<&2, S.binder>, ts: tokens, seen: List<&2, String>}
+  ParseFamConstructors{name: String, params: List<&2, S.binder>, ty: S.t, ts: tokens, seen: List<&2, String>}
 type answer is Data:
   Answer0{value: parsed(S.t)}
   Answer1{value: parsed(List<&2, S.binder>)}
@@ -194,7 +189,6 @@ type answer is Data:
   Answer10{value: parsed(S.rec_def)}
   Answer11{value: parsed(List<&2, S.fam>)}
   Answer12{value: parsed(S.fam)}
-  Answer13{value: parsed(List<&2, S.fam_ctor>)}
 
 def read_0(value: answer) -> parsed(S.t):
   match value:
@@ -210,7 +204,6 @@ def read_0(value: answer) -> parsed(S.t):
     case Answer10{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<S.t, tokens>, T.start, "internal parser result kind")
 
 def read_1(value: answer) -> parsed(List<&2, S.binder>):
   match value:
@@ -226,7 +219,6 @@ def read_1(value: answer) -> parsed(List<&2, S.binder>):
     case Answer10{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.binder>, tokens>, T.start, "internal parser result kind")
 
 def read_2(value: answer) -> parsed(S.binder):
   match value:
@@ -242,7 +234,6 @@ def read_2(value: answer) -> parsed(S.binder):
     case Answer10{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<S.binder, tokens>, T.start, "internal parser result kind")
 
 def read_3(value: answer) -> parsed(index_clause):
   match value:
@@ -258,7 +249,6 @@ def read_3(value: answer) -> parsed(index_clause):
     case Answer10{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<index_clause, tokens>, T.start, "internal parser result kind")
 
 def read_4(value: answer) -> parsed(List<&2, String>):
   match value:
@@ -274,7 +264,6 @@ def read_4(value: answer) -> parsed(List<&2, String>):
     case Answer10{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, String>, tokens>, T.start, "internal parser result kind")
 
 def read_5(value: answer) -> parsed(List<&2, S.branch>):
   match value:
@@ -290,7 +279,6 @@ def read_5(value: answer) -> parsed(List<&2, S.branch>):
     case Answer10{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.branch>, tokens>, T.start, "internal parser result kind")
 
 def read_6(value: answer) -> parsed(List<&2, S.field>):
   match value:
@@ -306,7 +294,6 @@ def read_6(value: answer) -> parsed(List<&2, S.field>):
     case Answer10{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.field>, tokens>, T.start, "internal parser result kind")
 
 def read_8(value: answer) -> parsed(S.decl):
   match value:
@@ -322,7 +309,6 @@ def read_8(value: answer) -> parsed(S.decl):
     case Answer10{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<S.decl, tokens>, T.start, "internal parser result kind")
 
 def read_9(value: answer) -> parsed(List<&2, S.rec_def>):
   match value:
@@ -338,7 +324,6 @@ def read_9(value: answer) -> parsed(List<&2, S.rec_def>):
     case Answer10{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.rec_def>, tokens>, T.start, "internal parser result kind")
 
 def read_10(value: answer) -> parsed(S.rec_def):
   match value:
@@ -354,7 +339,6 @@ def read_10(value: answer) -> parsed(S.rec_def):
     case Answer10{value}: value
     case Answer11{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
     case Answer12{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<S.rec_def, tokens>, T.start, "internal parser result kind")
 
 def read_11(value: answer) -> parsed(List<&2, S.fam>):
   match value:
@@ -370,7 +354,6 @@ def read_11(value: answer) -> parsed(List<&2, S.fam>):
     case Answer10{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
     case Answer11{value}: value
     case Answer12{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
-    case Answer13{_}: L.error(F.Pair2<List<&2, S.fam>, tokens>, T.start, "internal parser result kind")
 
 def read_12(value: answer) -> parsed(S.fam):
   match value:
@@ -386,23 +369,6 @@ def read_12(value: answer) -> parsed(S.fam):
     case Answer10{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer11{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
     case Answer12{value}: value
-    case Answer13{_}: L.error(F.Pair2<S.fam, tokens>, T.start, "internal parser result kind")
-
-def read_13(value: answer) -> parsed(List<&2, S.fam_ctor>):
-  match value:
-    case Answer0{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer1{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer2{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer3{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer4{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer5{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer6{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer8{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer9{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer10{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer11{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer12{_}: L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, T.start, "internal parser result kind")
-    case Answer13{value}: value
 
 # Backtracking retries one binder probe; successful loops consume tokens.
 def arm_count(bs: List<&2, S.branch>) -> Nat:
@@ -780,7 +746,7 @@ def dispatch(job: task) -> answer:
         case _:
           Answer10{want(S.rec_def, "':='", ts)}
     case ParseFamGroup{+ts, +acc}:
-      Answer11{next(S.fam, List<&2, S.fam>, read_12(dispatch(ParseFam{ts})), fm => rest => read_11(dispatch(ParseFamTail{rest, fm <> acc})))}
+      Answer11{next(S.fam, List<&2, S.fam>, read_12(dispatch(ParseFam{ts, Family.group_names(acc)})), fm => rest => read_11(dispatch(ParseFamTail{rest, fm <> acc})))}
     case ParseFamTail{+ts, +acc}:
       match ts:
         case T.Token{T.KAnd{}, _} <> rest:
@@ -790,7 +756,7 @@ def dispatch(job: task) -> answer:
     case ParseMutualGroup{+ts, +acc}:
       match ts:
         case T.Token{T.KMu{}, _} <> rest:
-          Answer11{next(S.fam, List<&2, S.fam>, read_12(dispatch(ParseFam{rest})), fm => tail => read_11(dispatch(ParseMutualGroup{tail, fm <> acc})))}
+          Answer11{next(S.fam, List<&2, S.fam>, read_12(dispatch(ParseFam{rest, Family.group_names(acc)})), fm => tail => read_11(dispatch(ParseMutualGroup{tail, fm <> acc})))}
         case T.Token{T.KEnd{}, loc} <> rest:
           match acc:
             case []:
@@ -801,40 +767,24 @@ def dispatch(job: task) -> answer:
               Answer11{done(List<&2, S.fam>, L.reverse(S.fam, a <> b <> others, []), rest)}
         case _:
           Answer11{want(List<&2, S.fam>, "'mu' or 'end' in a mutual group", ts)}
-    case ParseFam{+ts}:
+    case ParseFam{+ts, +seen}:
       match ts:
         case T.Token{T.Ident{name}, _} <> rest:
-          Answer12{next(List<&2, S.binder>, S.fam, read_1(dispatch(ParseBinders{rest, []})), bs => tail => read_12(dispatch(ParseFamType{name, bs, tail})))}
+          Answer12{next(List<&2, S.binder>, S.fam, read_1(dispatch(ParseBinders{rest, []})), bs => tail => read_12(dispatch(ParseFamType{name, bs, tail, seen})))}
         case _:
           Answer12{want(S.fam, "a family name", ts)}
-    case ParseFamType{+name, +params, +ts}:
+    case ParseFamType{+name, +params, +ts, +seen}:
       match ts:
         case T.Token{T.Colon{}, _} <> rest:
-          Answer12{next(S.t, S.fam, read_0(dispatch(ParseTerm{rest})), ty => tail => read_12(dispatch(ParseFamConstructors{name, params, ty, tail})))}
+          Answer12{next(S.t, S.fam, read_0(dispatch(ParseTerm{rest})), ty => tail => read_12(dispatch(ParseFamConstructors{name, params, ty, tail, seen})))}
         case _:
           Answer12{want(S.fam, "':'", ts)}
-    case ParseFamConstructors{+name, +params, +ty, +ts}:
+    case ParseFamConstructors{+name, +params, +ty, +ts, +seen}:
       match ts:
-        case T.Token{T.KWith{}, _} <> rest:
-          Answer12{next(List<&2, S.fam_ctor>, S.fam, read_13(dispatch(ParseFamCtors{rest, []})), cs => tail => done(S.fam, S.Fam{name, params, ty, cs}, tail))}
-        case T.Token{T.ColonEq{}, _} <> rest:
-          Answer12{next(List<&2, S.fam_ctor>, S.fam, read_13(dispatch(ParseFamCtors{rest, []})), cs => tail => done(S.fam, S.Fam{name, params, ty, cs}, tail))}
+        case T.Token{T.LBrace{}, _} <> +rest:
+          Answer12{next(List<&2, S.fam_ctor>, S.fam, Family.constructors(~(tail => read_0(dispatch(ParseTerm{tail}))), Family.Read{Record.length(rest), rest, [], name <> seen}), cs => tail => done(S.fam, S.Fam{name, params, ty, cs}, tail))}
         case _:
-          Answer12{want(S.fam, "':=' or 'with'", ts)}
-    case ParseFamCtors{+ts, +acc}:
-      match ts:
-        case T.Token{T.Pipe{}, _} <> T.Token{T.Ident{name}, _} <> rest:
-          Answer13{next(List<&2, S.binder>, List<&2, S.fam_ctor>, read_1(dispatch(ParseBinders{rest, []})), bs => tail => read_13(dispatch(ParseFamCtorType{name, bs, tail, acc})))}
-        case T.Token{T.Pipe{}, loc} <> _:
-          Answer13{L.error(F.Pair2<List<&2, S.fam_ctor>, tokens>, loc, "expected a constructor name and ':' after '|'")}
-        case _:
-          Answer13{done(List<&2, S.fam_ctor>, L.reverse(S.fam_ctor, acc, []), ts)}
-    case ParseFamCtorType{+name, +bs, +ts, +acc}:
-      match ts:
-        case T.Token{T.Colon{}, _} <> rest:
-          Answer13{next(S.t, List<&2, S.fam_ctor>, read_0(dispatch(ParseTerm{rest})), ty => tail => read_13(dispatch(ParseFamCtors{tail, S.FamCtor{name, arrows(bs, ty)} <> acc})))}
-        case _:
-          Answer13{want(List<&2, S.fam_ctor>, "':' after constructor binders", ts)}
+          Answer12{want(S.fam, "'{' after a family header", ts)}
 
 def finish(value: parsed(List<&2, S.decl>)) -> L.result(List<&2, S.decl>):
   match value:

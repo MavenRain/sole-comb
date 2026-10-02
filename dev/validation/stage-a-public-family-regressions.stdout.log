@@ -1,0 +1,7 @@
+PASS public erasure bun: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+PASS ordinary, product, sum and pair erasure: public observations, direct contracts, source hashes stable
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=5.430 child_cpu_s=6.634

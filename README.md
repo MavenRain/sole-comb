@@ -64,8 +64,17 @@ kernel test frontend. It preserves nominal layouts, generic erased placeholders,
 dependent branch targets, runtime binder indices and complete constructor groups.
 See the [family erasure evidence](dev/validation/stage-a-family-erasure.md).
 Its first native checks timed out at the tracked 900-second limit and passed with a local 2400-second deadline. The review rerun passed with the tracked limits.
-Public recursive-family syntax, recursive definition erasure, and the full
-kernel differential remain pending.
+A.5b.3.2e.3 adds public brace-form `mu` declarations and positional `elim`
+arms for recursive families. It supports mutual groups with `and`, parameters,
+indexed motives, empty families, and typed constructor fields. Constructors are
+separated by semicolons, and a trailing semicolon is allowed. Family elimination
+requires an explicit motive. See the
+[public family evidence](dev/validation/stage-a-public-family.md).
+The native public-family check passed. The full `make gates` has not been
+rerun with the public-family targets.
+Recursive definitions, structural recursor sugar, parameterized-constructor
+inference, family default arms, complete erased-corpus integration, WebAssembly
+build/run and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 
@@ -93,6 +102,8 @@ make test-family-layout # nominal family layouts against pinned reference fixtur
 make test-family-layout-mutations # layout comparisons and four semantic mutations
 make test-family-erasure # family constructor and match erasure against pinned reference fixtures
 make test-family-erasure-mutations # family erasure comparisons and eight semantic mutations
+make test-public-family # public families against frozen Kanon output
+make test-public-family-mutations # public families and four sugar mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```
@@ -134,7 +145,7 @@ The [A.1 validation](dev/validation/stage-a-foundation.md),
 [A.5b.2 validation](dev/validation/stage-a-program.md), and
 [A.5b.3.1 validation](dev/validation/stage-a-erasure.md) record their scope.
 The CLI now reaches production parsing, elaboration, and kernel checking.
-`build` and `run`, recursive families, and dependent or parameterized records require
+`build` and `run`, recursive definitions, and dependent or parameterized records require
 later compiler work and fail explicitly. Complete erasure and
 KANON-DIFF remain A.5b.3.2 work. Stage A acceptance remains pending.
 

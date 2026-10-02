@@ -54,7 +54,9 @@ A.5b.3.2c increment extends it to finite-sum layouts, injections and case
 elimination, with [sum erasure validation](validation/stage-a-sum-erasure.md).
 The A.5b.3.2d increment adds dependent-pair layouts, introductions and native
 two-binder elimination, with [pair erasure validation](validation/stage-a-pair-erasure.md).
-The full A.5b.3.2 boundary remains pending for recursive definitions, public recursive-family integration, complete corpus integration and WebAssembly build/run.
+The full A.5b.3.2 boundary remains pending for recursive definitions,
+structural recursor sugar, parameterized-constructor inference, family default
+arms, complete corpus integration and WebAssembly build/run.
 The A.5b.3.2e.1 increment adds nominal recursive-family representations and
 constructor layout planning in `erase/family.bend`. It resets the local scope,
 opens parameters as variables, evaluates dependent field types, and omits
@@ -73,7 +75,18 @@ constructor order, omitted fields, generic placeholders, dependent indices,
 runtime parameters, branch arities and family groups. Eight isolated semantic
 mutations exercise tags, ghost fields, binder order, constructor groups,
 lifted-closure groups and tail flags. See [family erasure validation](validation/stage-a-family-erasure.md).
-Public recursive-family syntax remains pending.
+A.5b.3.2e.3 admits public brace-form families and positional constructor arms.
+The native source checker retains checked family metadata for erasure.
+Public examples cover mutual and indexed families, parameters, empty matches,
+dependent generic slots and function-valued branch results. The public-family
+harness compares their erased output with a frozen pinned Kanon expansion. It
+also checks 16 literal goldens, a literal order probe and four mutations.
+The native public-family check passed. The full `make gates` has not been
+rerun with the public-family targets.
+Recursive definitions, structural recursor sugar, parameterized-constructor
+inference, family default arms, complete erased-corpus integration, and
+WebAssembly build/run remain pending. See the
+[public family validation](validation/stage-a-public-family.md).
 
 Semantic gates compare with recorded Kanon fixtures, not with live OCaml
 adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)

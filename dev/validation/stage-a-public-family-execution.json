@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "base": "4f0b7300466e227c5df8e4c0bd26128950a3da95",
+  "checkout": "/Users/oobi/Documents/sole-comb",
+  "recorded_hosts": [
+    "bun",
+    "node-worker"
+  ],
+  "runs": [
+    {
+      "name": "js-build",
+      "command": "python3 -P dev/build.py --backend js",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 18,
+      "logs": {
+        "dev/validation/stage-a-public-family-build.stdout.log": "f204003c56a88b609a5d985c6fa8fd930e59fd888f19ed5cba3966cb8cfa5e24",
+        "dev/validation/stage-a-public-family-build.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "focused",
+      "command": "python3 -P dev/test-public-family.py --hosts bun,node-worker --mutations",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 74,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-public-family-focused.stdout.log": "f91f3ded193813e413993223d4347210115fb838716e9659db0accbd24833aa6",
+        "dev/validation/stage-a-public-family-focused.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "record": {
+        "dev/validation/stage-a-public-family.json": "039d6b9252a041c7fe6f156cfec71c6765fd03aeb4d8a96f2f8620b94d2377bf"
+      }
+    },
+    {
+      "name": "cli",
+      "command": "python3 -P dev/test-cli.py --hosts bun,node-worker",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 179,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-public-family-cli.stdout.log": "0e684789164986d8087c7bdd93e16cde5762879136c0bb0477f122239c4f9688",
+        "dev/validation/stage-a-public-family-cli.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "record": {
+        "dev/validation/stage-a-public-family-cli.json": "46ae3e342472697575414ed136612919a1db3aada96f70d2e5ff1086b6278d55"
+      }
+    },
+    {
+      "name": "regressions",
+      "command": "python3 -P dev/test-core-erasure.py --hosts bun,node-worker && python3 -P dev/build.py --backend js --check",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 36,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-public-family-regressions.stdout.log": "55aea269081e40796f54e72a18c14a59f3acf2c0bbafedb7e73301e483a528f9",
+        "dev/validation/stage-a-public-family-regressions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "record": {
+        "dev/validation/stage-a-public-family-erasure-regressions.json": "bdf40552c985b216586b316381e30c61d8d7ab66b80ae882b1fe8ae3b2724812"
+      }
+    },
+    {
+      "name": "native-build",
+      "command": "python3 -P dev/build.py --backend native",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 160,
+      "logs": {
+        "dev/validation/stage-a-public-family-native-attempt.stdout.log": "77ad54b41225be366497d100e769812bd6b94c7e2fe222bfe71aeb7c0255b310",
+        "dev/validation/stage-a-public-family-native-attempt.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "native-check",
+      "command": "python3 -P dev/test-public-family.py --hosts native",
+      "checkout": "/Users/oobi/Documents/sole-comb",
+      "exit": 0,
+      "seconds": 1,
+      "hosts": [
+        "native"
+      ],
+      "logs": {
+        "dev/validation/stage-a-public-family-native.stdout.log": "d0b320f86c01f17d844bdbc0fdc6a686baa11e1fd38a308b67018d895298427d",
+        "dev/validation/stage-a-public-family-native.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "record": {
+        "dev/validation/stage-a-public-family-native.json": "235df2daee99a0b8a34a5908ead97156014d7b89ce1732d6a9f677c39893d17b"
+      }
+    }
+  ],
+  "native_validation": "passed",
+  "previous_tree": {
+    "scope": "historical evidence from the earlier tree, before the review fixes",
+    "checkout": "/Users/oobi/Documents/gpt5/sole-comb-public-family",
+    "base": "4f0b7300466e227c5df8e4c0bd26128950a3da95",
+    "full_gates": {
+      "command": "make gates",
+      "exit": 2,
+      "reason": "unchanged foundation native compilation exceeded its tracked 120-second limit",
+      "logs": {
+        "dev/validation/stage-a-public-family-full-gates.stdout.log": "4380e770b9ac17dbe5a57f65c776afd0d986d123c7f8146b0be331ab0bcec211",
+        "dev/validation/stage-a-public-family-full-gates.stderr.log": "bbd11332a85208a3f99500e53399304b6c29369ad267192acaa107e3c775b959"
+      }
+    },
+    "foundation_after_deadline": {
+      "exit": 0,
+      "stdout": "\"PASS\"\n",
+      "harness_cases": 275,
+      "binary_sha256": "be33d72dfb24d0d2048564db3cbb93265771a15658743e8dc7b087eedd41fe32",
+      "harness_sha256": "66152ae414e41cbf742275e43f7996d6d912258a34ae6a1003cf126edc3adfcc",
+      "scope": "informational direct run; full gate remains failed",
+      "command": "not recorded",
+      "logs": "not retained"
+    },
+    "native_attempt": {
+      "command": "make house test-reference-fixtures test-public-family-mutations test-cli test-core-erasure-mutations test-family-layout-mutations test-family-erasure-mutations build",
+      "exit": 2,
+      "compiler_exit": -9,
+      "type_check": "passed",
+      "reason": "compiler process killed with signal 9; cause is not recorded",
+      "native_validation": "outstanding",
+      "logs": "replaced by the native attempt on this tree"
+    }
+  }
+}
