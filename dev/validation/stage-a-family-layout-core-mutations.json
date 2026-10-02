@@ -1,0 +1,112 @@
+{
+  "mutants": [
+    {
+      "name": "zero-kept",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "proof-kept",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "index-shift",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "capture-not-pruned",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "tuple-field-order",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "projection-unfiltered",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "tuple-layout",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "body-layout-dependencies",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "sum-layout",
+      "path": "erase/type.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "sum-tag-number",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "sum-erased-payload",
+      "path": "erase/sum.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "case-payload-arity",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "case-leg-selection",
+      "path": "erase/sum.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "case-tail-lost",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "pair-fibre-offset",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "pair-synthetic-slot",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "pair-capture-frame",
+      "path": "erase/core.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    },
+    {
+      "name": "pair-fibre-type",
+      "path": "erase/pair.bend",
+      "exit": 1,
+      "semantic_rejection": true
+    }
+  ]
+}

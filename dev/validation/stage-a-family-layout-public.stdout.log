@@ -1,0 +1,70 @@
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 50 files, 39 line budgets, 57 reviewed unsafe sites, 30 catchalls
+python3 -P dev/test-cli.py
+PASS public bun: examples/identity.sole-comb
+PASS public bun: examples/arithmetic.sole-comb
+PASS public bun: examples/finite-elim.sole-comb
+PASS public bun: examples/motive.sole-comb
+PASS public bun: examples/function-arms.sole-comb
+PASS public bun: examples/default-arms.sole-comb
+PASS public bun: examples/default-arms-explicit.sole-comb
+PASS public bun: examples/records.sole-comb
+PASS public bun: examples/record-expansion.sole-comb
+PASS public bun: examples/record-expansion-explicit.sole-comb
+PASS public bun: examples/erasure.sole-comb
+PASS public bun: examples/product-erasure.sole-comb
+PASS public bun: examples/sum-erasure.sole-comb
+PASS public bun: examples/pair-erasure.sole-comb
+PASS public bun: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public bun: record field types, indices, namespaces and binder hygiene
+PASS public bun: 68 native files and 2 lexical boundary cases
+PASS public node-worker: examples/identity.sole-comb
+PASS public node-worker: examples/arithmetic.sole-comb
+PASS public node-worker: examples/finite-elim.sole-comb
+PASS public node-worker: examples/motive.sole-comb
+PASS public node-worker: examples/function-arms.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb
+PASS public node-worker: examples/default-arms-explicit.sole-comb
+PASS public node-worker: examples/records.sole-comb
+PASS public node-worker: examples/record-expansion.sole-comb
+PASS public node-worker: examples/record-expansion-explicit.sole-comb
+PASS public node-worker: examples/erasure.sole-comb
+PASS public node-worker: examples/product-erasure.sole-comb
+PASS public node-worker: examples/sum-erasure.sole-comb
+PASS public node-worker: examples/pair-erasure.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public node-worker: record field types, indices, namespaces and binder hygiene
+PASS public node-worker: 68 native files and 2 lexical boundary cases
+PASS public native: examples/identity.sole-comb
+PASS public native: examples/arithmetic.sole-comb
+PASS public native: examples/finite-elim.sole-comb
+PASS public native: examples/motive.sole-comb
+PASS public native: examples/function-arms.sole-comb
+PASS public native: examples/default-arms.sole-comb
+PASS public native: examples/default-arms-explicit.sole-comb
+PASS public native: examples/records.sole-comb
+PASS public native: examples/record-expansion.sole-comb
+PASS public native: examples/record-expansion-explicit.sole-comb
+PASS public native: examples/erasure.sole-comb
+PASS public native: examples/product-erasure.sole-comb
+PASS public native: examples/sum-erasure.sole-comb
+PASS public native: examples/pair-erasure.sole-comb
+PASS public native: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public native: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public native: record field types, indices, namespaces and binder hygiene
+PASS public native: 68 native files and 2 lexical boundary cases
+PASS public compiler: 217 command observations; source hashes stable
+python3 -P dev/test-core-erasure.py
+PASS public erasure bun: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure native: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-recursive/dev/toolchain.json
+PASS ordinary, product, sum and pair erasure: public observations, direct contracts, source hashes stable
+python3 -P dev/build.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-recursive/dev/toolchain.json
+BUILD sole-comb js cached
+ENDPOINTS bun node-worker
+LAUNCHER ./sole-comb: public source driver; qualified endpoint=None

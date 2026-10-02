@@ -1,0 +1,33 @@
+axiom P : Prop
+
+mu N : Type 0 with
+| zero : N
+| succ : N -> N
+
+mu Box (0 A : Type 0) : Type 0 with
+| box : A -> Box A
+
+mu V : (0 i : N) -> Type 0 with
+| vz : V zero
+| vs : (0 i : N) -> (1 value : Nat) -> V i -> V (succ i)
+
+mu Pair (0 A : Type 0) (0 B : Type 0) : Type 0 with
+| pair : A -> B -> Pair A B
+
+mu Dep : (0 A : Type 0) -> (0 x : A) -> Type 1 with
+| dep : (0 A : Type 0) -> (0 x : A) -> Dep A x
+
+mu Packet : Type 1 with
+| packet : (0 erased : Nat) -> Type 0 -> P -> (Nat -> Nat) -> prod (Nat, Nat) -> Packet
+
+mu Exists : Type 1 with
+| pack : (0 A : Type 0) -> A -> Exists
+
+mu Left : Type 0 with
+| leaf : Left
+| node : Right -> Left
+and Right : Type 0 with
+| link : Left -> Right
+
+mu W (A : Type 0) (0 Q : Prop) : Type 0 with
+| w : (0 R : Prop) -> A -> Q -> R -> Nat -> W A Q

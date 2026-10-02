@@ -6,6 +6,7 @@ import ../lib/kernel_error.bend as E
 import ../lib/kernel_global.bend as G
 import ../lib/kernel_level.bend as L
 import ../lib/kernel_literal.bend as Lit
+import ../lib/kernel_positivity.bend as Pos
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
@@ -16,6 +17,7 @@ import ../erase/type.bend as Ty
 import ../erase/eterm.bend as K
 import ../erase/sum.bend as Sum
 import ../erase/pair.bend as Pair
+import ../erase/family.bend as Family
 
 def check(+name: String, +want: String, +got: String) -> String:
   F.choose(String, String.eq(want, got), "", String.concat([name, " expected=", want, " actual=", got, "\n"]))
@@ -87,6 +89,12 @@ def pair_closure() -> String:
     T.Elim{T.Elimination{S.SPi{Q.Many{}, "x", T.Global{"Nat"}}, T.Global{"pair"}, Q.One{}, None{},
       [F.Pair2{T.ALeg{F.Int63.zero}, T.Leg{[F.Pair2{Q.Many{}, "x"}, F.Pair2{Q.Many{}, "y"}],
         T.Sec{S.SPi{Q.Many{}, "n", T.Global{"Nat"}}, [T.Leg{[F.Pair2{Q.Many{}, "n"}], T.Var{F.Int63.succ(two)}}]}}}]}}))
+def nominal(index: V.t) -> V.t:
+  V.VLan{S.SMu{"Vector", [index]}, V.close([], T.Univ{L.zero}), Some{L.zero}}
+def family_status(status: Pos.ctor_status) -> Pos.family:
+  Pos.Family{"Broken", [], [], L.zero, status, [], True{}}
+def family_error(status: Pos.ctor_status) -> String:
+  result_error(List<&2, K.tid>, Family.group_tids(context, "Broken", family_status(status)))
 def main() -> String:
   String.concat([
     check("proof", "false", proof),
@@ -96,6 +104,11 @@ def main() -> String:
     check("one", "true", boolean(Ty.point_runtime(context, Q.One{}, nat))),
     check("budget", "budget: type-directed erasure", exhausted),
     check("representation-budget", "budget: erasure type representation", repr_exhausted),
+    check("nominal-first-index", "union mu<Vector>", repr_text(Ty.repr_of(context, nominal(nat)))),
+    check("nominal-second-index", "union mu<Vector>", repr_text(Ty.repr_of(context, nominal(V.VUniv{L.one})))),
+    check("family-provisional", "unbound: the family Broken is still under declaration", family_error(Pos.Provisional{})),
+    check("family-builtin", "mismatch: the family Broken is a kernel family and has no branches", family_error(Pos.Builtin{})),
+    check("family-missing-constructor", "unbound: absent is not a constructor of Broken", family_error(Pos.Complete{["absent"]})),
     check("sum-layout", "union sum<union nat|union nat>", sum_repr),
     check("pair-layout", "struct pair<union nat,union nat>", repr_text(Ty.repr_of(context, pair_value))),
     check("pair-address", "mismatch: a pair takes a point address", result_error(List<&2, Pair.field>, Pair.introduction(context, pair_value, T.ALeg{F.Int63.zero}, [literal(1n)]))),

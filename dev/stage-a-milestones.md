@@ -56,6 +56,16 @@ The A.5b.3.2d increment adds dependent-pair layouts, introductions and native
 two-binder elimination, with [pair erasure validation](validation/stage-a-pair-erasure.md).
 The full A.5b.3.2 boundary remains pending for recursive families, recursive
 definitions, complete corpus integration and WebAssembly build/run.
+The A.5b.3.2e.1 increment adds nominal recursive-family representations and
+constructor layout planning in `erase/family.bend`. It resets the local scope,
+opens parameters as variables, evaluates dependent field types, and omits
+zero-quantity, type and proof fields. Constructor tags follow the completed
+family's declaration order. `make test-family-layout` compares these plans
+with freshly compiled pinned Kanon on Bun, Node worker and native;
+`make test-family-layout-mutations` also checks four semantic mutations on Bun.
+The [layout evidence](validation/stage-a-family-layout.md) describes the
+record, which contains exact observations and source hashes. Runtime constructor and match erasure remain
+the next part of recursive-family integration.
 
 ## Compiler commits
 

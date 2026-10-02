@@ -55,7 +55,12 @@ A.5b.3.2d adds dependent-pair layouts, introductions, and native `elim` with one
 two-binder lambda arm. Erasure drops type and proof fields, evaluates the
 scrutinee once, and preserves runtime indices through nested pairs and closures.
 See the [pair erasure evidence](dev/validation/stage-a-pair-erasure.md).
-Recursive families, recursive definitions and the full kernel differential remain pending.
+The A.5b.3.2e.1 increment adds nominal family and constructor layout planning.
+It opens family parameters as variables, drops erased fields, and records
+constructor layouts in declaration order. See the
+[family layout evidence](dev/validation/stage-a-family-layout.md).
+Recursive-family introductions and eliminations, recursive definition erasure,
+and the full kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 
@@ -79,6 +84,8 @@ make test-erasure     # erased representation and runtime scope against pinned K
 make test-erasure-mutations # erasure support comparisons and three isolated mutations
 make test-core-erasure # ordinary and product erasure against a fresh pinned oracle
 make test-core-erasure-mutations # quantity, binding, layout and projection mutations
+make test-family-layout # nominal family layouts against a fresh pinned oracle
+make test-family-layout-mutations # layout comparisons and four semantic mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```

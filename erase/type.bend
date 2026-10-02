@@ -1,6 +1,6 @@
 # Type-directed runtime admission and function layouts from Kanon 69f3be51.
 # Collection products omit erased fields; sums retain every tag and layout leg.
-# Dependent pairs omit erased components; recursive-family layouts remain pending.
+# Dependent pairs omit erased components; recursive families have nominal layouts.
 import Base
 import ../lib/foundation.bend as F
 import ../lib/kernel_budget.bend as B
@@ -48,6 +48,7 @@ def proof_free(+c: C.ctx, ty: V.t) -> R.result(Bool):
 def opened(+c: C.ctx, diagram: V.closure, args: List<&2, V.t>) -> R.result(V.t):
   R.run(G.t, EV.dispatch, V.t, R.open_closure(G.t, EV.ev(C.globals(c)), diagram, args))
 def any_repr() -> K.repr: K.RUnion{K.Tid{"any"}}
+def mu_tid(name: String) -> K.tid: K.Tid{String.concat(["mu<", name, ">"])}
 type signature is Data:
   Signature{params: List<&2, K.repr>, result: K.repr}
 def point_arrow(diagram: V.closure, value: Maybe<&2, R.Point>) -> Maybe<&2, arrow>:
@@ -144,9 +145,11 @@ def pair_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, point: 
 def sum_former_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, ty: V.t, former: V.Former, +b: B.t) -> R.result(K.repr):
   match former:
     case V.Former{+shape, +diagram, _}:
-      maybe(arrow, R.result(K.repr), point_arrow(diagram, R.point_view(shape)),
+      maybe(F.Pair2<String, List<&2, V.t>>, R.result(K.repr), R.as_mu(V.t, shape),
+        _ => maybe(arrow, R.result(K.repr), point_arrow(diagram, R.point_view(shape)),
         _ => maybe(F.Int63.t, R.result(K.repr), R.collection_view(shape), _ => refused_repr(ty), n => sum_repr(loop, c, n, diagram, b)),
-        point => pair_repr(loop, c, point, b))
+        point => pair_repr(loop, c, point, b)),
+        value => pair(String, List<&2, V.t>, R.result(K.repr), value, name => _ => Done{K.RUnion{mu_tid(name)}}))
 def structural_repr(~loop: C.ctx -> V.t -> B.t -> R.result(K.repr), +c: C.ctx, +ty: V.t, +b: B.t) -> R.result(K.repr):
   maybe(V.Former, R.result(K.repr), V.as_ran(ty),
     _ => maybe(V.Former, R.result(K.repr), V.as_lan(ty), _ => refused_repr(ty), former => sum_former_repr(loop, c, ty, former, b)),

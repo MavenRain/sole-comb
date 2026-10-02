@@ -1,0 +1,300 @@
+{
+  "expected": {
+    "test/family-layouts.kan": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n",
+    "test/kanon/test/fixtures/mu-constructor-scopes.kan": "Pair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nIx [leg<mu<Ix>,0>]\nix [drop]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nLarge [leg<mu<Large>,0>]\npackLarge [drop]\n",
+    "test/kanon/test/fixtures/mu-indexed.kan": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nV [leg<mu<V>,0>;leg<mu<V>,1,union mu<V>>]\nvz []\nvs [drop;union mu<V>]\n",
+    "test/kanon/test/fixtures/mu-parameter-layout.kan": "Box [leg<mu<Box>,0,union any>]\nbox [union any]\n",
+    "test/kanon/test/fixtures/mu-rec-mutual.kan": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nA [leg<mu<A>,0>;leg<mu<A>,1,union mu<B>>]\nleaf []\nnode [union mu<B>]\nB [leg<mu<B>,0,union mu<A>>]\ncons [union mu<A>]\n",
+    "test/kanon/test/fixtures/one-recursive.kan": "Chain [leg<mu<Chain>,0>;leg<mu<Chain>,1,union mu<Chain>>]\nstop []\nstep [union mu<Chain>]\n"
+  },
+  "families": 21,
+  "fixtures": 6,
+  "goldens": 11,
+  "hosts": {
+    "bun": {
+      "test/family-layouts.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-constructor-scopes.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Pair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nIx [leg<mu<Ix>,0>]\nix [drop]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nLarge [leg<mu<Large>,0>]\npackLarge [drop]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-indexed.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nV [leg<mu<V>,0>;leg<mu<V>,1,union mu<V>>]\nvz []\nvs [drop;union mu<V>]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-parameter-layout.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Box [leg<mu<Box>,0,union any>]\nbox [union any]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-rec-mutual.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nA [leg<mu<A>,0>;leg<mu<A>,1,union mu<B>>]\nleaf []\nnode [union mu<B>]\nB [leg<mu<B>,0,union mu<A>>]\ncons [union mu<A>]\n\n"
+      },
+      "test/kanon/test/fixtures/one-recursive.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Chain [leg<mu<Chain>,0>;leg<mu<Chain>,1,union mu<Chain>>]\nstop []\nstep [union mu<Chain>]\n\n"
+      }
+    },
+    "native": {
+      "test/family-layouts.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-constructor-scopes.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Pair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nIx [leg<mu<Ix>,0>]\nix [drop]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nLarge [leg<mu<Large>,0>]\npackLarge [drop]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-indexed.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nV [leg<mu<V>,0>;leg<mu<V>,1,union mu<V>>]\nvz []\nvs [drop;union mu<V>]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-parameter-layout.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Box [leg<mu<Box>,0,union any>]\nbox [union any]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-rec-mutual.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nA [leg<mu<A>,0>;leg<mu<A>,1,union mu<B>>]\nleaf []\nnode [union mu<B>]\nB [leg<mu<B>,0,union mu<A>>]\ncons [union mu<A>]\n\n"
+      },
+      "test/kanon/test/fixtures/one-recursive.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Chain [leg<mu<Chain>,0>;leg<mu<Chain>,1,union mu<Chain>>]\nstop []\nstep [union mu<Chain>]\n\n"
+      }
+    },
+    "node-worker": {
+      "test/family-layouts.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-constructor-scopes.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Pair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nIx [leg<mu<Ix>,0>]\nix [drop]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nLarge [leg<mu<Large>,0>]\npackLarge [drop]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-indexed.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nV [leg<mu<V>,0>;leg<mu<V>,1,union mu<V>>]\nvz []\nvs [drop;union mu<V>]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-parameter-layout.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Box [leg<mu<Box>,0,union any>]\nbox [union any]\n\n"
+      },
+      "test/kanon/test/fixtures/mu-rec-mutual.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nA [leg<mu<A>,0>;leg<mu<A>,1,union mu<B>>]\nleaf []\nnode [union mu<B>]\nB [leg<mu<B>,0,union mu<A>>]\ncons [union mu<A>]\n\n"
+      },
+      "test/kanon/test/fixtures/one-recursive.kan": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "Chain [leg<mu<Chain>,0>;leg<mu<Chain>,1,union mu<Chain>>]\nstop []\nstep [union mu<Chain>]\n\n"
+      }
+    }
+  },
+  "mutations": [
+    {
+      "name": "ordinal",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,1>;leg<mu<N>,2,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,1,union any>]\nbox [union any]\nV [leg<mu<V>,1>;leg<mu<V>,2,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,1,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,1>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,1,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,1,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,1>;leg<mu<Left>,2,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,1,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,1,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n\n"
+      },
+      "reason": "layout output differs from pinned oracle"
+    },
+    {
+      "name": "ghost-field",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union mu<N>,union nat,union mu<V>>]\nvz []\nvs [union mu<N>;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0,union any,union any>]\ndep [union any;union any]\nPacket [leg<mu<Packet>,0,union nat,union any,union any,func fn<1>,struct tuple<union nat,union nat>>]\npacket [union nat;union any;union any;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any,union any>]\npack [union any;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union any,union any,union any,union nat>]\nw [union any;union any;union any;union any;union nat]\n\n"
+      },
+      "reason": "layout output differs from pinned oracle"
+    },
+    {
+      "name": "nominal-name",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<wrong>,0>;leg<mu<wrong>,1,union mu<wrong>>]\nzero []\nsucc [union mu<wrong>]\nBox [leg<mu<wrong>,0,union any>]\nbox [union any]\nV [leg<mu<wrong>,0>;leg<mu<wrong>,1,union nat,union mu<wrong>>]\nvz []\nvs [drop;union nat;union mu<wrong>]\nPair [leg<mu<wrong>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<wrong>,0>]\ndep [drop;drop]\nPacket [leg<mu<wrong>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<wrong>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<wrong>,0>;leg<mu<wrong>,1,union mu<wrong>>]\nleaf []\nnode [union mu<wrong>]\nRight [leg<mu<wrong>,0,union mu<wrong>>]\nlink [union mu<wrong>]\nW [leg<mu<wrong>,0,union any,union nat>]\nw [drop;union any;drop;drop;union nat]\n\n"
+      },
+      "reason": "layout output differs from pinned oracle"
+    },
+    {
+      "name": "env-order",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "N [leg<mu<N>,0>;leg<mu<N>,1,union mu<N>>]\nzero []\nsucc [union mu<N>]\nBox [leg<mu<Box>,0,union any>]\nbox [union any]\nV [leg<mu<V>,0>;leg<mu<V>,1,union nat,union mu<V>>]\nvz []\nvs [drop;union nat;union mu<V>]\nPair [leg<mu<Pair>,0,union any,union any>]\npair [union any;union any]\nDep [leg<mu<Dep>,0>]\ndep [drop;drop]\nPacket [leg<mu<Packet>,0,func fn<1>,struct tuple<union nat,union nat>>]\npacket [drop;drop;drop;func fn<1>;struct tuple<union nat,union nat>]\nExists [leg<mu<Exists>,0,union any>]\npack [drop;union any]\nLeft [leg<mu<Left>,0>;leg<mu<Left>,1,union mu<Right>>]\nleaf []\nnode [union mu<Right>]\nRight [leg<mu<Right>,0,union mu<Left>>]\nlink [union mu<Left>]\nW [leg<mu<W>,0,union any,union any,union nat>]\nw [drop;union any;drop;union any;union nat]\n\n"
+      },
+      "reason": "layout output differs from pinned oracle"
+    }
+  ],
+  "oracle": {
+    "adapter_sha256": "f2067e5eda8732c0078f53debeef27d71f6c71af01c1838313c28bfd226295d8",
+    "compiler": "5.2.1",
+    "name_overrides": {
+      "AllErased_kind": "AllErased.kind",
+      "AllErased_witness": "AllErased.witness",
+      "Capture_item": "Capture.item",
+      "Mixed_callback": "Mixed.callback",
+      "Mixed_first": "Mixed.first",
+      "Mixed_kind": "Mixed.kind",
+      "Mixed_nested": "Mixed.nested",
+      "Mixed_second": "Mixed.second",
+      "Mixed_trailing": "Mixed.trailing",
+      "Mixed_witness": "Mixed.witness",
+      "Other_first": "Other.first",
+      "Other_zero": "Other.zero",
+      "Outer_erased": "Outer.erased",
+      "Outer_kept": "Outer.kept",
+      "Packet_count": "Packet.count",
+      "Packet_handler": "Packet.handler",
+      "Packet_kind": "Packet.kind",
+      "Packet_payload": "Packet.payload",
+      "Pair_first": "Pair.first",
+      "Pair_second": "Pair.second"
+    },
+    "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "source_overrides": {
+      "examples/finite-elim.sole-comb": "test/finite-elim-erasure.kan",
+      "examples/pair-erasure.sole-comb": "test/pair-erasure.kan",
+      "examples/product-erasure.sole-comb": "test/product-erasure.kan",
+      "examples/records.sole-comb": "test/records-erasure.kan",
+      "examples/sum-erasure.sole-comb": "test/sum-erasure.kan"
+    },
+    "sources": {
+      "lib/bignum.ml": "7159dd7e75fa08a5fc272cba76a8ec6214c7d190151dabf7db1a13bf5ecddd72",
+      "lib/budget.ml": "7d8b2afc86883415c892d6fea0e56c2115e4d859b6b6daa21c611b4e9517f028",
+      "lib/budget.mli": "b830149c9eb6d9362786d2e92c2dc8322f4d31f7b4cfc960ac6e1681d385578f",
+      "lib/check.ml": "cdc3712bf5ed0fa49d8dae34ea946d85a195ea94b25235c821b155570010e335",
+      "lib/conv.ml": "e73e707bcdac54808d8f8a1d9e9a174062edf0afd970972dee2c6d024f6bbe39",
+      "lib/erase.ml": "a6d03447ab9dfedf8e53bceff26cd7da57f113bb4b5d1453aecd618fac508a88",
+      "lib/error.ml": "44c9c263479575ec04db5056404a5940d6bb5514a5b9e1ec6215385c6eccb5b6",
+      "lib/eterm.ml": "028ff6e790f9c391463b961f7a3eac12e105d484285cfde1597e52c5b9ac69c7",
+      "lib/eval.ml": "155ddf7578d4ad68352505064616bed6afa7a260a88f3ddf1722b95fa6a6bd18",
+      "lib/global.ml": "2e5d2d932dfddcb329bcfdf237df87a70f2d79820470dc236e337ec6d275c329",
+      "lib/level.ml": "344bb9819870d8c459154ac8109ba1d69a4ee4312670f3887c6ed30d3dbca448",
+      "lib/level.mli": "c143b2b97e417724a81f8e83548b946d3339917488758b4d5fbf9da9e72e6811",
+      "lib/literal.ml": "80554b1d98c8dde3b474023a01ac57cc4abcaba2a5f20b707041cc5f0361b617",
+      "lib/order.ml": "d2cc3258fde25b61ba33093eaf19112c319329dc5b46ba029b3f042c14388e94",
+      "lib/positivity.ml": "97cb5fc9484ecaec360b4be1ac42f0668ae767aad25efc10ddbc1d4143185471",
+      "lib/pp.ml": "69618578ebb33a3d9803e604760252c77c64681aef2d847f3e1b40f9464e3895",
+      "lib/prim.ml": "5224df4f75e499b8fb962fad2a256b31086fcc9de5ab2f353eb90f61a8408aaa",
+      "lib/quantity.ml": "bf3f633c40a0dbb362cf85ca41b798ae0c9e1d4eca7e09f9b6f482bab2bfbb8b",
+      "lib/rules.ml": "b625cec31061ca79f77669889039e4ae2658393911e39076dc65189022f702ab",
+      "lib/shape.ml": "dafd7741b4332dcab6faba9cb9afb131fb3654172e0d375b1edd1046e69f7f7b",
+      "lib/spec_count.ml": "9a4cb97373ddbabb6156b04f92cc41803ee1b714391ccb669cf38e60d36437e6",
+      "lib/term.ml": "2de6729958bfbc3af10ed2e9c51d6591ab40fa16bd19b7acea1fbf37adf60690",
+      "lib/totality.ml": "046c608584ac21d465d46b05119a89dca5488a15113359eea30ed318a3f7c028",
+      "lib/value.ml": "997f4634df60744c49555e896c1de8d60e51a1086e731e547b48450def9c68c7",
+      "surface/elab.ml": "657b134e25e495e6edc5435bb3c9335bc48637915045fba91da9a595d2e3280d",
+      "surface/lexer.ml": "bb524f0202a01ab0b7a2e94745c9af50c5eede2a4c7d3fa450be785e2eb14254",
+      "surface/parser.ml": "107bb45cfba1335a41cf0268e6c28e05dbb961c1c454c47ef364683d6e04d977",
+      "surface/syntax.ml": "774c0c713f2cdfe493656131b446eb10614e9415ef4d3a0d7cf8a64d2da04c5a",
+      "surface/token.ml": "cd93b520f023f2aa80f42a4e352b47e63fd0c05e399f4c2344af898054fbb6db"
+    }
+  },
+  "schema": 1,
+  "sources": {
+    "Makefile": "4d8a5a2721f1b7f27f80f94d48ecc5ebe2684fa9aa8534f6e9a5e9ebbfec1164",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/bend-policy.json": "80b7f0cd9e5427c2cb8313c4006ba95e31a59bb4391747c4184390ca858b7dc3",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "430e5928180ba79ea17ffc48143a9cb823fffac090d523e295670ef1cb8cf025",
+    "dev/test-core-erasure-mutations.py": "51cb9607e0f30244fae356e73abd9903e0bfabcafc86049c8302e326e02b8c2e",
+    "dev/test-core-erasure.py": "9f360631bd63544c6594b419358c3681d84a7752e2afa1c0fe38adfefdee677f",
+    "dev/test-family-layout.py": "54294421fd0d810afa8eccd470373a278b97e8234f00d00ce4e36cc67ea21b7a",
+    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
+    "erase/core.bend": "0afd741ce482520079afa1a0e0bf659c39ecfbf5162777e2344540cf362308ca",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "170716c7cefc44eaa05618fa808e9cfab54af5aee75bb3756ac0e8eece1d0e33",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/arithmetic.sole-comb": "1ead9e3f8c1a443d97d96d52f5edace4e419c365f70804315302c84ed6e0e22f",
+    "examples/erasure.sole-comb": "dd2facd96825aea117c8ecfcf1033416512e452ae983688960d13eca4831a4fe",
+    "examples/finite-elim.sole-comb": "3d1f94e8637cd6bece43fec32e3cd201299fcf05138e3492516c46a1ebbbb345",
+    "examples/identity.sole-comb": "abb67ea5136a550581d9883b98202c52e2a9438dd38c4a376190362d0d57d43b",
+    "examples/pair-erasure.sole-comb": "4d26e873e06cf8674865ef9fb061331c84fd5eeec09b07c76b1889dfddd28621",
+    "examples/product-erasure.sole-comb": "7ecc30756f5952f456bbe208b64e0c95226e6c69d18264b50e9c3e555ae2d46c",
+    "examples/records.sole-comb": "728499d68434b2273d598f99092fa51a89862ab7204ceea58d8ffe3d0316b4de",
+    "examples/sum-erasure.sole-comb": "1c430e8282c92cae6f657edbe4c766e8cc1fa09330493f9e233ecb6834904f6e",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "a31725fb96942161455573c9e236fa9da8d50ca7e6ca336666d91d7f45b10cc6",
+    "surface/elab.bend": "f99e685be833482958407de424b49f5d18a0cc815820f1e5b553818cc6377bdb",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "b976fb4527776b05282f2408f98f955bdf084ce23839f1cb848e94f734dde8ab",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "e97b5622ceadcb88c1a86f91c9b4224f963968147ecd283be2f18de07d448d54",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/core-erasure-oracle.ml": "f2067e5eda8732c0078f53debeef27d71f6c71af01c1838313c28bfd226295d8",
+    "test/core-erasure.bend": "b57f11b4fae099efaaf28730fe3685c654076665fd3dc1375d72afc2dd2a51e7",
+    "test/family-layout.bend": "4dfdf3a10d8b5d65bf72a40b9bf4da3f6ff796bc06e7ca3df59ef85ce3e91b27",
+    "test/family-layouts.kan": "59369c3278ed3abf199dec014dd407e0d7bbde8265c2b168014bfb7dc05542e4",
+    "test/finite-elim-erasure.kan": "1958610c60b65a05b220c4fe7da6c3305f815b3e39ba7ce4e9a880c954269903",
+    "test/kanon/test/fixtures/mu-constructor-scopes.kan": "7c49289283f6b75f9162a56bf00c1e7c117bc15e842010bed59f30d4e1e34ff8",
+    "test/kanon/test/fixtures/mu-indexed.kan": "955324943c42fe31e5722a206f6561e14e6cbbacf37098f083ee75f2afbea465",
+    "test/kanon/test/fixtures/mu-parameter-layout.kan": "ab21eadc26ef3edd136a52bf33ecebf6fdcef5337004641e2eb0bc85808580fa",
+    "test/kanon/test/fixtures/mu-rec-mutual.kan": "a3e76767d1cf97e210f3a798fbd04c46aad360f69116154dbf69982ec34dde6d",
+    "test/kanon/test/fixtures/one-recursive.kan": "e7a94436d8e734081786bbc69eb5e650d2701fd4d0f579d2e5609f4b677ca3e6",
+    "test/pair-erasure.kan": "27fa423ac0b8fc469b992fdb0cbeac62ee68f17548a25d9a85f8709e695d37cb",
+    "test/pinfront/elab.bend": "3b5c1ca90e7ef7ced4b863f3da9ba4f777b031299898c18e60f50af2f87d91d5",
+    "test/pinfront/elab_program.bend": "cb44fe829bd5bc01f79e9549f3adb402235377f94322d10a36cbea85255ba03e",
+    "test/pinfront/lexer.bend": "004811c89310de98da986c592d4fc30e206b241746502581bbb65dc2a743935f",
+    "test/pinfront/order.bend": "73d7d6f8cd48e6833252cce122a9ec0b0c0af65b76d3c8862184309f15acc2ac",
+    "test/pinfront/parser.bend": "e9a1dd4691bc9b1e8ff44757c527e29330b85965b085d373c31be45a545a296c",
+    "test/pinfront/program.bend": "4a8676c0bf2c35bb4ab7a4b71ac02cf5e3f834ef548f811ccdcd89a6f388e57d",
+    "test/pinfront/syntax.bend": "71f5a5f965b263440532d504aa9381feda28a3f514eaaafdc52f516135c652b2",
+    "test/pinfront/token.bend": "80eb80a04a1416b92fd858b9f477cb776140863629cb61203f1c7e8977d7943f",
+    "test/pinfront/totality.bend": "40d1cb63b6bb84e143e59dd8d0ba56b2897cf29d45f09acffdee5c67ed44a7c4",
+    "test/product-erasure.kan": "17b0d0ffa8caa2d4cc4d282d85519033d48cad007da43ae1b012e21aa5e12614",
+    "test/program.bend": "4e6ceb9418a552c2a99149d95f3380a03b70b6a2df73336b240bb38adead536a",
+    "test/records-erasure.kan": "95e37f03d9b6d1bde7a048ee46e78b702c61106ce552f7c01c169c324f0eb79e",
+    "test/sum-erasure.kan": "3aa1dacc19a944af465eaa407688fc71af1c023305a8416a317e9fe4ac8186e4"
+  },
+  "stage": "A.5b.3.2e.1 family layouts"
+}
