@@ -1,0 +1,7 @@
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 51 files, 40 line budgets, 58 reviewed unsafe sites, 30 catchalls
+python3 -P dev/test-reference-fixtures.py
+python3 -P dev/test-core-erasure.py
+PASS public erasure bun: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal

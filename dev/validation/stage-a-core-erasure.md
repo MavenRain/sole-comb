@@ -73,3 +73,5 @@ classification. Structural refusals remain explicit. Required full-corpus,
 Wasm, A.close and R2 performance acceptance are still pending.
 
 Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.
+
+Current record: refreshed in the A.5b.3.2e.2 review rerun with the tracked limits; see stage-a-family-erasure.md.

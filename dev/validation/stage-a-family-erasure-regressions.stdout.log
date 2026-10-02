@@ -1,0 +1,85 @@
+LOCAL NATIVE RETRY suite=regressions: native compilation and native public-command deadlines=2400 s; tracked defaults unchanged
+PASS public erasure bun: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PASS public erasure native: 8 oracle comparisons, 3 pair goldens, 1 refusal
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-family-native-toolchain.json
+PASS ordinary, product, sum and pair erasure: public observations, direct contracts, source hashes stable
+PASS erasure mutant: zero-kept
+PASS erasure mutant: proof-kept
+PASS erasure mutant: index-shift
+PASS erasure mutant: capture-not-pruned
+PASS erasure mutant: tuple-field-order
+PASS erasure mutant: projection-unfiltered
+PASS erasure mutant: tuple-layout
+PASS erasure mutant: body-layout-dependencies
+PASS erasure mutant: sum-layout
+PASS erasure mutant: sum-tag-number
+PASS erasure mutant: sum-erased-payload
+PASS erasure mutant: case-payload-arity
+PASS erasure mutant: case-leg-selection
+PASS erasure mutant: case-tail-lost
+PASS erasure mutant: pair-fibre-offset
+PASS erasure mutant: pair-synthetic-slot
+PASS erasure mutant: pair-capture-frame
+PASS erasure mutant: pair-fibre-type
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-family-native-toolchain.json
+FAMILY LAYOUT PASS 6 fixtures, 21 families, 11 goldens on bun,node-worker,native; 4 semantic mutations
+PASS public bun: examples/identity.sole-comb
+PASS public bun: examples/arithmetic.sole-comb
+PASS public bun: examples/finite-elim.sole-comb
+PASS public bun: examples/motive.sole-comb
+PASS public bun: examples/function-arms.sole-comb
+PASS public bun: examples/default-arms.sole-comb
+PASS public bun: examples/default-arms-explicit.sole-comb
+PASS public bun: examples/records.sole-comb
+PASS public bun: examples/record-expansion.sole-comb
+PASS public bun: examples/record-expansion-explicit.sole-comb
+PASS public bun: examples/erasure.sole-comb
+PASS public bun: examples/product-erasure.sole-comb
+PASS public bun: examples/sum-erasure.sole-comb
+PASS public bun: examples/pair-erasure.sole-comb
+PASS public bun: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public bun: record field types, indices, namespaces and binder hygiene
+PASS public bun: 68 native files and 2 lexical boundary cases
+PASS public node-worker: examples/identity.sole-comb
+PASS public node-worker: examples/arithmetic.sole-comb
+PASS public node-worker: examples/finite-elim.sole-comb
+PASS public node-worker: examples/motive.sole-comb
+PASS public node-worker: examples/function-arms.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb
+PASS public node-worker: examples/default-arms-explicit.sole-comb
+PASS public node-worker: examples/records.sole-comb
+PASS public node-worker: examples/record-expansion.sole-comb
+PASS public node-worker: examples/record-expansion-explicit.sole-comb
+PASS public node-worker: examples/erasure.sole-comb
+PASS public node-worker: examples/product-erasure.sole-comb
+PASS public node-worker: examples/sum-erasure.sole-comb
+PASS public node-worker: examples/pair-erasure.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public node-worker: record field types, indices, namespaces and binder hygiene
+PASS public node-worker: 68 native files and 2 lexical boundary cases
+PASS public native: examples/identity.sole-comb
+PASS public native: examples/arithmetic.sole-comb
+PASS public native: examples/finite-elim.sole-comb
+PASS public native: examples/motive.sole-comb
+PASS public native: examples/function-arms.sole-comb
+PASS public native: examples/default-arms.sole-comb
+PASS public native: examples/default-arms-explicit.sole-comb
+PASS public native: examples/records.sole-comb
+PASS public native: examples/record-expansion.sole-comb
+PASS public native: examples/record-expansion-explicit.sole-comb
+PASS public native: examples/erasure.sole-comb
+PASS public native: examples/product-erasure.sole-comb
+PASS public native: examples/sum-erasure.sole-comb
+PASS public native: examples/pair-erasure.sole-comb
+PASS public native: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public native: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public native: record field types, indices, namespaces and binder hygiene
+PASS public native: 68 native files and 2 lexical boundary cases
+PASS public compiler: 217 command observations; source hashes stable
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-family-native-toolchain.json
+BUILD sole-comb js cached
+ENDPOINTS bun node-worker
+LAUNCHER ./sole-comb: public source driver; qualified endpoint=None

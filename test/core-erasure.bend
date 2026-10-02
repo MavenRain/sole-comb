@@ -18,6 +18,7 @@ import ../erase/eterm.bend as K
 import ../erase/sum.bend as Sum
 import ../erase/pair.bend as Pair
 import ../erase/family.bend as Family
+import ../erase/mu.bend as Mu
 
 def check(+name: String, +want: String, +got: String) -> String:
   F.choose(String, String.eq(want, got), "", String.concat([name, " expected=", want, " actual=", got, "\n"]))
@@ -35,7 +36,7 @@ def budget(value: R.result(Erase.answer)) -> String:
     case Fail{error}: E.to_string(error)
     case Done{_}: "unexpected erasure success"
 def exhausted() -> String:
-  budget(Erase.term(Erase.Context{context, [], "probe"}, Erase.State{0n, [], B.create(0n)}, False{}, Some{nat}, T.Lit{Lit.LInt{F.Bignum.one}}))
+  budget(Erase.term(Erase.Context{context, [], "probe"}, Erase.State{0n, [], [], B.create(0n)}, False{}, Some{nat}, T.Lit{Lit.LInt{F.Bignum.one}}))
 def repr_budget(value: R.result(K.repr)) -> String:
   match value:
     case Fail{error}: E.to_string(error)
@@ -46,6 +47,8 @@ def result_error(-A: Data, value: R.result(A)) -> String:
     case Fail{error}: E.to_string(error)
     case Done{_}: "unexpected success"
 def two() -> F.Int63.t: F.Int63.succ(F.Int63.one)
+def one_field() -> Pos.telescope: [F.Pair2{Q.Many{}, F.Pair2{"x", T.Global{"Nat"}}}]
+def start() -> Mu.binding: Mu.Binding{context, [], [], F.Int63.zero, []}
 def literal(n: Nat) -> T.t: T.Lit{Lit.LInt{F.Bignum.from_nat(n)}}
 def nat_leg() -> T.leg: T.Leg{[], T.Global{"Nat"}}
 def sum_term() -> T.t: T.Lan{S.SColl{two}, T.Sec{S.SColl{two}, [nat_leg, nat_leg]}}
@@ -59,7 +62,7 @@ def term_text(value: R.result(Erase.answer)) -> String:
     case Done{F.Pair2{body, _}}: K.print_ktm(body)
 def reordered() -> String:
   term_text(Erase.term(Erase.Context{C.make(G.add("tag", G.Axiom{G.Postulate{sum_term}}, G.initial), B.create(16384n)), [], "probe"},
-    Erase.State{0n, [], B.create(16384n)}, True{}, Some{nat},
+    Erase.State{0n, [], [], B.create(16384n)}, True{}, Some{nat},
     T.Elim{T.Elimination{S.SColl{two}, T.Global{"tag"}, Q.Many{}, None{}, reordered_branches}}))
 def malformed_branch(binders: List<&2, F.Pair2<Q.t, String>>) -> String:
   result_error(Sum.branch, Sum.branch_of(context, nat, None{}, [nat, nat], F.Int63.zero,
@@ -79,13 +82,13 @@ def malformed_pair(binders: List<&2, F.Pair2<Q.t, String>>) -> String:
     [F.Pair2{T.ALeg{F.Int63.zero}, T.Leg{binders, literal(10n)}}]))
 def synthetic_variable() -> String:
   term_text(Erase.term(Erase.Context{context, [Erase.Keep{}, Erase.Keep{}, Erase.Extra{}, Erase.Keep{}], "probe"},
-    Erase.State{0n, [], B.create(16384n)}, False{}, Some{nat}, T.Var{two}))
+    Erase.State{0n, [], [], B.create(16384n)}, False{}, Some{nat}, T.Var{two}))
 def synthetic_frame() -> String:
   term_text(Erase.term(Erase.Context{context, Erase.framed([Erase.Keep{}, Erase.Extra{}, Erase.Keep{}], [F.Int63.one], F.Int63.zero), "probe"},
-    Erase.State{0n, [], B.create(16384n)}, False{}, Some{nat}, T.Var{F.Int63.one}))
+    Erase.State{0n, [], [], B.create(16384n)}, False{}, Some{nat}, T.Var{F.Int63.one}))
 def pair_closure() -> String:
   term_text(Erase.term(Erase.Context{C.bind("outer", Q.Many{}, nat, pair_context), [Erase.Keep{}], "probe"},
-    Erase.State{0n, [], B.create(16384n)}, True{}, Some{V.VRan{S.SPi{Q.Many{}, "n", nat}, V.close([], T.Global{"Nat"}), Some{L.one}}},
+    Erase.State{0n, [], [], B.create(16384n)}, True{}, Some{V.VRan{S.SPi{Q.Many{}, "n", nat}, V.close([], T.Global{"Nat"}), Some{L.one}}},
     T.Elim{T.Elimination{S.SPi{Q.Many{}, "x", T.Global{"Nat"}}, T.Global{"pair"}, Q.One{}, None{},
       [F.Pair2{T.ALeg{F.Int63.zero}, T.Leg{[F.Pair2{Q.Many{}, "x"}, F.Pair2{Q.Many{}, "y"}],
         T.Sec{S.SPi{Q.Many{}, "n", T.Global{"Nat"}}, [T.Leg{[F.Pair2{Q.Many{}, "n"}], T.Var{F.Int63.succ(two)}}]}}}]}}))
@@ -109,6 +112,16 @@ def main() -> String:
     check("family-provisional", "unbound: the family Broken is still under declaration", family_error(Pos.Provisional{})),
     check("family-builtin", "mismatch: the family Broken is a kernel family and has no branches", family_error(Pos.Builtin{})),
     check("family-missing-constructor", "unbound: absent is not a constructor of Broken", family_error(Pos.Complete{["absent"]})),
+    check("family-intro-former", "mismatch: an introduction stands at a type that is not a left former", result_error(Mu.tag, Mu.injection(context, nat, T.ACtor{"missing"}, []))),
+    check("family-intro-address", "mismatch: a constructor takes a constructor address", result_error(Mu.tag, Mu.injection(context, nominal(nat), T.ALeg{F.Int63.zero}, []))),
+    check("family-intro-lookup", "unbound: the family Vector is not declared", result_error(Mu.tag, Mu.injection(context, nominal(nat), T.ACtor{"missing"}, []))),
+    check("family-intro-arity", "mismatch: a branch binds a different number of fields than its constructor takes", result_error(List<&2, Pair.field>, Mu.fields(context, [], [], [literal(1n)], []))),
+    check("family-branch-missing", "missing branch: the elimination of Vector has no branch at nil", result_error(T.leg, Mu.find_branch("Vector", "nil", []))),
+    check("family-branch-arity", "missing branch: a branch binds a different number of fields than its constructor takes", result_error(Mu.binding, Mu.binders([], [F.Pair2{Q.Many{}, "extra"}], [], Mu.Binding{context, [], [], F.Int63.zero, []}))),
+    check("family-intro-short-args", "mismatch: a branch binds a different number of fields than its constructor takes", result_error(List<&2, Pair.field>, Mu.fields(context, one_field, [], [], [None{}]))),
+    check("family-intro-short-layout", "mismatch: a branch binds a different number of fields than its constructor takes", result_error(List<&2, Pair.field>, Mu.fields(context, one_field, [], [literal(1n)], []))),
+    check("family-branch-short-names", "missing branch: a branch binds a different number of fields than its constructor takes", result_error(Mu.binding, Mu.binders(one_field, [], [None{}], start))),
+    check("family-branch-short-layout", "missing branch: a branch binds a different number of fields than its constructor takes", result_error(Mu.binding, Mu.binders(one_field, [F.Pair2{Q.Many{}, "x"}], [], start))),
     check("sum-layout", "union sum<union nat|union nat>", sum_repr),
     check("pair-layout", "struct pair<union nat,union nat>", repr_text(Ty.repr_of(context, pair_value))),
     check("pair-address", "mismatch: a pair takes a point address", result_error(List<&2, Pair.field>, Pair.introduction(context, pair_value, T.ALeg{F.Int63.zero}, [literal(1n)]))),

@@ -103,3 +103,5 @@ constructor and match erasure for recursive families, recursive definitions,
 complete erased-corpus integration and WebAssembly build/run remain pending.
 
 Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.
+
+Current record: refreshed in the A.5b.3.2e.2 review rerun with the tracked limits; see stage-a-family-erasure.md.

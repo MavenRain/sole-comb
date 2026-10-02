@@ -1,0 +1,33 @@
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.168s
+
+OK
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 0.328s
+
+OK
+Traceback (most recent call last):
+  File "/Users/oobi/Documents/gpt5/sole-comb-family-runtime/dev/test-core-erasure.py", line 207, in <module>
+    main()
+    ~~~~^^
+  File "/Users/oobi/Documents/gpt5/sole-comb-family-runtime/dev/test-core-erasure.py", line 175, in main
+    result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env)
+  File "/Users/oobi/Documents/gpt5/sole-comb-family-runtime/dev/test-core-erasure.py", line 90, in run
+    result = subprocess.run(list(map(str, argv)), cwd=cwd, env=env, capture_output=True, timeout=900)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2154, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1268, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/Users/oobi/Documents/gpt5/sole-comb-family-runtime/sole-comb', 'check', '--erased', '--host', 'native', 'examples/identity.sole-comb']' timed out after 900 seconds
+make: *** [test-core-erasure] Error 1

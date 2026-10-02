@@ -11,6 +11,8 @@ import ../lib/kernel_value.bend as V
 import ./eterm.bend as K
 import ./type.bend as Ty
 
+def not_ctor(+key: String, +name: String) -> E.t:
+  E.Unbound{String.concat([key, " is not a constructor of ", name])}
 def kept(fields: List<&2, Maybe<&2, K.repr>>) -> List<&2, K.repr>:
   match fields:
     case []: []
@@ -49,7 +51,7 @@ def group_loop(xs: List<&2, String>, +c: C.ctx, +name: String, +fam: P.family, +
     case []: Done{[]}
     case +key <> rest:
       Ty.maybe(P.ctor, R.result(List<&2, K.tid>), P.ctor_of(key, fam),
-        _ => Fail{E.Unbound{String.concat([key, " is not a constructor of ", name])}}, ctor =>
+        _ => Fail{not_ctor(key, name)}, ctor =>
           R.bind(List<&2, Maybe<&2, K.repr>>, List<&2, K.tid>, layout(c, fam, ctor), +fields =>
             R.map_result(List<&2, K.tid>, List<&2, K.tid>, more => leg_tid(name, index, kept(fields)) <> more,
               group_loop(rest, c, name, fam, F.Int63.succ(index)))))

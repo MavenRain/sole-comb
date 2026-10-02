@@ -470,6 +470,11 @@
       "path": "erase/type.bend",
       "function": "repr_text",
       "reason": "A retained pair component delegates to repr_visit, which spends the explicit erasure type budget before examining a proper component type. Type, affine-use and exhaustive checks remain enabled."
+    },
+    {
+      "path": "erase/core.bend",
+      "function": "mu_branches",
+      "reason": "Each recursive call consumes one constructor from the finite completed family. Branch term requests spend the shared erasure fuel. Type, affine-use and exhaustive checks remain enabled."
     }
   ]
 }

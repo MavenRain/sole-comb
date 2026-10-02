@@ -59,8 +59,13 @@ The A.5b.3.2e.1 increment adds nominal family and constructor layout planning.
 It opens family parameters as variables, drops erased fields, and records
 constructor layouts in declaration order. See the
 [family layout evidence](dev/validation/stage-a-family-layout.md).
-Recursive-family introductions and eliminations, recursive definition erasure,
-and the full kernel differential remain pending.
+A.5b.3.2e.2 adds recursive-family constructor and match erasure through the
+kernel test frontend. It preserves nominal layouts, generic erased placeholders,
+dependent branch targets, runtime binder indices and complete constructor groups.
+See the [family erasure evidence](dev/validation/stage-a-family-erasure.md).
+Its first native checks timed out at the tracked 900-second limit and passed with a local 2400-second deadline. The review rerun passed with the tracked limits.
+Public recursive-family syntax, recursive definition erasure, and the full
+kernel differential remain pending.
 
 Run from this directory with the locally pinned tools:
 
@@ -86,6 +91,8 @@ make test-core-erasure # ordinary and product erasure against pinned reference f
 make test-core-erasure-mutations # quantity, binding, layout and projection mutations
 make test-family-layout # nominal family layouts against pinned reference fixtures
 make test-family-layout-mutations # layout comparisons and four semantic mutations
+make test-family-erasure # family constructor and match erasure against pinned reference fixtures
+make test-family-erasure-mutations # family erasure comparisons and eight semantic mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```

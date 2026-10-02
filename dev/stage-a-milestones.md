@@ -54,8 +54,7 @@ A.5b.3.2c increment extends it to finite-sum layouts, injections and case
 elimination, with [sum erasure validation](validation/stage-a-sum-erasure.md).
 The A.5b.3.2d increment adds dependent-pair layouts, introductions and native
 two-binder elimination, with [pair erasure validation](validation/stage-a-pair-erasure.md).
-The full A.5b.3.2 boundary remains pending for recursive families, recursive
-definitions, complete corpus integration and WebAssembly build/run.
+The full A.5b.3.2 boundary remains pending for recursive definitions, public recursive-family integration, complete corpus integration and WebAssembly build/run.
 The A.5b.3.2e.1 increment adds nominal recursive-family representations and
 constructor layout planning in `erase/family.bend`. It resets the local scope,
 opens parameters as variables, evaluates dependent field types, and omits
@@ -64,8 +63,17 @@ family's declaration order. `make test-family-layout` compares these plans
 with pinned Kanon reference fixtures on Bun, Node worker and native;
 `make test-family-layout-mutations` also checks four semantic mutations on Bun.
 The [layout evidence](validation/stage-a-family-layout.md) describes the
-record, which contains exact observations and source hashes. Runtime constructor and match erasure remain
-the next part of recursive-family integration.
+record, which contains exact observations and source hashes.
+The A.5b.3.2e.2 increment adds runtime constructor and match erasure in
+`erase/mu.bend` and `erase/core.bend`. The test frontend compares six family
+fixtures with recorded pinned Kanon CLI observations on Bun, Node worker and
+native. The first native comparison timed out at the tracked 900-second limit and passed with a local 2400-second compile deadline. The review rerun passed with the tracked limits.
+Twenty-eight independent goldens, each keyed to its own fixture, cover
+constructor order, omitted fields, generic placeholders, dependent indices,
+runtime parameters, branch arities and family groups. Eight isolated semantic
+mutations exercise tags, ghost fields, binder order, constructor groups,
+lifted-closure groups and tail flags. See [family erasure validation](validation/stage-a-family-erasure.md).
+Public recursive-family syntax remains pending.
 
 Semantic gates compare with recorded Kanon fixtures, not with live OCaml
 adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)

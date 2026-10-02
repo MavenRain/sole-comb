@@ -1,0 +1,12 @@
+python3 -P dev/test-family-erasure.py --mutations
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-family-runtime/dev/toolchain.json
+PASS family erasure bun: test/family-erasure.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-dependent-layout.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-parameter-layout.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-indexed.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-empty-large-elim.kan
+PASS family erasure node-worker: test/family-erasure.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-dependent-layout.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-parameter-layout.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-indexed.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-empty-large-elim.kan

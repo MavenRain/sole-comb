@@ -34,10 +34,10 @@
     "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
     "dev/pin-check.py": "fc34309e4cccac54ebc7d37a7ea42662420935cc8ebf38b8eae47d6fbd2c59b9",
     "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
-    "dev/house-bend.py": "430e5928180ba79ea17ffc48143a9cb823fffac090d523e295670ef1cb8cf025",
+    "dev/house-bend.py": "3892c82bb6f2c98e88492c393163e6cb97e80fcde3675d28e6c35ff02c1cf591",
     "dev/test-house.py": "7f3f5916cdf18e743d912f09ee61b1d8bea2a7947dbaa4a03dd718016e5237bd",
-    "dev/bend-policy.json": "80b7f0cd9e5427c2cb8313c4006ba95e31a59bb4391747c4184390ca858b7dc3",
-    "Makefile": "5594d4c57e6893bd43c22ac0b1b17e49c01446f1b6c2204d47cfcaf9964b6ec3"
+    "dev/bend-policy.json": "d2bb977810fcafe703def08eb6989e5ffd9af31f1d97046387995636b3d5b575",
+    "Makefile": "1b947d4403d9841d3f77063b87481f553ef5df4f254d0f5f8fda3a1ab5e9a814"
   },
   "harness_sha256": "2bec1829f8d1e4941ad3cc283c9c71992cd1748c158608e1ccb1933c5d3fee8a",
   "kanon_revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",

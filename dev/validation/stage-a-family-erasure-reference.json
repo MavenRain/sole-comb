@@ -1,0 +1,63 @@
+{
+  "binary_sha256": "d8b522e8b92ce11227fb16c5420d472e33f601013721e1826e9d04fc3231ccc3",
+  "build_revision": "verified from clean isolated source clone",
+  "capture_binary_matches_clean_build": true,
+  "capture_binary_provenance_initially": "UNVERIFIED; the legacy binary predates the pinned commit",
+  "cases": {
+    "test/family-erasure-runtime.kan": {
+      "exit": 0,
+      "source_sha256": "9ac20778a814cf02052384e9642b4b527b7350c0cff23897873aef7e284548b3",
+      "stderr": "",
+      "stdout_sha256": "d15dee434c5cf3ac4b3016114b5553f2dbba863913d7fa541bd5f167ca750a8d"
+    },
+    "test/family-erasure.kan": {
+      "exit": 0,
+      "source_sha256": "9b0b8871fd4f99e4d95d352f6094e2f723417f12e43393dfe97e5c91c9fbf7fc",
+      "stderr": "",
+      "stdout_sha256": "b9a5a42afee6e448f8bd62dd4a5a9cf433e894d710f0f888beec15e887206efa"
+    },
+    "test/kanon/test/fixtures/mu-dependent-layout.kan": {
+      "exit": 0,
+      "source_sha256": "6b76ed7c64636d6bf7a42aacf08d2e5f2d2d276866e237328b2c5b31d243e832",
+      "stderr": "",
+      "stdout_sha256": "90f49c126cbc329dc40c5ddea29021264958354d6067db6d62051dee50d9c8d1"
+    },
+    "test/kanon/test/fixtures/mu-empty-large-elim.kan": {
+      "exit": 0,
+      "source_sha256": "fbb2e259a3ab8b2ba85e23f12afb62f8ee4346e3777b1028335c3bf91467a4ca",
+      "stderr": "",
+      "stdout_sha256": "ae1fa23e9b028326d9fb05746ce0597cb01a6fa92501c1db656f78a3b9f07952"
+    },
+    "test/kanon/test/fixtures/mu-indexed.kan": {
+      "exit": 0,
+      "source_sha256": "955324943c42fe31e5722a206f6561e14e6cbbacf37098f083ee75f2afbea465",
+      "stderr": "",
+      "stdout_sha256": "c576d6866670fd3fe522881a582838c78d9b4613491e2a1eaf22ca6583bbd98b"
+    },
+    "test/kanon/test/fixtures/mu-parameter-layout.kan": {
+      "exit": 0,
+      "source_sha256": "ab21eadc26ef3edd136a52bf33ecebf6fdcef5337004641e2eb0bc85808580fa",
+      "stderr": "",
+      "stdout_sha256": "5c2eccaeda81ad2533a1106a86910cc00cc69c7520d8313356a54760b539a279"
+    }
+  },
+  "command": "dune build --cache=disabled --display=short bin/kanon.exe",
+  "compiler": "5.2.1",
+  "dune": "3.24.2",
+  "fixture": "dev/reference-fixtures/family-erasure.json",
+  "fixture_expected_bytes_verified": true,
+  "fixture_sha256": "f169068d9c2e2e1ce1a42417aec976c9cef5d78d45e883f7e70752f534b41157",
+  "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "runtime_capture": {
+    "binary_sha256": "d8b522e8b92ce11227fb16c5420d472e33f601013721e1826e9d04fc3231ccc3",
+    "captured": "2026-10-02",
+    "case": "test/family-erasure-runtime.kan",
+    "command": "kanon.exe check --erased test/family-erasure-runtime.kan",
+    "cwd": "repository root",
+    "exit": 0,
+    "note": "added in review; same binary as the first capture",
+    "stderr": ""
+  },
+  "schema": 1,
+  "tree": "0a93881a243b5979487c4b04ad032bdd20592ca6"
+}

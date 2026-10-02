@@ -1,0 +1,23 @@
+LOCAL NATIVE RETRY suite=family: native compilation and native public-command deadlines=2400 s; tracked defaults unchanged
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/sole-family-native-toolchain.json
+PASS family erasure bun: test/family-erasure.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-dependent-layout.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-parameter-layout.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-indexed.kan
+PASS family erasure bun: test/kanon/test/fixtures/mu-empty-large-elim.kan
+PASS family erasure node-worker: test/family-erasure.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-dependent-layout.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-parameter-layout.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-indexed.kan
+PASS family erasure node-worker: test/kanon/test/fixtures/mu-empty-large-elim.kan
+PASS family erasure native: test/family-erasure.kan
+PASS family erasure native: test/kanon/test/fixtures/mu-dependent-layout.kan
+PASS family erasure native: test/kanon/test/fixtures/mu-parameter-layout.kan
+PASS family erasure native: test/kanon/test/fixtures/mu-indexed.kan
+PASS family erasure native: test/kanon/test/fixtures/mu-empty-large-elim.kan
+PASS family erasure mutation: constructor-tag
+PASS family erasure mutation: ghost-field
+PASS family erasure mutation: binder-order
+PASS family erasure mutation: branch-tag
+PASS family erasure mutation: constructor-group
+FAMILY-ERASURE PASS fixtures=5 goldens=14 hosts=bun,node-worker,native mutants=5

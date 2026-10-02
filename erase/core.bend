@@ -19,13 +19,14 @@ import type.bend as Ty
 import dependencies.bend as Dep
 import sum.bend as Sum
 import pair.bend as Pair
+import mu.bend as Mu
 
 type slot is Data:
   Drop{}
   Keep{}
   Extra{}
 type state is Data:
-  State{next: Nat, lifted: List<&2, K.kdecl>, fuel: B.t}
+  State{next: Nat, lifted: List<&2, K.kdecl>, groups: List<&2, K.tid>, fuel: B.t}
 type entry is Data:
   Dropped{}
   Postulate{repr: K.repr}
@@ -113,9 +114,9 @@ def print_decls(ds: List<&2, K.kdecl>) -> String:
 type ctx is Data:
   Context{check: C.ctx, slots: List<&2, slot>, self: String}
 def answer() -> Data: F.Pair2<K.ktm, state>
-def with_state(-Out: Type, value: state, next: Nat -> List<&2, K.kdecl> -> B.t -> Out) -> Out:
+def with_state(-Out: Type, value: state, next: Nat -> List<&2, K.kdecl> -> List<&2, K.tid> -> B.t -> Out) -> Out:
   match value:
-    case State{n, ds, b}: next(n, ds, b)
+    case State{n, ds, groups, b}: next(n, ds, groups, b)
 def with_found(-Out: Type, value: found, found: F.Int63.t -> Out, gone: Unit -> Out, missing: Unit -> Out) -> Out:
   match value:
     case Found{i}: found(i)
@@ -239,9 +240,9 @@ def with_chain(-Out: Type, value: chain_result, next: List<&2, K.repr> -> K.repr
     case Chain{ps, ret, body, s}: next(ps, ret, body, s)
 def code(name: String, result: chain_result) -> entry:
   match result:
-    case Chain{params, ret, body, State{_, ds, _}}:
+    case Chain{params, ret, body, State{_, ds, groups, _}}:
       Ty.inspect(List<&2, K.kdecl>, entry, List.append(&2, K.kdecl, ds, [K.KFun{K.Fid{name}, params, ret, body}]), +all =>
-        Code{K.KRec{unique_tids(decl_tids(all), [])} <> all})
+        Code{K.KRec{unique_tids(List.append(&2, K.tid, decl_tids(all), groups), [])} <> all})
 def print(rows: rows) -> String:
   match rows:
     case []: ""
@@ -288,8 +289,8 @@ def lifted(+fid: K.fid, +params: List<&2, K.repr>, ret: K.repr, s: state, value:
   match value:
     case RT.InvalidStack{}: Abort{E.Mismatch{"invalid erasure capture stack"}}
     case RT.Done{RT.Pruned{ps, args, body}}:
-      with_state(computation<answer>, s, +n => +ds => +b =>
-        Pure{F.Pair2{K.KClos{fid, count(K.repr, params), args}, State{n, List.append(&2, K.kdecl, ds, [K.KFun{fid, List.append(&2, K.repr, ps, params), ret, body}]), b}}})
+      with_state(computation<answer>, s, +n => +ds => +groups => +b =>
+        Pure{F.Pair2{K.KClos{fid, count(K.repr, params), args}, State{n, List.append(&2, K.kdecl, ds, [K.KFun{fid, List.append(&2, K.repr, ps, params), ret, body}]), groups, b}}})
 @unsafe
 def free_loop(todo: List<&2, F.Pair2<F.Int63.t, T.t>>, +acc: List<&2, F.Int63.t>) -> List<&2, F.Int63.t>:
   match todo:
@@ -340,7 +341,7 @@ def jobs_request(c: ctx, ty: V.t, args: List<&2, T.t>, acc: List<&2, job>, b: B.
   Request{JobsTask{c, ty, args, acc, b}, jobs_output}
 def tick(s: state) -> computation<state>:
   match s:
-    case State{n, ds, b}: map_result(B.t, state, +rest => State{n, ds, rest}, lift_result(B.t, B.spend("type-directed erasure", b)))
+    case State{n, ds, groups, b}: map_result(B.t, state, +rest => State{n, ds, groups, rest}, lift_result(B.t, B.spend("type-directed erasure", b)))
 def jobs_arrow(+c: ctx, +arg: T.t, rest: List<&2, T.t>, a: Ty.arrow, +acc: List<&2, job>, b: B.t) -> computation<List<&2, job>>:
   match a:
     case Ty.Arrow{q, _, +dom, d}:
@@ -369,7 +370,7 @@ def cap_values(+c: ctx, caps: List<&2, F.Int63.t>) -> computation<capture>:
     case +ix <> rest:
       bind(V.t, capture, lift_result(V.t, C.infer(checker(c), Q.Many{}, T.Var{ix})), +ty =>
         bind(K.repr, capture, lift_result(K.repr, Ty.repr_of(checker(c), ty)), +r =>
-          bind(answer, capture, variable(c, State{0n, [], B.create(0n)}, ix), +pair => with_answer(computation<capture>, pair, +arg => _ =>
+          bind(answer, capture, variable(c, State{0n, [], [], B.create(0n)}, ix), +pair => with_answer(computation<capture>, pair, +arg => _ =>
 
                 map_result(capture, capture, +value => with_capture(capture, value, +ps => +args =>
 Capture{r <> ps, arg <> args}), cap_values(c, rest))))))
@@ -405,7 +406,7 @@ def decl_value(+c: C.ctx, +name: String, body: Maybe<&2, T.t>, +ty: V.t, b: B.t,
   bind(Bool, entry, lift_result(Bool, Ty.runtime_ty(c, ty)), +keep => Ty.boolean(computation<entry>, keep, _ => Ty.boolean(computation<entry>, recursive, _ =>
 Abort{E.Not_yet{"recursive definitions in type-directed erasure"}}, _ => Ty.maybe(T.t, computation<entry>, body, _ =>
 map_result(K.repr, entry, +r => Postulate{r}, lift_result(K.repr, Ty.repr_of(c, ty))), +tm =>
-map_result(chain_result, entry, +result => code(name, result), chain_request(Context{c, [], name}, State{0n, [], b}, [], ty, tm)))), _ =>
+map_result(chain_result, entry, +result => code(name, result), chain_request(Context{c, [], name}, State{0n, [], [], b}, [], ty, tm)))), _ =>
 Pure{Dropped{}}))
 def jobs_weak(c: ctx, ty: V.t, arg: T.t, rest: List<&2, T.t>, acc: List<&2, job>, b: B.t) -> computation<List<&2, job>>:
   Ty.inspect(Maybe<&2, Ty.arrow>, computation<List<&2, job>>, Ty.arrow_of(ty), +view5 => Ty.maybe(Ty.arrow, computation<List<&2, job>>, view5, _ =>
@@ -442,9 +443,9 @@ def lift_closure(c: ctx, s: state, ty: V.t, +tm: T.t) -> computation<answer>:
       Ty.inspect(List<&2, F.Int63.t>, computation<answer>, captures(slots, free_loop([F.Pair2{F.Int63.zero, tm}], [])), +caps =>
         bind(capture, answer, cap_values(Context{check, slots, self}, R.rev_append(F.Int63.t, caps, [])), value =>
           with_capture(computation<answer>, value, ps => args =>
-            with_state(computation<answer>, s, +n => ds => b =>
+            with_state(computation<answer>, s, +n => ds => groups => b =>
               Ty.inspect(K.fid, computation<answer>, K.Fid{String.concat([self, "$", F.Bignum.to_string(F.Bignum.from_nat(n))])}, fid =>
-                bind(chain_result, answer, chain_request(Context{check, framed(slots, caps, F.Int63.zero), self}, State{(n + 1n : Nat), ds, b}, [], ty, tm), result =>
+                bind(chain_result, answer, chain_request(Context{check, framed(slots, caps, F.Int63.zero), self}, State{(n + 1n : Nat), ds, groups, b}, [], ty, tm), result =>
                   with_chain(computation<answer>, result, +params => ret => body => s1 =>
                     lifted(fid, params, ret, s1, RT.prune_captures(ps, args, count(K.repr, params), body)))))))))
 @unsafe
@@ -571,15 +572,54 @@ def pair_branch(+c: ctx, s: state, tail: Bool, scrut: T.t, plan: Pair.branch) ->
           with_answer(computation<answer>, value, +kscrut => +s1 =>
             map_result(answer, answer, result => with_answer(answer, result, +ktm => +s2 =>
               F.Pair2{K.KLet{"scrut", kscrut, pair_lets(tid, x, second, keep1, keep2, ktm)}, s2}), term_request(c2, s1, tail, Some{target}, body)))))
+type branches_answer is Data:
+  Branches{branches: List<&2, K.kbranch>, state: state}
+def with_groups(s: state, +more: List<&2, K.tid>) -> state:
+  match s:
+    case State{n, ds, groups, b}: State{n, ds, List.append(&2, K.tid, groups, more), b}
+def mu_tag(+c: ctx, s: state, plan: Mu.tag) -> computation<answer>:
+  match plan:
+    case Mu.Tag{+tid, +index, fields, +group}:
+      map_result(arguments, answer, value => with_arguments(answer, value, terms => s1 =>
+        F.Pair2{K.KTag{tid, index, terms}, with_groups(s1, group)}), erase_jobs(c, s, pair_jobs(fields), []))
+def mu_context(bs: List<&2, Mu.binder>, c: ctx) -> ctx:
+  match bs:
+    case []: c
+    case Mu.Binder{q, x, dom, keep} <> rest: mu_context(rest, added(c, q, x, dom, keep))
+def mu_body(c: ctx, s: state, tail: Bool, +index: F.Int63.t, plan: Mu.branch) -> computation<F.Pair2<K.kbranch, state>>:
+  match plan:
+    case Mu.Branch{bs, +arity, target, body}:
+      map_result(answer, F.Pair2<K.kbranch, state>, value => with_answer(F.Pair2<K.kbranch, state>, value, ktm => s1 =>
+        F.Pair2{K.Branch{index, arity, ktm}, s1}), term_request(mu_context(bs, c), s, tail, Some{target}, body))
+@unsafe
+def mu_branches(+c: ctx, +s: state, +tail: Bool, names: List<&2, String>, +index: F.Int63.t, +source: List<&2, F.Pair2<T.addr, T.leg>>, +acc: List<&2, K.kbranch>, fam: Mu.case_plan) -> computation<branches_answer>:
+  match names:
+    case []: Pure{Branches{R.rev_append(K.kbranch, acc, []), s}}
+    case key <> rest:
+      match fam:
+        case Mu.Case{+sty, +name, +family, +motive, +env, +all_names, +group}:
+          bind(Mu.branch, branches_answer, lift_result(Mu.branch, Mu.branch_of(checker(c), name, family, motive, env, key, source)), plan =>
+            bind(F.Pair2<K.kbranch, state>, branches_answer, mu_body(c, s, tail, index, plan), value =>
+              Ty.pair(K.kbranch, state, computation<branches_answer>, value, branch => s1 =>
+                mu_branches(c, s1, tail, rest, F.Int63.succ(index), source, branch <> acc,
+                  Mu.Case{sty, name, family, motive, env, all_names, group}))))
+def mu_finish(+n: String, +scrut: K.ktm, +group: List<&2, K.tid>, result: branches_answer) -> answer:
+  match result:
+    case Branches{bs, s}: F.Pair2{K.KCase{Ty.mu_tid(n), scrut, bs}, with_groups(s, group)}
+def mu_case(+c: ctx, s: state, +tail: Bool, scrut: T.t, +branches: List<&2, F.Pair2<T.addr, T.leg>>, plan: Mu.case_plan) -> computation<answer>:
+  match plan:
+    case Mu.Case{+sty, +n, +fam, +mo, +env, +names, +group}:
+      bind(answer, answer, term_request(c, s, False{}, Some{sty}, scrut), value =>
+        with_answer(computation<answer>, value, +kscrut => s1 =>
+          map_result(branches_answer, answer, result => mu_finish(n, kscrut, group, result),
+            mu_branches(c, s1, tail, names, F.Int63.zero, branches, [], Mu.Case{sty, n, fam, mo, env, names, group}))))
 def injection_shape(+c: ctx, +s: state, +ty: V.t, shape: S.t<T.t>, address: T.addr, args: List<&2, T.t>) -> computation<answer>:
   match shape:
     case S.SColl{_}: bind(Sum.tag, answer, lift_result(Sum.tag, Sum.injection(checker(c), ty, address, args)), plan => tag_plan(c, s, plan))
     case S.SPi{_, _, _}: bind(List<&2, Pair.field>, answer, lift_result(List<&2, Pair.field>, Pair.introduction(checker(c), ty, address, args)), fields => pair_fields(c, s, ty, fields))
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
-    case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
+    case S.SMu{_, _}: bind(Mu.tag, answer, lift_result(Mu.tag, Mu.injection(checker(c), ty, address, args)), plan => mu_tag(c, s, plan))
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
-type branches_answer is Data:
-  Branches{branches: List<&2, K.kbranch>, state: state}
 def branch_body(c: ctx, s: state, tail: Bool, +index: F.Int63.t, value: Sum.branch) -> computation<F.Pair2<K.kbranch, state>>:
   match value:
     case Sum.Branch{q, x, dom, +keep, target, body}:
@@ -607,7 +647,7 @@ def elimination_shape(+c: ctx, +s: state, +tail: Bool, +ty: V.t, shape: S.t<T.t>
     case S.SColl{_}: bind(Sum.case_plan, answer, lift_result(Sum.case_plan, Sum.case_of(checker(c), scrut)), plan => case_plan(c, s, tail, ty, scrut, motive, branches, plan))
     case S.SPi{q, x, dom}: bind(Pair.branch, answer, lift_result(Pair.branch, Pair.elimination(checker(c), ty, S.SPi{q, x, dom}, scrut, motive, branches)), plan => pair_branch(c, s, tail, scrut, plan))
     case S.SPar{_, _}: Abort{E.Not_yet{"parallel shapes in type-directed erasure"}}
-    case S.SMu{_, _}: Abort{E.Not_yet{"recursive families in type-directed erasure"}}
+    case S.SMu{_, _}: bind(Mu.case_plan, answer, lift_result(Mu.case_plan, Mu.case_of(checker(c), scrut, motive)), plan => mu_case(c, s, tail, scrut, branches, plan))
     case S.SNu{_, _}: Abort{E.Not_yet{"coinductive shapes in type-directed erasure"}}
 def elimination(c: ctx, s: state, tail: Bool, ty: V.t, value: T.elim) -> computation<answer>:
   match value:

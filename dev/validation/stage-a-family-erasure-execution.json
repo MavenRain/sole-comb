@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-02",
+  "full_stage_a_acceptance": false,
+  "local_native_timeout_s": 2400,
+  "local_toolchain_build_deadline_s": 2400,
+  "logs": [
+    {
+      "path": "dev/validation/stage-a-family-erasure-hosts.stdout.log",
+      "sha256": "ba1574441d1393fe9d47c23bc5a4245954c581607139dd1ad6b01f16a509cacb"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-hosts.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-regressions.stdout.log",
+      "sha256": "564c265029918eea3035b60f4aab9a3e497484573b6fa589b668edfce595f1f5"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-regressions.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-default-family.stdout.log",
+      "sha256": "3874281cb2cad301ff891d3716025c11a9708c2ebc66178bbf84076b37f9145b"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-default-family.stderr.log",
+      "sha256": "d37c23357902070d861e319937e0b15ae5670b480513a3d5e1ada2a3af8ef2bb"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-default-regressions.stdout.log",
+      "sha256": "118b6c7e2900cc4ff4122f2b2b03e3b6c9316137b07dc8e1922c277d37fb0188"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-default-regressions.stderr.log",
+      "sha256": "712fab03680f1e759fe8b0604bcb8fa45b51ca91e8cb8380ad355c26e85f2c11"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-policy.stdout.log",
+      "sha256": "2498641d31116127c1b4c635352c4b5b08ae68c005c83b10077be821992ff901"
+    },
+    {
+      "path": "dev/validation/stage-a-family-erasure-policy.stderr.log",
+      "sha256": "8ac6ba440541b161d629c691da1748302efcb1b4ad5633a6a93d2b42a3c12d5b"
+    }
+  ],
+  "retry_script": "\"\"\"Run unchanged semantic harnesses with explicit local native deadline overrides.\"\"\"\nimport json\nimport os\nfrom pathlib import Path\nimport runpy\nimport subprocess\nimport sys\n\nroot = Path('/Users/oobi/Documents/gpt5/sole-comb-family-runtime')\nsuite = sys.argv[1]\noriginal_run = subprocess.run\npins = json.loads((root / 'dev/toolchain.json').read_text())\npins['build_deadline_s'] = 2400\noverride = Path('/private/tmp/sole-family-native-toolchain.json')\noverride.write_text(json.dumps(pins))\nos.environ['SOLE_COMB_TOOLCHAIN'] = str(override)\n\n\ndef run(args, *rest, **kwargs):\n    argv = [str(a) for a in args] if not isinstance(args, str) else []\n    native_compile = len(argv) >= 4 and '-o' in argv and argv[-1].endswith('.exe')\n    public_native = '--host' in argv and 'native' in argv\n    if native_compile or public_native:\n        kwargs['timeout'] = 2400\n    return original_run(args, *rest, **kwargs)\n\n\nsubprocess.run = run\nprint(f'LOCAL NATIVE RETRY suite={suite}: native compilation and native public-command deadlines=2400 s; tracked defaults unchanged', flush=True)\nif suite == 'family':\n    sys.argv = ['dev/test-family-erasure.py', '--mutations']\n    runpy.run_path(str(root / sys.argv[0]), run_name='__main__')\nelif suite == 'regressions':\n    for path in ('dev/test-core-erasure.py', 'dev/test-core-erasure-mutations.py',\n                 'dev/test-family-layout.py', 'dev/test-cli.py', 'dev/build.py'):\n        sys.argv = [path, '--mutations'] if path == 'dev/test-family-layout.py' else [path]\n        runpy.run_path(str(root / path), run_name='__main__')\nelse:\n    raise ValueError(suite)\n",
+  "retry_script_sha256": "1eed74b981d37089af08f3fe75d856113cfc21710f0332a8e7b86289a4d2df6c",
+  "schema": 1,
+  "source_head": "462ef9fbd7308578a5f963d875aca6dfbd99a081",
+  "stage": "A.5b.3.2e.2",
+  "standard_deadline_runs": "failed: native compilation timed out",
+  "successful_commands": [
+    "python3 -P /private/tmp/sole-native-retry.py family",
+    "python3 -P /private/tmp/sole-native-retry.py regressions",
+    "make house test-reference-fixtures"
+  ],
+  "tracked_build_deadline_s": 1200,
+  "tracked_harness_timeout_s": 900,
+  "tracked_timeout_defaults_modified": false
+}

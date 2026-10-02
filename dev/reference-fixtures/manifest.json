@@ -31,6 +31,10 @@
     "program": {
       "path": "program.json",
       "sha256": "9000f197cfd91ce4d66411a7858bd4ce485fb1d5153c7448ad1487e8adf535a7"
+    },
+    "family-erasure": {
+      "path": "family-erasure.json",
+      "sha256": "f169068d9c2e2e1ce1a42417aec976c9cef5d78d45e883f7e70752f534b41157"
     }
   },
   "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
