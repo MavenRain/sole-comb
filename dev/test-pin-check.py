@@ -39,5 +39,11 @@ class EndpointTests(unittest.TestCase):
         self.assertIn("FAIL limits.endpoint_candidates:", result.stdout)
 
 
+class KanonPinTests(unittest.TestCase):
+    def test_no_oracle_executable_pin(self):
+        self.assertNotIn("oracle", PINS["kanon"])
+        self.assertEqual(len(PINS["kanon"]["revision"]), 40)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

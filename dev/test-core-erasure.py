@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Compare public ordinary, product, sum and pair erasure with fresh pinned Kanon and goldens."""
+"""Compare core-erasure behavior with immutable pinned Kanon fixtures."""
 import argparse
 import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
-import re
 import shutil
 import subprocess
 import sys
@@ -23,14 +22,6 @@ ORACLE_SOURCES = {"examples/product-erasure.sole-comb": "test/product-erasure.ka
                   "examples/sum-erasure.sole-comb": "test/sum-erasure.kan",
                   "examples/records.sole-comb": "test/records-erasure.kan",
                   "examples/pair-erasure.sole-comb": "test/pair-erasure.kan"}
-ORACLE_NAMES = {f"{record}_{field}": f"{record}.{field}"
-                for record, fields in (("Pair", ("first", "second")),
-                    ("Mixed", ("kind", "witness", "first", "second", "callback", "nested", "trailing")),
-                    ("AllErased", ("kind", "witness")), ("Outer", ("erased", "kept")),
-                    ("Other", ("first", "zero")), ("Packet", ("kind", "payload", "handler", "count")),
-                    ("Capture", ("item",)))
-                for field in fields}
-ORACLE_NAME_PATTERN = re.compile(r"(?<![\w'.$])(?:" + "|".join(map(re.escape, ORACLE_NAMES)) + r")(?![\w'])")
 PRODUCT_LAYOUT = "tuple<union nat,union nat,func fn<1>,struct tuple<union nat,union nat>>"
 PRODUCT_GOLDENS = (
     "erased proof", "erased Mixed.witness",
@@ -106,9 +97,19 @@ def run(name, argv, env, cwd=ROOT, expected=0):
 
 
 def sources():
-    paths = [ROOT / name for name in ("sole-comb", "Makefile", "dev/cli.py", "dev/build.py",
-             "dev/test-core-erasure.py", "dev/test-core-erasure-mutations.py", "dev/bend-policy.json",
-             "dev/house-bend.py", "dev/toolchain.json", "test/core-erasure.bend", "test/core-erasure-oracle.ml")]
+    paths = [ROOT / name for name in ("sole-comb",
+             "Makefile",
+             "dev/cli.py",
+             "dev/build.py",
+             "dev/test-core-erasure.py",
+             "dev/test-core-erasure-mutations.py",
+             "dev/bend-policy.json",
+             "dev/house-bend.py",
+             "dev/toolchain.json",
+             "test/core-erasure.bend",
+             "dev/reference-fixtures.py",
+             "dev/reference-fixtures/manifest.json",
+             "dev/reference-fixtures/core-erasure.json")]
     for directory in ("lib", "surface", "erase", "bin"):
         paths.extend((ROOT / directory).glob("*.bend"))
     paths.extend(ROOT / name for name in POSITIVE)
@@ -117,58 +118,17 @@ def sources():
 
 
 def oracle(pins, env):
-    upstream = Path(pins["kanon"]["checkout"])
-    revision = pins["kanon"]["revision"]
-
-    def git(*args):
-        return subprocess.run(["git", *args], cwd=upstream, capture_output=True, check=True).stdout
-
-    def pin():
-        if git("rev-parse", "HEAD").decode().strip() != revision or git("status", "--porcelain"):
-            raise RuntimeError("Kanon oracle checkout differs from the clean configured pin")
-
-    pin()
-    files = sorted((upstream / "lib").glob("*.ml")) + sorted((upstream / "lib").glob("*.mli"))
-    files += [upstream / "surface" / f"{name}.ml" for name in ("token", "syntax", "lexer", "parser", "elab")]
-    dest = WORK / "oracle"
-    if dest.exists():
-        shutil.rmtree(dest)
-    dest.mkdir()
-    hashes = {}
-    for path in files:
-        relative = path.relative_to(upstream).as_posix()
-        content = path.read_bytes()
-        if content != git("show", f"{revision}:{relative}"):
-            raise RuntimeError(f"oracle source differs from pin: {relative}")
-        hashes[relative] = digest(path)
-        (dest / path.name).write_bytes(content)
-    names = sorted(p.stem.capitalize() for p in files if p.parent.name == "lib" and p.suffix == ".ml")
-    (dest / "kanon_kernel.ml").write_text("\n".join(f"module {name} = {name}" for name in names) + "\n")
-    shutil.copyfile(ROOT / "test/core-erasure-oracle.ml", dest / "oracle_adapter.ml")
-    order = run("oracle-order", ["ocamldep", "-sort", *[p.name for p in files], "kanon_kernel.ml"], env, dest)["stdout"].split()
-    run("oracle-compile", ["ocamlfind", "ocamlc", "-package", "zarith", "-linkpkg", *order,
-                          "oracle_adapter.ml", "-o", "oracle.exe"], env, dest)
-    expected = {}
-    for i, path in enumerate(POSITIVE):
-        result = run(f"oracle-{i}", [dest / "oracle.exe", ROOT / ORACLE_SOURCES.get(path, path)], env)
-        if result["stderr"] or not result["stdout"]:
-            raise RuntimeError(f"oracle produced malformed success for {path}")
-        output = result["stdout"]
-        if path in ORACLE_SOURCES:
-            # The pin has no qualified surface names. Restore this fixture's namespaces.
-            # Rename whole identifiers only, so no key rewrites part of a longer name.
-            output = ORACLE_NAME_PATTERN.sub(lambda match: ORACLE_NAMES[match.group(0)], output)
-        if path == "examples/product-erasure.sole-comb" and any(line not in output.splitlines() for line in PRODUCT_GOLDENS):
-            raise RuntimeError("pinned oracle differs from independent product erasure goldens")
-        if path == "examples/sum-erasure.sole-comb" and any(line not in output.splitlines() for line in SUM_GOLDENS):
-            raise RuntimeError("pinned oracle differs from independent sum erasure goldens")
-        if path == "examples/pair-erasure.sole-comb" and any(line not in output.splitlines() for line in PAIR_GOLDENS):
-            raise RuntimeError("pinned oracle differs from independent pair erasure goldens")
-        expected[path] = output
-    pin()
-    return expected, {"revision": revision, "sources": hashes, "adapter_sha256": digest(dest / "oracle_adapter.ml"),
-                      "compiler": run("oracle-version", ["ocamlc", "-version"], env)["stdout"].strip(),
-                      "source_overrides": ORACLE_SOURCES, "name_overrides": ORACLE_NAMES}
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
+    inputs = [[path, digest(ROOT / path), digest(ROOT / ORACLE_SOURCES.get(path, path))] for path in POSITIVE]
+    expected, provenance = reference.load(pins, "core-erasure", inputs)
+    if not isinstance(expected, dict) or set(expected) != set(POSITIVE) or any(not isinstance(value, str) or not value for value in expected.values()):
+        raise RuntimeError("malformed core erasure reference observations")
+    for path, goldens in (("examples/product-erasure.sole-comb", PRODUCT_GOLDENS),
+                          ("examples/sum-erasure.sole-comb", SUM_GOLDENS),
+                          ("examples/pair-erasure.sole-comb", PAIR_GOLDENS)):
+        if any(line not in expected[path].splitlines() for line in goldens):
+            raise RuntimeError(f"reference differs from independent erasure goldens: {path}")
+    return expected, provenance
 
 
 def contracts(pins, hosts, env):

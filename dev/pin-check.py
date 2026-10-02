@@ -77,11 +77,9 @@ def bend_checks(pins):
 
 def kanon_checks(pins):
     kanon = pins["kanon"]
-    oracle = kanon["oracle"]
     return [
         check("kanon.checkout.head", lambda: equal(kanon["revision"], git_head(kanon["checkout"]))),
         check("kanon.head_observed", lambda: equal(kanon["revision"], kanon["head_observed"])),
-        check("kanon.oracle.sha256", lambda: equal(oracle["sha256"], sha256_file(oracle["path"]))),
     ]
 
 
@@ -128,7 +126,7 @@ def limits_checks(pins):
                                                      f"candidates={pins['endpoint_candidates']} "
                                                      f"info_only={pins['endpoint_info_only']}")),
         check("limits.sha256.format", lambda: (all(map(is_sha256, [
-            pins["bend"]["binary_sha256"], pins["kanon"]["oracle"]["sha256"],
+            pins["bend"]["binary_sha256"],
             *(tool["sha256"] for tool in pins["tools"].values())])), "every sha256 is 64 lower-case hex digits")),
     ]
 

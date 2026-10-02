@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A.5b.1 declaration differential, preceding the full program KANON-DIFF."""
+"""Compare elaboration behavior with immutable pinned Kanon fixtures."""
 import argparse
 import hashlib
 import importlib.util
@@ -65,8 +65,15 @@ def cases(pins, verify_upstream=True):
 
 
 def inputs():
-    names = ["dev/test-elaboration.py", "dev/elaboration-cases.py", "test/elaboration-oracle.ml",
-             "dev/test-pinfront.py", "test/kanon/SOURCE.json", "test/kanon/SURVIVORS.tsv"]
+    names = ["dev/test-elaboration.py",
+             "dev/elaboration-cases.py",
+             "dev/test-pinfront.py",
+             "test/kanon/SOURCE.json",
+             "test/kanon/SURVIVORS.tsv",
+             "dev/reference-fixtures.py",
+             "dev/reference-fixtures/manifest.json",
+             "dev/reference-fixtures/elaboration.json",
+             "dev/validation/stage-a-elaboration-reference.json"]
     return {name: digest(ROOT / name) for name in names}
 
 
@@ -83,31 +90,12 @@ def identity(checks):
 
 
 def oracle(pins, checks, env):
-    upstream, revision = pf.pin_state(pins)
-    files = sorted((upstream / "lib").glob("*.ml")) + sorted((upstream / "lib").glob("*.mli"))
-    files += [upstream / "surface" / f"{name}.ml" for name in ("token", "syntax", "lexer", "parser", "elab")]
-    dest = WORK / "oracle"
-    if dest.exists():
-        shutil.rmtree(dest)
-    dest.mkdir(parents=True)
-    hashes = {}
-    for path in files:
-        name = path.relative_to(upstream).as_posix()
-        content = path.read_bytes()
-        if content != pf.git(upstream, "show", f"{revision}:{name}"):
-            raise RuntimeError(f"oracle source differs from pin: {name}")
-        (dest / path.name).write_bytes(content)
-        hashes[name] = hashlib.sha256(content).hexdigest()
-    names = sorted(p.stem.capitalize() for p in files if p.parent.name == "lib" and p.suffix == ".ml")
-    (dest / "kanon_kernel.ml").write_text("\n".join(f"module {name} = {name}" for name in names) + "\n")
-    calls = [f"let () = emit {pf.ocaml_string(r['name'].encode())} {pf.ocaml_string(r['source'])}" for r in checks]
-    (dest / "oracle_cases.ml").write_text((ROOT / "test/elaboration-oracle.ml").read_text() + "\n" + "\n".join(calls) + "\n")
-    order = run("oracle-order", ["ocamldep", "-sort", *[p.name for p in files], "kanon_kernel.ml"], env, dest).decode().split()
-    run("oracle-compile", ["ocamlfind", "ocamlc", "-package", "zarith", "-linkpkg", *order, "oracle_cases.ml", "-o", "oracle.exe"], env, dest)
-    observations = pf.parse_rows(run("oracle-results", [str(dest / "oracle.exe")], env), checks)
-    pf.pin_state(pins)
-    record = {"schema": 1, "scope": SCOPE, "revision": revision, "inputs": inputs(),
-              "oracle_sources": hashes, "cases": [dict(row, observation=value.hex()) for row, value in zip(identity(checks), observations)]}
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
+    observations, provenance = reference.byte_observations(pins, "elaboration", checks)
+    record = {"schema": 1, "scope": SCOPE, "revision": pins["kanon"]["revision"],
+              "inputs": inputs(), "fixture": provenance,
+              "cases": [{"name": row["name"], "source_sha256": hashlib.sha256(row["source"]).hexdigest(),
+                         "observation": value.hex()} for row, value in zip(checks, observations)]}
     (WORK / "reference.json").write_text(json.dumps(record, indent=2) + "\n")
     compare_reference(record)
     return observations, record
@@ -115,6 +103,7 @@ def oracle(pins, checks, env):
 
 def compare_reference(record, path=REFERENCE):
     # Input hashes change with the harness, so only the per-case observations must stay equal.
+    # The observation part is identity-only: the snapshot is the reference itself.
     fields = ("name", "source_sha256", "observation")
     try:
         saved = [[case[key] for key in fields] for case in json.loads(path.read_text())["cases"]]
@@ -124,7 +113,7 @@ def compare_reference(record, path=REFERENCE):
     changed = [new[0] for new, old in zip(fresh, saved) if new != old]
     if changed or len(fresh) != len(saved):
         where = changed[0] if changed else "the case count"
-        raise RuntimeError(f"fresh oracle cases differ from the saved reference at {where}; "
+        raise RuntimeError(f"reference cases differ from the saved reference at {where}; "
                            f"review {WORK / 'reference.json'} and copy it to {path}")
 
 
@@ -165,7 +154,7 @@ def compare(name, actual, observations, checks):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--replay", action="store_true")
+    parser.add_argument("--replay", action="store_true", help="compatibility flag; recorded pinned fixtures are always used")
     parser.add_argument("--backend", choices=("all", "bun"), default="all")
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
@@ -173,10 +162,10 @@ def main():
     pins = json.loads((ROOT / "dev/toolchain.json").read_text())
     binary, _, _ = build.compiler(pins)
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
-    checks = cases(pins, not args.replay)
-    observations, _ = replay(pins, checks) if args.replay else oracle(pins, checks, env)
+    checks = cases(pins, False)
+    observations, _ = oracle(pins, checks, env)
     independent(checks, observations)
-    print(f"PASS A.5b.1 oracle: {len(checks)} cases, {EXPECTED_FIXED} independent expectations", flush=True)
+    print(f"PASS A.5b.1 reference fixtures: {len(checks)} cases, {EXPECTED_FIXED} independent expectations", flush=True)
     source = ROOT / "test/elaboration-driver.bend"
     run("check", [str(binary), str(source), "--check-only"], env)
     run("compile-js", [str(binary), str(source), "-o", str(WORK / "checks.js")], env)
@@ -204,7 +193,7 @@ def main():
         raise RuntimeError("elaboration sources changed during validation")
     result = {"schema": 1, "scope": SCOPE, "cases": len(checks), "corpus": 146, "probes": EXPECTED_PROBES,
               "independent": EXPECTED_FIXED, "backend": args.backend, "source_sha256": before,
-              "reference_sha256": digest(REFERENCE if args.replay else WORK / "reference.json"),
+              "reference_sha256": digest(WORK / "reference.json"),
               "agree": len(checks), "divergences": []}
     destination = ROOT / "dev/validation/stage-a-elaboration.json" if args.backend == "all" else WORK / "bun-result.json"
     destination.write_text(json.dumps(result, indent=2) + "\n")

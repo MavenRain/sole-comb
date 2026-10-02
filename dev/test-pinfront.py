@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A.5a parser differential. This is not the full Stage A KANON-DIFF."""
+"""Compare pinfront behavior with immutable pinned Kanon fixtures."""
 import argparse
 import hashlib
 import importlib.util
@@ -108,64 +108,27 @@ def cases(pins, verify_upstream=True):
 
 
 def reference_inputs():
-    paths = ["dev/test-pinfront.py", "dev/pinfront-cases.py", "test/pinfront-oracle.ml",
-             "test/kanon/SOURCE.json", "test/kanon/SURVIVORS.tsv"]
+    paths = ["dev/test-pinfront.py",
+             "dev/pinfront-cases.py",
+             "test/kanon/SOURCE.json",
+             "test/kanon/SURVIVORS.tsv",
+             "dev/reference-fixtures.py",
+             "dev/reference-fixtures/manifest.json",
+             "dev/reference-fixtures/pinfront.json",
+             "dev/validation/stage-a-pinfront-reference.json"]
     return {name: digest(ROOT / name) for name in paths}
 
 
-def ocaml_string(data):
-    return '"' + "".join(chr(b) if 32 <= b <= 126 and b not in (34, 92) else f"\\{b:03d}" for b in data) + '"'
+
 
 
 def oracle(pins, checks, env):
-    upstream, revision = pin_state(pins)
-    available = {p.stem.capitalize(): p for p in (upstream / "lib").glob("*.ml")}
-    deps = run("oracle-dependencies", ["ocamldep", "-modules", *map(str, available.values())], env)
-    graph = {Path(line.split(":", 1)[0]).stem.capitalize(): line.split(":", 1)[1].split() for line in deps.decode().splitlines()}
-    needed = {"Bignum", "Error", "Quantity"}
-    while True:
-        expanded = needed | {dep for key in needed for dep in graph[key] if dep in available}
-        if expanded == needed:
-            break
-        needed = expanded
-    files = []
-    for key in sorted(needed):
-        source = available[key]
-        if source.with_suffix(".mli").exists():
-            files.append(source.with_suffix(".mli"))
-        files.append(source)
-    files += [upstream / "surface" / f"{name}.ml" for name in ("token", "syntax", "lexer", "parser")]
-    dest = WORK / "oracle"
-    dest.mkdir(parents=True, exist_ok=True)
-    hashes = {}
-    for path in files:
-        name = path.relative_to(upstream).as_posix()
-        content = path.read_bytes()
-        if content != git(upstream, "show", f"{revision}:{name}"):
-            raise RuntimeError(f"oracle source differs from pin: {name}")
-        (dest / path.name).write_bytes(content)
-        hashes[name] = hashlib.sha256(content).hexdigest()
-    wrapper = "\n".join(f"module {key} = {key}" for key in sorted(needed)) + "\n"
-    (dest / "kanon_kernel.ml").write_text(wrapper)
-    adapter = (ROOT / "test/pinfront-oracle.ml").read_text()
-    calls = [f"let () = emit {ocaml_string(row['name'].encode())} {ocaml_string(row['source'])}" for row in checks]
-    (dest / "oracle_cases.ml").write_text(adapter + "\n" + "\n".join(calls) + "\n")
-    order = run("oracle-order", ["ocamldep", "-sort", *[p.name for p in files], "kanon_kernel.ml"], env, dest).decode().split()
-    run("oracle-compile", ["ocamlfind", "ocamlc", "-package", "zarith", "-linkpkg", *order, "oracle_cases.ml", "-o", "oracle.exe"], env, dest)
-    output = run("oracle-results", [str(dest / "oracle.exe")], env)
-    observations = parse_rows(output, checks)
-    pin_state(pins)
-    record = {
-        "schema": 1, "scope": "pinned lexer, parser, syntax printer; no elaboration or kernel verdict",
-        "revision": revision, "inputs": reference_inputs(),
-        "oracle": {"sources": hashes, "wrapper_sha256": digest(dest / "kanon_kernel.ml"),
-                   "adapter_sha256": digest(dest / "oracle_cases.ml"), "executable_sha256": digest(dest / "oracle.exe"),
-                   "compiler": shutil.which("ocamlc"), "compiler_version": run("ocaml-version", ["ocamlc", "-version"], env).decode().strip(),
-                   "zarith_version": run("zarith-version", ["ocamlfind", "query", "-format", "%v", "zarith"], env).decode().strip(),
-                   "build": "fresh compilation of unchanged pinned sources, outside the Kanon checkout"},
-        "cases": [{"name": row["name"], "source_sha256": hashlib.sha256(row["source"]).hexdigest(),
-                   "observation_hex": observation.hex()} for row, observation in zip(checks, observations)],
-    }
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
+    observations, provenance = reference.byte_observations(pins, "pinfront", checks)
+    record = {"schema": 1, "scope": "pinned lexer, parser, syntax printer; no elaboration or kernel verdict", "revision": pins["kanon"]["revision"],
+              "inputs": reference_inputs(), "fixture": provenance,
+              "cases": [{"name": row["name"], "source_sha256": hashlib.sha256(row["source"]).hexdigest(),
+                         "observation_hex": value.hex()} for row, value in zip(checks, observations)]}
     (WORK / "reference.json").write_text(json.dumps(record, indent=2) + "\n")
     compare_reference(record)
     return observations, record
@@ -173,6 +136,7 @@ def oracle(pins, checks, env):
 
 def compare_reference(record, path=REFERENCE):
     # Input hashes change with the harness, so only the per-case observations must stay equal.
+    # The observation part is identity-only: the snapshot is the reference itself.
     fields = ("name", "source_sha256", "observation_hex")
     try:
         saved = [[case[key] for key in fields] for case in json.loads(path.read_text())["cases"]]
@@ -182,21 +146,8 @@ def compare_reference(record, path=REFERENCE):
     changed = [new[0] for new, old in zip(fresh, saved) if new != old]
     if changed or len(fresh) != len(saved):
         where = changed[0] if changed else "the case count"
-        raise RuntimeError(f"fresh oracle cases differ from the saved reference at {where}; "
+        raise RuntimeError(f"reference cases differ from the saved reference at {where}; "
                            f"review {WORK / 'reference.json'} and copy it to {path}")
-
-
-def parse_rows(output, checks):
-    lines = output.splitlines()
-    if len(lines) != len(checks):
-        raise RuntimeError("oracle output has missing or extra cases")
-    observations = []
-    for line, row in zip(lines, checks):
-        fields = line.split(b"\t")
-        if len(fields) != 2 or fields[0] != row["name"].encode() or re.fullmatch(b"(?:[0-9a-f]{2})*", fields[1]) is None:
-            raise RuntimeError("oracle output has malformed, duplicate, or reordered cases")
-        observations.append(bytes.fromhex(fields[1].decode()))
-    return observations
 
 
 def replay(pins, checks, path=REFERENCE):
@@ -334,18 +285,28 @@ def harness(checks, destination):
 
 
 def source_hashes():
-    paths = [ROOT / "Makefile", ROOT / "dev/bend-policy.json", ROOT / "dev/house-bend.py",
-             ROOT / "dev/test-house.py", ROOT / "dev/test-pinfront.py", ROOT / "dev/pinfront-cases.py",
-             ROOT / "test/pinfront-oracle.ml", ROOT / "dev/toolchain.json", ROOT / "dev/build.py",
+    paths = [ROOT / "Makefile",
+             ROOT / "dev/bend-policy.json",
+             ROOT / "dev/house-bend.py",
+             ROOT / "dev/test-house.py",
+             ROOT / "dev/test-pinfront.py",
+             ROOT / "dev/pinfront-cases.py",
+             ROOT / "dev/toolchain.json",
+             ROOT / "dev/build.py",
              ROOT / "test/pinfront-native.bend",
-             ROOT / "dev/test-pinfront-harness.py", ROOT / "dev/test-pinfront-mutations.py"]
+             ROOT / "dev/test-pinfront-harness.py",
+             ROOT / "dev/test-pinfront-mutations.py",
+             ROOT / "dev/reference-fixtures.py",
+             ROOT / "dev/reference-fixtures/manifest.json",
+             ROOT / "dev/reference-fixtures/pinfront.json",
+             ROOT / "dev/validation/stage-a-pinfront-reference.json"]
     paths += sorted((ROOT / "lib").glob("*.bend")) + sorted((ROOT / "test/pinfront").glob("*.bend"))
     return {str(path.relative_to(ROOT)): digest(path) for path in paths}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--replay", action="store_true", help="use the recorded pinned observations without running OCaml or Kanon")
+    parser.add_argument("--replay", action="store_true", help="compatibility flag; recorded pinned fixtures are always used")
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     (WORK / "result.json").unlink(missing_ok=True)
@@ -353,11 +314,11 @@ def main():
     build = module("sole_build", ROOT / "dev/build.py")
     binary, _, _ = build.compiler(pins)
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
-    checks = cases(pins, not args.replay)
+    checks = cases(pins, False)
     before = source_hashes()
-    observations, reference = replay(pins, checks) if args.replay else oracle(pins, checks, env)
+    observations, reference = oracle(pins, checks, env)
     independent(checks, observations)
-    print(f"PASS A.5a pinned parser oracle: {len(checks)} cases, {EXPECTED_FIXED} independent expectations", flush=True)
+    print(f"PASS A.5a pinned parser fixtures: {len(checks)} cases, {EXPECTED_FIXED} independent expectations", flush=True)
     source = WORK / "checks.bend"
     harness(checks, source)
     run("check", [str(binary), str(source), "--check-only"], env)
@@ -397,7 +358,7 @@ def main():
               "cases": len(checks), "corpus_files": EXPECTED_CORPUS, "probes": EXPECTED_PROBES,
               "independent": EXPECTED_FIXED, "sources": before, "corpus": reference["inputs"],
               "harness_sha256": digest(source), "observations_sha256": hashlib.sha256(b"".join(observations)).hexdigest(),
-              "reference_sha256": digest(REFERENCE if args.replay else WORK / "reference.json"),
+              "reference_sha256": digest(WORK / "reference.json"),
               "endpoints": {name: "PASS" for name in ("bun", "node-worker", "native")},
               "native": {"role": "behavioral INFO, not a performance qualification", "compiler": cc,
                          "version": cc_version, "flags": ["-std=c11", "-O3", "-lpthread", "-lm"],

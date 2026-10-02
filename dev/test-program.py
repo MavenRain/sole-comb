@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A.5b.2 whole-program check/print differential; erased mode remains pending."""
+"""Compare program behavior with immutable pinned Kanon fixtures."""
 import argparse
 import hashlib
 import importlib.util
@@ -74,8 +74,16 @@ def cases(pins, verify_upstream=True):
 
 
 def inputs():
-    names = ["dev/test-program.py", "dev/program-cases.py", "dev/elaboration-cases.py", "dev/test-pinfront.py",
-             "test/program-oracle.ml", "test/kanon/SOURCE.json", "test/kanon/SURVIVORS.tsv"]
+    names = ["dev/test-program.py",
+             "dev/program-cases.py",
+             "dev/elaboration-cases.py",
+             "dev/test-pinfront.py",
+             "test/kanon/SOURCE.json",
+             "test/kanon/SURVIVORS.tsv",
+             "dev/reference-fixtures.py",
+             "dev/reference-fixtures/manifest.json",
+             "dev/reference-fixtures/program.json",
+             "dev/validation/stage-a-program-reference.json"]
     return {name: digest(ROOT / name) for name in names}
 
 
@@ -142,39 +150,12 @@ def validate_record(record, pins, checks, replay=False):
 
 
 def oracle(pins, checks, env):
-    upstream, revision = pf.pin_state(pins)
-    files = sorted((upstream / "lib").glob("*.ml")) + sorted((upstream / "lib").glob("*.mli"))
-    files += [upstream / "surface" / f"{n}.ml" for n in ("token", "syntax", "lexer", "parser", "elab")]
-    dest = WORK / "oracle"
-    if dest.exists():
-        shutil.rmtree(dest)
-    dest.mkdir(parents=True)
-    hashes = {}
-    for path in [*files, upstream / "bin/kanon.ml"]:
-        name = path.relative_to(upstream).as_posix()
-        content = path.read_bytes()
-        if content != pf.git(upstream, "show", f"{revision}:{name}"):
-            raise RuntimeError(f"oracle source differs from pin: {name}")
-        hashes[name] = hashlib.sha256(content).hexdigest()
-        if path in files:
-            (dest / path.name).write_bytes(content)
-    names = sorted(p.stem.capitalize() for p in files if p.parent.name == "lib" and p.suffix == ".ml")
-    (dest / "kanon_kernel.ml").write_text("\n".join(f"module {n} = {n}" for n in names) + "\n")
-    shutil.copyfile(ROOT / "test/program-oracle.ml", dest / "program_oracle.ml")
-    order = run("oracle-order", ["ocamldep", "-sort", *[p.name for p in files], "kanon_kernel.ml"], env, dest).stdout.decode().split()
-    run("oracle-compile", ["ocamlfind", "ocamlc", "-package", "zarith", "-linkpkg", *order, "program_oracle.ml", "-o", "oracle.exe"], env, dest)
-    rows = []
-    for i, (row, ident) in enumerate(zip(checks, identity(checks))):
-        source = dest / "input.kan"
-        source.write_bytes(row["source"])
-        observations = {}
-        for mode in MODES:
-            result = run(f"oracle-results/{i:04d}-{mode}", [str(dest / "oracle.exe"), mode, str(source)], env, allow_refusal=True)
-            observations[mode] = triple(result.returncode, result.stdout, result.stderr)
-        rows.append(dict(ident, observations=observations))
-    pf.pin_state(pins)
-    record = {"schema": 1, "scope": SCOPE, "revision": revision, "modes": list(MODES), "inputs": inputs(),
-              "oracle_sources": hashes, "compiler": run("ocaml-version", ["ocamlc", "-version"], env).stdout.decode().strip(), "cases": rows}
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
+    observations, provenance = reference.observations(pins, "program", checks)
+    record = {"schema": 1, "scope": SCOPE, "revision": pins["kanon"]["revision"], "modes": list(MODES),
+              "inputs": inputs(), "fixture": provenance,
+              "cases": [dict(row, observations=value) for row, value in zip(identity(checks), observations)]}
+    validate_record(record, pins, checks, True)
     (WORK / "reference.json").write_text(json.dumps(record, indent=2) + "\n")
     return record
 
@@ -224,7 +205,7 @@ def compare_host(name, argv, checks, record, env):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--replay", action="store_true")
+    parser.add_argument("--replay", action="store_true", help="compatibility flag; recorded pinned fixtures are always used")
     parser.add_argument("--backend", choices=("all", "bun"), default="all")
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
@@ -232,16 +213,11 @@ def main():
     pins = json.loads((ROOT / "dev/toolchain.json").read_text())
     binary, _, _ = build.compiler(pins)
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
-    checks = cases(pins, not args.replay)
-    record = json.loads(REFERENCE.read_text()) if args.replay else oracle(pins, checks, env)
-    validate_record(record, pins, checks, args.replay)
+    checks = cases(pins, False)
+    record = oracle(pins, checks, env)
+    validate_record(record, pins, checks, True)
     independent(checks, record)
-    if not args.replay:
-        saved = json.loads(REFERENCE.read_text())
-        validate_record(saved, pins, checks)
-        if saved["cases"] != record["cases"]:
-            raise RuntimeError("fresh program observations differ from the saved reference; inspect _build/program/reference.json")
-    print(f"PASS A.5b.2 oracle: {len(checks)} files, {len(MODES)} modes", flush=True)
+    print(f"PASS A.5b.2 reference fixtures: {len(checks)} files, {len(MODES)} modes", flush=True)
     source = ROOT / "test/program-driver.bend"
     run("check", [str(binary), str(source), "--check-only"], env)
     run("compile-js", [str(binary), str(source), "-o", str(WORK / "checks.js")], env)
@@ -252,7 +228,7 @@ def main():
         compare_host(name, argv, checks, record, env)
     if args.backend == "all":
         native = WORK / "checks-native.c"
-        run("emit-native", [str(binary), str(source), "-o", str(native)], env)
+        run("emit-native", [str(binary), str(source), "-o", str(native)], env, timeout=1800)
         cc = shutil.which(os.environ.get("SOLE_COMB_CC", os.environ.get("CC", "clang")))
         if cc is None:
             raise RuntimeError("native program checks require clang 14 or newer")
@@ -267,7 +243,7 @@ def main():
         raise RuntimeError("program sources changed during validation")
     result = {"schema": 1, "scope": SCOPE, "cases": len(checks), "corpus": 146, "probes": EXPECTED_PROBES,
               "independent": sum("code" in r for r in checks), "modes": list(MODES), "backend": args.backend,
-              "source_sha256": before, "reference_sha256": digest(REFERENCE if args.replay else WORK / "reference.json"),
+              "source_sha256": before, "reference_sha256": digest(WORK / "reference.json"),
               "agree": len(checks) * len(MODES), "divergences": []}
     dest = ROOT / "dev/validation/stage-a-program.json" if args.backend == "all" else WORK / "bun-result.json"
     dest.write_text(json.dumps(result, indent=2) + "\n")

@@ -11,6 +11,16 @@ import subprocess
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/representation"
 EXPECTED_CASES = 465
+# Kanon lib/*.ml digests at revision 69f3be51, frozen so that the gate needs no Kanon checkout.
+KANON_SOURCES = {
+    "term.ml": "2de6729958bfbc3af10ed2e9c51d6591ab40fa16bd19b7acea1fbf37adf60690",
+    "value.ml": "997f4634df60744c49555e896c1de8d60e51a1086e731e547b48450def9c68c7",
+    "shape.ml": "dafd7741b4332dcab6faba9cb9afb131fb3654172e0d375b1edd1046e69f7f7b",
+    "global.ml": "2e5d2d932dfddcb329bcfdf237df87a70f2d79820470dc236e337ec6d275c329",
+    "prim.ml": "5224df4f75e499b8fb962fad2a256b31086fcc9de5ab2f353eb90f61a8408aaa",
+    "quantity.ml": "bf3f633c40a0dbb362cf85ca41b798ae0c9e1d4eca7e09f9b6f482bab2bfbb8b",
+    "positivity.ml": "97cb5fc9484ecaec360b4be1ac42f0668ae767aad25efc10ddbc1d4143185471",
+    "rules.ml": "b625cec31061ca79f77669889039e4ae2658393911e39076dc65189022f702ab"}
 
 
 def quoted(text):
@@ -267,13 +277,10 @@ def main():
         "test/foundation.bend", "test/representation.bend", "dev/test-foundation.py", "dev/test-representation.py",
         "dev/build.py", "dev/pin-check.py", "dev/toolchain.json", "dev/house-bend.py", "dev/test-house.py", "dev/bend-policy.json", "Makefile")]
     sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
-    upstream = Path(pins["kanon"]["checkout"]) / "lib"
-    reference = {name: hashlib.sha256((upstream / name).read_bytes()).hexdigest() for name in (
-        "term.ml", "value.ml", "shape.ml", "global.ml", "prim.ml", "quantity.ml", "positivity.ml", "rules.ml")}
     report = {"milestone": "A.2", "cases_per_endpoint": len(checks), "endpoints": list(endpoints),
               "informational_endpoints": ["native"], "sources": sources,
               "harness_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
-              "kanon_revision": pins["kanon"]["revision"], "kanon_sources": reference,
+              "kanon_revision": pins["kanon"]["revision"], "kanon_sources": KANON_SOURCES,
               "r2_qualification": "pending", "stage_a_oracle": "pending"}
     (WORK / "result.json").write_text(json.dumps(report, indent=2) + "\n")
 

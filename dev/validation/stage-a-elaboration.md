@@ -139,3 +139,5 @@ A.5b.2 must add the recursive program driver with order and totality checking,
 full frontend execution, all required output and exit modes, and complete
 KANON-DIFF coverage. A.5b.1 does not close Stage A or change its acceptance
 gates, divergence policy, benchmark admission, or performance claims.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

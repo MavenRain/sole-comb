@@ -1,4 +1,4 @@
-"""Paired raw-kernel inputs; both hosts receive the same explicit syntax and values."""
+"""Raw Bend kernel inputs checked against pinned reference fixtures."""
 from dataclasses import dataclass
 import json
 import random
@@ -7,11 +7,10 @@ import random
 @dataclass(frozen=True)
 class Expr:
     bend: str
-    ocaml: str
 
 
 def text(s):
-    return Expr(json.dumps(s), json.dumps(s))
+    return Expr(json.dumps(s))
 
 
 def integer(n):
@@ -19,56 +18,55 @@ def integer(n):
     while remaining:
         digits.append(str(remaining % 32768))
         remaining //= 32768
-    return Expr(f'F.Int63.Int{{{"True" if n < 0 else "False"}{{}}, [{", ".join(digits)}]}}', f"({n})")
+    return Expr(f'F.Int63.Int{{{"True" if n < 0 else "False"}{{}}, [{", ".join(digits)}]}}')
 
 
 def number(n):
-    digits = "; ".join(str(d) for d in str(abs(n)))
-    return Expr(f'FT.number({json.dumps(str(abs(n)))})' if n >= 0 else f'F.Bignum.negate(FT.number({json.dumps(str(-n))}))', f'(number {str(n < 0).lower()} [{digits}])')
+    return Expr(f'FT.number({json.dumps(str(abs(n)))})' if n >= 0 else f'F.Bignum.negate(FT.number({json.dumps(str(-n))}))')
 
 
 def level(n):
     if n < 0:
         raise ValueError(f"the pinned Level interface has no negative level: {n}")
-    return Expr(number(n).bend, f"(level {n})")
+    return Expr(number(n).bend)
 
 
 def nat(n):
-    return Expr(f"{n}n", str(n))
+    return Expr(f"{n}n")
 
 
 def boolean(b):
-    return Expr("True{}" if b else "False{}", "true" if b else "false")
+    return Expr("True{}" if b else "False{}")
 
 
 def seq(xs):
-    return Expr("[" + ", ".join(x.bend for x in xs) + "]", "[" + "; ".join(x.ocaml for x in xs) + "]")
+    return Expr("[" + ", ".join(x.bend for x in xs) + "]")
 
 
 def ctor(name, *args):
-    return Expr(name + "{" + ", ".join(x.bend for x in args) + "}", name if not args else "(" + name + " (" + ", ".join(x.ocaml for x in args) + "))")
+    return Expr(name + "{" + ", ".join(x.bend for x in args) + "}")
 
 
 def record(name, fields, *args):
-    return Expr(ctor(name, *args).bend, "{" + "; ".join(f"{field}={arg.ocaml}" for field, arg in zip(fields, args, strict=True)) + "}")
+    return Expr(ctor(name, *args).bend)
 
 
 def pair(a, b):
-    return Expr(f"F.Pair2{{{a.bend}, {b.bend}}}", f"({a.ocaml}, {b.ocaml})")
+    return Expr(f"F.Pair2{{{a.bend}, {b.bend}}}")
 
 
 def call(name, *args):
-    return Expr(name + "(" + ", ".join(x.bend for x in args) + ")", "(" + name.removeprefix("C.") + " " + " ".join("(" + x.ocaml + ")" for x in args) + ")")
+    return Expr(name + "(" + ", ".join(x.bend for x in args) + ")")
 
 
-NONE = Expr("None{}", "None")
+NONE = Expr("None{}")
 ZERO, ONE, MANY = (ctor("Q." + q) for q in ("Zero", "One", "Many"))
-GLOBALS = Expr("G.initial", "G.initial")
-EMPTY = Expr("G.empty", "G.empty")
+GLOBALS = Expr("G.initial")
+EMPTY = Expr("G.empty")
 
 
 def some(x):
-    return Expr(f"Some{{{x.bend}}}", f"(Some ({x.ocaml}))")
+    return Expr(f"Some{{{x.bend}}}")
 
 
 def var(i): return ctor("T.Var", integer(i))
@@ -119,7 +117,7 @@ def cases():
         add(name, call("C.term_result", call("EV.quote", g, integer(size), value)))
         # Module names differ only at the public observer boundary.
         name_, e, ex = result[-1]
-        result[-1] = (name_, Expr(e.bend, e.ocaml.replace("EV.quote", "Eval.quote")), ex)
+        result[-1] = (name_, Expr(e.bend), ex)
     nf("universe", univ(4), "u4")
     nf("integer", lit(-17), "lit:-17")
     nf("string", ctor("T.Lit", ctor("Lit.LString", text("hello"))), "lit:string:hello")
@@ -233,7 +231,7 @@ def cases():
         ("builtin","Builtin",0,ZERO,False,True,0)):
         names=["c"+str(i) for i in range(count)]
         constructors=[record("Pos.Ctor",("Pos.c_name","Pos.c_args","Pos.c_res_idx","Pos.c_full_arity","Pos.c_self_rec"),text(n),
-            Expr(seq([pair(q,pair(text("x"),univ()))]).bend,"[("+q.ocaml+", \"x\", "+univ().ocaml+")]"),seq([]),integer(1),boolean(recursive)) for n in names]
+            Expr(seq([pair(q,pair(text("x"),univ()))]).bend),seq([]),integer(1),boolean(recursive)) for n in names]
         status_ = ctor("Pos.Complete",seq([text(n) for n in names])) if status=="Complete" else ctor("Pos."+status)
         family = record("Pos.Family",("Pos.f_name","Pos.f_params","Pos.f_indices","Pos.f_level","Pos.f_status","Pos.f_ctors","Pos.f_positive"),text("F"),seq([]),seq([]),level(lvl),status_,seq(constructors),boolean(positive))
         globals_ = call("G.add_family",text("F"),family,GLOBALS)
@@ -259,5 +257,5 @@ def cases():
             e=call("F.Int63.show",call("F.Int63."+op,integer(a),integer(b)))
             raw=a+b if op=="add" else a-b
             expected=str(((raw+(1<<62))%(1<<63))-(1<<62))
-            add(f"int63-{op}-{a}-{b}",Expr(e.bend,f"(string_of_int ({a} {symbol} ({b})))"),expected)
+            add(f"int63-{op}-{a}-{b}",Expr(e.bend),expected)
     return result

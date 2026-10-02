@@ -91,3 +91,5 @@ compiler gate. The bootstrap CLI is not yet an operational compiler.
 - This note now identifies the foundation code that is new in sole-comb,
   tells that Bend 2 cannot hide a representation, and keeps the gate
   outputs in the repository.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

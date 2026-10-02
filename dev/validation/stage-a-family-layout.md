@@ -101,3 +101,5 @@ inputs.
 This extends [dependent-pair erasure](stage-a-pair-erasure.md). Runtime
 constructor and match erasure for recursive families, recursive definitions,
 complete erased-corpus integration and WebAssembly build/run remain pending.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

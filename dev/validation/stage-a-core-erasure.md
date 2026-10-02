@@ -71,3 +71,5 @@ argument admission, runtime context indexing, eta expansion, closure capture
 ordering and pruning, fuel handling, oracle provenance, and mutation failure
 classification. Structural refusals remain explicit. Required full-corpus,
 Wasm, A.close and R2 performance acceptance are still pending.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

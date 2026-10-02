@@ -2,19 +2,12 @@
   "schema": 1,
   "observed": "2026-09-24",
   "kanon": {
-    "role": "semantic pin (Q0) and oracle, read only",
+    "role": "semantic pin (Q0) of the recorded reference fixtures, read only",
     "checkout": "/Users/oobi/Documents/kanon",
     "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
     "commit_date": "2026-09-09 22:19:37 -0700",
     "head_observed": "69f3be5198cda4334de4fd23b4ccc92cac595789",
-    "head_matches_revision": true,
-    "oracle": {
-      "path": "/Users/oobi/Documents/kanon/_build/default/bin/kanon.exe",
-      "sha256": "d8b522e8b92ce11227fb16c5420d472e33f601013721e1826e9d04fc3231ccc3",
-      "mtime": "2026-09-07",
-      "build_revision": "UNVERIFIED",
-      "note": "The build revision of this executable is UNVERIFIED. The file mtime (2026-09-07) is older than the revision commit date (2026-09-09). The pin check compares the sha256 and the kanon HEAD only."
-    }
+    "head_matches_revision": true
   },
   "bend": {
     "repository": "https://github.com/bendlang/bend.git",

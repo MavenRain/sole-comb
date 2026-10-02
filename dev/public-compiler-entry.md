@@ -58,7 +58,7 @@ It checks the source first, then erases Nat values and ordinary functions using
 the checked types. It drops ghost parameters, universes, proofs and empty
 products, handles eta expansion and partial applications, lifts closures and
 prunes unused captures. That increment refused structural runtime layouts and
-recursive definitions. Fresh pinned-oracle comparisons and direct contracts
+recursive definitions. Pinned-reference fixture comparisons and direct contracts
 run on Bun, Node worker and native; four isolated semantic mutations exercise
 the new gate. See [core erasure validation](validation/stage-a-core-erasure.md).
 
@@ -67,7 +67,7 @@ including closed-record layouts and generated getters. Type and proof fields
 drop before runtime field numbering; nested products and function fields retain
 their checked layouts and captures. Declaration groups collect layouts mentioned
 inside function bodies as well as signatures. A separate explicit product
-fixture supplies the fresh pinned oracle's input. See
+fixture supplies the archived reference input. See
 [product erasure validation](validation/stage-a-product-erasure.md).
 
 Next compiler work should extend this public path: complete erasure and the

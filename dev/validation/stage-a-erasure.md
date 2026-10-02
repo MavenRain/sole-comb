@@ -112,3 +112,5 @@ provide failure evidence for the key binding and capture decisions.
   isolated copy of the staged tree that keeps `.git`, with the logs in this
   repository. The earlier capture came from an external checkout, and its
   command record named that checkout. That record is removed.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

@@ -1,4 +1,4 @@
-"""Raw kernel inputs shared by the A.4 Bend and pinned OCaml checks."""
+"""Raw Bend kernel inputs for the A.4 reference fixture checks."""
 import importlib.util
 from pathlib import Path
 import sys
@@ -15,8 +15,7 @@ ZERO, ONE, MANY, NONE, GLOBALS = H.ZERO, H.ONE, H.MANY, H.NONE, H.GLOBALS
 
 
 def tele(xs):
-    return Expr(seq([pair(q, pair(text(n), t)) for q, n, t in xs]).bend,
-                "[" + "; ".join(f"({q.ocaml}, {text(n).ocaml}, {t.ocaml})" for q, n, t in xs) + "]")
+    return Expr(seq([pair(q, pair(text(n), t)) for q, n, t in xs]).bend)
 
 
 def family(name="F", params=(), indices=(), lev=1):
@@ -35,7 +34,7 @@ def cases():
     rows = []
     def add(name, expr, expected=None): rows.append((name, expr, expected))
     ctx = call("C.ck_ctx", GLOBALS)
-    nt = Expr("P.nat_ty", "P.nat_ty")
+    nt = Expr("P.nat_ty")
     def infer(name, tm, expected=None, c=ctx, q=MANY): add("infer-" + name, call("C.ck_infer", c, q, tm), expected)
     def check(name, tm, ty, expected=None, c=ctx, q=MANY): add("check-" + name, call("C.ck_check", c, q, tm, ty), expected)
     def ann(tm, ty): return ctor("T.Ann", tm, ty)
@@ -47,7 +46,7 @@ def cases():
         for j, (b, _) in enumerate(quantities):
             for op, table in (("add", ((0,1,2),(1,2,2),(2,2,2))), ("mul", ((0,0,0),(0,1,2),(0,2,2))), ("minimum", ((0,0,0),(0,1,1),(0,1,2))), ("maximum", ((0,1,2),(1,1,2),(2,2,2)))):
                 add(f"quantity-{op}-{i}-{j}", call("Q.to_string", call("Q." + op, a, b)), quantities[table[i][j]][1])
-    empty, dead = Expr("Q.empty", "Q.empty"), Expr("Q.unreachable", "Q.unreachable")
+    empty, dead = Expr("Q.empty"), Expr("Q.unreachable")
     once = call("Q.occurrence", integer(0), ONE)
     twice = call("Q.sequence", once, once)
     for name, u in [("empty",empty),("unreachable",dead),("once",once),("twice",twice),("optional",call("Q.alternative",once,empty)),("dead-sequence",call("Q.sequence",once,dead)),("dead-alternative",call("Q.alternative",once,dead)),("capture",call("Q.captures",call("Q.alternative",once,dead))),("remove",call("Q.remove",integer(0),twice))]:
@@ -69,9 +68,9 @@ def cases():
     for i, s in enumerate(["", "a\n\t\r\b\"\\", "éλ😀", "\x00\x7f"]):
         bend = "SNil{}"
         for ch in reversed(s): bend = f"SCon{{Chr{{{ord(ch)}}}, {bend}}}"
-        value = Expr(bend, '"' + ''.join(f"\\{b:03}" for b in s.encode()) + '"')
+        value = Expr(bend)
         add(f"print-string-{i}",call("PP.term",seq([]),ctor("T.Lit",ctor("Lit.LString",value))))
-    add("spec-count",Expr("PP.escape(SC.print)","String.escaped (SC.print ())"))
+    add("spec-count",Expr("PP.escape(SC.print)"))
     pos = [("absent",nt,"ok"),("self",global_("F"),"ok"),("mu-self",lan(mu(),univ()),"ok"),("positive-arrow",ran(pi(nt),global_("F")),"ok"),("negative-arrow",ran(pi(global_("F")),nt),None),("annotated",ann(global_("F"),univ()),None),("applied",H.app(global_("F"),nt),None),("foreign-mu-argument",lan(mu([global_("F")],"G"),univ()),None)]
     for name, tm, want in pos:
         add("positive-"+name,call("C.ck_unit",call("Pos.positive",seq([text("F")]),tm)),want)

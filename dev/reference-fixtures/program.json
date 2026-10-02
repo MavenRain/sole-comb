@@ -1,0 +1,63 @@
+{
+  "inputs_sha256": "f3aabf90a622181aa60888ac672898082c852887789a170cdb85d2ea633e1728",
+  "origin": {
+    "capture": "verified pinned Kanon adapter run before OCaml removal",
+    "compiler": "5.2.1",
+    "inputs": {
+      "dev/elaboration-cases.py": "31385e786620e6d51b7b4d13669e97df75761ae0f8b5dd83ce6133ab5a2568cb",
+      "dev/program-cases.py": "c1f315278708fb879039f677d46bc168decb96a54fc5d124e92367e6e108c68e",
+      "dev/test-pinfront.py": "0250443b37e95995a414e529465dc877c618ad53956c2469ed4ed006d91a87d2",
+      "dev/test-program.py": "11bbc33a021945288eb08402fa02f06f7f544174fe62d6ff7e149ade2b4923fc",
+      "test/kanon/SOURCE.json": "33fc0c067e69c9a7b0db85242895e2b6799e02ac5c8ac140e230386ac49b6c90",
+      "test/kanon/SURVIVORS.tsv": "7516545ba947b1d4285208a5cf6760ce98910dc73bedc33423cc94a994e84307",
+      "test/program-oracle.ml": "6dea4864ef27cb233cce6cf18d0102f275f61cc2d9ba99b3756b3c15230ceb93"
+    },
+    "modes": [
+      "check",
+      "print"
+    ],
+    "oracle_sources": {
+      "bin/kanon.ml": "76188958b33c81fd736a943d4e81972284bc0e3f01171a6bc2ee669ff67a04f6",
+      "lib/bignum.ml": "7159dd7e75fa08a5fc272cba76a8ec6214c7d190151dabf7db1a13bf5ecddd72",
+      "lib/budget.ml": "7d8b2afc86883415c892d6fea0e56c2115e4d859b6b6daa21c611b4e9517f028",
+      "lib/budget.mli": "b830149c9eb6d9362786d2e92c2dc8322f4d31f7b4cfc960ac6e1681d385578f",
+      "lib/check.ml": "cdc3712bf5ed0fa49d8dae34ea946d85a195ea94b25235c821b155570010e335",
+      "lib/conv.ml": "e73e707bcdac54808d8f8a1d9e9a174062edf0afd970972dee2c6d024f6bbe39",
+      "lib/erase.ml": "a6d03447ab9dfedf8e53bceff26cd7da57f113bb4b5d1453aecd618fac508a88",
+      "lib/error.ml": "44c9c263479575ec04db5056404a5940d6bb5514a5b9e1ec6215385c6eccb5b6",
+      "lib/eterm.ml": "028ff6e790f9c391463b961f7a3eac12e105d484285cfde1597e52c5b9ac69c7",
+      "lib/eval.ml": "155ddf7578d4ad68352505064616bed6afa7a260a88f3ddf1722b95fa6a6bd18",
+      "lib/global.ml": "2e5d2d932dfddcb329bcfdf237df87a70f2d79820470dc236e337ec6d275c329",
+      "lib/level.ml": "344bb9819870d8c459154ac8109ba1d69a4ee4312670f3887c6ed30d3dbca448",
+      "lib/level.mli": "c143b2b97e417724a81f8e83548b946d3339917488758b4d5fbf9da9e72e6811",
+      "lib/literal.ml": "80554b1d98c8dde3b474023a01ac57cc4abcaba2a5f20b707041cc5f0361b617",
+      "lib/order.ml": "d2cc3258fde25b61ba33093eaf19112c319329dc5b46ba029b3f042c14388e94",
+      "lib/positivity.ml": "97cb5fc9484ecaec360b4be1ac42f0668ae767aad25efc10ddbc1d4143185471",
+      "lib/pp.ml": "69618578ebb33a3d9803e604760252c77c64681aef2d847f3e1b40f9464e3895",
+      "lib/prim.ml": "5224df4f75e499b8fb962fad2a256b31086fcc9de5ab2f353eb90f61a8408aaa",
+      "lib/quantity.ml": "bf3f633c40a0dbb362cf85ca41b798ae0c9e1d4eca7e09f9b6f482bab2bfbb8b",
+      "lib/rules.ml": "b625cec31061ca79f77669889039e4ae2658393911e39076dc65189022f702ab",
+      "lib/shape.ml": "dafd7741b4332dcab6faba9cb9afb131fb3654172e0d375b1edd1046e69f7f7b",
+      "lib/spec_count.ml": "9a4cb97373ddbabb6156b04f92cc41803ee1b714391ccb669cf38e60d36437e6",
+      "lib/term.ml": "2de6729958bfbc3af10ed2e9c51d6591ab40fa16bd19b7acea1fbf37adf60690",
+      "lib/totality.ml": "046c608584ac21d465d46b05119a89dca5488a15113359eea30ed318a3f7c028",
+      "lib/value.ml": "997f4634df60744c49555e896c1de8d60e51a1086e731e547b48450def9c68c7",
+      "surface/elab.ml": "657b134e25e495e6edc5435bb3c9335bc48637915045fba91da9a595d2e3280d",
+      "surface/lexer.ml": "bb524f0202a01ab0b7a2e94745c9af50c5eede2a4c7d3fa450be785e2eb14254",
+      "surface/parser.ml": "107bb45cfba1335a41cf0268e6c28e05dbb961c1c454c47ef364683d6e04d977",
+      "surface/syntax.ml": "774c0c713f2cdfe493656131b446eb10614e9415ef4d3a0d7cf8a64d2da04c5a",
+      "surface/token.ml": "cd93b520f023f2aa80f42a4e352b47e63fd0c05e399f4c2344af898054fbb6db"
+    },
+    "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "schema": 1,
+    "scope": "A.5b.2 recursive programs and check/print observations; erased mode and full KANON-DIFF pending",
+    "sole_comb_revision": "2a22f67b7f2e18a435d1dfbb969ba78a1a6300e5"
+  },
+  "reference": {
+    "path": "dev/validation/stage-a-program-reference.json",
+    "sha256": "869830500cb1e50685069dffc11bf93093314b01a762c0cd253d49ed7dd22997"
+  },
+  "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "schema": 1,
+  "scope": "program"
+}

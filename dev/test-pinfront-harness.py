@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Failure injection for corpus identity, recorded replay, the saved reference, and oracle output."""
+"""Failure injection for corpus identity, recorded replay, and the saved reference."""
 import copy
 import hashlib
 import importlib.util
@@ -45,13 +45,6 @@ class HarnessTests(unittest.TestCase):
             mode, value = h.native_args(source)
             actual = value.encode() if mode == "text" else bytes.fromhex(value)
             self.assertEqual(source, actual)
-
-    def test_oracle_rows_require_identity_count_and_hex(self):
-        self.assertEqual([b"x", b"y"], h.parse_rows(b"a\t78\nb\t79\n", self.checks))
-        for bad in [b"", b"a\t78\n", b"a\t78\nb\t79\nc\t7a\n", b"a\t78\na\t79\n",
-                    b"b\t78\na\t79\n", b"a\t7\nb\t79\n", b"a\txx\nb\t79\n", b"a\t78\tx\nb\t79\n"]:
-            with self.subTest(bad=bad), self.assertRaises(RuntimeError):
-                h.parse_rows(bad, self.checks)
 
     def test_zero_probes_cannot_pass(self):
         with mock.patch.object(h, "module", return_value=SimpleNamespace(cases=lambda: [])):

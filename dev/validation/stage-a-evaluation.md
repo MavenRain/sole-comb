@@ -138,3 +138,5 @@ Suggested user commit after review:
 ```sh
 git -C /Users/oobi/Documents/sole-comb commit -s -m 'lib: add Stage A.3 evaluation and conversion'
 ```
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

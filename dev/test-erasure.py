@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A.5b.3.1 erased representation and runtime scope differential."""
+"""Compare erasure behavior with immutable pinned Kanon fixtures."""
 import hashlib
 import importlib.util
 import json
@@ -45,63 +45,15 @@ def compare_reference(path=REFERENCE):
     if fresh != saved:
         pairs = zip(fresh.decode().splitlines(), saved.decode().splitlines())
         where = next((new.split("\t", 1)[0] for new, old in pairs if new != old), "the case count")
-        raise RuntimeError(f"fresh oracle observations differ from the saved observations at {where}; "
+        raise RuntimeError(f"reference observations differ from the saved observations at {where}; "
                            f"review {WORK / 'oracle-results.log'} and copy it to {path}")
 
 
 def oracle(pins, checks, env):
-    upstream = Path(pins["kanon"]["checkout"])
-    pin = pins["kanon"]["revision"]
-    if run("oracle-head", ["git", "rev-parse", "HEAD"], env, upstream) != pin:
-        raise RuntimeError("Kanon HEAD differs from the configured pin")
-    if run("oracle-status", ["git", "status", "--porcelain"], env, upstream):
-        raise RuntimeError("Kanon checkout is dirty")
-    sources = {p.stem.capitalize(): p for p in (upstream / "lib").glob("*.ml")}
-    dependencies = run("oracle-dependencies", ["ocamldep", "-modules", *map(str, sources.values())], env)
-    graph = {Path(line.split(":", 1)[0]).stem.capitalize(): line.split(":", 1)[1].split() for line in dependencies.splitlines()}
-    needed = {"Erase", "Eterm"}
-    while True:
-        expanded = needed | {dep for key in needed for dep in graph[key] if dep in sources}
-        if needed == expanded:
-            break
-        needed = expanded
-    dest = WORK / "oracle"
-    if dest.exists():
-        shutil.rmtree(dest)
-    dest.mkdir(parents=True, exist_ok=True)
-    interfaces = {p.stem.capitalize(): p for p in (upstream / "lib").glob("*.mli")}
-    files = [path for key in sorted(needed) for path in (interfaces.get(key), sources[key]) if path is not None]
-    reference = {}
-    for source in files:
-        content = source.read_bytes()
-        pinned = subprocess.run(["git", "show", f"{pin}:lib/{source.name}"], cwd=upstream, capture_output=True, check=True).stdout
-        if content != pinned:
-            raise RuntimeError(f"oracle source differs from pin: {source.name}")
-        (dest / source.name).write_bytes(content)
-        reference[source.name] = digest(source)
-    adapter = (ROOT / "test/erasure-oracle.ml").read_text()
-    calls = [f"let () = Printf.printf \"%s\\t%s\\n\" {json.dumps(name)} ({expr.ocaml})" for name, expr, _ in checks]
-    (dest / "oracle_cases.ml").write_text(adapter + "\n" + "\n".join(calls) + "\n")
-    order = run("oracle-order", ["ocamldep", "-sort", *[source.name for source in files]], env, dest).split()
-    run("oracle-compile", ["ocamlfind", "ocamlc", "-package", "zarith", "-linkpkg", *order, "oracle_cases.ml", "-o", "oracle.exe"], env, dest)
-    rows = run("oracle-results", [str(dest / "oracle.exe")], env).splitlines()
-    parsed = [row.split("\t", 1) for row in rows]
-    if len(parsed) != len(checks) or any(len(row) != 2 or row[0] != case[0] for row, case in zip(parsed, checks)):
-        raise RuntimeError("oracle output has missing, duplicate, or reordered cases")
-    expected = []
-    for (_, observed), (name, _, fixed) in zip(parsed, checks):
-        if fixed is not None and fixed != observed:
-            raise RuntimeError(f"independent expectation failed: {name}: expected {fixed!r}, oracle returned {observed!r}")
-        expected.append(observed)
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
+    expected, provenance = reference.expressions(pins, "erasure", checks)
+    (WORK / "oracle-results.log").write_text("".join(f"{name}\t{value}\n" for (name, _, _), value in zip(checks, expected)))
     compare_reference()
-    provenance = {"sources": reference, "generated_adapter_sha256": digest(dest / "oracle_cases.ml"),
-                  "executable_sha256": digest(dest / "oracle.exe"), "compiler_path": shutil.which("ocamlc"),
-                  "compiler_version": run("oracle-version", ["ocamlc", "-version"], env),
-                  "zarith_version": run("oracle-zarith", ["ocamlfind", "query", "-format", "%v", "zarith"], env),
-                  "build": "fresh compilation of byte-identical sources at the configured revision"}
-    if (run("oracle-head-after", ["git", "rev-parse", "HEAD"], env, upstream) != pin
-            or run("oracle-status-after", ["git", "status", "--porcelain"], env, upstream)):
-        raise RuntimeError("Kanon identity changed during the oracle run")
     return expected, provenance
 
 
@@ -118,7 +70,7 @@ def main():
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
     (ROOT / "_build/bend-cache").mkdir(parents=True, exist_ok=True)
     expected, provenance = oracle(pins, checks, env)
-    print(f"PASS A.5b.3.1 pinned source oracle: {len(checks)} cases", flush=True)
+    print(f"PASS A.5b.3.1 pinned reference fixtures: {len(checks)} cases", flush=True)
     imports = ["import Base", "import ../../test/erasure.bend as C", "import ../../lib/foundation.bend as F",
                "import ../../lib/kernel_literal.bend as Lit", "import ../../erase/eterm.bend as K",
                "import ../../erase/runtime.bend as R"]
@@ -150,10 +102,19 @@ def main():
     if output not in ('"PASS"', "PASS"):
         raise RuntimeError(f"native INFO failed erasure cases:\n{output}")
     print(f"PASS A.5b.3.1 native INFO: {len(checks)} cases", flush=True)
-    inputs = sorted(build.dependencies(ROOT / "test/erasure.bend")) + [ROOT / name for name in (
-        "test/erasure-oracle.ml", "dev/erasure-cases.py", "dev/test-erasure.py", "dev/test-erasure-mutations.py",
-        "dev/build.py", "dev/pin-check.py", "dev/toolchain.json",
-        "dev/house-bend.py", "dev/test-house.py", "dev/bend-policy.json", "Makefile")]
+    inputs = sorted(build.dependencies(ROOT / "test/erasure.bend")) + [ROOT / name for name in ("dev/erasure-cases.py",
+             "dev/test-erasure.py",
+             "dev/test-erasure-mutations.py",
+             "dev/build.py",
+             "dev/pin-check.py",
+             "dev/toolchain.json",
+             "dev/house-bend.py",
+             "dev/test-house.py",
+             "dev/bend-policy.json",
+             "Makefile",
+             "dev/reference-fixtures.py",
+             "dev/reference-fixtures/manifest.json",
+             "dev/reference-fixtures/erasure.json")]
     report = {"milestone": "A.5b.3.1", "cases_per_endpoint": len(checks), "endpoints": list(endpoints),
               "informational_endpoints": ["native"], "sources": {str(p.relative_to(ROOT)): digest(p) for p in inputs},
               "harness_sha256": digest(source), "kanon_revision": pins["kanon"]["revision"], "oracle": provenance,

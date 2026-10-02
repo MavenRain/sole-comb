@@ -1,0 +1,38 @@
+{
+  "fixtures": {
+    "checking": {
+      "path": "checking.json",
+      "sha256": "e5778cc97731421b1c271e80f16b3277dacad41b747823f1efafe3d12706646c"
+    },
+    "core-erasure": {
+      "path": "core-erasure.json",
+      "sha256": "8e5750c3365bfd27d432fd8151f6656a1a7375940207ca5695e99a0ce14a5127"
+    },
+    "elaboration": {
+      "path": "elaboration.json",
+      "sha256": "7b7e182ed91020b591cd7207545a91fd5e013aba1bfcf377d9b2466b1b86ef06"
+    },
+    "erasure": {
+      "path": "erasure.json",
+      "sha256": "97075f46808464b2a3b26b4bff2187167ffd21eebeb556a435910244c16837dd"
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "7d0537ed262f9908f9c5f033bb524360190ccb74448f5907a51c6a0138f5fa67"
+    },
+    "family-layout": {
+      "path": "family-layout.json",
+      "sha256": "156507342cf08e468a6bb49bbd8f1099e3c2acbe3c68c9e4d17f35bfbba849da"
+    },
+    "pinfront": {
+      "path": "pinfront.json",
+      "sha256": "5e92f9144a9043dbfb6696c94884d6bbdc35c0adbd185006cd0f41b76e50065d"
+    },
+    "program": {
+      "path": "program.json",
+      "sha256": "9000f197cfd91ce4d66411a7858bd4ce485fb1d5153c7448ad1487e8adf535a7"
+    }
+  },
+  "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "schema": 1
+}

@@ -1,0 +1,228 @@
+{
+  "core_erasure_raw_adapter_output": {
+    "adapter": "test/core-erasure-oracle.ml at HEAD 2a22f67",
+    "adapter_sha256": "f2067e5eda8732c0078f53debeef27d71f6c71af01c1838313c28bfd226295d8",
+    "mtime": "2026-10-01 17:35",
+    "stdout_sha256": {
+      "_build/core-erasure/oracle-0.stdout": "28ce97c8012a9a7e33887c48a7beaa6a6e31aa85a2c9be3b3d6ec54df8a23b97",
+      "_build/core-erasure/oracle-1.stdout": "393b8bb402aecc61b17c2fe9ecf160cf5d7dca38087e8204f5dd55399b411cb5",
+      "_build/core-erasure/oracle-2.stdout": "f5518595533f0d9a5a9a4d26663ce1fb52ead88d8a60868ff0ba81f412c174c5",
+      "_build/core-erasure/oracle-3.stdout": "4c1043b2ffdce65f1253f6da924debe374733159802216a154cbc2d95ef49ac1",
+      "_build/core-erasure/oracle-4.stdout": "492d0c74c5cf4da2ef3892a4f0924c92bd173df46db3e3f2c85b7a8f7abec588",
+      "_build/core-erasure/oracle-5.stdout": "d91af27118265a31d084539e8eaf7d869e1e825d445ae385b221d3b1db532521",
+      "_build/core-erasure/oracle-6.stdout": "babac175be1d3ebd90608741222f9c58d80b48726113b686bca7e63ec27c7c26",
+      "_build/core-erasure/oracle-7.stdout": "c70b3cb3e2073811341a9bc5398d7742a5df2252d3feb5a725e142a57647b0fe"
+    }
+  },
+  "evidence": "dev/validation/no-ocaml-cleanup.md",
+  "fixture_tests": {
+    "result": "PASS",
+    "tests": 11
+  },
+  "kanon_revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "limitations": [
+    "The review rerun ran make gates without test-bench and R2."
+  ],
+  "logs": {
+    "note": "ephemeral copies outside the repository; not reproducible from the repository",
+    "paths": {
+      "erasure_cli_core_family": "/private/tmp/sole-comb-no-ocaml-edit/.kanon-exec/run-R70RMm",
+      "parser_elaboration_and_partial_program": "/private/tmp/sole-comb-no-ocaml-edit/.kanon-exec/run-mWnjnx",
+      "suite_prefix": "/private/tmp/sole-comb-no-ocaml-edit/.kanon-exec/run-uWTs1H"
+    }
+  },
+  "observations_unchanged": {
+    "checking": 291,
+    "core_erasure": 8,
+    "elaboration": 221,
+    "erasure": 221,
+    "evaluation": 251,
+    "family_layout": 6,
+    "pinfront": 561,
+    "program": {
+      "files": 245,
+      "modes": 2
+    }
+  },
+  "program_mutations": "PASS in the review rerun (make test-program-mutations, 2555 s)",
+  "program_runtime": {
+    "backend": "bun",
+    "cases": [
+      "examples/m0-spine.kan",
+      "examples/m1-spine.kan",
+      "examples/reactor-realpath.kan",
+      "test/agreement/agreement-natAdd.kan",
+      "test/agreement/agreement-natEq.kan",
+      "test/agreement/agreement-natLt.kan"
+    ],
+    "completed_cases_matching_reference": 6,
+    "full_corpus": "complete in the review rerun; 245 files, 2 modes",
+    "modes": [
+      "check",
+      "print"
+    ]
+  },
+  "records": {
+    "dev/validation/stage-a-checking-mutations.json": "338c37d3a174df210974dff2e92743fc8ee5903fd4e7cbc1a5073a2a784a0877",
+    "dev/validation/stage-a-checking.json": "73bdda70b685b21ed61c848329c6836e1371bea0ae48bb79d062bcc9e91525f5",
+    "dev/validation/stage-a-core-erasure-mutations.json": "cd5be6b61fbce2bbf6784ada2e87d744675c095ee77cebcef6098097e4a41516",
+    "dev/validation/stage-a-core-erasure.json": "a511ae052834abedcce4f32620c4f5b81045b0f2326cfc1e3a8590b31eb4b24e",
+    "dev/validation/stage-a-elaboration-mutations.json": "673454be5621572374f63f88146e736cb4b8e2a6694280d9a16e7860e94edf42",
+    "dev/validation/stage-a-elaboration.json": "c4546f345fdb6ba28937b4a80064b28adbcd32076c5e49b30e93524612922f15",
+    "dev/validation/stage-a-erasure-mutations.json": "13c41073fc4ba7937f9cb67c131d3a95daec9639c64b96847abd016ea0b0a108",
+    "dev/validation/stage-a-erasure.json": "1fadecf3ab7e96a1cdf1761ada16259a4bd9c1cbb9a26c17e59408377c32f665",
+    "dev/validation/stage-a-evaluation.json": "7e46b7dd5e2f893469bd24859873fa9516de846ddb544315d26f36da4a896f51",
+    "dev/validation/stage-a-family-layout.json": "68565cca11565a646a4aa4c6875bbd6be7b08b5981aa5defe4101bfd0cf8235b",
+    "dev/validation/stage-a-foundation.json": "014a27d9e3047788a9a4553d30189315b56b08541e7692a399dd60dfbe53e5d9",
+    "dev/validation/stage-a-pinfront-mutations.json": "90e433075a4a898b72a65160ad9ac02e8665a2a04c36c35da72a139e3ea5ca8b",
+    "dev/validation/stage-a-pinfront.json": "83b0483e648d39a3b275dba2210531112897c9a3e722927dfa2936e71be97104",
+    "dev/validation/stage-a-program-mutations.json": "a2c98fbaf284b856a8cdcb70b46c2e55a9ad895fee6075966c8eb355a8c3cf64",
+    "dev/validation/stage-a-program.json": "927bbaaaf9a25a702e7d39032608ee4336002c94c27533757b6016d4438e4097",
+    "dev/validation/stage-a-representation.json": "9c8d4fc32fa9de8b7fb877b2107c66d71fa48d18299fdc706dede82fb07b4c1d"
+  },
+  "reference_mode": "immutable recorded Kanon observations; no live oracle compilation",
+  "review_rerun": {
+    "date": "2026-10-01",
+    "first_attempt": {
+      "cause": {
+        "evaluation": "bend compile of checks.bend exceeded the 120 s subprocess limit",
+        "program": "bun/0006-both exceeded the 1800 s large-input limit"
+      },
+      "steps": {
+        "evaluation": {
+          "exit": 2,
+          "seconds": 127
+        },
+        "program": {
+          "exit": 2,
+          "seconds": 1898
+        }
+      }
+    },
+    "hosts": [
+      "bun",
+      "node-worker",
+      "native"
+    ],
+    "limit_change": {
+      "dev/test-evaluation.py": "compile-native limit 120 s to 1800 s",
+      "dev/test-program.py": "emit-native limit 300 s to 1800 s"
+    },
+    "load_gate": 40,
+    "load_wait_seconds": 120,
+    "omitted": [
+      "test-bench",
+      "R2"
+    ],
+    "second_attempt": {
+      "cause": {
+        "evaluation": "bend compile of checks.bend exceeded the 120 s subprocess limit",
+        "program": "bun and node-worker passed 245 files in 2 modes; emit-native then exceeded the 300 s limit"
+      },
+      "load_wait_seconds": 420,
+      "same_index": true,
+      "steps": {
+        "evaluation": {
+          "exit": 2,
+          "seconds": 129
+        },
+        "program": {
+          "exit": 2,
+          "seconds": 4932
+        }
+      },
+      "uptime": [
+        "23:56  28 users, load averages: 37.54 58.33 80.68",
+        "23:58  28 users, load averages: 44.83 53.19 75.41",
+        " 1:20  28 users, load averages: 120.28 106.93 79.47"
+      ]
+    },
+    "steps": {
+      "buildcheck": {
+        "exit": 0,
+        "seconds": 2
+      },
+      "checking": {
+        "exit": 0,
+        "seconds": 107
+      },
+      "cli3": {
+        "exit": 0,
+        "seconds": 223
+      },
+      "core": {
+        "exit": 0,
+        "seconds": 206
+      },
+      "elab": {
+        "exit": 0,
+        "seconds": 342
+      },
+      "erasure": {
+        "exit": 0,
+        "seconds": 23
+      },
+      "evaluation": {
+        "exit": 0,
+        "seconds": 175
+      },
+      "family": {
+        "exit": 0,
+        "seconds": 93
+      },
+      "fixtures": {
+        "exit": 0,
+        "seconds": 0
+      },
+      "foundation": {
+        "exit": 0,
+        "seconds": 86
+      },
+      "house": {
+        "exit": 0,
+        "seconds": 0
+      },
+      "pincheck": {
+        "exit": 0,
+        "seconds": 0
+      },
+      "pinfront": {
+        "exit": 0,
+        "seconds": 620
+      },
+      "program": {
+        "exit": 0,
+        "seconds": 2555
+      },
+      "representation": {
+        "exit": 0,
+        "seconds": 105
+      }
+    },
+    "third_attempt": {
+      "load_wait_seconds": 120,
+      "same_index": false,
+      "steps": {
+        "evaluation": {
+          "exit": 0,
+          "seconds": 175
+        },
+        "program": {
+          "exit": 0,
+          "seconds": 2555
+        }
+      },
+      "uptime": [
+        " 1:30  28 users, load averages: 39.94 58.67 68.20",
+        " 1:33  28 users, load averages: 69.28 62.35 67.66",
+        " 2:15  28 users, load averages: 11.79 16.44 28.16"
+      ]
+    },
+    "uptime": [
+      "22:30  28 users, load averages: 38.25 44.68 47.36",
+      "23:34  28 users, load averages: 132.67 115.01 88.53"
+    ]
+  },
+  "schema": 1,
+  "validated_ocaml_source_count": 0
+}

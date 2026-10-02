@@ -1,0 +1,42 @@
+{
+  "inputs_sha256": "4b75015536c782858ac708010a57485b9c3e97079862f608d034f30049a132a4",
+  "origin": {
+    "capture": "verified pinned Kanon adapter run before OCaml removal",
+    "inputs": {
+      "dev/pinfront-cases.py": "9b32d0de06e0a02e04d7511011815ed16fa7ad5463dd5f0a0cd1640673a92e72",
+      "dev/test-pinfront.py": "0250443b37e95995a414e529465dc877c618ad53956c2469ed4ed006d91a87d2",
+      "test/kanon/SOURCE.json": "33fc0c067e69c9a7b0db85242895e2b6799e02ac5c8ac140e230386ac49b6c90",
+      "test/kanon/SURVIVORS.tsv": "7516545ba947b1d4285208a5cf6760ce98910dc73bedc33423cc94a994e84307",
+      "test/pinfront-oracle.ml": "122c29c671faf7e4eda59a1a2e12c1cb28821b3715109a4844e1bb56761acd13"
+    },
+    "oracle": {
+      "adapter_sha256": "163b35a7282cf63eb33e4e61c69919817b28434df0e00b413a3175047c0eb05e",
+      "build": "fresh compilation of unchanged pinned sources, outside the Kanon checkout",
+      "compiler": "/Users/oobi/.opam/zxcaml-p1/bin/ocamlc",
+      "compiler_version": "5.2.1",
+      "executable_sha256": "e4117e37070d12cc33bf8009c442603f25f028ba08f03c50524c91b2891c18a7",
+      "sources": {
+        "lib/bignum.ml": "7159dd7e75fa08a5fc272cba76a8ec6214c7d190151dabf7db1a13bf5ecddd72",
+        "lib/error.ml": "44c9c263479575ec04db5056404a5940d6bb5514a5b9e1ec6215385c6eccb5b6",
+        "lib/quantity.ml": "bf3f633c40a0dbb362cf85ca41b798ae0c9e1d4eca7e09f9b6f482bab2bfbb8b",
+        "surface/lexer.ml": "bb524f0202a01ab0b7a2e94745c9af50c5eede2a4c7d3fa450be785e2eb14254",
+        "surface/parser.ml": "107bb45cfba1335a41cf0268e6c28e05dbb961c1c454c47ef364683d6e04d977",
+        "surface/syntax.ml": "774c0c713f2cdfe493656131b446eb10614e9415ef4d3a0d7cf8a64d2da04c5a",
+        "surface/token.ml": "cd93b520f023f2aa80f42a4e352b47e63fd0c05e399f4c2344af898054fbb6db"
+      },
+      "wrapper_sha256": "3471f25ca8d942f7eb1455434f018b4d5714caa903429b804d4c3704da147324",
+      "zarith_version": "1.14"
+    },
+    "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+    "schema": 1,
+    "scope": "pinned lexer, parser, syntax printer; no elaboration or kernel verdict",
+    "sole_comb_revision": "2a22f67b7f2e18a435d1dfbb969ba78a1a6300e5"
+  },
+  "reference": {
+    "path": "dev/validation/stage-a-pinfront-reference.json",
+    "sha256": "e3433096a3f4032a957d7125a1f79cbd7326cac73fd9e1de3fbb6b7011416df2"
+  },
+  "revision": "69f3be5198cda4334de4fd23b4ccc92cac595789",
+  "schema": 1,
+  "scope": "pinfront"
+}

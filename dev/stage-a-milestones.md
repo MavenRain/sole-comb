@@ -61,11 +61,15 @@ constructor layout planning in `erase/family.bend`. It resets the local scope,
 opens parameters as variables, evaluates dependent field types, and omits
 zero-quantity, type and proof fields. Constructor tags follow the completed
 family's declaration order. `make test-family-layout` compares these plans
-with freshly compiled pinned Kanon on Bun, Node worker and native;
+with pinned Kanon reference fixtures on Bun, Node worker and native;
 `make test-family-layout-mutations` also checks four semantic mutations on Bun.
 The [layout evidence](validation/stage-a-family-layout.md) describes the
 record, which contains exact observations and source hashes. Runtime constructor and match erasure remain
 the next part of recursive-family integration.
+
+Semantic gates compare with recorded Kanon fixtures, not with live OCaml
+adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)
+records the provenance of each fixture.
 
 ## Compiler commits
 
@@ -73,9 +77,9 @@ the next part of recursive-family integration.
 |---|---|---|
 | A.1, foundation | A1: `lib/foundation.bend`, `kernel_budget.bend`, `kernel_error.bend`, `kernel_level.bend`, `kernel_literal.bend` | Pinned host checks/builds for the landed modules, source-policy checks, and focused foundation, budget, error, level, and literal checks. |
 | A.2, representation | A2: `kernel_term.bend`, `kernel_value.bend`, `kernel_shape.bend`, `kernel_global.bend`, `kernel_prim.bend`, plus the A.2 subsets of `kernel_quantity.bend` (tags), `kernel_positivity.bend` (records and constructor lookup), and `kernel_rules.bend` (arrow, unit, and boolean builders) | Build the landed dependency closure and exercise representation, lookup, and primitive contracts. |
-| A.3, evaluation | A3: `kernel_eval.bend`, `kernel_conv.bend`, the runtime and conversion subset of `kernel_rules.bend`, quantity equality, and signed host index arithmetic | Evaluation and conversion cases covering normal forms, refusal and budget exhaustion, plus comparisons with the pinned oracle wherever an adapter is available. |
+| A.3, evaluation | A3: `kernel_eval.bend`, `kernel_conv.bend`, the runtime and conversion subset of `kernel_rules.bend`, quantity equality, and signed host index arithmetic | Evaluation and conversion cases covering normal forms, refusal and budget exhaustion, plus comparisons with pinned Kanon reference fixtures. |
 | A.4, checking | A4 through A6: the remaining rules, checking, positivity checking, the quantity algebra, printing, and specification counts | Focused acceptance/refusal, typing, shape, positivity, quantity, and printing checks, the specification counts, and earlier milestone regressions. |
-| A.5a, test frontend parsing | A7 corpus and gate plumbing; A8 lexer, parser, and syntax printing in `test/pinfront/` | Every pinned corpus file and supplemental lexer/parser cases compared with freshly compiled pinned Kanon modules on Bun, Node worker, and native; malformed-output and isolated mutation checks. |
+| A.5a, test frontend parsing | A7 corpus and gate plumbing; A8 lexer, parser, and syntax printing in `test/pinfront/` | Every pinned corpus file and supplemental lexer/parser case compared with immutable pinned Kanon fixtures on Bun, Node worker, and native; malformed-output and isolated mutation checks. |
 | A.5b.1, elaboration entry points | A9 through A10 expression and declaration elaboration in `test/pinfront/`, ordinary declaration checking, and mutual family admission | Exact pinned declaration observations for all 146 corpus files and focused probes on Bun, Node worker, and native; isolated semantic mutations. Recursive groups exercise the declaration API refusal. |
 | A.5b.2, recursive programs | A9 through A10 recursive program driver, order certificates, totality checking, and A7 check/print observation plumbing | Exact stdout, stderr, and exit observations for all 146 corpus files and focused probes on Bun, Node worker, and native; direct contracts and isolated mutations. |
 | A.5b.3.1, erasure support | Pinned `lib/eterm.ml` representation and printer in `erase/eterm.bend`; runtime variable reindexing, collection, and capture pruning from `lib/erase.ml` in `erase/runtime.bend` | Exact pinned observations on Bun, Node worker, and native, independent binding and printer expectations, and isolated semantic mutations. |

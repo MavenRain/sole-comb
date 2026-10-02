@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare nominal recursive-family layouts with freshly compiled pinned Kanon."""
+"""Compare nominal recursive-family layouts with immutable pinned Kanon fixtures."""
 import argparse
 import importlib.util
 import json
@@ -57,22 +57,20 @@ def main():
     core = module("family_layout_core", ROOT / "dev/test-core-erasure.py")
     build = module("family_layout_build", ROOT / "dev/build.py")
     core.WORK = WORK
+    reference = module("sole_reference", ROOT / "dev/reference-fixtures.py")
 
     def snapshot():
-        paths = list(core.sources()) + ["dev/test-family-layout.py", *TEST_SOURCES, *FIXTURES]
+        paths = list(core.sources()) + ["dev/test-family-layout.py", *reference.source_files("family-layout"), *TEST_SOURCES, *FIXTURES]
         return {path: core.digest(ROOT / path) for path in sorted(set(paths))}
 
     hashes = snapshot()
     pins = json.loads((ROOT / "dev/toolchain.json").read_text())
     env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
     (ROOT / "_build/bend-cache").mkdir(parents=True, exist_ok=True)
-    _, provenance = core.oracle(pins, env)
-    expected = {}
-    for i, (path, names) in enumerate(FIXTURES.items()):
-        result = core.run(f"layout-oracle-{i}", [WORK / "oracle/oracle.exe", "--layouts", ROOT / path, *names], env)
-        if result["stderr"] or not result["stdout"]:
-            raise RuntimeError(f"malformed oracle result for {path}")
-        expected[path] = result["stdout"]
+    inputs = [[path, core.digest(ROOT / path), list(names)] for path, names in FIXTURES.items()]
+    expected, provenance = reference.load(pins, "family-layout", inputs)
+    if not isinstance(expected, dict) or set(expected) != set(FIXTURES) or any(not isinstance(value, str) or not value for value in expected.values()):
+        raise RuntimeError("malformed family layout reference observations")
     if any(line not in expected["test/family-layouts.kan"].splitlines() for line in GOLDENS):
         raise RuntimeError("pinned family layout output differs from independent goldens")
     binary, _, _ = build.compiler(pins)

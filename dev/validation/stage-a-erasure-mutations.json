@@ -54,7 +54,7 @@
       "output_sha256": "396c161e5588e17b186d1c063af518b128f497b85c543c204ffd85a486d58ea7"
     }
   ],
-  "erasure_evidence_sha256": "b7f60ccdb79343d666fe0d9dfc84813ce30b67f3b6387fce65f3d9390eca86f5",
+  "erasure_evidence_sha256": "1fadecf3ab7e96a1cdf1761ada16259a4bd9c1cbb9a26c17e59408377c32f665",
   "runner_sha256": "70156b0e12fe6b9592312c370f936c7e313842359a4d6a8db370066540991cc6",
   "source_hashes": {
     "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
@@ -67,16 +67,18 @@
     "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
     "test/erasure.bend": "417882b638eb2b5bcf1288cb100f462d18c4a216df3adfcb3158d9400961a491",
     "test/foundation.bend": "cc647ec6407f2d39c30abc6f75b6abb9c92213dc600183bf3e112d5d1d20c533",
-    "test/erasure-oracle.ml": "e2c8d32a73b31f510681db8bc76cb28537c793c02238988176fadaa0b7a24130",
-    "dev/erasure-cases.py": "e0336f4ca57ae82868d4c0a0744a6b492b701ffae3fc57313e82dcd1131406ae",
-    "dev/test-erasure.py": "bafc94d64c3fac980ce447fd1cbf719ec2bdea69b7973a2a6c51566b326b57f0",
+    "dev/erasure-cases.py": "052e45b585e704bb872baa569c704286602a9ecfe12b5a0bfca1d5220a1c476b",
+    "dev/test-erasure.py": "909c7d985217b4f78e1968eb91fe3912c54922d80a1c61dbbf33c8ae50e62412",
     "dev/test-erasure-mutations.py": "70156b0e12fe6b9592312c370f936c7e313842359a4d6a8db370066540991cc6",
-    "dev/build.py": "4f9b7a650747c5cccdfb7eab219fc04d90430ed2beb648c11cca2091dab67991",
-    "dev/pin-check.py": "1b56907dfeaa00caa25dd5690cb03df06f2ac20d312c3b5d5217ce58ac5e0e6d",
-    "dev/toolchain.json": "a2e13402fa2e7db7abfab6ed634cde07d35bb64276f12f67683758ef70cb1cf6",
-    "dev/house-bend.py": "5e9ac6c26aefb74dd6462110a025736d2b37d5da2a50f3b3463bdfb0afb5b9e4",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/pin-check.py": "fc34309e4cccac54ebc7d37a7ea42662420935cc8ebf38b8eae47d6fbd2c59b9",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "dev/house-bend.py": "430e5928180ba79ea17ffc48143a9cb823fffac090d523e295670ef1cb8cf025",
     "dev/test-house.py": "7f3f5916cdf18e743d912f09ee61b1d8bea2a7947dbaa4a03dd718016e5237bd",
-    "dev/bend-policy.json": "8e8d9e3f356605d24667c36ff7dd017ca8bc639b8532215aba6d0580c25437a0",
-    "Makefile": "6599a66c54aa1c26e24c3021a19513912c4155db7e46066943b38a22a443747c"
+    "dev/bend-policy.json": "80b7f0cd9e5427c2cb8313c4006ba95e31a59bb4391747c4184390ca858b7dc3",
+    "Makefile": "5594d4c57e6893bd43c22ac0b1b17e49c01446f1b6c2204d47cfcaf9964b6ec3",
+    "dev/reference-fixtures.py": "7b74e199dda17d6c9baf52ebbe3fba938088f1c326a25600a1169f9c371df7e6",
+    "dev/reference-fixtures/manifest.json": "7c54c680e4a71019595c76a1caf1c190dbfd8ea4113e0e8bfae59c1d35769314",
+    "dev/reference-fixtures/erasure.json": "97075f46808464b2a3b26b4bff2187167ffd21eebeb556a435910244c16837dd"
   }
 }

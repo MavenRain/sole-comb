@@ -129,3 +129,5 @@ selection are not completed by these focused checks.
 - The gate rerun used an isolated copy of the staged tree that keeps `.git`.
 
 No commit was created.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.

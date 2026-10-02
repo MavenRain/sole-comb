@@ -6,18 +6,15 @@ import json
 @dataclass(frozen=True)
 class Expr:
     bend: str
-    ocaml: str
 
 
 def text(value):
-    # OCaml strings hold UTF-8 bytes; Bend strings hold Unicode scalars.
-    encoded = "".join(f"\\{byte:03d}" for byte in value.encode())
     bend = json.dumps(value)
     if any(ord(c) < 32 or ord(c) >= 127 for c in value):
         bend = "SNil{}"
         for c in reversed(value):
             bend = f"SCon{{Chr{{{ord(c)}}}, {bend}}}"
-    return Expr(bend, '"' + encoded + '"')
+    return Expr(bend)
 
 
 def integer(value):
@@ -26,20 +23,19 @@ def integer(value):
     while magnitude:
         limbs.append(magnitude % 32768)
         magnitude //= 32768
-    return Expr(f'F.Int63.Int{{{"True" if value < 0 else "False"}{{}}, {limbs}}}', f"({value})")
+    return Expr(f'F.Int63.Int{{{"True" if value < 0 else "False"}{{}}, {limbs}}}')
 
 
 def items(values):
-    return Expr("[" + ", ".join(v.bend for v in values) + "]", "[" + "; ".join(v.ocaml for v in values) + "]")
+    return Expr("[" + ", ".join(v.bend for v in values) + "]")
 
 
 def ctor(name, *args):
-    return Expr(f'K.{name}{{{", ".join(a.bend for a in args)}}}',
-                f'(K.{name}' + (" (" + ", ".join(a.ocaml for a in args) + ")" if args else "") + ")")
+    return Expr(f'K.{name}{{{", ".join(a.bend for a in args)}}}')
 
 
-def call(bend, ocaml, *args):
-    return Expr(f'{bend}({", ".join(a.bend for a in args)})', f'({ocaml} ' + " ".join(a.ocaml for a in args) + ")")
+def call(bend, *args):
+    return Expr(f'{bend}({", ".join(a.bend for a in args)})')
 
 
 def var(n):
@@ -55,28 +51,27 @@ def fid(name):
 
 
 def branch(tag, arity, body):
-    return Expr(f'K.Branch{{{integer(tag).bend}, {integer(arity).bend}, {body.bend}}}',
-                f'{{ K.tag = {tag}; arity = {arity}; body = {body.ocaml} }}')
+    return Expr(f'K.Branch{{{integer(tag).bend}, {integer(arity).bend}, {body.bend}}}')
 
 
 def lit_int(n):
-    value = call("C.number", "number", text(str(abs(n))))
+    value = call("C.number", text(str(abs(n))))
     if n < 0:
-        value = Expr(f"F.Bignum.negate({value.bend})", f"(Bignum.mul (Bignum.of_int (-1)) {value.ocaml})")
-    return Expr(f'K.KLit{{Lit.LInt{{{value.bend}}}}}', f'(K.KLit (Literal.LInt {value.ocaml}))')
+        value = Expr(f"F.Bignum.negate({value.bend})")
+    return Expr(f'K.KLit{{Lit.LInt{{{value.bend}}}}}')
 
 
 def lit_string(s):
     value = text(s)
-    return Expr(f'K.KLit{{Lit.LString{{{value.bend}}}}}', f'(K.KLit (Literal.LString {value.ocaml}))')
+    return Expr(f'K.KLit{{Lit.LString{{{value.bend}}}}}')
 
 
 def printed(term):
-    return call("K.print_ktm", "K.print_ktm", term)
+    return call("K.print_ktm", term)
 
 
 def mapped(term):
-    return call("C.mapping", "K.print_ktm", term)
+    return call("C.mapping", term)
 
 
 def cases():
@@ -119,34 +114,34 @@ def cases():
         ("empty-case", ctor("KCase", tid("empty"), var(2), items([])), "KCase empty (KVar 2) []", [2]),
         ("empty-delay", ctor("KDelay", fid("f"), items([])), "KDelay f []", []),
     ]
-    remap = Expr("+i => F.Int63.add(F.Int63.add(i, i), F.Int63.one)", "(fun i -> 2 * i + 1)")
+    remap = Expr("+i => F.Int63.add(F.Int63.add(i, i), F.Int63.one)")
     for name, term, golden, variables in samples:
         add("print/" + name, printed(term), golden)
-        add("vars/" + name, call("C.vars", "vars", integer(0), term), "[" + "; ".join(map(str, variables)) + "]")
-        add("vars-under/" + name, call("C.vars", "vars", integer(2), term))
-        add("shift/" + name, mapped(call("R.shift_runtime", "R.shift_runtime", integer(3), integer(0), term)))
-        add("shift-under/" + name, mapped(call("R.shift_runtime", "R.shift_runtime", integer(-2), integer(1), term)))
-        add("reindex/" + name, mapped(call("C.reindex", "R.reindex_runtime", remap, integer(1), term)))
-        identity = Expr("i => i", "(fun i -> i)")
-        add("identity/" + name, mapped(call("C.reindex", "R.reindex_runtime", identity, integer(0), term)), golden)
+        add("vars/" + name, call("C.vars", integer(0), term), "[" + "; ".join(map(str, variables)) + "]")
+        add("vars-under/" + name, call("C.vars", integer(2), term))
+        add("shift/" + name, mapped(call("R.shift_runtime", integer(3), integer(0), term)))
+        add("shift-under/" + name, mapped(call("R.shift_runtime", integer(-2), integer(1), term)))
+        add("reindex/" + name, mapped(call("C.reindex", remap, integer(1), term)))
+        identity = Expr("i => i")
+        add("identity/" + name, mapped(call("C.reindex", identity, integer(0), term)), golden)
 
     for name, body, golden, variables in (
         ("force", var(0), "KForce (" * 128 + "KVar 0" + ")" * 128, "[0]"),
         ("let", var(128), "KLet x (KVar 0) (" * 128 + "KVar 128" + ")" * 128, "[0; 0]"),
     ):
-        term = call(f"C.{name}_chain", f"{name}_chain", Expr("128n", "128"), body)
+        term = call(f"C.{name}_chain", Expr("128n"), body)
         add("deep/print-" + name, printed(term), golden)
-        add("deep/vars-" + name, call("C.vars", "vars", integer(0), term), variables)
-        add("deep/shift-" + name, mapped(call("R.shift_runtime", "R.shift_runtime", integer(3), integer(0), term)))
+        add("deep/vars-" + name, call("C.vars", integer(0), term), variables)
+        add("deep/shift-" + name, mapped(call("R.shift_runtime", integer(3), integer(0), term)))
 
     representations = [(ctor("RI31"), "i31")]
     representations += [(ctor(name, tid("tag")), word + " tag") for name, word in (
         ("RStruct", "struct"), ("RUnion", "union"), ("RFunc", "func"), ("RThunk", "thunk"))]
     for i, (representation, golden) in enumerate(representations):
-        add(f"repr/{i}", call("K.print_repr", "K.print_repr", representation), golden)
+        add(f"repr/{i}", call("K.print_repr", representation), golden)
     for i, name in enumerate(("", "raw name;[]", "λ😀")):
-        add(f"tid/{i}", call("K.tid_text", "K.tid_text", tid(name)), name)
-        add(f"fid/{i}", call("K.fid_text", "K.fid_text", fid(name)), name)
+        add(f"tid/{i}", call("K.tid_text", tid(name)), name)
+        add(f"fid/{i}", call("K.fid_text", fid(name)), name)
     for n in (0, -1, -(2**100), 2**160, 2**62 - 1):
         add(f"integer/{n}", printed(lit_int(n)), "KLit " + str(n))
     strings = [
@@ -158,13 +153,13 @@ def cases():
         add(f"string/{i}", printed(lit_string(value)), golden)
     for n in (-(2**62), 2**62 - 1):
         add(f"host-index/{n}", printed(var(n)), f"KVar {n}")
-    add("shift/wrap", mapped(call("R.shift_runtime", "R.shift_runtime", integer(1), integer(0), var(2**62 - 1))), f"KVar {-2**62}")
-    add("branch/negative", call("K.print_branch", "K.print_branch", branch(-1, -2, var(-3))), "{-1 -2 (KVar -3)}")
-    add("decl/rec-empty", call("K.print_decl", "K.print_decl", ctor("KRec", items([]))), "rec []")
-    add("decl/rec", call("K.print_decl", "K.print_decl", ctor("KRec", items([tid("a"), tid("b")]))), "rec [a; b]")
-    add("decl/fun", call("K.print_decl", "K.print_decl", ctor("KFun", fid("f"), items([r for r, _ in representations]), ctor("RI31"), var(0))),
+    add("shift/wrap", mapped(call("R.shift_runtime", integer(1), integer(0), var(2**62 - 1))), f"KVar {-2**62}")
+    add("branch/negative", call("K.print_branch", branch(-1, -2, var(-3))), "{-1 -2 (KVar -3)}")
+    add("decl/rec-empty", call("K.print_decl", ctor("KRec", items([]))), "rec []")
+    add("decl/rec", call("K.print_decl", ctor("KRec", items([tid("a"), tid("b")]))), "rec [a; b]")
+    add("decl/fun", call("K.print_decl", ctor("KFun", fid("f"), items([r for r, _ in representations]), ctor("RI31"), var(0))),
         "fun f (i31, struct tag, union tag, func tag, thunk tag) : i31 := KVar 0")
-    add("decl/no-params", call("K.print_decl", "K.print_decl", ctor("KFun", fid("g"), items([]), ctor("RUnion", tid("any")), ctor("KErased"))),
+    add("decl/no-params", call("K.print_decl", ctor("KFun", fid("g"), items([]), ctor("RUnion", tid("any")), ctor("KErased"))),
         "fun g () : union any := KErased")
 
     ps = items([ctor("RStruct", tid("a")), ctor("RStruct", tid("b")), ctor("RStruct", tid("c"))])
@@ -188,7 +183,7 @@ def cases():
         ("outer", var(8), 2, "[]|[]|KVar 2"),
     ]
     for name, body, params, golden in pruning:
-        result = call("R.prune_captures", "R.prune_captures", ps, args, integer(params), body)
-        add("prune/" + name, call("C.pruned", "pruned", result), golden)
-    add("prune/empty", call("C.pruned", "pruned", call("R.prune_captures", "R.prune_captures", items([]), items([]), integer(1), var(0))), "[]|[]|KVar 0")
+        result = call("R.prune_captures", ps, args, integer(params), body)
+        add("prune/" + name, call("C.pruned", result), golden)
+    add("prune/empty", call("C.pruned", call("R.prune_captures", items([]), items([]), integer(1), var(0))), "[]|[]|KVar 0")
     return rows

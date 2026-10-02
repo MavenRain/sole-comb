@@ -72,7 +72,7 @@ make gates           # existing regressions, landed Stage A checks, policies, pi
 make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
 make test-representation # real A.2 dependency closure on the same hosts
 make test-evaluation # real A.3 evaluator and converter on the same hosts
-make test-checking   # A.4 checker against the pinned OCaml oracle on all three hosts
+make test-checking   # A.4 checker against pinned reference fixtures on all three hosts
 make test-checking-mutations # checker comparisons and three isolated mutations
 make test-pinfront   # pinned lexer/parser comparisons on all three hosts
 make test-pinfront-mutations # parser comparisons and five isolated mutations
@@ -82,9 +82,9 @@ make test-program     # whole-program check/print comparisons and direct contrac
 make test-program-mutations # program comparisons and three isolated mutations
 make test-erasure     # erased representation and runtime scope against pinned Kanon
 make test-erasure-mutations # erasure support comparisons and three isolated mutations
-make test-core-erasure # ordinary and product erasure against a fresh pinned oracle
+make test-core-erasure # ordinary and product erasure against pinned reference fixtures
 make test-core-erasure-mutations # quantity, binding, layout and projection mutations
-make test-family-layout # nominal family layouts against a fresh pinned oracle
+make test-family-layout # nominal family layouts against pinned reference fixtures
 make test-family-layout-mutations # layout comparisons and four semantic mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
@@ -96,6 +96,26 @@ driver. It uses Bun for development while the endpoint is unset, or the selected
 endpoint afterward. `check --host bun|node-worker|native` overrides that host
 for validation. A development default does not select the qualified endpoint.
 No command installs tools or updates the pinned Bend checkout.
+
+Semantic regression tests use immutable Kanon observations under
+`dev/reference-fixtures/`, including descriptors for the existing parser,
+elaboration, and program reference snapshots. The loader checks the fixture and
+referenced snapshot checksums, the Kanon
+revision, and the exact ordered case inputs before comparing the Bend results.
+The existing independent expectations and semantic mutation tests remain active.
+`make test-reference-fixtures` checks fixture integrity and rejects OCaml source
+files anywhere in the repository outside build and Git directories. The
+[no-OCaml cleanup evidence](dev/validation/no-ocaml-cleanup.md) records the
+provenance of each fixture.
+
+These observations were captured from verified pinned sources before removing
+the adapters at sole-comb revision `2a22f67b7f2e18a435d1dfbb969ba78a1a6300e5`.
+Routine semantic tests use recorded results and do not compile a live oracle.
+Historical validation documents describe the earlier live comparisons. To
+refresh expectations, run the pinned reference tooling outside sole-comb,
+review the observations and independent expectations, and update the affected
+fixture and its manifest checksum. Never derive reference expectations from
+sole-comb's own output. Changed inputs or revisions require a reviewed refresh.
 
 The active work is the [Stage A compiler milestones](dev/stage-a-milestones.md).
 The [A.1 validation](dev/validation/stage-a-foundation.md),

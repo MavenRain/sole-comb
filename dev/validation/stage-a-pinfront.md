@@ -129,3 +129,5 @@ remain pending.
 - The gate rerun used an isolated copy of the staged tree that keeps `.git`.
   The result, reference, and mutation records and the gate output come from
   that rerun.
+
+Current provenance: recorded Kanon fixtures; see no-ocaml-cleanup.md.
