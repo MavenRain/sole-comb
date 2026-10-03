@@ -14,6 +14,7 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check --erased examples/sum-erasure.sole-comb
 ./sole-comb check --erased examples/pair-erasure.sole-comb
 ./sole-comb check --erased examples/constructor-parameters.sole-comb
+./sole-comb check --erased examples/family-arguments.sole-comb
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
@@ -97,6 +98,11 @@ type. It covers nested constructors, aliases, open parameters, dependent fields
 and indexed families. It also has a wrapper family `W` without parameters and a
 `List Nat` literal. A constructor used without an expected family still
 receives an explicit inference refusal.
+
+`family-arguments` supplies constructor expressions directly as family
+parameters and indices. Earlier argument values determine later expected types.
+It covers a boxed parameter, a dependent index, open erased variables and a
+nullary constructor. The checker accepts these without argument annotations.
 
 The public command provides source checking and ordinary, product, sum, pair
 and recursive-family erasure. Wasm build/run, dependent or parameterized

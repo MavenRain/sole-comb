@@ -32,13 +32,13 @@ def values(+c: K.ctx, terms: List<&2, T.t>) -> M.result(List<&2, V.t>):
 def same_family(+family: String, name: String, +n: String) -> M.result(Unit):
   choose(M.result(Unit), String.eq(n, family), _ => M.Pure{Unit{}},
     _ => M.Abort{E.Mismatch{Syn.cat(["the constructor ", name, " of ", family, " cannot have the expected family ", n])}})
-def parameters(+family: String, name: String, tm: T.t) -> M.result(F.Pair2<List<&2, T.t>, List<&2, T.t>>):
+def parameters(c: K.ctx, +family: String, name: String, ty: V.t, tm: T.t) -> M.result(F.Pair2<List<&2, T.t>, List<&2, T.t>>):
   match tm:
     case T.Lan{S.SMu{n, ix}, diagram}:
       M.bind(Unit, F.Pair2<List<&2, T.t>, List<&2, T.t>>, same_family(family, name, n), _ =>
         M.map_result(List<&2, T.t>, F.Pair2<List<&2, T.t>, List<&2, T.t>>, ps => F.Pair2{ps, ix},
           M.lift(List<&2, T.t>, R.run(K.ctx, K.dispatch, List<&2, T.t>, R.mu_params_of(K.ctx, diagram)))))
-    case _: M.Abort{E.Mismatch{Syn.cat(["the constructor ", name, " of ", family, " needs the family ", family, " as its expected type"])}}
+    case _: M.Abort{E.Mismatch{Syn.cat(["the constructor ", name, " of ", family, " needs the family ", family, " as its expected type, but the expected type is ", K.pp_value(c, ty)])}}
 # Only a later field type reads a field value, so the last field is not evaluated.
 def next_env(c: K.ctx, rest: P.telescope, tm: T.t, env: List<&2, V.t>) -> M.result(List<&2, V.t>):
   match rest:
@@ -73,12 +73,12 @@ def index_terms(ix: List<&2, T.t>, run: List<&2, T.t> -> M.result(List<&2, T.t>)
 def whnf_target(+c: K.ctx, ty: V.t) -> M.result(T.t):
   M.bind(V.t, T.t, M.lift(V.t, Ev.whnf(K.globals(c), ty)), w => M.lift(T.t, Ev.quote(K.globals(c), K.size(c), w)))
 # The caller checks the field count (elab.bend arity_is) before both paths.
-def expected(~go: walker, +c: K.ctx, fam: P.family, ctor: P.ctor, args: List<&2, Syn.t>, ty: V.t) -> M.result(T.t):
+def expected(~go: walker, +c: K.ctx, fam: P.family, ctor: P.ctor, args: List<&2, Syn.t>, +ty: V.t) -> M.result(T.t):
   match fam:
     case P.Family{+family, _, _, _, _, _, _}:
       match ctor:
         case P.Ctor{+name, fields, _, _, _}:
-          M.bind(T.t, T.t, whnf_target(c, ty), tm => M.bind(F.Pair2<List<&2, T.t>, List<&2, T.t>>, T.t, parameters(family, name, tm), ps => finish(go, c, family, name, fields, args, ps)))
+          M.bind(T.t, T.t, whnf_target(c, ty), tm => M.bind(F.Pair2<List<&2, T.t>, List<&2, T.t>>, T.t, parameters(c, family, name, ty, tm), ps => finish(go, c, family, name, fields, args, ps)))
 def owner_shape(family: String, name: String, tm: T.t) -> M.result(Unit):
   match tm:
     case T.Lan{S.SMu{n, _}, _}: same_family(family, name, n)

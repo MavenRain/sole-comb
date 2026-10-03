@@ -96,11 +96,20 @@ their arguments. The elaborator does not run a kernel check for each field.
 The kernel declaration check validates parameters, fields, indices and usage
 once, so a nested constructor no longer runs a kernel check at each level.
 [Constructor parameter validation](validation/stage-a-constructor-parameters.md)
-records the Bun and Node worker checks. Native validation and the full
-`make gates` remain pending on the current tree. Unconstrained constructor
-inference remains pending. Family arguments do not get expected types yet.
-Thus the checker refuses a constructor with parameters in a family argument,
-such as `Ib2 (box 1)`.
+records the Bun and Node worker checks for that increment. Unconstrained
+constructor inference remains pending.
+A.5b.3.2e.5 extends the telescope walker to family parameters and indices.
+Each family argument receives its instantiated expected type. Parameter values
+remain in scope when the walker reaches the indices. The public example and
+56-case constructor suite cover this behavior, including nested and nullary
+constructors, aliases, open variables, dependent arguments and refusals. See
+[family argument validation](validation/stage-a-family-arguments.md).
+Recursive definitions, structural recursor sugar, unconstrained
+parameterized-constructor inference, family default arms, complete erased-corpus
+integration, WebAssembly build/run and the full kernel differential remain
+pending.
+Native validation and the full `make gates` have not run on the
+A.5b.3.2e.4 or A.5b.3.2e.5 tree.
 
 Semantic gates compare with recorded Kanon fixtures, not with live OCaml
 adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)

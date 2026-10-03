@@ -327,12 +327,14 @@ def app_point(~go: walker, +c: K.ctx, f: Syn.t, a: Syn.t) -> M.result(T.t):
             M.bind(R.Point, T.t, need(R.Point, E.Mismatch{"the head of an application is not a function"}, R.point_view(s)), point => with_point(M.result(T.t), point, +q => x => +dom =>
                   M.bind(T.t, T.t, go(c, Some{dom}, a), arg =>
                     M.map_result(T.t, T.t, dt => T.Out{S.SPi{q, x, dt}, T.APt{q, arg}, head}, quote_in(c, dom)))))))))
-def cod_former(+c: K.ctx, former: Maybe<&2, V.Former>) -> M.result(Maybe<&2, V.t>):
+def binder_domain(+c: K.ctx, x: String, ann: T.t, +dom: V.t) -> M.result(Unit):
+  M.bind(V.t, Unit, eval_in(c, ann), +actual => M.bind(Bool, Unit, M.lift(Bool, K.conv_type(c, actual, dom)), agrees => choose(M.result(Unit), agrees, _ => M.Pure{Unit{}}, _ => M.Abort{E.Mismatch{Syn.cat(["the binder ", x, " is annotated with ", K.pp_value(c, actual), " and the expected domain is ", K.pp_value(c, dom)])}})))
+def cod_former(+c: K.ctx, x: String, ann: T.t, former: Maybe<&2, V.Former>) -> M.result(Maybe<&2, V.t>):
   match former:
     case None{}: M.Pure{None{}}
     case Some{V.Former{s, clo, _}}:
-      maybe(R.Point, M.result(Maybe<&2, V.t>), R.point_view(s), _ => M.Pure{None{}}, _ =>
-        M.map_result(V.t, Maybe<&2, V.t>, v => Some{v}, open_in(c, clo, [V.var(K.size(c))])))
+      maybe(R.Point, M.result(Maybe<&2, V.t>), R.point_view(s), _ => M.Pure{None{}}, point => with_point(M.result(Maybe<&2, V.t>), point, _ => _ => dom => M.bind(Unit, Maybe<&2, V.t>, binder_domain(c, x, ann, dom), _ =>
+        M.map_result(V.t, Maybe<&2, V.t>, v => Some{v}, open_in(c, clo, [V.var(K.size(c))])))))
 def elab_group(~go: walker, c: K.ctx, b: Syn.binder, cod: Syn.t, left: Bool) -> M.result(T.t):
   M.bind(bound, T.t, elab_binder(go, c, b), bound => with_bound(M.result(T.t), bound, +q => +x => +ty => inner =>
         M.map_result(T.t, T.t, +tm => F.choose(T.t, left, T.Lan{S.SPi{q, x, ty}, tm}, T.Ran{S.SPi{q, x, ty}, tm}), go(inner, None{}, cod))))
@@ -412,19 +414,19 @@ def mu_ref_of(+c: K.ctx, +x: String) -> Maybe<&2, mu_ref>:
     maybe(P.family, Maybe<&2, mu_ref>, G.find_family(x, K.globals(c)), _ => family_ctor(x, K.globals(c)), fam => Some{RFam{fam}}), _ => None{})
 def elab_fam_ref(~go: walker, +c: K.ctx, f: P.family, +args: List<&2, Syn.t>) -> M.result(T.t):
   match f:
-    case P.Family{+name, params, indices, _, _, _, _}:
+    case P.Family{+name, +params, +indices, _, _, _, _}:
       using(F.Int63.t, M.result(T.t), length(F.Pair2<Q.t, F.Pair2<String, T.t>>, params), +np =>
         M.bind(Unit, T.t, arity_is(name, F.Int63.add(np, length(F.Pair2<Q.t, F.Pair2<String, T.t>>, indices)), length(Syn.t, args)), _ =>
-          M.bind(List<&2, T.t>, T.t, collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args), terms => fam_term(name, np, terms))))
+          M.bind(List<&2, T.t>, T.t, Constructor.arguments(go, append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices), c, [], args), terms => fam_term(name, np, terms))))
 def project_type(c: K.ctx, +scrut: T.t, +w: V.t, +k: F.Int63.t) -> M.result(T.t):
   maybe(V.Former, M.result(T.t), V.as_lan(w), _ =>
     maybe(V.Former, M.result(T.t), V.as_ran(w), _ => M.Abort{E.Mismatch{"a projection reads a pair or a tuple, and this scrutinee is neither"}}, former => with_former(M.result(T.t), former, s => _ => _ =>
                                 leg_projection(scrut, s, k))), former => with_former(M.result(T.t), former, s => clo => _ =>
                                 pair_projection(c, scrut, s, clo, k)))
-def cod_of(+c: K.ctx, expected: Maybe<&2, V.t>) -> M.result(Maybe<&2, V.t>):
+def cod_of(+c: K.ctx, x: String, ann: T.t, expected: Maybe<&2, V.t>) -> M.result(Maybe<&2, V.t>):
   match expected:
     case None{}: M.Pure{None{}}
-    case Some{ty}: M.bind(V.t, Maybe<&2, V.t>, whnf_in(c, ty), w => cod_former(c, V.as_ran(w)))
+    case Some{ty}: M.bind(V.t, Maybe<&2, V.t>, whnf_in(c, ty), w => cod_former(c, x, ann, V.as_ran(w)))
 def elab_mu_motive(~go: walker, c: K.ctx, n: String, fam: P.family, clo: V.closure, u: Maybe<&2, L.t>, penv: List<&2, V.t>, mo: Maybe<&2, Syn.motive>) -> M.result(Maybe<&2, T.motive>):
   mu_motive_indices(go, c, n, family_indices(fam), clo, u, penv, mo)
 def elab_mu_branch(~go: walker, +c: K.ctx, +n: String, fam: P.family, mo: Maybe<&2, T.motive>, penv: List<&2, V.t>, expected: Maybe<&2, V.t>, br: Syn.branch) -> M.result(F.Pair2<T.addr, T.leg>):
@@ -485,8 +487,8 @@ def elab_fun(~go: walker, bs: List<&2, Syn.binder>, +c: K.ctx, expected: Maybe<&
   match bs:
     case []: go(c, expected, body)
     case b <> rest:
-      M.bind(bound, T.t, elab_binder(go, c, b), bound => with_bound(M.result(T.t), bound, +q => +x => ty => inner =>
-            M.bind(Maybe<&2, V.t>, T.t, cod_of(c, expected), cod =>
+      M.bind(bound, T.t, elab_binder(go, c, b), bound => with_bound(M.result(T.t), bound, +q => +x => +ty => inner =>
+            M.bind(Maybe<&2, V.t>, T.t, cod_of(c, x, ty, expected), cod =>
               M.map_result(T.t, T.t, tm => T.Sec{S.SPi{q, x, ty}, [T.Leg{[F.Pair2{q, x}], tm}]}, elab_fun(go, rest, inner, cod, body)))))
 def elab_items(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, +items: List<&2, Syn.t>) -> M.result(List<&2, T.t>):
   M.bind(List<&2, Maybe<&2, V.t>>, List<&2, T.t>, leg_expectations(c, expected, length(Syn.t, items), False{}), tys =>

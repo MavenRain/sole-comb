@@ -1,0 +1,296 @@
+{
+  "schema": 1,
+  "base": "ec6354ef7e01144160322e7c1c87b8993f39ca68",
+  "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1003-family-args/tree",
+  "build": {
+    "command": [
+      "python3",
+      "-P",
+      "dev/build.py",
+      "--backend",
+      "js"
+    ],
+    "start": "2026-10-03T11:30:25.907594+00:00",
+    "end": "2026-10-03T11:30:26.615934+00:00",
+    "seconds": 0.704,
+    "exit": 0
+  },
+  "constructor": {
+    "command": [
+      "python3",
+      "-P",
+      "dev/test-constructor-parameters.py",
+      "--hosts",
+      "bun,node-worker",
+      "--mutations"
+    ],
+    "start": "2026-10-03T11:30:26.618204+00:00",
+    "end": "2026-10-03T11:42:51.145285+00:00",
+    "seconds": 744.515,
+    "exit": 0
+  },
+  "regressions": [
+    {
+      "name": "cli",
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-cli.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "start": "2026-10-03T11:42:52.492229+00:00",
+      "end": "2026-10-03T11:45:46.513199+00:00",
+      "seconds": 174.018,
+      "exit": 0
+    },
+    {
+      "name": "family",
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-public-family.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "start": "2026-10-03T11:45:46.517871+00:00",
+      "end": "2026-10-03T11:45:54.019978+00:00",
+      "seconds": 7.502,
+      "exit": 0
+    },
+    {
+      "name": "house-tests",
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-house.py"
+      ],
+      "start": "2026-10-03T11:45:54.022675+00:00",
+      "end": "2026-10-03T11:45:54.281148+00:00",
+      "seconds": 0.259,
+      "exit": 0
+    },
+    {
+      "name": "house",
+      "command": [
+        "python3",
+        "-P",
+        "dev/house-bend.py"
+      ],
+      "start": "2026-10-03T11:45:54.283698+00:00",
+      "end": "2026-10-03T11:45:54.695576+00:00",
+      "seconds": 0.412,
+      "exit": 0
+    },
+    {
+      "name": "fixtures",
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-reference-fixtures.py"
+      ],
+      "start": "2026-10-03T11:45:54.697905+00:00",
+      "end": "2026-10-03T11:45:55.153640+00:00",
+      "seconds": 0.456,
+      "exit": 0
+    }
+  ],
+  "native": {
+    "status": "not-run",
+    "reason": "a free-disk-space floor held native builds"
+  },
+  "full_gates": {
+    "status": "not-run",
+    "reason": "a free-disk-space floor held native builds"
+  },
+  "attempts": [
+    {
+      "name": "build",
+      "attempt": "probe",
+      "command": [
+        "python3",
+        "-P",
+        "dev/build.py",
+        "--backend",
+        "js"
+      ],
+      "start": "2026-10-03T11:17:56.726440+00:00",
+      "end": "2026-10-03T11:21:57.826440+00:00",
+      "seconds": 241.1,
+      "exit": 0,
+      "recorded": false,
+      "note": "the probe did not record start or end; end is the modification time of its log files and start is end minus 241.1 seconds"
+    },
+    {
+      "name": "build",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/build.py",
+        "--backend",
+        "js"
+      ],
+      "start": "2026-10-03T11:30:25.907594+00:00",
+      "end": "2026-10-03T11:30:26.615934+00:00",
+      "seconds": 0.704,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "constructor",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-constructor-parameters.py",
+        "--hosts",
+        "bun,node-worker",
+        "--mutations"
+      ],
+      "start": "2026-10-03T11:30:26.618204+00:00",
+      "end": "2026-10-03T11:42:51.145285+00:00",
+      "seconds": 744.515,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "k4-parameter-order",
+      "attempt": 1,
+      "command": [
+        "/private/tmp/claude/kan-elim-lang-m0/review-1003-family-args/tree/_build/constructor-parameters/mutants/parameter-order/sole-comb",
+        "check",
+        "--host",
+        "bun",
+        "--print",
+        "/private/tmp/claude/kan-elim-lang-m0/review-1003-family-args/tree/_build/constructor-parameters/family-parameter-index-order.sole-comb"
+      ],
+      "start": "2026-10-03T11:42:51.148189+00:00",
+      "end": "2026-10-03T11:42:51.769767+00:00",
+      "seconds": 0.622,
+      "exit": 0,
+      "recorded": false
+    },
+    {
+      "name": "k4-family-telescope-order",
+      "attempt": 1,
+      "command": [
+        "/private/tmp/claude/kan-elim-lang-m0/review-1003-family-args/tree/_build/constructor-parameters/mutants/family-telescope-order/sole-comb",
+        "check",
+        "--host",
+        "bun",
+        "--print",
+        "/private/tmp/claude/kan-elim-lang-m0/review-1003-family-args/tree/_build/constructor-parameters/family-parameter-index-order.sole-comb"
+      ],
+      "start": "2026-10-03T11:42:51.770904+00:00",
+      "end": "2026-10-03T11:42:52.491045+00:00",
+      "seconds": 0.72,
+      "exit": 1,
+      "recorded": false
+    },
+    {
+      "name": "cli",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-cli.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "start": "2026-10-03T11:42:52.492229+00:00",
+      "end": "2026-10-03T11:45:46.513199+00:00",
+      "seconds": 174.018,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "family",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-public-family.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "start": "2026-10-03T11:45:46.517871+00:00",
+      "end": "2026-10-03T11:45:54.019978+00:00",
+      "seconds": 7.502,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "house-tests",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-house.py"
+      ],
+      "start": "2026-10-03T11:45:54.022675+00:00",
+      "end": "2026-10-03T11:45:54.281148+00:00",
+      "seconds": 0.259,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "house",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/house-bend.py"
+      ],
+      "start": "2026-10-03T11:45:54.283698+00:00",
+      "end": "2026-10-03T11:45:54.695576+00:00",
+      "seconds": 0.412,
+      "exit": 0,
+      "recorded": true
+    },
+    {
+      "name": "fixtures",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "-P",
+        "dev/test-reference-fixtures.py"
+      ],
+      "start": "2026-10-03T11:45:54.697905+00:00",
+      "end": "2026-10-03T11:45:55.153640+00:00",
+      "seconds": 0.456,
+      "exit": 0,
+      "recorded": true
+    }
+  ],
+  "earlier_attempts": [
+    {
+      "run": "run-F7WQL7",
+      "checkout": "/private/tmp/sole-comb-family-arguments",
+      "step": "build",
+      "exit": 1,
+      "reason": "Bend reported \"indices (consumed more than once)\" at elab_fam_ref"
+    },
+    {
+      "run": "run-dSlMDB",
+      "checkout": "/private/tmp/sole-comb-family-arguments",
+      "step": "constructor",
+      "exit": 143,
+      "reason": "the run stopped with exit status 143"
+    },
+    {
+      "run": "run-KLw2aJ",
+      "checkout": "/private/tmp/sole-comb-family-arguments",
+      "step": "regressions",
+      "exit": 1,
+      "reason": "the cli regression exited 1"
+    },
+    {
+      "run": "run-oLRDMH",
+      "checkout": "/private/tmp/sole-comb-family-arguments",
+      "step": "constructor",
+      "exit": 1,
+      "reason": "the family-telescope-order mutant survived"
+    }
+  ]
+}

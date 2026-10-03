@@ -76,19 +76,22 @@ types through constructor applications and nullary constructor names. This also
 applies to a family without parameters: each constructor argument gets its field
 type as the expected type. Examples cover open parameters, aliases, nested
 constructors, argument positions, indexed families, a wrapper without parameters
-and a list. Inference without an expected family remains refused. Family
-arguments do not get expected types yet. Thus the checker refuses a constructor
-with parameters in a family argument, such as `Ib2 (box 1)`. See
+and a list. Inference without an expected family remains refused. See
 [constructor parameter validation](dev/validation/stage-a-constructor-parameters.md).
 
-The preceding public-family increment passed its native check. Signal 9
-killed a native build of an earlier version of this increment. Native
-constructor parameter validation and the full `make gates` remain pending
-on the current tree.
+A.5b.3.2e.5 forwards expected types to family parameters and indices. It opens
+the combined telescope in declaration order, so later arguments can depend on
+earlier ones. In the family argument `Hold (box 7)` of
+[`examples/family-arguments.sole-comb`](examples/family-arguments.sole-comb),
+the constructor `box 7` now gets its expected type `Box Nat`. The checker
+accepts nested and nullary constructors, aliases and open variables in family
+arguments. See [family argument validation](dev/validation/stage-a-family-arguments.md).
 Recursive definitions, structural recursor sugar, unconstrained
 parameterized-constructor inference, family default arms, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
+Native validation and the full `make gates` have not run on the
+A.5b.3.2e.4 or A.5b.3.2e.5 tree.
 
 Run from this directory with the locally pinned tools:
 

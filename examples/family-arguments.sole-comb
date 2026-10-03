@@ -1,0 +1,13 @@
+mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
+mu Hold (0 b : Box Nat) : Type 0 { hold : Hold b }
+mu Indexed (0 A : Type 0) : (0 b : Box A) -> Type 0 {
+  indexed : (0 b : Box A) -> Indexed A b
+}
+mu Maybe (0 A : Type 0) : Type 0 { none : Maybe A; some : A -> Maybe A }
+mu EmptyMaybe (0 m : Maybe Nat) : Type 0 { emptyMaybe : EmptyMaybe m }
+
+def held : Hold (box 7) := hold
+def indexedValue : Indexed Nat (box 9) := indexed (box 9)
+def generic : (0 A : Type 0) -> (0 a : A) -> Indexed A (box a) :=
+  fun (0 A : Type 0) (0 a : A) => indexed (box a)
+def empty : EmptyMaybe none := emptyMaybe
