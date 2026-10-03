@@ -55,7 +55,7 @@
     "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
     "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
     "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
-    "surface/elab.bend": "ab13325b1a5280b5eaf5279c261791fb0cd9eaab6c0b5982e823ef245886fa77",
+    "surface/elab.bend": "062e8368469b4b05256af3fc0c7c118cf281ee2fe12ed3f3d60fd71ea0b046cb",
     "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
     "surface/family.bend": "c29eed0c7cf0822d4d9840065e93fced0635936ef7a26c7e44e6dc43fbed9588",
     "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",

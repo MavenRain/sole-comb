@@ -90,6 +90,7 @@
     "corpus/refuse/family-no-motive.sole-comb": "cannot infer: an elimination at a mu shape needs a motive",
     "corpus/refuse/family-header.sole-comb": "expected '{' after a family header",
     "corpus/refuse/family-group-duplicate.sole-comb": "line 1, column 43: E-FAMILY-CTOR: duplicate constructor mk",
+    "corpus/refuse/family-ctor-earlier-family.sole-comb": "mismatch: E-FAMILY-CTOR: duplicate constructor N",
     "corpus/refuse/family-ctor-family-name.sole-comb": "line 1, column 17: E-FAMILY-CTOR: duplicate constructor N",
     "corpus/refuse/family-ctor-redeclared.sole-comb": "mismatch: E-FAMILY-CTOR: duplicate constructor zero"
   },

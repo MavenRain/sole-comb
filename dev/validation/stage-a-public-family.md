@@ -29,6 +29,14 @@ declaration uses as a family or constructor name. This guard runs when the
 group is declared, and its refusal has no source location. A family name that an earlier
 constructor uses is not refused.
 
+The first version of this guard looked up the earlier families and
+constructors inside nested closures, after the group lookup. Its native
+executable admitted these constructors, but Bun and Node worker refused them.
+The guard now gives each lookup result directly to `Bool.or` and does the
+group lookup last. The cause in the native compiler is not known.
+`family-ctor-redeclared` and `family-ctor-earlier-family`
+cover the two earlier-declaration lookups on all three hosts.
+
 `surface/family.bend` implements the brace parser and positional arm expansion.
 Both closing-brace exits of the constructor parser use one helper that restores
 the declaration order.
@@ -49,13 +57,14 @@ the first field. The expected output is literal text in the harness. This text
 was derived by hand from the erasure rules, because the probe has no Kanon
 oracle.
 
-The CLI census has 89 examples and refusal cases. Twenty new family refusals
+The CLI census has 90 examples and refusal cases. Twenty-one new family refusals
 cover malformed declaration headers and delimiters, legacy syntax, positivity,
 duplicate constructor names, wrong constructor results, missing and excess arms,
 field arity, annotations, quantities, affine duplication, wrong arm results,
 unsupported defaults, parameterized-constructor inference and missing motives.
-The review added four of them: `family-header`, `family-group-duplicate`,
-`family-ctor-family-name` and `family-ctor-redeclared`. The default-arm refusal
+The review added five of them: `family-header`, `family-group-duplicate`,
+`family-ctor-family-name`, `family-ctor-redeclared` and
+`family-ctor-earlier-family`. The default-arm refusal
 has an explicit motive, so only its default arm is wrong. The earlier incomplete
 family declaration now reaches its missing-brace refusal.
 
@@ -80,13 +89,14 @@ arm result at the wrong type. The field-annotation mutant runs on the
 wrong-domain fixture and accepts only `admitted`. All observations and source
 hashes are saved in `_build/public-family/result.json`.
 
-The recorded runs use `--hosts bun,node-worker`. The `make test-public-family`
+The focused, mutation and regression runs use `--hosts bun,node-worker`. The CLI
+run uses the default host list. The `make test-public-family`
 and `make test-public-family-mutations` targets use the default host list, which
 includes native. The differential and the order probe passed on Bun and Node
 worker. The four mutations ran on Bun, with these kill kinds: constructor-order
 (`output-changed`), field-order (`output-changed`), result-lambda (`refused`)
-and field-annotation (`admitted`). The 89-case public CLI checks passed on Bun
-and Node worker. One native build at the tracked limits passed.
+and field-annotation (`admitted`). The 90-case public CLI checks passed on Bun,
+Node worker and native. One native build at the tracked limits passed.
 `python3 -P dev/test-public-family.py --hosts native` then passed with the exact
 erased output, the literal goldens and the order probe.
 The tracked deadlines and the default host list are unchanged. `check`, `test`
@@ -112,8 +122,8 @@ regression record keeps the A.5b.3.2d `milestone` and scope labels that
 `stage-a-public-family-erasure-regressions.json` are copies of
 `_build/public-family/result.json`, `_build/public/result.json` and
 `_build/core-erasure/result.json` from these runs. They retain the exact
-observations and source hashes. The family record hashes 133 sources, the CLI
-record hashes 139 sources and the regression record hashes 68 sources.
+observations and source hashes. The family record hashes 134 sources, the CLI
+record hashes 140 sources and the regression record hashes 68 sources.
 `stage-a-public-family-execution.json` binds each run to its command, exit
 code, logs and checkout. The adjacent build, focused, CLI, regression,
 native-attempt and native logs retain complete command output. The full-gate logs and the

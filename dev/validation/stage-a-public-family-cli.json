@@ -3,14 +3,15 @@
   "scope": "public checking with native function arms, default arms, closed records, recursive families and ordinary, product, sum and pair erasure examples",
   "hosts": [
     "bun",
-    "node-worker"
+    "node-worker",
+    "native"
   ],
-  "files": 89,
+  "files": 90,
   "equivalences": {
     "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",
     "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb"
   },
-  "observations": 189,
+  "observations": 283,
   "sources": {
     "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
     "corpus/refuse/affine-duplication.sole-comb": "35e2a2cd54defe413b1c6fa9576fc19f259cf66f2071110e8d9c20a549da9f47",
@@ -34,6 +35,7 @@
     "corpus/refuse/family-arm-fields.sole-comb": "76998d0286dacf2afdd43de05de38e89ec952c68fa58a3e00a5663725b8d698a",
     "corpus/refuse/family-arm-quantity.sole-comb": "78929e697914ca57f2070eb286112fcf52f181dc7f0320b7b422355af42dc7f4",
     "corpus/refuse/family-arm-result.sole-comb": "ad420e8ee1cbcf034561b7c7e8a55c291b5ac272ec360adfb51d6d1d8d35bf43",
+    "corpus/refuse/family-ctor-earlier-family.sole-comb": "31f1eda3ee03f9abce909301e45a4b5396b37056f11023a75b5ddb5a6a1f2b0e",
     "corpus/refuse/family-ctor-family-name.sole-comb": "e67e48c1c1b449cf186fd671186bd647dcd9cc5da6dcbcffebc60463724529fb",
     "corpus/refuse/family-ctor-redeclared.sole-comb": "b57e2224d22996a612d114d28f1198fc0631d8f7b51b429ba8e53836eebfc52f",
     "corpus/refuse/family-default.sole-comb": "70dcc751fb163d187d43ca4a893682db715825c94e12cb211841e4516c7ce653",
@@ -90,7 +92,7 @@
     "dev/bend-policy.json": "cbfa6fe121f115e44e95d3dbf7a4ce49b0c284d53044159eda99b466fe29e87d",
     "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
     "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
-    "dev/test-cli.py": "ae7b505401fe2ebac21f12d4f7b7dd5a9869b00faeb09eb8bf0c1b43f1c08397",
+    "dev/test-cli.py": "bfb0e652e37dcb2f9720e24acfc65232139960d944fc2e205e4d1c5774bba63a",
     "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
     "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
     "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
@@ -101,7 +103,7 @@
     "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
     "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
     "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
-    "examples/EXPECTATIONS.json": "b0ec2527679ff96de2276f9adbb9d8e9ad11d70b62779f0fd3b89255ca64a40f",
+    "examples/EXPECTATIONS.json": "2995199bf4b124951083de40b79ec3b63280935ea73a089d8d829962cd44ec2d",
     "examples/arithmetic.sole-comb": "1ead9e3f8c1a443d97d96d52f5edace4e419c365f70804315302c84ed6e0e22f",
     "examples/default-arms-explicit.sole-comb": "2e5bd6e00a75a971d301c5a3d2cb7e41919b221ad8b11b0b156e9a192034a9d9",
     "examples/default-arms.sole-comb": "7e7c9de17e7cae86c499475b3ed2d3b43b8b1fc7223055e118f62c8d9da2632d",
@@ -138,7 +140,7 @@
     "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
     "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
     "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
-    "surface/elab.bend": "ab13325b1a5280b5eaf5279c261791fb0cd9eaab6c0b5982e823ef245886fa77",
+    "surface/elab.bend": "062e8368469b4b05256af3fc0c7c118cf281ee2fe12ed3f3d60fd71ea0b046cb",
     "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
     "surface/family.bend": "c29eed0c7cf0822d4d9840065e93fced0635936ef7a26c7e44e6dc43fbed9588",
     "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
@@ -1218,6 +1220,18 @@
         "check",
         "--host",
         "bun",
+        "corpus/refuse/family-ctor-earlier-family.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-ctor-earlier-family.sole-comb FAIL mismatch: E-FAMILY-CTOR: duplicate constructor N\n"
+    },
+    {
+      "host": "bun",
+      "args": [
+        "check",
+        "--host",
+        "bun",
         "corpus/refuse/family-ctor-family-name.sole-comb"
       ],
       "exit": 1,
@@ -1242,10 +1256,10 @@
         "check",
         "--host",
         "bun",
-        "/tmp/claude-501/sole source 59grffog/with spaces.sole-comb"
+        "/tmp/claude-501/sole source u4cgeplj/with spaces.sole-comb"
       ],
       "exit": 0,
-      "stdout": "CHECK /tmp/claude-501/sole source 59grffog/with spaces.sole-comb defs=4 ok\n",
+      "stdout": "CHECK /tmp/claude-501/sole source u4cgeplj/with spaces.sole-comb defs=4 ok\n",
       "stderr": ""
     },
     {
@@ -1254,11 +1268,11 @@
         "check",
         "--host",
         "bun",
-        "/tmp/claude-501/sole source 59grffog/with spaces.sole-comb"
+        "/tmp/claude-501/sole source u4cgeplj/with spaces.sole-comb"
       ],
       "exit": 1,
       "stdout": "",
-      "stderr": "CHECK /tmp/claude-501/sole source 59grffog/with spaces.sole-comb FAIL unbound: bytesCons\n"
+      "stderr": "CHECK /tmp/claude-501/sole source u4cgeplj/with spaces.sole-comb FAIL unbound: bytesCons\n"
     },
     {
       "host": "node-worker",
@@ -2325,6 +2339,18 @@
         "check",
         "--host",
         "node-worker",
+        "corpus/refuse/family-ctor-earlier-family.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-ctor-earlier-family.sole-comb FAIL mismatch: E-FAMILY-CTOR: duplicate constructor N\n"
+    },
+    {
+      "host": "node-worker",
+      "args": [
+        "check",
+        "--host",
+        "node-worker",
         "corpus/refuse/family-ctor-family-name.sole-comb"
       ],
       "exit": 1,
@@ -2349,10 +2375,10 @@
         "check",
         "--host",
         "node-worker",
-        "/tmp/claude-501/sole source ot6ffgbm/with spaces.sole-comb"
+        "/tmp/claude-501/sole source c9z5urvy/with spaces.sole-comb"
       ],
       "exit": 0,
-      "stdout": "CHECK /tmp/claude-501/sole source ot6ffgbm/with spaces.sole-comb defs=4 ok\n",
+      "stdout": "CHECK /tmp/claude-501/sole source c9z5urvy/with spaces.sole-comb defs=4 ok\n",
       "stderr": ""
     },
     {
@@ -2361,11 +2387,1130 @@
         "check",
         "--host",
         "node-worker",
-        "/tmp/claude-501/sole source ot6ffgbm/with spaces.sole-comb"
+        "/tmp/claude-501/sole source c9z5urvy/with spaces.sole-comb"
       ],
       "exit": 1,
       "stdout": "",
-      "stderr": "CHECK /tmp/claude-501/sole source ot6ffgbm/with spaces.sole-comb FAIL unbound: bytesCons\n"
+      "stderr": "CHECK /tmp/claude-501/sole source c9z5urvy/with spaces.sole-comb FAIL unbound: bytesCons\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/identity.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/identity.sole-comb defs=3 ok\naxiom Nat : Type 1\ndef identity : (Ran SPi 0 A Type 1 (Ran SPi w x A A)) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => x])])\ndef answer : Nat := (Out SPi w x Nat (APt w 42) (Out SPi 0 A Type 1 (APt 0 Nat) identity))\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/arithmetic.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/arithmetic.sole-comb defs=3 ok\naxiom Nat : Type 1\ndef answer : Nat := (Out SPi w b Nat (APt w 0) (Out SPi w a Nat (APt w (Out SPi w b Nat (APt w 7) (Out SPi w a Nat (APt w 6) natMul))) natAdd))\ndef saturated : Nat := (Out SPi w b Nat (APt w 8) (Out SPi w a Nat (APt w 3) natSub))\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/finite-elim.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/finite-elim.sole-comb defs=6 ok\naxiom Nat : Type 1\ndef Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef left : Two := (In SColl 2 (ALeg 0) [7])\ndef right : Two := (In SColl 2 (ALeg 1) [42])\ndef unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) a => a | (ALeg 1) b => b)])\ndef answer : Nat := (Out SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt w right) unwrap)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/motive.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/motive.sole-comb defs=3 ok\naxiom Nat : Type 1\ndef Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x as value return Nat with | (ALeg 0) a => a | (ALeg 1) b => b)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/function-arms.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/function-arms.sole-comb defs=13 ok\naxiom Nat : Type 1\ndef Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef id : (Ran SPi w x Nat Nat) := (Sec SPi w x Nat [x => x])\ndef plus : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))])])\ndef unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))])\ndef local : (Ran SPi w f (Ran SPi w n Nat Nat) (Ran SPi w x Two Nat)) := (Sec SPi w f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w x Nat (APt w $elim) id))])])\ndef motive : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x as value return Nat with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 2) plus)))])\ndef functions : (Ran SPi w x Two (Ran SPi w y Nat Nat)) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 1) $elim => (Out SPi w a Nat (APt w $elim) plus))])\ndef answer : Nat := (Out SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt w (In SColl 2 (ALeg 1) [41])) unwrap)\ndef linear : (Ran SPi 1 x Nat Nat) := (Sec SPi 1 x Nat [x => x])\ndef linearArms : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 1) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear))])\ndef localLinear : (Ran SPi 1 f (Ran SPi w n Nat Nat) (Ran SPi w x Two Nat)) := (Sec SPi 1 f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f))])])\ndef nested : (Ran SPi w x Two (Ran SPi w y Two Nat)) := (Sec SPi w x Two [x => (Sec SPi w y Two [y => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w (Elim SColl 2 y with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))) plus)) | (ALeg 1) $elim => (Out SPi w x Nat (APt w $elim) id))])])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/default-arms.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/default-arms.sole-comb defs=20 ok\naxiom Nat : Type 1\ndef Three : Type 1 := (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat]))\ndef id : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => n])\ndef plus : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))])])\ndef all : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef suffix : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 10) plus)) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef lambda : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) n => n | (ALeg 1) n => n | (ALeg 2) n => n)])\ndef partial : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)) | (ALeg 2) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))])\ndef local : (Ran SPi w f (Ran SPi w n Nat Nat) (Ran SPi w x Three Nat)) := (Sec SPi w f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) f))])])\ndef motive : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x as value return Nat with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef functions : (Ran SPi w x Three (Ran SPi w y Nat Nat)) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 1) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 2) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linear : (Ran SPi 1 x Nat Nat) := (Sec SPi 1 x Nat [x => x])\ndef linearArms : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 1) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 2) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear))])\ndef localLinear : (Ran SPi 1 f (Ran SPi w n Nat Nat) (Ran SPi w x Three Nat)) := (Sec SPi 1 f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) f))])])\ndef captured : (Ran SPi w n Nat (Ran SPi w x Three Nat)) := (Sec SPi w n Nat [n => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 1) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 2) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)))])])\ndef scrutinee : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)) | (ALeg 1) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)) | (ALeg 2) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)))])\ndef nested : (Ran SPi w x Three (Ran SPi w y Three Nat)) := (Sec SPi w x Three [x => (Sec SPi w y Three [y => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w (Elim SColl 3 y with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))) plus)) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])])\ndef heterogeneous : (Ran SPi w x (Lan SColl 3 (Sec SColl 3 [ => Type 1;  => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 3 (Sec SColl 3 [ => Type 1;  => Nat;  => Nat])) [x => (Elim SColl 3 x with | (ALeg 0) ty => 0 | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef answer : Nat := (Out SPi w x (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) (APt w (In SColl 3 (ALeg 2) [41])) suffix)\ndef one : (Ran SPi w x (Lan SColl 1 (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w x (Lan SColl 1 (Sec SColl 1 [ => Nat])) [x => (Elim SColl 1 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id))])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/default-arms-explicit.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/default-arms-explicit.sole-comb defs=20 ok\naxiom Nat : Type 1\ndef Three : Type 1 := (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat]))\ndef id : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => n])\ndef plus : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))])])\ndef all : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef suffix : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 10) plus)) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef lambda : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) n => n | (ALeg 1) n => n | (ALeg 2) n => n)])\ndef partial : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)) | (ALeg 2) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))])\ndef local : (Ran SPi w f (Ran SPi w n Nat Nat) (Ran SPi w x Three Nat)) := (Sec SPi w f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) f))])])\ndef motive : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x as value return Nat with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef functions : (Ran SPi w x Three (Ran SPi w y Nat Nat)) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 1) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 2) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linear : (Ran SPi 1 x Nat Nat) := (Sec SPi 1 x Nat [x => x])\ndef linearArms : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 1) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 2) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear))])\ndef localLinear : (Ran SPi 1 f (Ran SPi w n Nat Nat) (Ran SPi w x Three Nat)) := (Sec SPi 1 f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) f))])])\ndef captured : (Ran SPi w n Nat (Ran SPi w x Three Nat)) := (Sec SPi w n Nat [n => (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 1) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 2) payload => (Out SPi w b Nat (APt w payload) (Out SPi w a Nat (APt w n) natAdd)))])])\ndef scrutinee : (Ran SPi w x Three Nat) := (Sec SPi w x Three [x => (Elim SColl 3 x with | (ALeg 0) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)) | (ALeg 1) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)) | (ALeg 2) payload => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id)))])\ndef nested : (Ran SPi w x Three (Ran SPi w y Three Nat)) := (Sec SPi w x Three [x => (Sec SPi w y Three [y => (Elim SColl 3 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w (Elim SColl 3 y with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))) plus)) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])])\ndef heterogeneous : (Ran SPi w x (Lan SColl 3 (Sec SColl 3 [ => Type 1;  => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 3 (Sec SColl 3 [ => Type 1;  => Nat;  => Nat])) [x => (Elim SColl 3 x with | (ALeg 0) ty => 0 | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) id) | (ALeg 2) $elim => (Out SPi w n Nat (APt w $elim) id))])\ndef answer : Nat := (Out SPi w x (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) (APt w (In SColl 3 (ALeg 2) [41])) suffix)\ndef one : (Ran SPi w x (Lan SColl 1 (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w x (Lan SColl 1 (Sec SColl 1 [ => Nat])) [x => (Elim SColl 1 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) id))])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/records.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/records.sole-comb defs=32 ok\naxiom Nat : Type 1\ndef Pair : Type 1 := (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef Pair.first : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 0) #record)])\ndef Pair.second : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 1) #record)])\ndef pair : Pair := (Sec SColl 2 [ => 10;  => 20])\ndef first : Nat := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 pair) Pair.first)\ndef second : Nat := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 pair) Pair.second)\ndef linearFirst : (Ran SPi 1 p Pair Nat) := (Sec SPi 1 p Pair [p => (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 p) Pair.first)])\ndef Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef empty : Empty := (Sec SColl 0 [])\ndef Other : Type 1 := (Ran SColl 1 (Sec SColl 1 [ => Nat]))\ndef Other.first : (Ran SPi 1 #record Other Nat) := (Sec SPi 1 #record Other [#record => (Out SColl 1 (ALeg 0) #record)])\ndef other : Other := (Sec SColl 1 [ => 30])\ndef otherFirst : Nat := (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 other) Other.first)\ndef Packet : Type 2 := (Ran SColl 4 (Sec SColl 4 [ => Type 1;  => Pair;  => (Ran SPi w _ Nat Nat);  => Nat]))\ndef Packet.kind : (Ran SPi 1 #record Packet Type 1) := (Sec SPi 1 #record Packet [#record => (Out SColl 4 (ALeg 0) #record)])\ndef Packet.payload : (Ran SPi 1 #record Packet Pair) := (Sec SPi 1 #record Packet [#record => (Out SColl 4 (ALeg 1) #record)])\ndef Packet.handler : (Ran SPi 1 #record Packet (Ran SPi w _ Nat Nat)) := (Sec SPi 1 #record Packet [#record => (Out SColl 4 (ALeg 2) #record)])\ndef Packet.count : (Ran SPi 1 #record Packet Nat) := (Sec SPi 1 #record Packet [#record => (Out SColl 4 (ALeg 3) #record)])\ndef packet : Packet := (Sec SColl 4 [ => Nat;  => pair;  => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))]);  => 40])\ndef payload : Pair := (Out SPi 1 #record (Ran SColl 4 (Sec SColl 4 [ => Type 1;  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => (Ran SPi w _ Nat Nat);  => Nat])) (APt 1 packet) Packet.payload)\ndef handled : Nat := (Out SPi w _ Nat (APt w (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 payload) Pair.first)) (Out SPi 1 #record (Ran SColl 4 (Sec SColl 4 [ => Type 1;  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => (Ran SPi w _ Nat Nat);  => Nat])) (APt 1 packet) Packet.handler))\ndef count : Nat := (Out SPi 1 #record (Ran SColl 4 (Sec SColl 4 [ => Type 1;  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => (Ran SPi w _ Nat Nat);  => Nat])) (APt 1 packet) Packet.count)\ndef kind : Type 1 := (Out SPi 1 #record (Ran SColl 4 (Sec SColl 4 [ => Type 1;  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => (Ran SPi w _ Nat Nat);  => Nat])) (APt 1 packet) Packet.kind)\ndef value : Type 1 := Nat\ndef Capture : Type 1 := (Ran SColl 1 (Sec SColl 1 [ => value]))\ndef Capture.item : (Ran SPi 1 #record Capture value) := (Sec SPi 1 #record Capture [#record => (Out SColl 1 (ALeg 0) #record)])\ndef capture : Capture := (Sec SColl 1 [ => 50])\ndef captured : value := (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 capture) Capture.item)\ndef picked : Nat := (Elim SColl 2 ((In SColl 2 (ALeg 1) [other]) : (Lan SColl 2 (Sec SColl 2 [ => Other;  => Other]))) with | (ALeg 0) $elim => (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 $elim) Other.first) | (ALeg 1) $elim => (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 $elim) Other.first))\naxiom Other.zero : Other\ndef zeroFirst : Nat := (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 Other.zero) Other.first)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/record-expansion.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/record-expansion.sole-comb defs=7 ok\naxiom Nat : Type 1\ndef Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef empty : Empty := (Sec SColl 0 [])\ndef Box : Type 1 := (Ran SColl 1 (Sec SColl 1 [ => Nat]))\ndef Box.item : (Ran SPi 1 #record Box Nat) := (Sec SPi 1 #record Box [#record => (Out SColl 1 (ALeg 0) #record)])\ndef box : Box := (Sec SColl 1 [ => 7])\ndef item : Nat := (Out SPi 1 #record (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 box) Box.item)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/record-expansion-explicit.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/record-expansion-explicit.sole-comb defs=7 ok\naxiom Nat : Type 1\ndef Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef empty : Empty := (Sec SColl 0 [])\ndef Box : Type 1 := (Ran SColl 1 (Sec SColl 1 [ => Nat]))\ndef Box.item : (Ran SPi 1 recordArg Box Nat) := (Sec SPi 1 recordArg Box [recordArg => (Out SColl 1 (ALeg 0) recordArg)])\ndef box : Box := (Sec SColl 1 [ => 7])\ndef item : Nat := (Out SPi 1 recordArg (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 box) Box.item)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/erasure.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/erasure.sole-comb defs=19 ok\naxiom Nat : Type 1\ndef Natural : Type 1 := Nat\naxiom opaque : Nat\ndef id : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => n])\ndef alias : (Ran SPi w n Nat Nat) := id\ndef zero : (Ran SPi 0 ignored Nat Nat) := (Sec SPi 0 ignored Nat [ignored => 7])\ndef ghostFunction : (Ran SPi 0 f (Ran SPi w _ Nat Nat) Nat) := (Sec SPi 0 f (Ran SPi w _ Nat Nat) [f => 9])\ndef zeroCall : Nat := (Out SPi 0 ignored Nat (APt 0 42) zero)\ndef partial : (Ran SPi w n Nat Nat) := (Out SPi w a Nat (APt w 10) natAdd)\ndef apply : (Ran SPi w f (Ran SPi w _ Nat Nat) Nat) := (Sec SPi w f (Ran SPi w _ Nat Nat) [f => (Out SPi w _ Nat (APt w 2) f)])\ndef capture : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w x) (Out SPi w a Nat (APt w n) natAdd))])) apply)])\ndef deadCapture : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi 0 ignored Nat (APt 0 n) zero)])) apply)])\ndef captureOrder : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w x) (Out SPi w a Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) natAdd))])) apply)])])\ndef linear : (Ran SPi 1 n Nat Nat) := (Sec SPi 1 n Nat [n => n])\ndef Unit : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef unit : Unit := (Sec SColl 0 [])\ndef dropUnit : (Ran SPi w u Unit Nat) := (Sec SPi w u Unit [u => 11])\ndef unitCall : Nat := (Out SPi w u (Ran SColl 0 (Sec SColl 0 [])) (APt w unit) dropUnit)\ndef answer : Nat := (Out SPi w b Nat (APt w (Out SPi w n Nat (APt w 10) partial)) (Out SPi w a Nat (APt w (Out SPi w n Nat (APt w 20) alias)) captureOrder))\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/product-erasure.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/product-erasure.sole-comb defs=40 ok\naxiom Nat : Type 1\naxiom P : Type 0\naxiom proof : P\ndef Pair : Type 1 := (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef Pair.first : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 0) #record)])\ndef Pair.second : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 1) #record)])\ndef pair : Pair := (Sec SColl 2 [ => 10;  => 20])\ndef Mixed : Type 2 := (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => Pair;  => Type 1]))\ndef Mixed.kind : (Ran SPi 1 #record Mixed Type 1) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 0) #record)])\ndef Mixed.witness : (Ran SPi 1 #record Mixed P) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 1) #record)])\ndef Mixed.first : (Ran SPi 1 #record Mixed Nat) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 2) #record)])\ndef Mixed.second : (Ran SPi 1 #record Mixed Nat) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 3) #record)])\ndef Mixed.callback : (Ran SPi 1 #record Mixed (Ran SPi w _ Nat Nat)) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 4) #record)])\ndef Mixed.nested : (Ran SPi 1 #record Mixed Pair) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 5) #record)])\ndef Mixed.trailing : (Ran SPi 1 #record Mixed Type 1) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 6) #record)])\ndef mixed : Mixed := (Sec SColl 7 [ => Nat;  => proof;  => 30;  => 40;  => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))]);  => pair;  => Nat])\ndef first : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.first)\ndef second : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.second)\ndef called : Nat := (Out SPi w _ Nat (APt w (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.second)) (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.callback))\ndef nested : Pair := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.nested)\ndef inner : Nat := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 nested) Pair.second)\ndef kind : Type 1 := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.kind)\ndef witness : P := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.witness)\ndef trailing : Type 1 := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.trailing)\ndef captured : (Ran SPi w n Nat Mixed) := (Sec SPi w n Nat [n => (Sec SColl 7 [ => Nat;  => proof;  => n;  => n;  => (Sec SPi w m Nat [m => (Out SPi w b Nat (APt w m) (Out SPi w a Nat (APt w n) natAdd))]);  => (Sec SColl 2 [ => n;  => n]);  => Nat])])\ndef linearFirst : (Ran SPi 1 p Pair Nat) := (Sec SPi 1 p Pair [p => (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 p) Pair.first)])\naxiom external : Mixed\ndef externalSecond : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 external) Mixed.second)\ndef Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef empty : Empty := (Sec SColl 0 [])\ndef AllErased : Type 2 := (Ran SColl 2 (Sec SColl 2 [ => Type 1;  => P]))\ndef AllErased.kind : (Ran SPi 1 #record AllErased Type 1) := (Sec SPi 1 #record AllErased [#record => (Out SColl 2 (ALeg 0) #record)])\ndef AllErased.witness : (Ran SPi 1 #record AllErased P) := (Sec SPi 1 #record AllErased [#record => (Out SColl 2 (ALeg 1) #record)])\ndef allErased : AllErased := (Sec SColl 2 [ => Nat;  => proof])\ndef ignore : (Ran SPi w _ AllErased Nat) := (Sec SPi w a AllErased [a => 7])\ndef Outer : Type 2 := (Ran SColl 2 (Sec SColl 2 [ => AllErased;  => Mixed]))\ndef Outer.erased : (Ran SPi 1 #record Outer AllErased) := (Sec SPi 1 #record Outer [#record => (Out SColl 2 (ALeg 0) #record)])\ndef Outer.kept : (Ran SPi 1 #record Outer Mixed) := (Sec SPi 1 #record Outer [#record => (Out SColl 2 (ALeg 1) #record)])\ndef outer : Outer := (Sec SColl 2 [ => allErased;  => mixed])\ndef outerKept : Mixed := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => (Ran SColl 2 (Sec SColl 2 [ => Type 1;  => P]));  => (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1]))])) (APt 1 outer) Outer.kept)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/sum-erasure.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/sum-erasure.sole-comb defs=29 ok\naxiom Nat : Type 1\ndef Unit : Type 1 := (Ran SColl 0 (Sec SColl 0 []))\ndef unit : Unit := (Sec SColl 0 [])\ndef Mixed : Type 1 := (Lan SColl 3 (Sec SColl 3 [ => Unit;  => Nat;  => Unit]))\ndef first : Mixed := (In SColl 3 (ALeg 0) [unit])\ndef middle : Mixed := (In SColl 3 (ALeg 1) [42])\ndef last : Mixed := (In SColl 3 (ALeg 2) [unit])\ndef unwrap : (Ran SPi w _ Mixed Nat) := (Sec SPi w x Mixed [x => (Elim SColl 3 x with | (ALeg 0) u => 1 | (ALeg 1) n => n | (ALeg 2) u => 3)])\ndef answer : Nat := (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) unwrap)\ndef Types : Type 2 := (Lan SColl 2 (Sec SColl 2 [ => Type 1;  => Nat]))\ndef typeTag : Types := (In SColl 2 (ALeg 0) [Nat])\ndef natTag : Types := (In SColl 2 (ALeg 1) [7])\ndef typeUnwrap : (Ran SPi w _ Types Nat) := (Sec SPi w x Types [x => (Elim SColl 2 x with | (ALeg 0) A => 9 | (ALeg 1) n => n)])\ndef Pair : Type 1 := (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))\ndef Nested : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Pair;  => Mixed]))\ndef pairTag : Nested := (In SColl 2 (ALeg 0) [(Sec SColl 2 [ => 10;  => 20])])\ndef sumTag : Nested := (In SColl 2 (ALeg 1) [middle])\ndef nestedUnwrap : (Ran SPi w _ Nested Nat) := (Sec SPi w x Nested [x => (Elim SColl 2 x with | (ALeg 0) p => (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) unwrap) | (ALeg 1) $elim => (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w $elim) unwrap))])\ndef WithFunction : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => (Ran SPi w _ Nat Nat);  => Unit]))\ndef functionTag : WithFunction := (In SColl 2 (ALeg 0) [(Sec SPi w n Nat [n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))])])\ndef applyTag : (Ran SPi w _ WithFunction Nat) := (Sec SPi w x WithFunction [x => (Elim SColl 2 x with | (ALeg 0) f => (Out SPi w _ Nat (APt w 5) f) | (ALeg 1) u => 0)])\ndef choose : (Ran SPi w _ Nat (Ran SPi w _ Mixed (Ran SPi w _ Nat Nat))) := (Sec SPi w base Nat [base => (Sec SPi w x Mixed [x => (Elim SColl 3 x with | (ALeg 0) u => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w base) natAdd))]) | (ALeg 1) v => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w base) natAdd))) (Out SPi w a Nat (APt w v) natAdd))]) | (ALeg 2) u => (Sec SPi w n Nat [n => base]))])])\ndef chosen : Nat := (Out SPi w _ Nat (APt w 2) (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) (Out SPi w _ Nat (APt w 10) choose)))\ndef defaulted : (Ran SPi w _ (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) [x => (Elim SColl 3 x with | (ALeg 0) n => n | (ALeg 1) n => 99 | (ALeg 2) n => 99)])\ndef Empty : Type 1 := (Lan SColl 0 (Sec SColl 0 []))\naxiom impossible : Empty\ndef emptyCase : (Ran SPi w _ Empty Nat) := (Sec SPi w x Empty [x => (Elim SColl 0 x with)])\ndef erasedBinder : (Ran SPi w _ (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) [x => (Elim SColl 2 x with | (ALeg 0) n => 10 | (ALeg 1) n => 20)])\ndef withMotive : (Ran SPi w _ Mixed Nat) := (Sec SPi w x Mixed [x => (Elim SColl 3 x as value return Nat with | (ALeg 0) u => 0 | (ALeg 1) n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 2) u => 2)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/pair-erasure.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/pair-erasure.sole-comb defs=33 ok\naxiom Nat : Type 1\naxiom P : Type 0\naxiom proof : P\ndef Both : Type 1 := (Lan SPi w x Nat Nat)\ndef both : Both := (In SPi w x Nat (APt w 11) [6])\ndef first : Nat := (Elim SPi w x Nat both with | (ALeg 0) x y => x)\ndef second : Nat := (Elim SPi w x Nat both with | (ALeg 0) x y => y)\ndef make : (Ran SPi w _ Nat Both) := (Sec SPi w n Nat [n => (In SPi w x Nat (APt w n) [(Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))])])\ndef returned : Nat := (Elim SPi w x Nat (Out SPi w _ Nat (APt w 4) make) with | (ALeg 0) x y => y)\ndef PointOnly : Type 1 := (Lan SPi w _ Nat P)\ndef pointOnly : PointOnly := (In SPi w _ Nat (APt w 3) [proof])\ndef pointValue : Nat := (Elim SPi w _ Nat pointOnly with | (ALeg 0) x y => x)\ndef droppedProof : P := (Elim SPi w _ Nat pointOnly with | (ALeg 0) x y => y)\ndef FibreOnly : Type 1 := (Lan SPi 0 x Nat Nat)\ndef fibreOnly : FibreOnly := (In SPi 0 x Nat (APt 0 10) [20])\ndef fibreValue : Nat := (Elim SPi 0 x Nat fibreOnly with | (ALeg 0) x y => y)\ndef Neither : Type 2 := (Lan SPi w _ Type 1 P)\ndef neither : Neither := (In SPi w _ Type 1 (APt w Nat) [proof])\ndef droppedType : Type 1 := (Elim SPi w _ Type 1 neither with | (ALeg 0) x y => x)\ndef Dependent : Type 2 := (Lan SPi 0 A Type 1 A)\ndef dependent : Dependent := (In SPi 0 A Type 1 (APt 0 Nat) [7])\ndef box : (Ran SPi 0 A Type 1 (Ran SPi w x A (Lan SPi 0 T Type 1 T))) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => (In SPi 0 T Type 1 (APt 0 A) [x])])])\ndef unbox : (Ran SPi 0 A Type 1 (Ran SPi w _ (Lan SPi 0 T Type 1 T) Nat)) := (Sec SPi 0 A Type 1 [A => (Sec SPi w p (Lan SPi 0 T Type 1 T) [p => 9])])\ndef Nested : Type 1 := (Lan SPi w _ Nat Both)\ndef nested : Nested := (In SPi w _ Nat (APt w 8) [both])\ndef nestedValue : Nat := (Elim SPi w x Nat (Elim SPi w _ Nat nested as value return Both with | (ALeg 0) x y => y) with | (ALeg 0) x y => x)\ndef FunctionPair : Type 1 := (Lan SPi w _ Nat (Ran SPi w _ Nat Nat))\ndef capture : (Ran SPi w _ Nat FunctionPair) := (Sec SPi w outer Nat [outer => (In SPi w _ Nat (APt w outer) [(Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w outer) natAdd))])])])\ndef applyPair : (Ran SPi w _ FunctionPair Nat) := (Sec SPi w p FunctionPair [p => (Out SPi w _ Nat (APt w 5) (Elim SPi w _ Nat p as value return (Ran SPi w _ Nat Nat) with | (ALeg 0) x y => y))])\ndef outerAfter : (Ran SPi w _ Nat (Ran SPi w _ Both Nat)) := (Sec SPi w outer Nat [outer => (Sec SPi w p Both [p => (Out SPi w b Nat (APt w (Elim SPi w x Nat p with | (ALeg 0) x y => y)) (Out SPi w a Nat (APt w outer) natAdd))])])\ndef capturedAfter : (Ran SPi w _ Nat (Ran SPi w _ Both (Ran SPi w _ Nat Nat))) := (Sec SPi w outer Nat [outer => (Sec SPi w p Both [p => let value : Nat := (Elim SPi w x Nat p with | (ALeg 0) x y => y) in (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w value) natAdd))) (Out SPi w a Nat (APt w outer) natAdd))])])])\ndef poly : (Ran SPi 0 A Type 1 (Ran SPi w x A (Lan SPi w a A A))) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => (In SPi w a A (APt w x) [x])])])\ndef polyValue : Nat := (Elim SPi w a Nat (Out SPi w x Nat (APt w 5) (Out SPi 0 A Type 1 (APt 0 Nat) poly)) with | (ALeg 0) x y => x)\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "--print",
+        "examples/families.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK examples/families.sole-comb defs=23 ok\ndef first : (Lan SMu N [] (Sec SColl 0 [])) := (In SMu N [] (ACtor zero) [])\ndef second : (Lan SMu N [] (Sec SColl 0 [])) := (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])\ndef read : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) Nat) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as x return Nat with | (ACtor zero)  => 1 | (ACtor succ) m => 2)])\ndef nested : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (Lan SMu N [] (Sec SColl 0 []))) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as x return (Lan SMu N [] (Sec SColl 0 [])) with | (ACtor zero)  => (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])]) | (ACtor succ) m => m)])\ndef answer : Nat := (Out SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (APt w second) read)\ndef nullFunction : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as z return (Ran SPi w _ Nat Nat) with | (ACtor zero)  => (Sec SPi w x Nat [x => x]) | (ACtor succ) m => (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w x) natAdd))]))])\naxiom P : Type 0\naxiom proof : P\ndef ghostValue : (Lan SMu Ghost [] (Sec SColl 0 [])) := (In SMu Ghost [] (ACtor ghost) [99; proof; 7])\ndef ghostRead : (Ran SPi w _ (Lan SMu Ghost [] (Sec SColl 0 [])) Nat) := (Sec SPi w g (Lan SMu Ghost [] (Sec SColl 0 [])) [g => (Elim SMu Ghost [] g as x return Nat with | (ACtor ghost) gone witness value => value)])\ndef capture : (Ran SPi w _ Nat (Ran SPi w _ (Lan SMu Ghost [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat))) := (Sec SPi w outer Nat [outer => (Sec SPi w g (Lan SMu Ghost [] (Sec SColl 0 [])) [g => (Elim SMu Ghost [] g as x return (Ran SPi w _ Nat Nat) with | (ACtor ghost) gone witness value => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w value) natAdd))) (Out SPi w a Nat (APt w outer) natAdd))]))])])\naxiom empty : (Lan SMu Empty [] (Sec SColl 0 []))\ndef emptyRead : Nat := (Elim SMu Empty [] empty as x return Nat with)\ndef mutualValue : (Lan SMu Left [] (Sec SColl 0 [])) := (In SMu Left [] (ACtor node) [(In SMu Right [] (ACtor link) [(In SMu Left [] (ACtor leaf) [])])])\ndef leftRead : (Ran SPi w _ (Lan SMu Left [] (Sec SColl 0 [])) Nat) := (Sec SPi w a (Lan SMu Left [] (Sec SColl 0 [])) [a => (Elim SMu Left [] a as x return Nat with | (ACtor leaf)  => 1 | (ACtor node) b => 2)])\ndef rightRead : (Ran SPi w _ (Lan SMu Right [] (Sec SColl 0 [])) (Lan SMu Left [] (Sec SColl 0 []))) := (Sec SPi w b (Lan SMu Right [] (Sec SColl 0 [])) [b => (Elim SMu Right [] b as x return (Lan SMu Left [] (Sec SColl 0 [])) with | (ACtor link) a => a)])\ndef boxRead : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => (Ran SColl 0 (Sec SColl 0 []))])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => (Ran SColl 0 (Sec SColl 0 []))])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor box) p => 5)])\ndef vector : (Lan SMu V [(In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])] (Sec SColl 0 [])) := (In SMu V [(In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])] (ACtor vs) [(In SMu N [] (ACtor zero) []); 11; (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) [])])\ndef head : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) Nat)) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return Nat with | (ACtor vz)  => 0 | (ACtor vs) k a w => a)])])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef pn : (Lan SMu Pack [] (Sec SColl 0 [])) := (In SMu Pack [] (ACtor pack) [Nat; 7; 8])\ndef pu : (Lan SMu Pack [] (Sec SColl 0 [])) := (In SMu Pack [] (ACtor pack) [(Ran SColl 0 (Sec SColl 0 [])); (Sec SColl 0 []); 9])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor pack) A a n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/legacy-case.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/legacy-case.sole-comb FAIL line 2, column 23: E-R4-MATCH: 'case' is reserved; use elim\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/legacy-rec.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/legacy-rec.sole-comb FAIL line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/wrong-type.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/wrong-type.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/unbound.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/unbound.sole-comb FAIL unbound: missing\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/missing-arm.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/missing-arm.sole-comb FAIL missing branch: the case has 1 branches and the type has 2 legs\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/wrong-arm-domain.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/wrong-arm-domain.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/wrong-arm-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/wrong-arm-result.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/affine-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/affine-duplication.sole-comb FAIL quantity: the linear binder x must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/recursive-family.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/recursive-family.sole-comb FAIL line 2, column 1: expected '{' after a family header, found end of input\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/unclosed-elim.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/unclosed-elim.sole-comb FAIL line 5, column 1: expected ';' or '}' after an elim arm, found end of input\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/nonfunction-arm.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/nonfunction-arm.sole-comb FAIL mismatch: an elim arm must be a function\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/function-arm-domain.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/function-arm-domain.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/function-arm-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/function-arm-result.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/function-arm-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/function-arm-duplication.sole-comb FAIL quantity: the linear binder f must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/function-arm-dependent.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/function-arm-dependent.sole-comb FAIL mismatch: the term has type (Out SPi w n Nat (APt w n) P) and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-not-final.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-not-final.sole-comb FAIL line 2, column 105: expected '}' after the final default elim arm, found 'fun'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-duplicate.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-duplicate.sole-comb FAIL line 2, column 105: expected '}' after the final default elim arm, found 'else'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-colon.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-colon.sole-comb FAIL line 2, column 84: expected ':' after 'else', found 'fun'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-body.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-body.sole-comb FAIL line 2, column 85: expected a term, found '}'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-vacuous.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-vacuous.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining leg\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-excess.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-excess.sole-comb FAIL wrong leg: the leg address is outside the collection\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-empty.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining leg\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-nonfunction.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-nonfunction.sole-comb FAIL mismatch: an elim arm must be a function\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-domain.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-domain.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-result.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-heterogeneous.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-heterogeneous.sole-comb FAIL mismatch: the term has type Nat and the expected type is Type 1\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-duplication.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/default-unclosed.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/default-unclosed.sole-comb FAIL line 3, column 1: expected ';' or '}' after the final default elim arm, found end of input\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-duplicate-field.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-duplicate-field.sole-comb FAIL line 2, column 36: E-RECORD-FIELD: duplicate field item\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-field-colon.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-field-colon.sole-comb FAIL line 2, column 23: expected a record field 'name : type' or '}', found identifier item\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-field-type.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-field-type.sole-comb FAIL universe: a term used as a type is not a universe:  Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-missing-type.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-missing-type.sole-comb FAIL line 1, column 30: expected a term, found '}'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-unclosed.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-unclosed.sole-comb FAIL line 3, column 1: expected ';' or '}' after a record field, found end of input\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-delimiter.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-delimiter.sole-comb FAIL line 2, column 35: expected ';' or '}' after a record field, found ','\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-sort.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-sort.sole-comb FAIL universe: a type former is checked against a type that is not a universe:  Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-universe.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-universe.sole-comb FAIL universe: the former lives at 2 and the expected universe is 1\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-recursive.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-recursive.sole-comb FAIL unbound: Loop\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-dependent.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-dependent.sole-comb FAIL unbound: kind\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-unknown-field.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-unknown-field.sole-comb FAIL unbound: Box.missing\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-projection-target.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-projection-target.sole-comb FAIL line 2, column 44: E-RECORD-PROJECTION: use a qualified getter such as Pair.first value\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-local-projection.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-local-projection.sole-comb FAIL mismatch: E-RECORD-PROJECTION: use a qualified getter such as Pair.first value\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-wrong-field.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-wrong-field.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/record-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/record-duplication.sole-comb FAIL quantity: the linear binder p must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-count.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-count.sole-comb FAIL missing branch: a pair elim takes exactly one arm\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-arity.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-arity.sole-comb FAIL missing branch: a pair elim arm must be a two-binder lambda\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-point.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-point.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-fibre.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-fibre.sole-comb FAIL mismatch: the term has type Type 1 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-result.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-quantity.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-quantity.sole-comb FAIL quantity: the branch binder x is marked 1 and the type marks it w\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-duplication.sole-comb FAIL quantity: the linear binder x must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-projection.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-projection.sole-comb FAIL line 3, column 19: E-R4-MATCH: '.1' is reserved\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-default.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-default.sole-comb FAIL wrong leg: a pair elim requires an explicit arm\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-named-arm.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-named-arm.sole-comb FAIL missing branch: a pair elim arm must be a two-binder lambda\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/pair-arm-three.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/pair-arm-three.sole-comb FAIL missing branch: a pair elim arm must be a two-binder lambda\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-delimiter.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-delimiter.sole-comb FAIL line 1, column 31: expected ';' or '}' after a constructor, found ':'\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-unclosed.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-unclosed.sole-comb FAIL line 2, column 1: expected a constructor 'name : type' or '}', found end of input\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-legacy.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-legacy.sole-comb FAIL line 1, column 20: E-R4-MATCH: branch-binder syntax is reserved; use elim arms\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-negative.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-negative.sole-comb FAIL not yet: a family that is not strictly positive arrives at M2\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-duplicate.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-duplicate.sole-comb FAIL line 1, column 27: E-FAMILY-CTOR: duplicate constructor zero\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-result.sole-comb FAIL mismatch: a constructor of N ends at another type\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-count.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-count.sole-comb FAIL missing branch: the elimination of N has no branch at succ\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-excess.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-excess.sole-comb FAIL wrong leg: family elim arm 1 of N has no constructor\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-fields.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-domain.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-domain.sole-comb FAIL mismatch: the annotation of constructor field m differs from its declared type\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-result.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-result.sole-comb FAIL mismatch: a constructor needs a left former\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-quantity.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-quantity.sole-comb FAIL quantity: the branch binder m is marked 0 and the field marks it w\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-arm-duplication.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-arm-duplication.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-default.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: default elim arms currently require a collection\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-parameter-ctor.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-parameter-ctor.sole-comb FAIL cannot infer: the constructor box needs an expected type\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-no-motive.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-no-motive.sole-comb FAIL cannot infer: an elimination at a mu shape needs a motive\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-header.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-header.sole-comb FAIL line 1, column 15: expected '{' after a family header, found ':='\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-group-duplicate.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-group-duplicate.sole-comb FAIL line 1, column 43: E-FAMILY-CTOR: duplicate constructor mk\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-ctor-earlier-family.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-ctor-earlier-family.sole-comb FAIL mismatch: E-FAMILY-CTOR: duplicate constructor N\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-ctor-family-name.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-ctor-family-name.sole-comb FAIL line 1, column 17: E-FAMILY-CTOR: duplicate constructor N\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "corpus/refuse/family-ctor-redeclared.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-ctor-redeclared.sole-comb FAIL mismatch: E-FAMILY-CTOR: duplicate constructor zero\n"
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "/tmp/claude-501/sole source tvx4rqgb/with spaces.sole-comb"
+      ],
+      "exit": 0,
+      "stdout": "CHECK /tmp/claude-501/sole source tvx4rqgb/with spaces.sole-comb defs=4 ok\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "args": [
+        "check",
+        "--host",
+        "native",
+        "/tmp/claude-501/sole source tvx4rqgb/with spaces.sole-comb"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK /tmp/claude-501/sole source tvx4rqgb/with spaces.sole-comb FAIL unbound: bytesCons\n"
     },
     {
       "host": "cli",
@@ -2380,17 +3525,17 @@
       "host": "cli",
       "args": [
         "check",
-        "/tmp/claude-501/sole cli vt9i9d3i/missing.sole-comb"
+        "/tmp/claude-501/sole cli vc57ivst/missing.sole-comb"
       ],
       "exit": 2,
       "stdout": "",
-      "stderr": "E-IO: /tmp/claude-501/sole cli vt9i9d3i/missing.sole-comb: No such file or directory\n"
+      "stderr": "E-IO: /tmp/claude-501/sole cli vc57ivst/missing.sole-comb: No such file or directory\n"
     },
     {
       "host": "cli",
       "args": [
         "check",
-        "/tmp/claude-501/sole cli vt9i9d3i/wrong.kan"
+        "/tmp/claude-501/sole cli vc57ivst/wrong.kan"
       ],
       "exit": 64,
       "stdout": "",
@@ -2427,11 +3572,11 @@
       "host": "cli",
       "args": [
         "check",
-        "/tmp/claude-501/sole cli vt9i9d3i/large.sole-comb"
+        "/tmp/claude-501/sole cli vc57ivst/large.sole-comb"
       ],
       "exit": 5,
       "stdout": "",
-      "stderr": "E-SOURCE-SIZE: /tmp/claude-501/sole cli vt9i9d3i/large.sole-comb: this source-checking increment supports at most 32768 bytes\n"
+      "stderr": "E-SOURCE-SIZE: /tmp/claude-501/sole cli vc57ivst/large.sole-comb: this source-checking increment supports at most 32768 bytes\n"
     }
   ]
 }

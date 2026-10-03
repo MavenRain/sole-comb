@@ -1,11 +1,12 @@
 {
   "schema": 1,
   "date": "2026-10-02",
-  "base": "4f0b7300466e227c5df8e4c0bd26128950a3da95",
+  "base": "7efd80468c709d7d4b11bb10e329c78b32f962b1",
   "checkout": "/Users/oobi/Documents/sole-comb",
   "recorded_hosts": [
     "bun",
-    "node-worker"
+    "node-worker",
+    "native"
   ],
   "runs": [
     {
@@ -13,9 +14,9 @@
       "command": "python3 -P dev/build.py --backend js",
       "checkout": "/Users/oobi/Documents/sole-comb",
       "exit": 0,
-      "seconds": 18,
+      "seconds": 58,
       "logs": {
-        "dev/validation/stage-a-public-family-build.stdout.log": "f204003c56a88b609a5d985c6fa8fd930e59fd888f19ed5cba3966cb8cfa5e24",
+        "dev/validation/stage-a-public-family-build.stdout.log": "95507058eea8247c2c8892ed916e55614928e49be0a388319a21a747db06652a",
         "dev/validation/stage-a-public-family-build.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -24,7 +25,7 @@
       "command": "python3 -P dev/test-public-family.py --hosts bun,node-worker --mutations",
       "checkout": "/Users/oobi/Documents/sole-comb",
       "exit": 0,
-      "seconds": 74,
+      "seconds": 78,
       "hosts": [
         "bun",
         "node-worker"
@@ -34,25 +35,26 @@
         "dev/validation/stage-a-public-family-focused.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "record": {
-        "dev/validation/stage-a-public-family.json": "039d6b9252a041c7fe6f156cfec71c6765fd03aeb4d8a96f2f8620b94d2377bf"
+        "dev/validation/stage-a-public-family.json": "08bb86194a12711a573cb6b671728f41d460b46f602223fcd1ba20952f1787d3"
       }
     },
     {
       "name": "cli",
-      "command": "python3 -P dev/test-cli.py --hosts bun,node-worker",
+      "command": "python3 -P dev/test-cli.py",
       "checkout": "/Users/oobi/Documents/sole-comb",
       "exit": 0,
-      "seconds": 179,
+      "seconds": 490,
       "hosts": [
         "bun",
-        "node-worker"
+        "node-worker",
+        "native"
       ],
       "logs": {
-        "dev/validation/stage-a-public-family-cli.stdout.log": "0e684789164986d8087c7bdd93e16cde5762879136c0bb0477f122239c4f9688",
+        "dev/validation/stage-a-public-family-cli.stdout.log": "e0d2e753fd9f281416c3f7f2249fb422089315eafac033d469e968a3f1348026",
         "dev/validation/stage-a-public-family-cli.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "record": {
-        "dev/validation/stage-a-public-family-cli.json": "46ae3e342472697575414ed136612919a1db3aada96f70d2e5ff1086b6278d55"
+        "dev/validation/stage-a-public-family-cli.json": "11dc1039587622c9334499fc7f05041a8180c099687384bc7e9ec9d5c86f937e"
       }
     },
     {
@@ -60,17 +62,17 @@
       "command": "python3 -P dev/test-core-erasure.py --hosts bun,node-worker && python3 -P dev/build.py --backend js --check",
       "checkout": "/Users/oobi/Documents/sole-comb",
       "exit": 0,
-      "seconds": 36,
+      "seconds": 38,
       "hosts": [
         "bun",
         "node-worker"
       ],
       "logs": {
-        "dev/validation/stage-a-public-family-regressions.stdout.log": "55aea269081e40796f54e72a18c14a59f3acf2c0bbafedb7e73301e483a528f9",
+        "dev/validation/stage-a-public-family-regressions.stdout.log": "cef184ec458a64955019e385200e0fdc9dc632298e3e0eca7c0a2e61657fcad3",
         "dev/validation/stage-a-public-family-regressions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "record": {
-        "dev/validation/stage-a-public-family-erasure-regressions.json": "bdf40552c985b216586b316381e30c61d8d7ab66b80ae882b1fe8ae3b2724812"
+        "dev/validation/stage-a-public-family-erasure-regressions.json": "e9263e9648355a8335550ec0fbeafddf38852c86c412758fbb03ee3cb0b97ed1"
       }
     },
     {
@@ -78,9 +80,9 @@
       "command": "python3 -P dev/build.py --backend native",
       "checkout": "/Users/oobi/Documents/sole-comb",
       "exit": 0,
-      "seconds": 160,
+      "seconds": 856,
       "logs": {
-        "dev/validation/stage-a-public-family-native-attempt.stdout.log": "77ad54b41225be366497d100e769812bd6b94c7e2fe222bfe71aeb7c0255b310",
+        "dev/validation/stage-a-public-family-native-attempt.stdout.log": "eb6b9b30252764b53ad450d718c2e970cef0f62f2f5dbd9db352720426c821c0",
         "dev/validation/stage-a-public-family-native-attempt.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -98,7 +100,7 @@
         "dev/validation/stage-a-public-family-native.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "record": {
-        "dev/validation/stage-a-public-family-native.json": "235df2daee99a0b8a34a5908ead97156014d7b89ce1732d6a9f677c39893d17b"
+        "dev/validation/stage-a-public-family-native.json": "35e90cdb636780d3e0c134620a639653720db19b87806c46b08938146d268961"
       }
     }
   ],

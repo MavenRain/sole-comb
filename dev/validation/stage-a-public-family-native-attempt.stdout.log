@@ -1,5 +1,5 @@
 PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
 BUILD sole-comb native compile: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/native/sole-comb.building.exe
-BUILD sole-comb native OK wall_s=158.953 child_cpu_s=138.310 output=_build/native/sole-comb.exe sha256=ed69f38513d7e676e28b86f528835bb5827fc1a1d453706e869ac20c3b69608d
+BUILD sole-comb native OK wall_s=854.376 child_cpu_s=267.380 output=_build/native/sole-comb.exe sha256=41900c7b9b89166cd45ed25b865d97532af25f119e09bff5f4e5e48c24b8e264
 ENDPOINTS native
 LAUNCHER ./sole-comb: public source driver; qualified endpoint=None

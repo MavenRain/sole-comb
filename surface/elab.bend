@@ -557,8 +557,10 @@ def case_former(~go: walker, c: K.ctx, expected: Maybe<&2, V.t>, scrut: T.t, w: 
 def elab_app(~go: walker, +c: K.ctx, +f: Syn.t, +a: Syn.t) -> M.result(T.t):
   app_spine(go, c, f, a, spine_of(Syn.SApp{f, a}, []))
 # A constructor name must differ from each family of its group and from each earlier family or constructor.
+def present(-A: Data, value: Maybe<&2, A>) -> Bool:
+  maybe(A, Bool, value, _ => False{}, _ => True{})
 def taken(+x: String, +g: G.t, +group: List<&2, String>) -> Bool:
-  Bool.or(Family.known(x, group), maybe(P.family, Bool, G.find_family(x, g), _ => maybe(mu_ref, Bool, family_ctor(x, g), _ => False{}, _ => True{}), _ => True{}))
+  Bool.or(present(P.family, G.find_family(x, g)), Bool.or(present(mu_ref, family_ctor(x, g)), Family.known(x, group)))
 def clash(+g: G.t, +group: List<&2, String>, cs: List<&2, Syn.fam_ctor>) -> Maybe<&2, String>:
   match cs:
     case []: None{}
