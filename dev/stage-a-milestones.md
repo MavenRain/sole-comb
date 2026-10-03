@@ -55,8 +55,9 @@ elimination, with [sum erasure validation](validation/stage-a-sum-erasure.md).
 The A.5b.3.2d increment adds dependent-pair layouts, introductions and native
 two-binder elimination, with [pair erasure validation](validation/stage-a-pair-erasure.md).
 The full A.5b.3.2 boundary remains pending for recursive definitions,
-structural recursor sugar, parameterized-constructor inference, family default
-arms, complete corpus integration and WebAssembly build/run.
+structural recursor sugar, unconstrained parameterized-constructor
+inference, family default arms, complete corpus integration and
+WebAssembly build/run.
 The A.5b.3.2e.1 increment adds nominal recursive-family representations and
 constructor layout planning in `erase/family.bend`. It resets the local scope,
 opens parameters as variables, evaluates dependent field types, and omits
@@ -83,10 +84,23 @@ harness compares their erased output with a frozen pinned Kanon expansion. It
 also checks 16 literal goldens, a literal order probe and four mutations.
 The native public-family check passed. The full `make gates` has not been
 rerun with the public-family targets.
-Recursive definitions, structural recursor sugar, parameterized-constructor
-inference, family default arms, complete erased-corpus integration, and
-WebAssembly build/run remain pending. See the
+Recursive definitions, structural recursor sugar, unconstrained
+parameterized-constructor inference, family default arms, complete
+erased-corpus integration, and WebAssembly build/run remain pending. See the
 [public family validation](validation/stage-a-public-family.md).
+
+A.5b.3.2e.4 delivers expected-type constructor parameter inference through the
+public compiler. Fields elaborate against the instantiated family telescope.
+Constructors of families without parameters also give their field types to
+their arguments. The elaborator does not run a kernel check for each field.
+The kernel declaration check validates parameters, fields, indices and usage
+once, so a nested constructor no longer runs a kernel check at each level.
+[Constructor parameter validation](validation/stage-a-constructor-parameters.md)
+records the Bun and Node worker checks. Native validation and the full
+`make gates` remain pending on the current tree. Unconstrained constructor
+inference remains pending. Family arguments do not get expected types yet.
+Thus the checker refuses a constructor with parameters in a family argument,
+such as `Ib2 (box 1)`.
 
 Semantic gates compare with recorded Kanon fixtures, not with live OCaml
 adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)
@@ -141,6 +155,31 @@ command. The user commits. Source commits may land before A.close, but Stage
 A stays incomplete until A.close passes. Stage B waits for that complete
 gate. Later findings are fixed in subsequent milestones and rerun the
 affected earlier checks.
+
+## UAT portability priority
+
+Added on 2026-10-02 at the user's request. The next Stage A public-source
+increment starts UAT.0 requirement probes. It prioritizes the already planned
+structural recursors and unconstrained parameterized-constructor inference.
+Public structural recursion uses `elim`; `def rec` stays excluded.
+
+The [UAT proof portability schedule](uat-proof-portability.md) sets the first
+M1 implementation sequence:
+
+- equality in `Prop` and transport;
+- dependent records;
+- universe polymorphism and instance resolution;
+- the equality/categorical library;
+- a checked UAT pilot.
+
+These additions precede new seed breadth, lex2 and conditional brec2 work.
+Existing M1 acceptance obligations remain required.
+
+Preparation begins now. Compatibility changes to the pinned semantics begin
+after M0 acceptance under an explicit M1 semantic-delta gate. The existing
+Stage A and M0 corpus, modes, divergence policy and closure checks remain
+required. The pilot and the full UAT port have separate completion criteria
+in that schedule.
 
 ## Integration gate preservation
 

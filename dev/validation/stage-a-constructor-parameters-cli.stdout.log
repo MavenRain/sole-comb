@@ -1,0 +1,41 @@
+PASS public bun: examples/identity.sole-comb
+PASS public bun: examples/arithmetic.sole-comb
+PASS public bun: examples/finite-elim.sole-comb
+PASS public bun: examples/motive.sole-comb
+PASS public bun: examples/function-arms.sole-comb
+PASS public bun: examples/default-arms.sole-comb
+PASS public bun: examples/default-arms-explicit.sole-comb
+PASS public bun: examples/records.sole-comb
+PASS public bun: examples/record-expansion.sole-comb
+PASS public bun: examples/record-expansion-explicit.sole-comb
+PASS public bun: examples/erasure.sole-comb
+PASS public bun: examples/product-erasure.sole-comb
+PASS public bun: examples/sum-erasure.sole-comb
+PASS public bun: examples/pair-erasure.sole-comb
+PASS public bun: examples/families.sole-comb
+PASS public bun: examples/constructor-parameters.sole-comb
+PASS public bun: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public bun: record field types, indices, namespaces and binder hygiene
+PASS public bun: 91 native files and 2 lexical boundary cases
+PASS public node-worker: examples/identity.sole-comb
+PASS public node-worker: examples/arithmetic.sole-comb
+PASS public node-worker: examples/finite-elim.sole-comb
+PASS public node-worker: examples/motive.sole-comb
+PASS public node-worker: examples/function-arms.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb
+PASS public node-worker: examples/default-arms-explicit.sole-comb
+PASS public node-worker: examples/records.sole-comb
+PASS public node-worker: examples/record-expansion.sole-comb
+PASS public node-worker: examples/record-expansion-explicit.sole-comb
+PASS public node-worker: examples/erasure.sole-comb
+PASS public node-worker: examples/product-erasure.sole-comb
+PASS public node-worker: examples/sum-erasure.sole-comb
+PASS public node-worker: examples/pair-erasure.sole-comb
+PASS public node-worker: examples/families.sole-comb
+PASS public node-worker: examples/constructor-parameters.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public node-worker: record field types, indices, namespaces and binder hygiene
+PASS public node-worker: 91 native files and 2 lexical boundary cases
+PASS public compiler: 193 command observations; source hashes stable

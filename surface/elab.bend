@@ -16,6 +16,7 @@ import ../lib/kernel_rules.bend as R
 import ../lib/kernel_eval.bend as Ev
 import ../lib/kernel_check.bend as K
 import syntax.bend as Syn
+import constructor.bend as Constructor
 import elab_program.bend as M
 import sugar.bend as Sugar
 import family.bend as Family
@@ -287,18 +288,18 @@ def local_or_global(c: K.ctx, +x: String) -> T.t:
   maybe(F.Int63.t, T.t, index_of(x, K.local_names(K.locals(c))), _ => T.Global{x}, i => T.Var{i})
 def fam_term(name: String, +np: F.Int63.t, terms: List<&2, T.t>) -> M.result(T.t):
   fam_split(name, np, split_at(T.t, terms, np))
-def elab_ctor_ref(~go: walker, +c: K.ctx, fam: P.family, ctor: P.ctor, +args: List<&2, Syn.t>) -> M.result(T.t):
+def elab_ctor_ref(~go: walker, +c: K.ctx, fam: P.family, ctor: P.ctor, args: List<&2, Syn.t>) -> M.result(T.t):
   match fam:
     case P.Family{fname, params, _, _, _, _, _}:
       match ctor:
         case P.Ctor{+name, fields, indices, _, _}:
-          M.bind(Unit, T.t, arity_is(name, length(F.Pair2<Q.t, F.Pair2<String, T.t>>, fields), length(Syn.t, args)), _ =>
-            choose(M.result(T.t), F.Int63.equal(length(F.Pair2<Q.t, F.Pair2<String, T.t>>, params), F.Int63.zero), _ =>
-                M.bind(List<&2, T.t>, T.t, collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args), +terms =>
-                  M.bind(List<&2, V.t>, T.t, collect(T.t, V.t, K.ctx, ctx => tm => eval_in(ctx, tm), c, terms), +values =>
-                    M.bind(List<&2, V.t>, T.t, collect(T.t, V.t, F.Pair2<G.t, List<&2, V.t>>, eval_environment, F.Pair2{K.globals(c), reverse(V.t, values)}, indices), ixv =>
-                      M.map_result(List<&2, T.t>, T.t, ix => T.In{S.SMu{fname, ix}, T.ACtor{name}, terms}, collect(V.t, T.t, K.ctx, ctx => v => quote_in(ctx, v), c, ixv))))),
-              _ => M.Abort{no_expect(String.append("the constructor ", name))}))
+          choose(M.result(T.t), F.Int63.equal(length(F.Pair2<Q.t, F.Pair2<String, T.t>>, params), F.Int63.zero), _ =>
+              M.bind(List<&2, T.t>, T.t, Constructor.arguments(go, fields, c, [], args), +terms =>
+                M.map_result(List<&2, T.t>, T.t, ix => T.In{S.SMu{fname, ix}, T.ACtor{name}, terms}, Constructor.index_terms(indices, ixs =>
+                  M.bind(List<&2, V.t>, List<&2, T.t>, collect(T.t, V.t, K.ctx, ctx => tm => eval_in(ctx, tm), c, terms), values =>
+                    M.bind(List<&2, V.t>, List<&2, T.t>, collect(T.t, V.t, F.Pair2<G.t, List<&2, V.t>>, eval_environment, F.Pair2{K.globals(c), reverse(V.t, values)}, ixs), ixv =>
+                      collect(V.t, T.t, K.ctx, ctx => v => quote_in(ctx, v), c, ixv)))))),
+            _ => M.Abort{no_expect(String.append("the constructor ", name))})
 def elab_pair(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, a: Syn.t, b: Syn.t) -> M.result(T.t):
   M.bind(V.t, T.t, need(V.t, no_expect("a pair"), expected), ty =>
     M.bind(V.t, T.t, whnf_in(c, ty), w =>
@@ -461,10 +462,19 @@ def elab_coll_case(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, scrut: T.t
         M.bind(List<&2, Syn.branch>, T.t, Sugar.expand(V.vleg, brs, F.Int63.zero, legs), expanded =>
           M.map_result(List<&2, F.Pair2<T.addr, T.leg>>, T.t, branches => T.Elim{T.Elimination{S.SColl{n}, scrut, Q.One{}, motive, branches}},
             collect(Syn.branch, F.Pair2<T.addr, T.leg>, collection_environment, env => br => collection_branch(go, env, br), CollectionEnv{c, s, legs, motive, expected}, expanded))))))
-def elab_mu_ref(~go: walker, c: K.ctx, r: mu_ref, args: List<&2, Syn.t>) -> M.result(T.t):
+# One count check (arity_is) runs before both constructor paths.
+def elab_mu_ref(~go: walker, +c: K.ctx, r: mu_ref, +args: List<&2, Syn.t>, +expected: Maybe<&2, V.t>) -> M.result(T.t):
   match r:
     case RFam{f}: elab_fam_ref(go, c, f, args)
-    case RCtor{f, ct}: elab_ctor_ref(go, c, f, ct, args)
+    case RCtor{+f, +ct}:
+      match f:
+        case P.Family{family, params, _, _, _, _, _}:
+          match ct:
+            case P.Ctor{+name, fields, _, _, _}:
+              M.bind(Unit, T.t, arity_is(name, length(F.Pair2<Q.t, F.Pair2<String, T.t>>, fields), length(Syn.t, args)), _ =>
+                choose(M.result(T.t), F.Int63.equal(length(F.Pair2<Q.t, F.Pair2<String, T.t>>, params), F.Int63.zero),
+                  _ => maybe(V.t, M.result(T.t), expected, _ => elab_ctor_ref(go, c, f, ct, args), ty => M.bind(Unit, T.t, Constructor.owner(c, family, name, ty), _ => elab_ctor_ref(go, c, f, ct, args))),
+                  _ => maybe(V.t, M.result(T.t), expected, _ => elab_ctor_ref(go, c, f, ct, args), ty => Constructor.expected(go, c, f, ct, args, ty))))
 def elab_proj(~go: walker, +c: K.ctx, a: Syn.t, k: F.Int63.t) -> M.result(T.t):
   M.bind(T.t, T.t, go(c, None{}, a), +scrut => M.bind(V.t, T.t, type_of(c, scrut), w => project_type(c, scrut, w, k)))
 def app_head(c: K.ctx, head: Syn.t) -> Maybe<&2, mu_ref>:
@@ -501,10 +511,10 @@ def elab_mu_case(~go: walker, +c: K.ctx, +expected: Maybe<&2, V.t>, scrut: T.t, 
       M.bind(Maybe<&2, T.motive>, T.t, elab_mu_motive(go, c, n, fam, clo, u, penv, mo), +motive =>
         M.bind(List<&2, F.Pair2<T.addr, T.leg>>, T.t, collect(Syn.branch, F.Pair2<T.addr, T.leg>, family_environment, env => br => family_branch(go, env, br), FamilyEnv{c, n, fam, motive, penv, expected}, brs), branches =>
           M.map_result(List<&2, T.t>, T.t, ix => T.Elim{T.Elimination{S.SMu{n, ix}, scrut, Q.One{}, motive, branches}}, collect(V.t, T.t, K.ctx, ctx => v => quote_in(ctx, v), c, ixv)))))))
-def app_spine(~go: walker, +c: K.ctx, f: Syn.t, a: Syn.t, spine: F.Pair2<Syn.t, List<&2, Syn.t>>) -> M.result(T.t):
+def app_spine(~go: walker, +c: K.ctx, f: Syn.t, a: Syn.t, spine: F.Pair2<Syn.t, List<&2, Syn.t>>, expected: Maybe<&2, V.t>) -> M.result(T.t):
   match spine:
     case F.Pair2{head, args}:
-      maybe(mu_ref, M.result(T.t), app_head(c, head), _ => app_point(go, c, f, a), r => elab_mu_ref(go, c, r, args))
+      maybe(mu_ref, M.result(T.t), app_head(c, head), _ => app_point(go, c, f, a), r => elab_mu_ref(go, c, r, args, expected))
 def define_families(fams: List<&2, Syn.fam>, +budget: B.t, +group: List<&2, String>, +globals: G.t) -> M.result(G.t):
   match fams:
     case []: M.Pure{globals}
@@ -554,8 +564,8 @@ def case_former(~go: walker, c: K.ctx, expected: Maybe<&2, V.t>, scrut: T.t, w: 
         case other:
           choose(M.result(T.t), only_mu, _ => M.Abort{E.Mismatch{"a match needs a mu family as the type of its scrutinee"}},
             _ => elab_coll_case(go, c, expected, scrut, w, other, clo, mo, brs))
-def elab_app(~go: walker, +c: K.ctx, +f: Syn.t, +a: Syn.t) -> M.result(T.t):
-  app_spine(go, c, f, a, spine_of(Syn.SApp{f, a}, []))
+def elab_app(~go: walker, +c: K.ctx, +f: Syn.t, +a: Syn.t, expected: Maybe<&2, V.t>) -> M.result(T.t):
+  app_spine(go, c, f, a, spine_of(Syn.SApp{f, a}, []), expected)
 # A constructor name must differ from each family of its group and from each earlier family or constructor.
 def present(-A: Data, value: Maybe<&2, A>) -> Bool:
   maybe(A, Bool, value, _ => False{}, _ => True{})
@@ -583,7 +593,7 @@ def elab_node(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, s: Syn.t) -> M.r
   match s:
     case Syn.SVar{+x}:
       choose(M.result(T.t), local_projection(c, x), _ => M.Abort{E.Mismatch{"E-RECORD-PROJECTION: use a qualified getter such as Pair.first value"}},
-        _ => maybe(mu_ref, M.result(T.t), mu_ref_of(c, x), _ => M.Pure{local_or_global(c, x)}, r => elab_mu_ref(go, c, r, [])))
+        _ => maybe(mu_ref, M.result(T.t), mu_ref_of(c, x), _ => M.Pure{local_or_global(c, x)}, r => elab_mu_ref(go, c, r, [], expected)))
     case Syn.SNat{n}: M.Pure{T.Lit{Lit.LInt{n}}}
     case Syn.SProp{}: M.Pure{T.Univ{L.zero}}
     case Syn.SType{n}: univ_of_int(F.Int63.succ(n))
@@ -599,7 +609,7 @@ def elab_node(~go: walker, +c: K.ctx, expected: Maybe<&2, V.t>, s: Syn.t) -> M.r
       M.bind(List<&2, Maybe<&2, V.t>>, T.t, leg_expectations(c, expected, n, True{}), tys =>
         M.map_result(T.t, T.t, tm => T.In{S.SColl{n}, T.ALeg{k}, [tm]}, go(c, joined(R.at(Maybe<&2, V.t>, k, tys)), a)))
     case Syn.SAbsurd{a}: M.map_result(T.t, T.t, tm => T.Elim{T.Elimination{S.SColl{F.Int63.zero}, tm, Q.One{}, None{}, []}}, go(c, None{}, a))
-    case Syn.SApp{f, a}: elab_app(go, c, f, a)
+    case Syn.SApp{f, a}: elab_app(go, c, f, a, expected)
     case Syn.SFun{bs, body}: elab_fun(go, bs, c, expected, body)
     case Syn.SArrow{b, cod}: elab_group(go, c, b, cod, False{})
     case Syn.SStar{b, cod}: elab_group(go, c, b, cod, True{})

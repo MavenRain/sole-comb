@@ -1,0 +1,6 @@
+All terms check, but 4 defs rely on unsafe or foreign code:
+- checked_source
+- erased_source
+- run
+- main
+BUILD FAIL: sole-comb native exit=-9; log=.gatework/build/sole-comb-native.log

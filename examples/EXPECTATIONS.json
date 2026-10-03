@@ -15,7 +15,8 @@
     "examples/product-erasure.sole-comb": 40,
     "examples/sum-erasure.sole-comb": 29,
     "examples/pair-erasure.sole-comb": 33,
-    "examples/families.sole-comb": 23
+    "examples/families.sole-comb": 23,
+    "examples/constructor-parameters.sole-comb": 17
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",

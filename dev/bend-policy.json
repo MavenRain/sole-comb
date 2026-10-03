@@ -195,6 +195,24 @@
       "function": "fields",
       "sites": 1,
       "reason": "A positional family arm must supply a lambda for each constructor field; other expressions explicitly refuse a missing field."
+    },
+    {
+      "path": "surface/constructor.bend",
+      "function": "parameters",
+      "sites": 1,
+      "reason": "An expected type outside the named recursive family is refused; parameters are decoded only from its checked family diagram."
+    },
+    {
+      "path": "surface/constructor.bend",
+      "function": "arguments",
+      "sites": 1,
+      "reason": "An excess constructor field is refused after the exact telescope arity check."
+    },
+    {
+      "path": "surface/constructor.bend",
+      "function": "owner_shape",
+      "sites": 1,
+      "reason": "An expected type that is not a recursive family is left to the kernel check; only a different family name is refused here."
     }
   ],
   "unsafe": [

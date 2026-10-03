@@ -13,6 +13,7 @@ Run these files through the public compiler from the repository root:
 ./sole-comb check --erased examples/product-erasure.sole-comb
 ./sole-comb check --erased examples/sum-erasure.sole-comb
 ./sole-comb check --erased examples/pair-erasure.sole-comb
+./sole-comb check --erased examples/constructor-parameters.sole-comb
 ```
 
 `identity` demonstrates dependent functions and application. `arithmetic`
@@ -81,17 +82,24 @@ python3 -P dev/test-cli.py --hosts bun,node-worker,native
 The suite also invokes every file under `corpus/refuse/`, tests lexical
 boundaries, and checks command errors and file handling.
 
-`check --erased` prints type-directed erased code for Nat values and ordinary
-functions, collection products and finite sums. `erasure` covers ghost arguments, partial applications, eta
+`check --erased` prints type-directed erased code for Nat values, ordinary
+functions, collection products, finite sums, dependent pairs and recursive
+families. `erasure` covers ghost arguments, partial applications, eta
 expansion, captured and unused runtime variables, and linear parameters.
 Universes, proof positions and empty products, such as its `Unit`, disappear.
 `product-erasure` covers closed-record getters, erased type and proof fields,
 runtime projection indices, nested products, function fields, linear parameters,
-captured variables, and empty or entirely erased tuples. Dependent pairs,
-recursive families and recursive definitions report an
-explicit erasure refusal.
+captured variables, and empty or entirely erased tuples. Recursive definitions
+receive an explicit refusal.
 
-The public command provides source checking and ordinary, product and sum erasure. Wasm build/run,
-recursive families, dependent or parameterized records, and constructor-labelled arms remain
-pending. `check --print` displays checked kernel definitions rather than a
-source round trip. Files larger than 32768 bytes report `E-SOURCE-SIZE`.
+`constructor-parameters` demonstrates parameter inference from an expected family
+type. It covers nested constructors, aliases, open parameters, dependent fields
+and indexed families. It also has a wrapper family `W` without parameters and a
+`List Nat` literal. A constructor used without an expected family still
+receives an explicit inference refusal.
+
+The public command provides source checking and ordinary, product, sum, pair
+and recursive-family erasure. Wasm build/run, dependent or parameterized
+records, and constructor-labelled arms remain pending. `check --print`
+displays checked kernel definitions rather than a source round trip. Files
+larger than 32768 bytes report `E-SOURCE-SIZE`.

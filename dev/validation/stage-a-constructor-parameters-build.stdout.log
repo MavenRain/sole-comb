@@ -1,0 +1,4 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree/dev/toolchain.json
+BUILD sole-comb js cached
+ENDPOINTS bun node-worker
+LAUNCHER ./sole-comb: public source driver; qualified endpoint=None

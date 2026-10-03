@@ -70,11 +70,25 @@ indexed motives, empty families, and typed constructor fields. Constructors are
 separated by semicolons, and a trailing semicolon is allowed. Family elimination
 requires an explicit motive. See the
 [public family evidence](dev/validation/stage-a-public-family.md).
-The native public-family check passed. The full `make gates` has not been
-rerun with the public-family targets.
-Recursive definitions, structural recursor sugar, parameterized-constructor
-inference, family default arms, complete erased-corpus integration, WebAssembly
-build/run and the full kernel differential remain pending.
+A.5b.3.2e.4 adds constructor parameter inference from an expected family type.
+It checks dependent fields in their instantiated telescope. It forwards expected
+types through constructor applications and nullary constructor names. This also
+applies to a family without parameters: each constructor argument gets its field
+type as the expected type. Examples cover open parameters, aliases, nested
+constructors, argument positions, indexed families, a wrapper without parameters
+and a list. Inference without an expected family remains refused. Family
+arguments do not get expected types yet. Thus the checker refuses a constructor
+with parameters in a family argument, such as `Ib2 (box 1)`. See
+[constructor parameter validation](dev/validation/stage-a-constructor-parameters.md).
+
+The preceding public-family increment passed its native check. Signal 9
+killed a native build of an earlier version of this increment. Native
+constructor parameter validation and the full `make gates` remain pending
+on the current tree.
+Recursive definitions, structural recursor sugar, unconstrained
+parameterized-constructor inference, family default arms, complete erased-corpus
+integration, WebAssembly build/run and the full kernel differential remain
+pending.
 
 Run from this directory with the locally pinned tools:
 

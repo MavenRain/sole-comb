@@ -1,2 +1,3 @@
 mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
-def value : Box Nat := box 7
+-- A constructor in the scrutinee has no expected family type.
+def value : Nat := elim (box 7) as x in Box return Nat { fun (n : Nat) => n }

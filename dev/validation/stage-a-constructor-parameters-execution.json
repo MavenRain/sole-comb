@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "date": "2026-10-03",
+  "base": "1815c8dbd2d78af9134192600b5a3a4fe096a4f7",
+  "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+  "source_checkout": "/Users/oobi/Documents/sole-comb",
+  "copy": "every tracked file in checkout equals its staged blob in source_checkout; the records were then regenerated",
+  "recorded_hosts": [
+    "bun",
+    "node-worker"
+  ],
+  "runs": [
+    {
+      "name": "js-build",
+      "command": "python3 -P dev/build.py --backend js",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:50:13Z",
+      "end": "2026-10-03T08:50:13Z",
+      "exit": 0,
+      "seconds": 0,
+      "logs": {
+        "dev/validation/stage-a-constructor-parameters-build.stdout.log": "70241bfab920b8ce216b397b9374e45cdaef39764addd456efa148e75c439932",
+        "dev/validation/stage-a-constructor-parameters-build.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "constructor",
+      "command": "python3 -P dev/test-constructor-parameters.py --hosts bun,node-worker --mutations",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:50:13Z",
+      "end": "2026-10-03T08:52:15Z",
+      "exit": 0,
+      "seconds": 122,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-constructor-parameters.stdout.log": "6d0fef965271c50dc0b5efd7d51ea9a436fc35037bc46557a6ad0fe807d4641c"
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      },
+      "record": {
+        "dev/validation/stage-a-constructor-parameters.json": "380f1dabe16acdd716f21d3d7b4f874e95ea2fe3cd9c0cea39bde4ccd23b5869"
+      }
+    },
+    {
+      "name": "cli",
+      "command": "python3 -P dev/test-cli.py --hosts bun,node-worker",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:52:15Z",
+      "end": "2026-10-03T08:57:19Z",
+      "exit": 0,
+      "seconds": 304,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-constructor-parameters-cli.stdout.log": "bb381e364d18a75544cdda97b31c794b4b8b0ace654f8bc01237d0cf1b2e8e92"
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      },
+      "record": {
+        "dev/validation/stage-a-constructor-parameters-cli.json": "907483a91cb5cd108e21a660a9c9a857bdb8c730b6f43f9da5b58c746fb16bc6"
+      }
+    },
+    {
+      "name": "family",
+      "command": "python3 -P dev/test-public-family.py --hosts bun,node-worker",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:57:19Z",
+      "end": "2026-10-03T08:57:23Z",
+      "exit": 0,
+      "seconds": 4,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "logs": {
+        "dev/validation/stage-a-constructor-parameters-family.stdout.log": "4ddaeca0129f41205440791c31ba70f8fb561e71d90553450f2c6d88ef5daf73"
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      },
+      "record": {
+        "dev/validation/stage-a-constructor-parameters-family.json": "01b65407c2e9584afcd4de84a81381864a6be61aa7c22c5ac88725450f1642e8"
+      }
+    },
+    {
+      "name": "test-house",
+      "command": "python3 -P dev/test-house.py",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:57:23Z",
+      "end": "2026-10-03T08:57:23Z",
+      "exit": 0,
+      "seconds": 0,
+      "stdout": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "0b25b87cdaf7c9018e588e07a12cb645e1f465cee2bc7bfbc81d62d0985a72ed",
+        "last_line": "OK"
+      }
+    },
+    {
+      "name": "house-bend",
+      "command": "python3 -P dev/house-bend.py",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:57:23Z",
+      "end": "2026-10-03T08:57:24Z",
+      "exit": 0,
+      "seconds": 1,
+      "stdout": {
+        "retained": false,
+        "sha256": "df9c5e56c5d4694c2a259a4d728a6922aebab9cda4f3df2e7ce8e52bcf0c20bf",
+        "last_line": "HOUSE PASS scoped host policy: 53 files, 42 line budgets, 60 reviewed unsafe sites, 35 catchalls"
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      }
+    },
+    {
+      "name": "reference-fixtures",
+      "command": "python3 -P dev/test-reference-fixtures.py",
+      "checkout": "/private/tmp/claude/kan-elim-lang-m0/review-1002-ctor-params/pass2/tree",
+      "start": "2026-10-03T08:57:24Z",
+      "end": "2026-10-03T08:57:24Z",
+      "exit": 0,
+      "seconds": 0,
+      "stdout": {
+        "retained": false,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "last_line": ""
+      },
+      "stderr": {
+        "retained": false,
+        "sha256": "a1997bca199d13e3e903ceb20a1553adeacc855514ae424c9195f78f6a0df6d4",
+        "last_line": "OK"
+      }
+    }
+  ],
+  "native_validation": "pending",
+  "full_gates": {
+    "command": "make gates",
+    "status": "not run on this tree; pending with native validation"
+  },
+  "previous_tree": {
+    "scope": "historical evidence from an earlier checkout, before the review fixes",
+    "checkout": "/Users/oobi/Documents/gpt5/sole-comb-a5b3-e4-1815c8d",
+    "base": "1815c8dbd2d78af9134192600b5a3a4fe096a4f7",
+    "native_attempt": {
+      "command": "python3 -P dev/build.py --backend native",
+      "type_check": "passed",
+      "compiler_exit": -9,
+      "reason": "compiler process killed with signal 9; cause is not recorded",
+      "native_validation": "outstanding",
+      "logs": {
+        "dev/validation/stage-a-constructor-parameters-native.stdout.log": "110410c68bb185de44199de4d6d2fdd212e2e9cd0847565ad7bf75f4551bea44",
+        "dev/validation/stage-a-constructor-parameters-native.stderr.log": "3d4c76abcadf2dd11f2a5009fac451d1246add7228ffe6de7202d060fc8a0615"
+      }
+    }
+  }
+}

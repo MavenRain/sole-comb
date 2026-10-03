@@ -1,0 +1,2 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-a5b3-e4-1815c8d/dev/toolchain.json
+BUILD sole-comb native compile: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend -o _build/native/sole-comb.building.exe
