@@ -139,6 +139,15 @@ readiness increment pins the UAT revision and dependencies, selected declaration
 types and transitive axiom inventory, with public-source requirement probes.
 See [UAT.0 readiness validation](validation/uat-readiness.md).
 
+A.5b.3.2e.9 adds the direct recursive-field layout prerequisite for structural
+recursors. It opens parameters in a fresh context, normalizes field domains,
+and records direct self-recursive fields with their quantities and indices.
+It refuses non-direct self occurrences and fields that mention another member
+of a mutual group. The layout is metadata, not a checked recursor certificate.
+Public branch elaboration, recursor typing, delayed IH evaluation and erasure
+remain pending, so UAT.0 stays open. See
+[recursor layout validation](validation/stage-a-recursor-layout.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

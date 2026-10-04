@@ -137,6 +137,13 @@ error as the equivalent explicit arm. See the
 [family default examples](examples/family-default-arms.sole-comb) and
 [validation](dev/validation/stage-a-family-defaults.md).
 
+A.5b.3.2e.9 adds [direct recursive-field layouts](dev/validation/stage-a-recursor-layout.md)
+for the structural recursor. The planner retains field quantities, normalized
+domains and child indices in declaration order. It refuses a field that
+mentions another member of a mutual group, as it refuses a non-direct self
+occurrence. Public recursor typing, delayed induction hypotheses and their
+erasure remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

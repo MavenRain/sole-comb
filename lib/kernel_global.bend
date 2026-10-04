@@ -35,6 +35,10 @@ def find_family(name: String, globals: t) -> Maybe<&2, Pos.family>:
   match globals:
     case Globals{_, families}: F.Map.get(Pos.family, name, families)
 
+def family_list(globals: t) -> List<&2, F.Pair2<String, Pos.family>>:
+  match globals:
+    case Globals{_, families}: F.Map.bindings(Pos.family, families)
+
 def add_family(name: String, fam: Pos.family, globals: t) -> t:
   match globals:
     case Globals{entries, families}: Globals{entries, F.Map.insert(Pos.family, name, fam, families)}
