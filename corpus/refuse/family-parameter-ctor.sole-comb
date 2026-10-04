@@ -1,3 +1,3 @@
-mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
--- A constructor in the scrutinee has no expected family type.
-def value : Nat := elim (box 7) as x in Box return Nat { fun (n : Nat) => n }
+mu Box (0 A : Type 0) : Type 0 { box : Box A }
+-- A nullary constructor has no field evidence for its parameter.
+def value : Nat := elim box as x in Box return Nat { 7 }

@@ -213,6 +213,42 @@
       "function": "owner_shape",
       "sites": 1,
       "reason": "An expected type that is not a recursive family is left to the kernel check; only a different family name is refused here."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "parameter",
+      "sites": 1,
+      "reason": "Only un-applied local neutrals in the fresh parameter interval represent inference slots."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "negative",
+      "sites": 1,
+      "reason": "Only a local variable term has an index. Every other term node has no index of its own and is not a slot."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "located",
+      "sites": 1,
+      "reason": "Only a Cannot_infer refusal of the argument or of its kernel type gets the constructor text. Every other error keeps its own text."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "solve_family",
+      "sites": 1,
+      "reason": "A nominal field must have a matching nominal family before its parameters and indices are compared."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "solve_nominal",
+      "sites": 1,
+      "reason": "A non-nominal field type without a slot uses checked conversion. A slot in any other position is left to the final kernel check."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "zip",
+      "sites": 1,
+      "reason": "Constraint lists with different arities are refused explicitly."
     }
   ],
   "unsafe": [
@@ -515,6 +551,21 @@
       "path": "surface/family.bend",
       "function": "fields",
       "reason": "Consumes the finite constructor telescope or descends into a lambda body. Bend cannot infer the combined structural measure; type, affine-use and exhaustive checks stay enabled."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "open_term",
+      "reason": "Consumes a work list of the finite subterms of one quoted field type. T.scan_term replaces each node by its strict subterms, so Bend cannot see a structural measure; type, affine-use and exhaustive checks stay enabled."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "inferable",
+      "reason": "Follows the finite request chain of one argument elaboration, then wraps the kernel type of the term. Each resumed program answers one request; type, affine-use and exhaustive checks stay enabled."
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "function": "solve",
+      "reason": "Consumes a work list of finite first-order nominal constraints; nested families add their finite parameter and index pairs."
     }
   ]
 }

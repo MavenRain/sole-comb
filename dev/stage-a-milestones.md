@@ -104,12 +104,44 @@ remain in scope when the walker reaches the indices. The public example and
 56-case constructor suite cover this behavior, including nested and nullary
 constructors, aliases, open variables, dependent arguments and refusals. See
 [family argument validation](validation/stage-a-family-arguments.md).
-Recursive definitions, structural recursor sugar, unconstrained
-parameterized-constructor inference, family default arms, complete erased-corpus
+A.5b.3.2e.6 adds constructor parameter inference from field types when the
+constructor has no expected family. Direct parameter occurrences and nominal
+family parameters and indices provide constraints. Later fields receive their
+instantiated expected types. The result carries a kernel-checked family
+annotation, so a constructor can be an unannotated elimination scrutinee.
+The [constructor inference example](../examples/constructor-inference.sole-comb)
+covers nested constructors, distinct and open parameters, recursive tails and
+value parameters inferred from a nominal index. See
+[constructor inference validation](validation/stage-a-constructor-inference.md).
+
+Inference reads the fields from left to right. It first puts the solved
+parameters and the earlier field values into the field type. If no unsolved
+parameter remains in that type, the checker checks the argument against it. If
+an unsolved parameter remains in any position, the checker does not use the
+field type as an expected type. It infers the type of the argument and solves
+the parameters from that type. A parameter gets a value at the top of the field
+type and in the parameters and indices of a nominal family. A parameter beneath
+a function, product or sum former gets no value from that field. Another field
+must supply it. The kernel then checks the annotated constructor with all its
+fields. An argument without a type of its own, such as a lambda or a tuple
+without an annotation, cannot be inferred. In a field with an unsolved
+parameter, the checker refuses it with a text that names the constructor and the
+field. A nullary constructor of a family with parameters, such as `nil`, is
+refused in the same way. For `r : (Nat -> A) -> A -> R A`,
+`r (fun (n : Nat) => n) 7` is refused. For `r2 : A -> (Nat -> A) -> R2 A`,
+`r2 7 (fun (n : Nat) => n)` is accepted. For `w3 : Both (Nat -> A) A -> W3 A`
+and `g4 : Nat -> Nat`, `w3 (both g4 7)` is accepted. The second parameter of
+`Both` gives the value of A. Nullary and phantom parameters without field
+evidence remain refused.
+
+This increment starts the UAT.0 constructor requirement probes. UAT revision
+pinning, theorem selection and the transitive axiom inventory remain pending.
+
+Recursive definitions, structural recursor sugar, family default arms, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
-Native validation and the full `make gates` have not run on the
-A.5b.3.2e.4 or A.5b.3.2e.5 tree.
+The constructor inference validation records the current host checks and
+integration gate status.
 
 Semantic gates compare with recorded Kanon fixtures, not with live OCaml
 adapters. The [no-OCaml cleanup evidence](validation/no-ocaml-cleanup.md)
@@ -167,9 +199,9 @@ affected earlier checks.
 
 ## UAT portability priority
 
-Added on 2026-10-02 at the user's request. The next Stage A public-source
-increment starts UAT.0 requirement probes. It prioritizes the already planned
-structural recursors and unconstrained parameterized-constructor inference.
+Added on 2026-10-02 at the user's request. A.5b.3.2e.6 starts the UAT.0
+requirement probes with constructor inference. Structural recursors remain
+planned.
 Public structural recursion uses `elim`; `def rec` stays excluded.
 
 The [UAT proof portability schedule](uat-proof-portability.md) sets the first

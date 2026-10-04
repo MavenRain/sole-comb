@@ -32,7 +32,7 @@ def main():
     selected = set(manifest["positive"]) | set(manifest["negative"])
     found = {str(p.relative_to(ROOT)) for directory in ("examples", "corpus/refuse")
              for p in (ROOT / directory).rglob("*.sole-comb")}
-    if manifest["schema"] != 1 or selected != found or len(selected) != 92 or not all(manifest["negative"].values()):
+    if manifest["schema"] != 1 or selected != found or len(selected) != 93 or not all(manifest["negative"].values()):
         raise RuntimeError("native example census changed; update and review the independent expectations")
     equivalents = manifest["equivalent"]
     if equivalents != {"examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",

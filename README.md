@@ -76,7 +76,7 @@ types through constructor applications and nullary constructor names. This also
 applies to a family without parameters: each constructor argument gets its field
 type as the expected type. Examples cover open parameters, aliases, nested
 constructors, argument positions, indexed families, a wrapper without parameters
-and a list. Inference without an expected family remains refused. See
+and a list. See
 [constructor parameter validation](dev/validation/stage-a-constructor-parameters.md).
 
 A.5b.3.2e.5 forwards expected types to family parameters and indices. It opens
@@ -86,12 +86,49 @@ earlier ones. In the family argument `Hold (box 7)` of
 the constructor `box 7` now gets its expected type `Box Nat`. The checker
 accepts nested and nullary constructors, aliases and open variables in family
 arguments. See [family argument validation](dev/validation/stage-a-family-arguments.md).
-Recursive definitions, structural recursor sugar, unconstrained
-parameterized-constructor inference, family default arms, complete erased-corpus
+A.5b.3.2e.6 adds constructor parameter inference from field types when the
+constructor has no expected family. Direct parameter occurrences and nominal
+family parameters and indices provide constraints. Later fields receive their
+instantiated expected types. The result carries a kernel-checked family
+annotation, so a constructor can be an unannotated elimination scrutinee.
+The [constructor inference example](examples/constructor-inference.sole-comb)
+covers nested constructors, distinct and open parameters, recursive tails and
+value parameters inferred from a nominal index. See
+[constructor inference validation](dev/validation/stage-a-constructor-inference.md).
+
+Constructors of families without parameters also become unannotated scrutinees.
+For `mu Token : Type 0 { token : Token }`, `check --print` shows
+`def value : Nat := elim (token) as x in Token return Nat { 7 }` as follows:
+
+```text
+def value : Nat := (Elim SMu Token [] ((In SMu Token [] (ACtor token) []) : (Lan SMu Token [] (Sec SColl 0 []))) as x return Nat with | (ACtor token)  => 7)
+```
+
+Inference reads the fields from left to right. It first puts the solved
+parameters and the earlier field values into the field type. If no unsolved
+parameter remains in that type, the checker checks the argument against it. If
+an unsolved parameter remains in any position, the checker does not use the
+field type as an expected type. It infers the type of the argument and solves
+the parameters from that type. A parameter gets a value at the top of the field
+type and in the parameters and indices of a nominal family. A parameter beneath
+a function, product or sum former gets no value from that field. Another field
+must supply it. The kernel then checks the annotated constructor with all its
+fields. An argument without a type of its own, such as a lambda or a tuple
+without an annotation, cannot be inferred. In a field with an unsolved
+parameter, the checker refuses it with a text that names the constructor and the
+field. A nullary constructor of a family with parameters, such as `nil`, is
+refused in the same way. For `r : (Nat -> A) -> A -> R A`,
+`r (fun (n : Nat) => n) 7` is refused. For `r2 : A -> (Nat -> A) -> R2 A`,
+`r2 7 (fun (n : Nat) => n)` is accepted. For `w3 : Both (Nat -> A) A -> W3 A`
+and `g4 : Nat -> Nat`, `w3 (both g4 7)` is accepted. The second parameter of
+`Both` gives the value of A. Nullary and phantom parameters without field
+evidence remain refused.
+
+Recursive definitions, structural recursor sugar, family default arms, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
-Native validation and the full `make gates` have not run on the
-A.5b.3.2e.4 or A.5b.3.2e.5 tree.
+The constructor inference validation records the current host checks and
+integration gate status.
 
 Run from this directory with the locally pinned tools:
 

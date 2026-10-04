@@ -71,7 +71,7 @@ CASES = [
     ("wrong-index", AT + "def value : At 0 1 := at\n", "mismatch: the constructor at of At gives the index 0 and the type asks for 1"),
     ("wrong-dependent-field", DEP + "def value : DepBox Nat := depBox (prod ()) 7 8\n", "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))"),
     ("wrong-parameter-order", BOTH + "def value : Both Nat (prod ()) := both (tuple ()) 7\n", "mismatch: a tuple needs a right former as its expected type"),
-    ("unconstrained", BOX + "def value : Nat := elim (box 7) as x in Box return Nat { fun (n : Nat) => n }\n", "needs an expected type"),
+    ("unconstrained", BOX + "def value : Nat := elim (box 7) as x in Box return Nat { fun (n : Nat) => n }\n", None),
     ("family-wrong-field", BOX + HOLD + "def value : Hold (box (tuple ())) := hold\n", "mismatch: a tuple needs a right former as its expected type"),
     ("family-wrong-family", BOX + HOLD + "mu Other (0 A : Type 0) : Type 0 { other : A -> Other A }\ndef value : Hold (other 1) := hold\n", "mismatch: the constructor other of Other cannot have the expected family Box"),
     ("family-missing-argument", BOX + STAMP + "def value : Stamp Nat := stamp\n", "mismatch: Stamp takes 2 arguments and the term gives 1"),
@@ -125,14 +125,18 @@ GOLDENS = {
     'plain-wrapper': (1, '(In SMu W [] (ACtor w) [(In SMu Box [] (ACtor box) [7])])', 'fun value () : union mu<W> := KTag mu<W> 0 [KTag mu<Box> 0 [KLit 7]]'),
     'shadowed': (1, '[box => (Out SPi w _ Nat (APt w 7) box)]', 'fun value (func fn<1>) : union mu<Box> := KTail (KVar 0) [KLit 7]'),
 }
+GOLDENS["unconstrained"] = GOLDENS["annotated-scrutinee"]
+# A nullary parameterized constructor still requires the field's expected type.
+CASES.append(("plain-nullary", LIST + "mu W : Type 0 { w : List Nat -> W }\ndef value : W := w nil\n", None))
+GOLDENS["plain-nullary"] = (1, "(In SMu W [] (ACtor w) [(In SMu List [] (ACtor nil) [])])", "KTag mu<W> 0 [KTag mu<List> 0 []]")
 # name, file, anchor, replacement, case, expected stderr marker of the refusal that kills the mutant.
 MUTANTS = [
-    ("family-expected", "surface/elab.bend", "Constructor.arguments(go, append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices), c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "family-argument", "the constructor box needs an expected type"),
+    ("family-expected", "surface/elab.bend", "Constructor.arguments(go, append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices), c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "family-nullary", "the constructor nil needs an expected type or an inferable field for the parameter A"),
     ("family-telescope-order", "surface/elab.bend", "append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices)", "append(F.Pair2<Q.t, F.Pair2<String, T.t>>, indices, params)", "family-parameter-index-order", "unbound: de Bruijn index 0 is outside the environment"),
     ("expected-type", "surface/elab.bend", "Constructor.expected(go, c, f, ct, args, ty)", "elab_ctor_ref(go, c, f, ct, args)", "annotation", "the constructor box needs an expected type"),
     ("parameter-order", "surface/constructor.bend", "reverse(vs, [])", "vs", "parameter-order", "the constructor box of Box needs the family Box as its expected type, but the expected type is (Ran SColl 0 (Sec SColl 0 []))"),
     ("dependent-environment", "surface/constructor.bend", "value <> env", "env", "dependent-fields", "unbound: de Bruijn index 2 is outside the environment"),
-    ("plain-fields", "surface/elab.bend", "Constructor.arguments(go, fields, c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "plain-wrapper", "the constructor box needs an expected type"),
+    ("plain-fields", "surface/elab.bend", "Constructor.arguments(go, fields, c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "plain-nullary", "the constructor nil needs an expected type or an inferable field for the parameter A"),
 ]
 
 

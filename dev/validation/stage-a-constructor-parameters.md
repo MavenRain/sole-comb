@@ -25,8 +25,11 @@ positivity and erasure semantics do not change.
 A refusal for another family names the constructor, its family and the
 expected family. For example, `other 7` against `Box Nat` gives
 `the constructor other of Other cannot have the expected family Box`.
-A constructor without an expected type gives
-`the constructor box needs an expected type`.
+Since A.5b.3.2e.6, the elaborator infers the parameters of a constructor without
+an expected type from its fields. If the fields do not determine a parameter,
+the refusal is
+`the constructor nil needs an expected type or an inferable field for the parameter A`.
+See [constructor inference validation](stage-a-constructor-inference.md).
 `examples/constructor-parameters.sole-comb` adds the definitions `wrapped` and
 `numbers`, and now has 17 definitions.
 
@@ -128,11 +131,14 @@ remain pending.
 | `expected-type` | `surface/elab.bend` | routes the constructor around the expected type | `annotation` | `the constructor box needs an expected type` | `cannot infer: the constructor box needs an expected type` | 0 | 1 |
 | `parameter-order` | `surface/constructor.bend` | drops the reversal of the parameter environment | `parameter-order` | `the constructor box of Box needs the family Box as its expected type` | `mismatch: the constructor box of Box needs the family Box as its expected type` | 0 | 1 |
 | `dependent-environment` | `surface/constructor.bend` | drops earlier field values from the telescope environment | `dependent-fields` | `unbound: de Bruijn index 2 is outside the environment` | `unbound: de Bruijn index 2 is outside the environment` | 0 | 1 |
-| `plain-fields` | `surface/elab.bend` | elaborates parameterless fields without expected types | `plain-wrapper` | `the constructor box needs an expected type` | `cannot infer: the constructor box needs an expected type` | 0 | 1 |
+| `plain-fields` | `surface/elab.bend` | elaborates parameterless fields without expected types | `plain-nullary` | `the constructor nil needs an expected type or an inferable field for the parameter A` | `cannot infer: the constructor nil needs an expected type or an inferable field for the parameter A` | 0 | 1 |
 
 Each mutant must compile before its check. A compile failure does not count as
 a kill. A kill needs exit 1, a `FAIL` line on stderr and the kill marker. The
 refusal column gives the first stderr line after `FAIL`.
+The `plain-fields` row gives the witness and the marker of the current harness.
+Constructor inference (A.5b.3.2e.6) makes the earlier witness `plain-wrapper`
+valid.
 
 ## Timing control
 

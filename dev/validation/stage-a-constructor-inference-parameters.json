@@ -1,0 +1,3165 @@
+{
+  "schema": 3,
+  "scope": "expected-type constructor parameters",
+  "hosts": [
+    "bun",
+    "node-worker",
+    "native"
+  ],
+  "cases": 57,
+  "goldens": {
+    "family-argument": {
+      "defs": 1,
+      "checked": "(Lan SMu Ib2 [(In SMu Box [] (ACtor box) [1])] (Sec SColl 0 [])) := (In SMu Ib2 [(In SMu Box [] (ACtor box) [1])] (ACtor ib2) [(In SMu Box [] (ACtor box) [1])])",
+      "erased": "fun value () : union mu<Ib2> := KTag mu<Ib2> 0 []"
+    },
+    "family-parameter": {
+      "defs": 1,
+      "checked": "(Lan SMu Hold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [1])])) := (In SMu Hold [] (ACtor hold) [])",
+      "erased": "fun value () : union mu<Hold> := KTag mu<Hold> 0 []"
+    },
+    "family-dependent-parameters": {
+      "defs": 1,
+      "checked": "(Lan SMu Stamp [] (Sec SColl 2 [ => Nat;  => (In SMu Box [] (ACtor box) [1])])) := (In SMu Stamp [] (ACtor stamp) [])",
+      "erased": "fun value () : union mu<Stamp> := KTag mu<Stamp> 0 []"
+    },
+    "family-dependent-indices": {
+      "defs": 1,
+      "checked": "(Lan SMu Ix [Nat; (In SMu Box [] (ACtor box) [1])] (Sec SColl 0 [])) := (In SMu Ix [Nat; (In SMu Box [] (ACtor box) [1])] (ACtor ix) [Nat; (In SMu Box [] (ACtor box) [1])])",
+      "erased": "fun value () : union mu<Ix> := KTag mu<Ix> 0 []"
+    },
+    "family-index-after-parameter": {
+      "defs": 1,
+      "checked": "(Lan SMu PI [(In SMu Box [] (ACtor box) [1])] (Sec SColl 1 [ => Nat])) := (In SMu PI [(In SMu Box [] (ACtor box) [1])] (ACtor pi) [(In SMu Box [] (ACtor box) [1])])",
+      "erased": "fun value () : union mu<PI> := KTag mu<PI> 0 []"
+    },
+    "family-open": {
+      "defs": 1,
+      "checked": "(Sec SColl 2 [ => A;  => (In SMu Box [] (ACtor box) [a])])",
+      "erased": "fun value () : union mu<Stamp> := KTag mu<Stamp> 0 []"
+    },
+    "family-nested": {
+      "defs": 1,
+      "checked": "(Lan SMu Deep [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [(In SMu Box [] (ACtor box) [1])])])) := (In SMu Deep [] (ACtor deep) [])",
+      "erased": "fun value () : union mu<Deep> := KTag mu<Deep> 0 []"
+    },
+    "family-nullary": {
+      "defs": 1,
+      "checked": "(Lan SMu EmptyList [] (Sec SColl 1 [ => (In SMu List [] (ACtor nil) [])])) := (In SMu EmptyList [] (ACtor emptyList) [])",
+      "erased": "fun value () : union mu<EmptyList> := KTag mu<EmptyList> 0 []"
+    },
+    "family-alias": {
+      "defs": 2,
+      "checked": "(Lan SMu AliasHold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [1])])) := (In SMu AliasHold [] (ACtor aliasHold) [])",
+      "erased": "fun value () : union mu<AliasHold> := KTag mu<AliasHold> 0 []"
+    },
+    "family-field": {
+      "defs": 1,
+      "checked": "(Lan SMu W2 [] (Sec SColl 0 [])) := (In SMu W2 [] (ACtor w2) [(In SMu Hold [] (ACtor hold) [])])",
+      "erased": "fun value () : union mu<W2> := KTag mu<W2> 0 [KTag mu<Hold> 0 []]"
+    },
+    "family-mutual-sibling": {
+      "defs": 1,
+      "checked": "(Lan SMu U [] (Sec SColl 0 [])) := (In SMu U [] (ACtor u) [(In SMu T [] (ACtor t) [])])",
+      "erased": "fun value () : union mu<U> := KTag mu<U> 0 [KTag mu<T> 0 []]"
+    },
+    "family-self-index": {
+      "defs": 1,
+      "checked": "(Lan SMu T [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [1])])) := (In SMu T [] (ACtor node) [(In SMu T [] (ACtor leaf) [])])",
+      "erased": "fun value () : union mu<T> := KTag mu<T> 1 [KTag mu<T> 0 []]"
+    },
+    "family-elim-motive": {
+      "defs": 1,
+      "checked": "(Lan SMu Hold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [1])])) := (Elim SMu Box [] ((In SMu Box [] (ACtor box) [7]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat]))) as x return (Lan SMu Hold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [1])])) with | (ACtor box) n => (In SMu Hold [] (ACtor hold) []))",
+      "erased": "fun value () : union mu<Hold> := KCase mu<Box> (KTag mu<Box> 0 [KLit 7]) [{0 1 (KTag mu<Hold> 0 [])}]"
+    },
+    "family-mutual-value": {
+      "defs": 1,
+      "checked": "(Lan SMu HE [] (Sec SColl 1 [ => (In SMu Ev [] (ACtor econs) [1; (In SMu Od [] (ACtor ocons) [2; (In SMu Ev [] (ACtor enil) [])])])])) := (In SMu HE [] (ACtor he) [])",
+      "erased": "fun value () : union mu<HE> := KTag mu<HE> 0 []"
+    },
+    "family-lambda-alias": {
+      "defs": 2,
+      "checked": "(Lan SMu F [] (Sec SColl 1 [ => (Sec SPi w n N [n => n])])) := (In SMu F [] (ACtor mk) [])",
+      "erased": "fun value () : union mu<F> := KTag mu<F> 0 []"
+    },
+    "family-parameter-index-order": {
+      "defs": 1,
+      "checked": "(Lan SMu R [(In SMu Box [] (ACtor box) [2])] (Sec SColl 2 [ => (In SMu Box [] (ACtor box) [1]);  => Nat])) := (In SMu R [(In SMu Box [] (ACtor box) [2])] (ACtor r) [(In SMu Box [] (ACtor box) [2])])",
+      "erased": "fun value () : union mu<R> := KTag mu<R> 0 []"
+    },
+    "family-example": {
+      "defs": 4,
+      "checked": "def held : (Lan SMu Hold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [7])])) := (In SMu Hold [] (ACtor hold) [])\ndef indexedValue : (Lan SMu Indexed [(In SMu Box [] (ACtor box) [9])] (Sec SColl 1 [ => Nat])) := (In SMu Indexed [(In SMu Box [] (ACtor box) [9])] (ACtor indexed) [(In SMu Box [] (ACtor box) [9])])\ndef generic : (Ran SPi 0 A Type 1 (Ran SPi 0 a A (Lan SMu Indexed [(In SMu Box [] (ACtor box) [a])] (Sec SColl 1 [ => A])))) := (Sec SPi 0 A Type 1 [A => (Sec SPi 0 a A [a => (In SMu Indexed [(In SMu Box [] (ACtor box) [a])] (ACtor indexed) [(In SMu Box [] (ACtor box) [a])])])])\ndef empty : (Lan SMu EmptyMaybe [] (Sec SColl 1 [ => (In SMu Maybe [] (ACtor none) [])])) := (In SMu EmptyMaybe [] (ACtor emptyMaybe) [])",
+      "erased": "rec [mu<Hold>; leg<mu<Hold>,0>]\nfun held () : union mu<Hold> := KTag mu<Hold> 0 []\nrec [mu<Indexed>; leg<mu<Indexed>,0>]\nfun indexedValue () : union mu<Indexed> := KTag mu<Indexed> 0 []\nrec [mu<Indexed>; leg<mu<Indexed>,0>]\nfun generic () : union mu<Indexed> := KTag mu<Indexed> 0 []\nrec [mu<EmptyMaybe>; leg<mu<EmptyMaybe>,0>]\nfun empty () : union mu<EmptyMaybe> := KTag mu<EmptyMaybe> 0 []"
+    },
+    "alias": {
+      "defs": 2,
+      "checked": "def value : Alias := (In SMu Box [] (ACtor box) [7])",
+      "erased": "fun value () : union mu<Box> := KTag mu<Box> 0 [KLit 7]"
+    },
+    "annotated-scrutinee": {
+      "defs": 1,
+      "checked": "((In SMu Box [] (ACtor box) [7]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat])))",
+      "erased": "KCase mu<Box> (KTag mu<Box> 0 [KLit 7]) [{0 1 (KVar 0)}]"
+    },
+    "annotation": {
+      "defs": 1,
+      "checked": "def value : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])",
+      "erased": "fun value () : union mu<Box> := KTag mu<Box> 0 [KLit 7]"
+    },
+    "argument": {
+      "defs": 2,
+      "checked": "(APt w (In SMu Box [] (ACtor box) [7]))",
+      "erased": "fun value () : union nat := KTail (KGlobal read) [KTag mu<Box> 0 [KLit 7]]"
+    },
+    "dependent-fields": {
+      "defs": 1,
+      "checked": "(In SMu DepBox [] (ACtor depBox) [(Ran SColl 0 (Sec SColl 0 [])); (Sec SColl 0 []); 7])",
+      "erased": "fun value () : union mu<DepBox> := KTag mu<DepBox> 0 [KErased; KLit 7]"
+    },
+    "erased-argument": {
+      "defs": 2,
+      "checked": "(APt 0 (In SMu Box [] (ACtor box) [n]))",
+      "erased": "fun value () : union nat := KTail (KGlobal ignore) []"
+    },
+    "generic": {
+      "defs": 1,
+      "checked": "[a => (In SMu Box [] (ACtor box) [a])]",
+      "erased": "fun value (union any) : union mu<Box> := KTag mu<Box> 0 [KVar 0]"
+    },
+    "indexed": {
+      "defs": 1,
+      "checked": "(In SMu At [7] (ACtor at) [])",
+      "erased": "fun value () : union mu<At> := KTag mu<At> 0 []"
+    },
+    "list": {
+      "defs": 1,
+      "checked": "(In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor cons) [2; (In SMu List [] (ACtor nil) [])])])",
+      "erased": "fun value () : union mu<List> := KTag mu<List> 1 [KLit 1; KTag mu<List> 1 [KLit 2; KTag mu<List> 0 []]]"
+    },
+    "long-list": {
+      "defs": 1,
+      "checked": "(In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])])",
+      "erased": "KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]"
+    },
+    "mutual": {
+      "defs": 1,
+      "checked": "(In SMu Ev [] (ACtor econs) [1; (In SMu Od [] (ACtor ocons) [2; (In SMu Ev [] (ACtor enil) [])])])",
+      "erased": "fun value () : union mu<Ev> := KTag mu<Ev> 1 [KLit 1; KTag mu<Od> 0 [KLit 2; KTag mu<Ev> 0 []]]"
+    },
+    "nested": {
+      "defs": 1,
+      "checked": "(In SMu Box [] (ACtor box) [(In SMu Box [] (ACtor box) [7])])",
+      "erased": "fun value () : union mu<Box> := KTag mu<Box> 0 [KTag mu<Box> 0 [KLit 7]]"
+    },
+    "nullary": {
+      "defs": 1,
+      "checked": "(In SMu Maybe [] (ACtor none) [])",
+      "erased": "fun value () : union mu<Maybe> := KTag mu<Maybe> 0 []"
+    },
+    "open-index": {
+      "defs": 1,
+      "checked": "[x => (In SMu At [x] (ACtor at) [])]",
+      "erased": "fun value () : union mu<At> := KTag mu<At> 0 []"
+    },
+    "parameter-order": {
+      "defs": 1,
+      "checked": "(In SMu Both [] (ACtor both) [(In SMu Box [] (ACtor box) [7]); (Sec SColl 0 [])])",
+      "erased": "fun value () : union mu<Both> := KTag mu<Both> 0 [KTag mu<Box> 0 [KLit 7]; KErased]"
+    },
+    "plain-dependent": {
+      "defs": 1,
+      "checked": "(In SMu S [] (ACtor s) [(Lan SMu Box [] (Sec SColl 1 [ => Nat])); (In SMu Box [] (ACtor box) [7])])",
+      "erased": "fun value () : union mu<S> := KTag mu<S> 0 [KTag mu<Box> 0 [KLit 7]]"
+    },
+    "plain-wrapper": {
+      "defs": 1,
+      "checked": "(In SMu W [] (ACtor w) [(In SMu Box [] (ACtor box) [7])])",
+      "erased": "fun value () : union mu<W> := KTag mu<W> 0 [KTag mu<Box> 0 [KLit 7]]"
+    },
+    "shadowed": {
+      "defs": 1,
+      "checked": "[box => (Out SPi w _ Nat (APt w 7) box)]",
+      "erased": "fun value (func fn<1>) : union mu<Box> := KTail (KVar 0) [KLit 7]"
+    },
+    "unconstrained": {
+      "defs": 1,
+      "checked": "((In SMu Box [] (ACtor box) [7]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat])))",
+      "erased": "KCase mu<Box> (KTag mu<Box> 0 [KLit 7]) [{0 1 (KVar 0)}]"
+    },
+    "plain-nullary": {
+      "defs": 1,
+      "checked": "(In SMu W [] (ACtor w) [(In SMu List [] (ACtor nil) [])])",
+      "erased": "KTag mu<W> 0 [KTag mu<List> 0 []]"
+    }
+  },
+  "long_list": {
+    "cells": 300,
+    "limit_s": 60,
+    "seconds": {
+      "bun/checked": 1.718,
+      "bun/erased": 1.607,
+      "node-worker/checked": 2.103,
+      "node-worker/erased": 1.854,
+      "native/checked": 0.572,
+      "native/erased": 0.565
+    }
+  },
+  "observations": [
+    {
+      "case": "annotation",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.536,
+      "stdout_sha256": "52fbff6a005f3ac4a533419a22caec20d5ad9f4fa7905ebeb35fcce8f3ab3f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotation",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.543,
+      "stdout_sha256": "9ad7b48fe1704e545e310b94752794dcecc9df95d9a1c70aee6d732b126801f1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotation",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.536,
+      "stdout_sha256": "52fbff6a005f3ac4a533419a22caec20d5ad9f4fa7905ebeb35fcce8f3ab3f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotation",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.513,
+      "stdout_sha256": "9ad7b48fe1704e545e310b94752794dcecc9df95d9a1c70aee6d732b126801f1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotation",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.404,
+      "stdout_sha256": "52fbff6a005f3ac4a533419a22caec20d5ad9f4fa7905ebeb35fcce8f3ab3f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotation",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.418,
+      "stdout_sha256": "9ad7b48fe1704e545e310b94752794dcecc9df95d9a1c70aee6d732b126801f1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.49,
+      "stdout_sha256": "2ad9c8985ed830ea9803ee45963711b8b829b950d7029970a3947f8e5d757c70",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.609,
+      "stdout_sha256": "53a9197d21b12ee078cd08e33d8d4335fe0ff9ac2f8d9433548b852474c7b2e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.573,
+      "stdout_sha256": "2ad9c8985ed830ea9803ee45963711b8b829b950d7029970a3947f8e5d757c70",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.64,
+      "stdout_sha256": "53a9197d21b12ee078cd08e33d8d4335fe0ff9ac2f8d9433548b852474c7b2e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.491,
+      "stdout_sha256": "2ad9c8985ed830ea9803ee45963711b8b829b950d7029970a3947f8e5d757c70",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nested",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.461,
+      "stdout_sha256": "53a9197d21b12ee078cd08e33d8d4335fe0ff9ac2f8d9433548b852474c7b2e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.577,
+      "stdout_sha256": "7056f376d860da95f3bc6ef5ac77cbc0adbc0cb3bd38d914bcae9e347aa567aa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.552,
+      "stdout_sha256": "56e4660a8c4c98ae7018ee2736972eb3e380ffd47c39ea70e14a044837877956",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.569,
+      "stdout_sha256": "7056f376d860da95f3bc6ef5ac77cbc0adbc0cb3bd38d914bcae9e347aa567aa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.518,
+      "stdout_sha256": "56e4660a8c4c98ae7018ee2736972eb3e380ffd47c39ea70e14a044837877956",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.429,
+      "stdout_sha256": "7056f376d860da95f3bc6ef5ac77cbc0adbc0cb3bd38d914bcae9e347aa567aa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "generic",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.385,
+      "stdout_sha256": "56e4660a8c4c98ae7018ee2736972eb3e380ffd47c39ea70e14a044837877956",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.511,
+      "stdout_sha256": "c4d75c5098e8c53eb2dc3694c09282c74643e55e126dfaec73bbb4514fc7fca0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.507,
+      "stdout_sha256": "4e37d5a49eee65545e6712f209c8a3310483e03cad60eaed0df6be91f424a859",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.556,
+      "stdout_sha256": "c4d75c5098e8c53eb2dc3694c09282c74643e55e126dfaec73bbb4514fc7fca0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.535,
+      "stdout_sha256": "4e37d5a49eee65545e6712f209c8a3310483e03cad60eaed0df6be91f424a859",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.461,
+      "stdout_sha256": "c4d75c5098e8c53eb2dc3694c09282c74643e55e126dfaec73bbb4514fc7fca0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "alias",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.431,
+      "stdout_sha256": "4e37d5a49eee65545e6712f209c8a3310483e03cad60eaed0df6be91f424a859",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.581,
+      "stdout_sha256": "fb58bede501edf4445e70cb0edc6177b4dd191d09af47004a9d8272ac4c4f52c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.527,
+      "stdout_sha256": "bcbd9052df6367e7e2d6e1c093e71b2cfcacde952476ccc333477d921b7e37a9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.595,
+      "stdout_sha256": "fb58bede501edf4445e70cb0edc6177b4dd191d09af47004a9d8272ac4c4f52c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.573,
+      "stdout_sha256": "bcbd9052df6367e7e2d6e1c093e71b2cfcacde952476ccc333477d921b7e37a9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.468,
+      "stdout_sha256": "fb58bede501edf4445e70cb0edc6177b4dd191d09af47004a9d8272ac4c4f52c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "argument",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.472,
+      "stdout_sha256": "bcbd9052df6367e7e2d6e1c093e71b2cfcacde952476ccc333477d921b7e37a9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.576,
+      "stdout_sha256": "8806598c929123499c9482145fb5d344de423f753fb10ca4c33a6d01a741ac56",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.549,
+      "stdout_sha256": "ae9e1a00646b405bf170164d6216864bb90b7d4d59f1bbdc149f54022448d9d9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.567,
+      "stdout_sha256": "8806598c929123499c9482145fb5d344de423f753fb10ca4c33a6d01a741ac56",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.517,
+      "stdout_sha256": "ae9e1a00646b405bf170164d6216864bb90b7d4d59f1bbdc149f54022448d9d9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.43,
+      "stdout_sha256": "8806598c929123499c9482145fb5d344de423f753fb10ca4c33a6d01a741ac56",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "nullary",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.4,
+      "stdout_sha256": "ae9e1a00646b405bf170164d6216864bb90b7d4d59f1bbdc149f54022448d9d9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.536,
+      "stdout_sha256": "ab70db9188dd2cd3e3e264df23e2d22da27f7146913f677ca589550d48db0e50",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.564,
+      "stdout_sha256": "3fb8262c1083a9c2c9c6a73e6e5cacd5768711865b8ab35404e72bded1257e17",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.602,
+      "stdout_sha256": "ab70db9188dd2cd3e3e264df23e2d22da27f7146913f677ca589550d48db0e50",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.758,
+      "stdout_sha256": "3fb8262c1083a9c2c9c6a73e6e5cacd5768711865b8ab35404e72bded1257e17",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.738,
+      "stdout_sha256": "ab70db9188dd2cd3e3e264df23e2d22da27f7146913f677ca589550d48db0e50",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "parameter-order",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.602,
+      "stdout_sha256": "3fb8262c1083a9c2c9c6a73e6e5cacd5768711865b8ab35404e72bded1257e17",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.657,
+      "stdout_sha256": "ff86030f369c563a6e3969db8a15f6ef1af799755365b1f4907b03464f5fb6e7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.607,
+      "stdout_sha256": "4f1ca29fe1280de4686ef004d5cf261b2131502c62050fa995254e38d07d7a9e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.582,
+      "stdout_sha256": "ff86030f369c563a6e3969db8a15f6ef1af799755365b1f4907b03464f5fb6e7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.538,
+      "stdout_sha256": "4f1ca29fe1280de4686ef004d5cf261b2131502c62050fa995254e38d07d7a9e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.444,
+      "stdout_sha256": "ff86030f369c563a6e3969db8a15f6ef1af799755365b1f4907b03464f5fb6e7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "dependent-fields",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.426,
+      "stdout_sha256": "4f1ca29fe1280de4686ef004d5cf261b2131502c62050fa995254e38d07d7a9e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.495,
+      "stdout_sha256": "1364bace3ca25e275e4b7c285017bc0548955bb2a4bf52aa792e1ce9291b6ded",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.536,
+      "stdout_sha256": "35c339af436378403204542036fa743342d8a49581deac973d947e9724e050b6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.53,
+      "stdout_sha256": "1364bace3ca25e275e4b7c285017bc0548955bb2a4bf52aa792e1ce9291b6ded",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.486,
+      "stdout_sha256": "35c339af436378403204542036fa743342d8a49581deac973d947e9724e050b6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.397,
+      "stdout_sha256": "1364bace3ca25e275e4b7c285017bc0548955bb2a4bf52aa792e1ce9291b6ded",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "indexed",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.383,
+      "stdout_sha256": "35c339af436378403204542036fa743342d8a49581deac973d947e9724e050b6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.534,
+      "stdout_sha256": "815888f2f0c49b47f40ad69b4e81cbbd34dd07f3a150cd82a1d384633f85fd26",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.501,
+      "stdout_sha256": "18b75d7d253de140041540896728deab7b91af07e47a8d5346cee5483aa41f2d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.516,
+      "stdout_sha256": "815888f2f0c49b47f40ad69b4e81cbbd34dd07f3a150cd82a1d384633f85fd26",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.476,
+      "stdout_sha256": "18b75d7d253de140041540896728deab7b91af07e47a8d5346cee5483aa41f2d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.422,
+      "stdout_sha256": "815888f2f0c49b47f40ad69b4e81cbbd34dd07f3a150cd82a1d384633f85fd26",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "open-index",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.401,
+      "stdout_sha256": "18b75d7d253de140041540896728deab7b91af07e47a8d5346cee5483aa41f2d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.531,
+      "stdout_sha256": "4e08b8fa766faab41af1d1c2487505aa15d8848add6d5fc6ec247341f46e2ddb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.533,
+      "stdout_sha256": "998287dd7e2e1125b1ad6a71c922c7d5ba182a19bc14015397511ae4b7fdad43",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.578,
+      "stdout_sha256": "4e08b8fa766faab41af1d1c2487505aa15d8848add6d5fc6ec247341f46e2ddb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.546,
+      "stdout_sha256": "998287dd7e2e1125b1ad6a71c922c7d5ba182a19bc14015397511ae4b7fdad43",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.457,
+      "stdout_sha256": "4e08b8fa766faab41af1d1c2487505aa15d8848add6d5fc6ec247341f46e2ddb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "shadowed",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.422,
+      "stdout_sha256": "998287dd7e2e1125b1ad6a71c922c7d5ba182a19bc14015397511ae4b7fdad43",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.522,
+      "stdout_sha256": "a733656c79e04e187962f86c20859d6565acf3f52e7658ce5294fe944960669d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.485,
+      "stdout_sha256": "1f66a5c17d78fe50c32e10f9fc9097756173bd84f0d5e85955db5dfa07bed476",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.5,
+      "stdout_sha256": "a733656c79e04e187962f86c20859d6565acf3f52e7658ce5294fe944960669d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.469,
+      "stdout_sha256": "1f66a5c17d78fe50c32e10f9fc9097756173bd84f0d5e85955db5dfa07bed476",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.394,
+      "stdout_sha256": "a733656c79e04e187962f86c20859d6565acf3f52e7658ce5294fe944960669d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "erased-argument",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.378,
+      "stdout_sha256": "1f66a5c17d78fe50c32e10f9fc9097756173bd84f0d5e85955db5dfa07bed476",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.46,
+      "stdout_sha256": "655035ea5d165f6e149905d5103b58c705257a57559a939fda3eed614845be38",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.433,
+      "stdout_sha256": "370fd5f13bb989234d5f279a752e59f1f173c94d136e4729fd1790e46d87ecf3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.473,
+      "stdout_sha256": "655035ea5d165f6e149905d5103b58c705257a57559a939fda3eed614845be38",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.47,
+      "stdout_sha256": "370fd5f13bb989234d5f279a752e59f1f173c94d136e4729fd1790e46d87ecf3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.38,
+      "stdout_sha256": "655035ea5d165f6e149905d5103b58c705257a57559a939fda3eed614845be38",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "list",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.373,
+      "stdout_sha256": "370fd5f13bb989234d5f279a752e59f1f173c94d136e4729fd1790e46d87ecf3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.467,
+      "stdout_sha256": "08e876a7e6692a44ebd8ff3b1447b04669f331f98fc34d393aa3df54cb0d2b6c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.464,
+      "stdout_sha256": "f7ad82ca0281b94d4e3a30cf6f35cc8b828e4db02c132802dea561f3ef8de8e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.474,
+      "stdout_sha256": "08e876a7e6692a44ebd8ff3b1447b04669f331f98fc34d393aa3df54cb0d2b6c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.463,
+      "stdout_sha256": "f7ad82ca0281b94d4e3a30cf6f35cc8b828e4db02c132802dea561f3ef8de8e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.398,
+      "stdout_sha256": "08e876a7e6692a44ebd8ff3b1447b04669f331f98fc34d393aa3df54cb0d2b6c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mutual",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.376,
+      "stdout_sha256": "f7ad82ca0281b94d4e3a30cf6f35cc8b828e4db02c132802dea561f3ef8de8e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.503,
+      "stdout_sha256": "b90867702379238e99b00eb7c439237c6042ba50d299925b66c536bb98a57ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.474,
+      "stdout_sha256": "8259ba5d6a000b92ca9f3bc557a916b0347d53c3efc2b6bf4d7a73190db5e797",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.54,
+      "stdout_sha256": "b90867702379238e99b00eb7c439237c6042ba50d299925b66c536bb98a57ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.554,
+      "stdout_sha256": "8259ba5d6a000b92ca9f3bc557a916b0347d53c3efc2b6bf4d7a73190db5e797",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.459,
+      "stdout_sha256": "b90867702379238e99b00eb7c439237c6042ba50d299925b66c536bb98a57ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "annotated-scrutinee",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.409,
+      "stdout_sha256": "8259ba5d6a000b92ca9f3bc557a916b0347d53c3efc2b6bf4d7a73190db5e797",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.497,
+      "stdout_sha256": "9889db4fe4970d8982caa5d63ac2e88bdff7966dd99a5efa6a24d8499485c9b1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.5,
+      "stdout_sha256": "41a6c54943bcd9c9d1d5b4261043d865f89394f3120d4614e95a6175cac3b604",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.567,
+      "stdout_sha256": "9889db4fe4970d8982caa5d63ac2e88bdff7966dd99a5efa6a24d8499485c9b1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.774,
+      "stdout_sha256": "41a6c54943bcd9c9d1d5b4261043d865f89394f3120d4614e95a6175cac3b604",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.479,
+      "stdout_sha256": "9889db4fe4970d8982caa5d63ac2e88bdff7966dd99a5efa6a24d8499485c9b1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-wrapper",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.454,
+      "stdout_sha256": "41a6c54943bcd9c9d1d5b4261043d865f89394f3120d4614e95a6175cac3b604",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.547,
+      "stdout_sha256": "508c4f6b4fda6d885c258221a8b672bf131aca795507758ea9e92847f328e57e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.769,
+      "stdout_sha256": "881c801f4bec65d703dde8164ea68aee6cf12362a80a77e650e2a10e5cbafdbd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.615,
+      "stdout_sha256": "508c4f6b4fda6d885c258221a8b672bf131aca795507758ea9e92847f328e57e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.544,
+      "stdout_sha256": "881c801f4bec65d703dde8164ea68aee6cf12362a80a77e650e2a10e5cbafdbd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.397,
+      "stdout_sha256": "508c4f6b4fda6d885c258221a8b672bf131aca795507758ea9e92847f328e57e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-dependent",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.666,
+      "stdout_sha256": "881c801f4bec65d703dde8164ea68aee6cf12362a80a77e650e2a10e5cbafdbd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.718,
+      "stdout_sha256": "7014c73ade686e676089201225f3061aa97b92283f6ed65aaadd1ac8e16fcb3d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.607,
+      "stdout_sha256": "dd8106caf45a1a2f47619560dd88e4a9465f85b6ea854758708b1745b3631ec5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 2.103,
+      "stdout_sha256": "7014c73ade686e676089201225f3061aa97b92283f6ed65aaadd1ac8e16fcb3d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.854,
+      "stdout_sha256": "dd8106caf45a1a2f47619560dd88e4a9465f85b6ea854758708b1745b3631ec5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.572,
+      "stdout_sha256": "7014c73ade686e676089201225f3061aa97b92283f6ed65aaadd1ac8e16fcb3d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "long-list",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.565,
+      "stdout_sha256": "dd8106caf45a1a2f47619560dd88e4a9465f85b6ea854758708b1745b3631ec5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.852,
+      "stdout_sha256": "82c19945a3f8c03949bee180f521fc1acf9a845e8066517693414dc20d732397",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.613,
+      "stdout_sha256": "01aff9daf5a979bb7669923c1f7fcfa0f770fd88b06dedc54741e150a2f8903d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.57,
+      "stdout_sha256": "82c19945a3f8c03949bee180f521fc1acf9a845e8066517693414dc20d732397",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.726,
+      "stdout_sha256": "01aff9daf5a979bb7669923c1f7fcfa0f770fd88b06dedc54741e150a2f8903d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.644,
+      "stdout_sha256": "82c19945a3f8c03949bee180f521fc1acf9a845e8066517693414dc20d732397",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-argument",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.461,
+      "stdout_sha256": "01aff9daf5a979bb7669923c1f7fcfa0f770fd88b06dedc54741e150a2f8903d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.862,
+      "stdout_sha256": "61756efa90d3a6b53723097d71122ec7116b86febb47ae320fa808fed0bc9ebb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.772,
+      "stdout_sha256": "dc5b4771cade715cc58ce8b4f26cf47941c2c9412f0da37b55e36423bfaaf7f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.966,
+      "stdout_sha256": "61756efa90d3a6b53723097d71122ec7116b86febb47ae320fa808fed0bc9ebb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.872,
+      "stdout_sha256": "dc5b4771cade715cc58ce8b4f26cf47941c2c9412f0da37b55e36423bfaaf7f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.013,
+      "stdout_sha256": "61756efa90d3a6b53723097d71122ec7116b86febb47ae320fa808fed0bc9ebb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.596,
+      "stdout_sha256": "dc5b4771cade715cc58ce8b4f26cf47941c2c9412f0da37b55e36423bfaaf7f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.666,
+      "stdout_sha256": "a8f10d3bd2bf9451ee1311c484c4dbb11932e5683dc432fd4d9d4e022ec989f4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.599,
+      "stdout_sha256": "fb7651bd6e69ffe4cf6c3d98c5a635200110ee3e5ccb321cbf1fcae3acfe6488",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.925,
+      "stdout_sha256": "a8f10d3bd2bf9451ee1311c484c4dbb11932e5683dc432fd4d9d4e022ec989f4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.706,
+      "stdout_sha256": "fb7651bd6e69ffe4cf6c3d98c5a635200110ee3e5ccb321cbf1fcae3acfe6488",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.98,
+      "stdout_sha256": "a8f10d3bd2bf9451ee1311c484c4dbb11932e5683dc432fd4d9d4e022ec989f4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-parameters",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.146,
+      "stdout_sha256": "fb7651bd6e69ffe4cf6c3d98c5a635200110ee3e5ccb321cbf1fcae3acfe6488",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.2,
+      "stdout_sha256": "7ba182dad42d9e1d4d42599840da10a3535bee89427440e591a4784f4c10f95f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.916,
+      "stdout_sha256": "299bea0d03f9218d663697677279b0e71f13c53c578812e93047be4bd7ab56fc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.874,
+      "stdout_sha256": "7ba182dad42d9e1d4d42599840da10a3535bee89427440e591a4784f4c10f95f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.402,
+      "stdout_sha256": "299bea0d03f9218d663697677279b0e71f13c53c578812e93047be4bd7ab56fc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.949,
+      "stdout_sha256": "7ba182dad42d9e1d4d42599840da10a3535bee89427440e591a4784f4c10f95f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-dependent-indices",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.043,
+      "stdout_sha256": "299bea0d03f9218d663697677279b0e71f13c53c578812e93047be4bd7ab56fc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.877,
+      "stdout_sha256": "ed55bbe7a6d931d26701798f5c209635e8f5ceab4c300ee0dc558827580116cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.848,
+      "stdout_sha256": "e3c04c4a0038e7373a5a06c88cef33179602a6ea618ec37cb61aaa9b3ad71069",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.848,
+      "stdout_sha256": "ed55bbe7a6d931d26701798f5c209635e8f5ceab4c300ee0dc558827580116cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.923,
+      "stdout_sha256": "e3c04c4a0038e7373a5a06c88cef33179602a6ea618ec37cb61aaa9b3ad71069",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.623,
+      "stdout_sha256": "ed55bbe7a6d931d26701798f5c209635e8f5ceab4c300ee0dc558827580116cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-index-after-parameter",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.492,
+      "stdout_sha256": "e3c04c4a0038e7373a5a06c88cef33179602a6ea618ec37cb61aaa9b3ad71069",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.639,
+      "stdout_sha256": "78754777090cf92a23fdfafddd0f8f98561680f28a693e414165e491a213ce00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.139,
+      "stdout_sha256": "9555826d4c9528460cf6d398d96171245fe95e1fb9382a0ce4f670654df19ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.13,
+      "stdout_sha256": "78754777090cf92a23fdfafddd0f8f98561680f28a693e414165e491a213ce00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.8,
+      "stdout_sha256": "9555826d4c9528460cf6d398d96171245fe95e1fb9382a0ce4f670654df19ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.561,
+      "stdout_sha256": "78754777090cf92a23fdfafddd0f8f98561680f28a693e414165e491a213ce00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-open",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.516,
+      "stdout_sha256": "9555826d4c9528460cf6d398d96171245fe95e1fb9382a0ce4f670654df19ae9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 1.532,
+      "stdout_sha256": "37fd6c41a6d535162bc70412caf5ed14c58c7792507824ebd1907e56a950be1c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.832,
+      "stdout_sha256": "7965c3ca256a9eb466509a2fe5bc9a424da782f28ca5a73764aabc5585492ea3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.693,
+      "stdout_sha256": "37fd6c41a6d535162bc70412caf5ed14c58c7792507824ebd1907e56a950be1c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.589,
+      "stdout_sha256": "7965c3ca256a9eb466509a2fe5bc9a424da782f28ca5a73764aabc5585492ea3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.439,
+      "stdout_sha256": "37fd6c41a6d535162bc70412caf5ed14c58c7792507824ebd1907e56a950be1c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nested",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.614,
+      "stdout_sha256": "7965c3ca256a9eb466509a2fe5bc9a424da782f28ca5a73764aabc5585492ea3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.806,
+      "stdout_sha256": "d1b00a1ced2bdef93bf2b115290cbc52092031ecbc0ced23326d09a90e95e8fd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.898,
+      "stdout_sha256": "ad6953c5a7f3816ceafbcdc16b275d382b2227976788f3c2cc8c536f059ef9fb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.636,
+      "stdout_sha256": "d1b00a1ced2bdef93bf2b115290cbc52092031ecbc0ced23326d09a90e95e8fd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.583,
+      "stdout_sha256": "ad6953c5a7f3816ceafbcdc16b275d382b2227976788f3c2cc8c536f059ef9fb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.44,
+      "stdout_sha256": "d1b00a1ced2bdef93bf2b115290cbc52092031ecbc0ced23326d09a90e95e8fd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-nullary",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.736,
+      "stdout_sha256": "ad6953c5a7f3816ceafbcdc16b275d382b2227976788f3c2cc8c536f059ef9fb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.59,
+      "stdout_sha256": "1624faf7c728072b6ee2eb483709c4d2d1a636cedac274521c8525632672c3bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.571,
+      "stdout_sha256": "d2ab326ce20157c3d417bb86696b8d77e3fdf5c894711747a2653e9fe6961aab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.59,
+      "stdout_sha256": "1624faf7c728072b6ee2eb483709c4d2d1a636cedac274521c8525632672c3bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.6,
+      "stdout_sha256": "d2ab326ce20157c3d417bb86696b8d77e3fdf5c894711747a2653e9fe6961aab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.484,
+      "stdout_sha256": "1624faf7c728072b6ee2eb483709c4d2d1a636cedac274521c8525632672c3bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-alias",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.454,
+      "stdout_sha256": "d2ab326ce20157c3d417bb86696b8d77e3fdf5c894711747a2653e9fe6961aab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.59,
+      "stdout_sha256": "f839d6d3ebbd665e8a8bf5c6d71426c9f46b56cbdac73755aa1d279f4e0f4434",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.523,
+      "stdout_sha256": "6c95d4fa9cb83723412c4bb5d44c17b0d9af3bf652bfc4dade42065ab268a377",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.566,
+      "stdout_sha256": "f839d6d3ebbd665e8a8bf5c6d71426c9f46b56cbdac73755aa1d279f4e0f4434",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.572,
+      "stdout_sha256": "6c95d4fa9cb83723412c4bb5d44c17b0d9af3bf652bfc4dade42065ab268a377",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.465,
+      "stdout_sha256": "f839d6d3ebbd665e8a8bf5c6d71426c9f46b56cbdac73755aa1d279f4e0f4434",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-field",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.415,
+      "stdout_sha256": "6c95d4fa9cb83723412c4bb5d44c17b0d9af3bf652bfc4dade42065ab268a377",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.849,
+      "stdout_sha256": "21a2055f22e4164fc01699bd08c68829a1e9dfbedff20d97fab45f5bd18ed95b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.548,
+      "stdout_sha256": "78d14a72c882cd5e05ba9317ff81d19234df66c4c200867f7e259b3bed15ac44",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.575,
+      "stdout_sha256": "21a2055f22e4164fc01699bd08c68829a1e9dfbedff20d97fab45f5bd18ed95b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.588,
+      "stdout_sha256": "78d14a72c882cd5e05ba9317ff81d19234df66c4c200867f7e259b3bed15ac44",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.447,
+      "stdout_sha256": "21a2055f22e4164fc01699bd08c68829a1e9dfbedff20d97fab45f5bd18ed95b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-sibling",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.511,
+      "stdout_sha256": "78d14a72c882cd5e05ba9317ff81d19234df66c4c200867f7e259b3bed15ac44",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.67,
+      "stdout_sha256": "214ee972cef4791d72e58868c845c520dcbf1fbc72184c31fd10099cf96cbb7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.578,
+      "stdout_sha256": "b2948d2522532ae6a7e2e9e76e7e17ea63cbd2e0ab787c0780588d710f971881",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.591,
+      "stdout_sha256": "214ee972cef4791d72e58868c845c520dcbf1fbc72184c31fd10099cf96cbb7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.538,
+      "stdout_sha256": "b2948d2522532ae6a7e2e9e76e7e17ea63cbd2e0ab787c0780588d710f971881",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.475,
+      "stdout_sha256": "214ee972cef4791d72e58868c845c520dcbf1fbc72184c31fd10099cf96cbb7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-self-index",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.437,
+      "stdout_sha256": "b2948d2522532ae6a7e2e9e76e7e17ea63cbd2e0ab787c0780588d710f971881",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.652,
+      "stdout_sha256": "0ef2bc33ae94538f6c8f4a80941a5125d1dff6e2287393437deefed73db42cdd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.63,
+      "stdout_sha256": "ba8c0fa95aa63958c6fa448cc92eada5c3c68965c05e587b7355a3f9895206b9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.596,
+      "stdout_sha256": "0ef2bc33ae94538f6c8f4a80941a5125d1dff6e2287393437deefed73db42cdd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.702,
+      "stdout_sha256": "ba8c0fa95aa63958c6fa448cc92eada5c3c68965c05e587b7355a3f9895206b9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.589,
+      "stdout_sha256": "0ef2bc33ae94538f6c8f4a80941a5125d1dff6e2287393437deefed73db42cdd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-elim-motive",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.504,
+      "stdout_sha256": "ba8c0fa95aa63958c6fa448cc92eada5c3c68965c05e587b7355a3f9895206b9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.924,
+      "stdout_sha256": "931937d9820530069def5cf9ff0caf7436a7d11c9a21248d42cfcb0e68050440",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.603,
+      "stdout_sha256": "09d2ebf26f692a0cafbe1c224a3a518f44a33e50d7ac217f57a38ef3724f9b2c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.614,
+      "stdout_sha256": "931937d9820530069def5cf9ff0caf7436a7d11c9a21248d42cfcb0e68050440",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.552,
+      "stdout_sha256": "09d2ebf26f692a0cafbe1c224a3a518f44a33e50d7ac217f57a38ef3724f9b2c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.421,
+      "stdout_sha256": "931937d9820530069def5cf9ff0caf7436a7d11c9a21248d42cfcb0e68050440",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-mutual-value",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.439,
+      "stdout_sha256": "09d2ebf26f692a0cafbe1c224a3a518f44a33e50d7ac217f57a38ef3724f9b2c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.54,
+      "stdout_sha256": "204e27135b486674b188cf45929e65172a1409b9954beae4d81dc059e6114254",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.533,
+      "stdout_sha256": "c2a6e582d9aa20f1475104ca483cf70260ffabe3e0ab737fd6889cca00944d34",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.555,
+      "stdout_sha256": "204e27135b486674b188cf45929e65172a1409b9954beae4d81dc059e6114254",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.577,
+      "stdout_sha256": "c2a6e582d9aa20f1475104ca483cf70260ffabe3e0ab737fd6889cca00944d34",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.428,
+      "stdout_sha256": "204e27135b486674b188cf45929e65172a1409b9954beae4d81dc059e6114254",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-lambda-alias",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.433,
+      "stdout_sha256": "c2a6e582d9aa20f1475104ca483cf70260ffabe3e0ab737fd6889cca00944d34",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.527,
+      "stdout_sha256": "e28906f515f2dce1695ef0f20db9a57373c8ab0a100b2bcfeeb51b2b3f6b67bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.566,
+      "stdout_sha256": "f098495521d513588aaa03f33ea72ae769b0464b3472573e2d7e646850544c52",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.554,
+      "stdout_sha256": "e28906f515f2dce1695ef0f20db9a57373c8ab0a100b2bcfeeb51b2b3f6b67bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.527,
+      "stdout_sha256": "f098495521d513588aaa03f33ea72ae769b0464b3472573e2d7e646850544c52",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.742,
+      "stdout_sha256": "e28906f515f2dce1695ef0f20db9a57373c8ab0a100b2bcfeeb51b2b3f6b67bc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-parameter-index-order",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.496,
+      "stdout_sha256": "f098495521d513588aaa03f33ea72ae769b0464b3472573e2d7e646850544c52",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.582,
+      "stdout_sha256": "5780f5f18c4b0f4452739375c29a5e8c9cd0aae4d0972dd97e4d7a09a6310bc2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.969,
+      "stdout_sha256": "8bc0f5a67b5d1379efaa31097de6d8f5266b7a80f5ea923fb044cf6c014326a0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.718,
+      "stdout_sha256": "5780f5f18c4b0f4452739375c29a5e8c9cd0aae4d0972dd97e4d7a09a6310bc2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.697,
+      "stdout_sha256": "8bc0f5a67b5d1379efaa31097de6d8f5266b7a80f5ea923fb044cf6c014326a0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.55,
+      "stdout_sha256": "5780f5f18c4b0f4452739375c29a5e8c9cd0aae4d0972dd97e4d7a09a6310bc2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-example",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.491,
+      "stdout_sha256": "8bc0f5a67b5d1379efaa31097de6d8f5266b7a80f5ea923fb044cf6c014326a0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "wrong-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.604,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7e566ca21bca69c46272f542ade6faedafdc751b618a1bf7a350b63731af88d2"
+    },
+    {
+      "case": "wrong-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.659,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7e566ca21bca69c46272f542ade6faedafdc751b618a1bf7a350b63731af88d2"
+    },
+    {
+      "case": "wrong-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.566,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7e566ca21bca69c46272f542ade6faedafdc751b618a1bf7a350b63731af88d2"
+    },
+    {
+      "case": "missing-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.665,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ca6109ca7898a803eeec08b41e089997e5ed72895f49da5288081a00c54303bc"
+    },
+    {
+      "case": "missing-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.798,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ca6109ca7898a803eeec08b41e089997e5ed72895f49da5288081a00c54303bc"
+    },
+    {
+      "case": "missing-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.634,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ca6109ca7898a803eeec08b41e089997e5ed72895f49da5288081a00c54303bc"
+    },
+    {
+      "case": "excess-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.814,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6d5538b1c64da8a75230e7cf052187b1f2e4aaf3d126cf8159be98c84a4d8f9f"
+    },
+    {
+      "case": "excess-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.722,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6d5538b1c64da8a75230e7cf052187b1f2e4aaf3d126cf8159be98c84a4d8f9f"
+    },
+    {
+      "case": "excess-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "takes 1 arguments",
+      "seconds": 0.615,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6d5538b1c64da8a75230e7cf052187b1f2e4aaf3d126cf8159be98c84a4d8f9f"
+    },
+    {
+      "case": "wrong-family",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.707,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9efc9a30bcfa528844f52c907309177b6871ed327bd3d12dfab39a57d29dcf9e"
+    },
+    {
+      "case": "wrong-family",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.736,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9efc9a30bcfa528844f52c907309177b6871ed327bd3d12dfab39a57d29dcf9e"
+    },
+    {
+      "case": "wrong-family",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.552,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9efc9a30bcfa528844f52c907309177b6871ed327bd3d12dfab39a57d29dcf9e"
+    },
+    {
+      "case": "wrong-index",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor at of At gives the index 0 and the type asks for 1",
+      "seconds": 0.632,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7b54d6f53175205be65261ac362b72cff8222929799b9fc0a21576853230f128"
+    },
+    {
+      "case": "wrong-index",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor at of At gives the index 0 and the type asks for 1",
+      "seconds": 0.551,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7b54d6f53175205be65261ac362b72cff8222929799b9fc0a21576853230f128"
+    },
+    {
+      "case": "wrong-index",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor at of At gives the index 0 and the type asks for 1",
+      "seconds": 0.409,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7b54d6f53175205be65261ac362b72cff8222929799b9fc0a21576853230f128"
+    },
+    {
+      "case": "wrong-dependent-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.469,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "188a19225aafa77a815389298a9e37846d9fbad2bd93c09a0f89920eee3280d8"
+    },
+    {
+      "case": "wrong-dependent-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.489,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "188a19225aafa77a815389298a9e37846d9fbad2bd93c09a0f89920eee3280d8"
+    },
+    {
+      "case": "wrong-dependent-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "seconds": 0.529,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "188a19225aafa77a815389298a9e37846d9fbad2bd93c09a0f89920eee3280d8"
+    },
+    {
+      "case": "wrong-parameter-order",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.621,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e013812afa272bd6d380570f965f41447acbdfb79d7869f4b89b2d4ddb8be757"
+    },
+    {
+      "case": "wrong-parameter-order",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.572,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e013812afa272bd6d380570f965f41447acbdfb79d7869f4b89b2d4ddb8be757"
+    },
+    {
+      "case": "wrong-parameter-order",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.551,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e013812afa272bd6d380570f965f41447acbdfb79d7869f4b89b2d4ddb8be757"
+    },
+    {
+      "case": "unconstrained",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.566,
+      "stdout_sha256": "e415d3b39e101c17106670001c8859482436342e0748c767de15ec519c8c42cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "unconstrained",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.552,
+      "stdout_sha256": "160791c24a4dd3c0e5193fcbe10c5ba75ac290f7977daa9b97b85437dda90f24",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "unconstrained",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.546,
+      "stdout_sha256": "e415d3b39e101c17106670001c8859482436342e0748c767de15ec519c8c42cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "unconstrained",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.526,
+      "stdout_sha256": "160791c24a4dd3c0e5193fcbe10c5ba75ac290f7977daa9b97b85437dda90f24",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "unconstrained",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.415,
+      "stdout_sha256": "e415d3b39e101c17106670001c8859482436342e0748c767de15ec519c8c42cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "unconstrained",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.394,
+      "stdout_sha256": "160791c24a4dd3c0e5193fcbe10c5ba75ac290f7977daa9b97b85437dda90f24",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "family-wrong-field",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.513,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e70b467519e24c2371937e27371dff3806c670edd010114723b61d2664eb1a2c"
+    },
+    {
+      "case": "family-wrong-field",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.529,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e70b467519e24c2371937e27371dff3806c670edd010114723b61d2664eb1a2c"
+    },
+    {
+      "case": "family-wrong-field",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: a tuple needs a right former as its expected type",
+      "seconds": 0.412,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e70b467519e24c2371937e27371dff3806c670edd010114723b61d2664eb1a2c"
+    },
+    {
+      "case": "family-wrong-family",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.526,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3f963609058f139ffa77dfcc24b9d45b7a269f9a64a06d8deab07de13dbc6c5"
+    },
+    {
+      "case": "family-wrong-family",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.529,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3f963609058f139ffa77dfcc24b9d45b7a269f9a64a06d8deab07de13dbc6c5"
+    },
+    {
+      "case": "family-wrong-family",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor other of Other cannot have the expected family Box",
+      "seconds": 0.448,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3f963609058f139ffa77dfcc24b9d45b7a269f9a64a06d8deab07de13dbc6c5"
+    },
+    {
+      "case": "family-missing-argument",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Stamp takes 2 arguments and the term gives 1",
+      "seconds": 0.546,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c508e6be7be6c0aa1ccb01d2dec0d67e1d95940739282cfc37892c1fa5260afa"
+    },
+    {
+      "case": "family-missing-argument",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Stamp takes 2 arguments and the term gives 1",
+      "seconds": 0.539,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c508e6be7be6c0aa1ccb01d2dec0d67e1d95940739282cfc37892c1fa5260afa"
+    },
+    {
+      "case": "family-missing-argument",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Stamp takes 2 arguments and the term gives 1",
+      "seconds": 0.42,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c508e6be7be6c0aa1ccb01d2dec0d67e1d95940739282cfc37892c1fa5260afa"
+    },
+    {
+      "case": "family-excess-argument",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Hold takes 1 arguments and the term gives 2",
+      "seconds": 0.508,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "72b12e16407d4f7afc4d5632fd48ef4c84b1f276b056261fef08937d16c35c82"
+    },
+    {
+      "case": "family-excess-argument",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Hold takes 1 arguments and the term gives 2",
+      "seconds": 0.489,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "72b12e16407d4f7afc4d5632fd48ef4c84b1f276b056261fef08937d16c35c82"
+    },
+    {
+      "case": "family-excess-argument",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: Hold takes 1 arguments and the term gives 2",
+      "seconds": 0.41,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "72b12e16407d4f7afc4d5632fd48ef4c84b1f276b056261fef08937d16c35c82"
+    },
+    {
+      "case": "family-wrong-numeral",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Lan SMu Box [] (Sec SColl 1 [ => Nat]))",
+      "seconds": 0.469,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7ff44080bcb6a1c8a756eb76157d397fba3e729b4c46f24dc1bb633173a56d9a"
+    },
+    {
+      "case": "family-wrong-numeral",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Lan SMu Box [] (Sec SColl 1 [ => Nat]))",
+      "seconds": 0.493,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7ff44080bcb6a1c8a756eb76157d397fba3e729b4c46f24dc1bb633173a56d9a"
+    },
+    {
+      "case": "family-wrong-numeral",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Nat and the expected type is (Lan SMu Box [] (Sec SColl 1 [ => Nat]))",
+      "seconds": 0.43,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7ff44080bcb6a1c8a756eb76157d397fba3e729b4c46f24dc1bb633173a56d9a"
+    },
+    {
+      "case": "family-wrong-index-value",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor ib2 of Ib2 gives the index (In SMu Box [] (ACtor box) [2]) and the type asks for (In SMu Box [] (ACtor box) [1])",
+      "seconds": 0.534,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7a39e84a573be02675b3436d962428b56f725720f930379ad51bf16dde158dad"
+    },
+    {
+      "case": "family-wrong-index-value",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor ib2 of Ib2 gives the index (In SMu Box [] (ACtor box) [2]) and the type asks for (In SMu Box [] (ACtor box) [1])",
+      "seconds": 0.543,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7a39e84a573be02675b3436d962428b56f725720f930379ad51bf16dde158dad"
+    },
+    {
+      "case": "family-wrong-index-value",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor ib2 of Ib2 gives the index (In SMu Box [] (ACtor box) [2]) and the type asks for (In SMu Box [] (ACtor box) [1])",
+      "seconds": 0.457,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7a39e84a573be02675b3436d962428b56f725720f930379ad51bf16dde158dad"
+    },
+    {
+      "case": "family-no-cumulativity",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Type 1 and the expected type is Type 2",
+      "seconds": 0.567,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9e928f97aee162a16ffd50eb8aefacc8c1d504787293a5ddff210203ed0ff711"
+    },
+    {
+      "case": "family-no-cumulativity",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Type 1 and the expected type is Type 2",
+      "seconds": 0.566,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9e928f97aee162a16ffd50eb8aefacc8c1d504787293a5ddff210203ed0ff711"
+    },
+    {
+      "case": "family-no-cumulativity",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the term has type Type 1 and the expected type is Type 2",
+      "seconds": 0.43,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9e928f97aee162a16ffd50eb8aefacc8c1d504787293a5ddff210203ed0ff711"
+    },
+    {
+      "case": "family-constructor-not-family",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor box of Box needs the family Box as its expected type, but the expected type is Nat",
+      "seconds": 0.584,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e850fb6e9520ea87489145d9d7302af325b1930739a89f697522c849c55cd4ab"
+    },
+    {
+      "case": "family-constructor-not-family",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor box of Box needs the family Box as its expected type, but the expected type is Nat",
+      "seconds": 0.569,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e850fb6e9520ea87489145d9d7302af325b1930739a89f697522c849c55cd4ab"
+    },
+    {
+      "case": "family-constructor-not-family",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the constructor box of Box needs the family Box as its expected type, but the expected type is Nat",
+      "seconds": 0.457,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e850fb6e9520ea87489145d9d7302af325b1930739a89f697522c849c55cd4ab"
+    },
+    {
+      "case": "lambda-annotation-def",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.515,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "13bd702b56c2780f9e08162f72fe7dcb134a325564d2cda587076f45291c38b1"
+    },
+    {
+      "case": "lambda-annotation-def",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.527,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "13bd702b56c2780f9e08162f72fe7dcb134a325564d2cda587076f45291c38b1"
+    },
+    {
+      "case": "lambda-annotation-def",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.389,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "13bd702b56c2780f9e08162f72fe7dcb134a325564d2cda587076f45291c38b1"
+    },
+    {
+      "case": "family-lambda-annotation",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.471,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d95c62792493b6e908b63174ff4726155efb3dbc70516b228f474d5b5318bfb7"
+    },
+    {
+      "case": "family-lambda-annotation",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.462,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d95c62792493b6e908b63174ff4726155efb3dbc70516b228f474d5b5318bfb7"
+    },
+    {
+      "case": "family-lambda-annotation",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "mismatch: the binder x is annotated with (Lan SMu Box [] (Sec SColl 1 [ => Nat])) and the expected domain is Nat",
+      "seconds": 0.407,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d95c62792493b6e908b63174ff4726155efb3dbc70516b228f474d5b5318bfb7"
+    },
+    {
+      "case": "erased-runtime-use",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "quantity: the erased binder n is read in a runtime position",
+      "seconds": 0.45,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "488200a36100cca80b7b2a217d09bdf5708d88f63564456510fe3751a66c5ed7"
+    },
+    {
+      "case": "erased-runtime-use",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "quantity: the erased binder n is read in a runtime position",
+      "seconds": 0.497,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "488200a36100cca80b7b2a217d09bdf5708d88f63564456510fe3751a66c5ed7"
+    },
+    {
+      "case": "erased-runtime-use",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "quantity: the erased binder n is read in a runtime position",
+      "seconds": 0.378,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "488200a36100cca80b7b2a217d09bdf5708d88f63564456510fe3751a66c5ed7"
+    },
+    {
+      "case": "uat-prop-equality",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "index above universe",
+      "seconds": 0.472,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "01920f4791b49d80a2690fe875c79ff6c218b18dc3010b3363fe7de9582eac6a"
+    },
+    {
+      "case": "uat-prop-equality",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "index above universe",
+      "seconds": 0.452,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "01920f4791b49d80a2690fe875c79ff6c218b18dc3010b3363fe7de9582eac6a"
+    },
+    {
+      "case": "uat-prop-equality",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "index above universe",
+      "seconds": 0.369,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "01920f4791b49d80a2690fe875c79ff6c218b18dc3010b3363fe7de9582eac6a"
+    },
+    {
+      "case": "uat-dependent-record",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "unbound: Obj",
+      "seconds": 0.457,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "35ddd5e5457d451686f56d50d19c23b18a3b2f0fb8436b5e988c8a5f75933ec6"
+    },
+    {
+      "case": "uat-dependent-record",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "unbound: Obj",
+      "seconds": 0.434,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "35ddd5e5457d451686f56d50d19c23b18a3b2f0fb8436b5e988c8a5f75933ec6"
+    },
+    {
+      "case": "uat-dependent-record",
+      "host": "native",
+      "mode": "checked",
+      "exit": 1,
+      "marker": "unbound: Obj",
+      "seconds": 0.385,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "35ddd5e5457d451686f56d50d19c23b18a3b2f0fb8436b5e988c8a5f75933ec6"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.451,
+      "stdout_sha256": "abff66c19665f8a9324490be2eb7c3fb304448031f75f57322a9ced476729b53",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.453,
+      "stdout_sha256": "fa2eb138cd673cd2766f8b9c6b2d8781b068f111c90054fc49df40c21887c836",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.462,
+      "stdout_sha256": "abff66c19665f8a9324490be2eb7c3fb304448031f75f57322a9ced476729b53",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.492,
+      "stdout_sha256": "fa2eb138cd673cd2766f8b9c6b2d8781b068f111c90054fc49df40c21887c836",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.41,
+      "stdout_sha256": "abff66c19665f8a9324490be2eb7c3fb304448031f75f57322a9ced476729b53",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "plain-nullary",
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "marker": null,
+      "seconds": 0.372,
+      "stdout_sha256": "fa2eb138cd673cd2766f8b9c6b2d8781b068f111c90054fc49df40c21887c836",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "family-expected",
+      "file": "surface/elab.bend",
+      "case": "family-nullary",
+      "marker": "the constructor nil needs an expected type or an inferable field for the parameter A",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/family-nullary.sole-comb FAIL cannot infer: the constructor nil needs an expected type or an inferable field for the parameter A",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0bc897b31745cfe29d386e00bb945e22717a7d2ec973a1605a077cf1f2cfa269",
+      "kill": "refused"
+    },
+    {
+      "name": "family-telescope-order",
+      "file": "surface/elab.bend",
+      "case": "family-parameter-index-order",
+      "marker": "unbound: de Bruijn index 0 is outside the environment",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/family-parameter-index-order.sole-comb FAIL unbound: de Bruijn index 0 is outside the environment",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d0852cb28e4468dea3ffa260be265200bf2d65b79c621bc0adfc25ff58a17e79",
+      "kill": "refused"
+    },
+    {
+      "name": "expected-type",
+      "file": "surface/elab.bend",
+      "case": "annotation",
+      "marker": "the constructor box needs an expected type",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/annotation.sole-comb FAIL cannot infer: the constructor box needs an expected type",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e0060183bf630e9c592a8467f868796b99c15bff4452b6ba689cdbb870d02779",
+      "kill": "refused"
+    },
+    {
+      "name": "parameter-order",
+      "file": "surface/constructor.bend",
+      "case": "parameter-order",
+      "marker": "the constructor box of Box needs the family Box as its expected type, but the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/parameter-order.sole-comb FAIL mismatch: the constructor box of Box needs the family Box as its expected type, but the expected type is (Ran SColl 0 (Sec SColl 0 []))",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "35b6ffd09e60b6afbe6765f8d5d1e463040e2206d7254900a711a0a842f9cf89",
+      "kill": "refused"
+    },
+    {
+      "name": "dependent-environment",
+      "file": "surface/constructor.bend",
+      "case": "dependent-fields",
+      "marker": "unbound: de Bruijn index 2 is outside the environment",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/dependent-fields.sole-comb FAIL unbound: de Bruijn index 2 is outside the environment",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ca3979b3fc67213a51836767d0f24e31fde88710c0a56c67d1f2f784e966e545",
+      "kill": "refused"
+    },
+    {
+      "name": "plain-fields",
+      "file": "surface/elab.bend",
+      "case": "plain-nullary",
+      "marker": "the constructor nil needs an expected type or an inferable field for the parameter A",
+      "compile_exit": 0,
+      "exit": 1,
+      "stderr_first_line": "CHECK /private/tmp/claude/kan-elim-lang-m0/review-1003-ctor-infer/tree/_build/constructor-parameters/plain-nullary.sole-comb FAIL cannot infer: the constructor nil needs an expected type or an inferable field for the parameter A",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "3815d28350178a7635cf7e0ef71d80742aa4a9c7e28a4dfb0e0d35ae2e8c4a80",
+      "kill": "refused"
+    }
+  ],
+  "sources": {
+    "Makefile": "2bc8289f677fcfd83fa80780109cb208661d45ec860d76dfc606fcd55edfb716",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "corpus/refuse/family-parameter-ctor.sole-comb": "30a33d4d1eee8fb6bd5bc54b55314b1b67e5e7d8154b7ba8ba3edbe6d801e981",
+    "dev/bend-policy.json": "e29c854d870b28c159832c47783041b58d52155f0e2dc6c2e560fea534f3d310",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "8508454a1849498ce0ae950ee91f1875ad7a9c4bff46e245e147e4022148bfd7",
+    "dev/test-cli.py": "2cd6883172ca3994b42d96e6193f421a9a056d331fc18cd6601b350d37f710e9",
+    "dev/test-constructor-parameters.py": "b98b454e1a28161b88ed0fd0a00604c9ddf6c2ca3d73472bc37cf57e8ad211aa",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/EXPECTATIONS.json": "eb716c6ce00cd1ab33c0ef32fb1d298291937929b3a1bfa578d62161313b1958",
+    "examples/constructor-parameters.sole-comb": "79b56973728857fb6498c62c48bfb36af5a2696b67208afb6730190175ea98e1",
+    "examples/family-arguments.sole-comb": "b43bef21282217d6ad9ef71daf722158c73a3a6035eefb10f5492799c482265c",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "c29eed0c7cf0822d4d9840065e93fced0635936ef7a26c7e44e6dc43fbed9588",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb"
+  },
+  "result": "pass"
+}

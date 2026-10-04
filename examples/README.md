@@ -96,13 +96,34 @@ receive an explicit refusal.
 `constructor-parameters` demonstrates parameter inference from an expected family
 type. It covers nested constructors, aliases, open parameters, dependent fields
 and indexed families. It also has a wrapper family `W` without parameters and a
-`List Nat` literal. A constructor used without an expected family still
-receives an explicit inference refusal.
+`List Nat` literal. The `constructor-inference` example covers inference without
+an expected family type.
 
 `family-arguments` supplies constructor expressions directly as family
 parameters and indices. Earlier argument values determine later expected types.
 It covers a boxed parameter, a dependent index, open erased variables and a
 nullary constructor. The checker accepts these without argument annotations.
+
+`constructor-inference` uses unannotated constructor expressions as elimination
+scrutinees. Their fields determine direct parameters and parameters or indices
+of nominal field types. It covers nested constructors, open type parameters,
+distinct parameters, a recursive tail checked at the inferred element type and a
+Nat-valued parameter. Nullary or phantom parameters still need an expected type.
+Fields are read from left to right. A field type that still holds an unsolved
+parameter is not used as an expected type. The checker infers the argument and
+solves the parameter from its type. A parameter beneath a function, product or
+sum former must come from another field. A lambda or a tuple without an
+annotation has no type of its own. In a field with an unsolved parameter, the
+checker refuses it and names the constructor and the field. In a later field,
+after the parameter is solved, the checker accepts it.
+
+Constructors of families without parameters also become unannotated scrutinees.
+For `mu Token : Type 0 { token : Token }`, `check --print` shows
+`def value : Nat := elim (token) as x in Token return Nat { 7 }` as follows:
+
+```text
+def value : Nat := (Elim SMu Token [] ((In SMu Token [] (ACtor token) []) : (Lan SMu Token [] (Sec SColl 0 []))) as x return Nat with | (ACtor token)  => 7)
+```
 
 The public command provides source checking and ordinary, product, sum, pair
 and recursive-family erasure. Wasm build/run, dependent or parameterized

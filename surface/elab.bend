@@ -17,10 +17,10 @@ import ../lib/kernel_eval.bend as Ev
 import ../lib/kernel_check.bend as K
 import syntax.bend as Syn
 import constructor.bend as Constructor
+import constructor_infer.bend as ConstructorInfer
 import elab_program.bend as M
 import sugar.bend as Sugar
 import family.bend as Family
-
 def walker() -> Type: K.ctx -> Maybe<&2, V.t> -> Syn.t -> M.result(T.t)
 def choose(-A: Type, flag: Bool, yes: Unit -> A, no: Unit -> A) -> A:
   match flag:
@@ -475,8 +475,8 @@ def elab_mu_ref(~go: walker, +c: K.ctx, r: mu_ref, +args: List<&2, Syn.t>, +expe
             case P.Ctor{+name, fields, _, _, _}:
               M.bind(Unit, T.t, arity_is(name, length(F.Pair2<Q.t, F.Pair2<String, T.t>>, fields), length(Syn.t, args)), _ =>
                 choose(M.result(T.t), F.Int63.equal(length(F.Pair2<Q.t, F.Pair2<String, T.t>>, params), F.Int63.zero),
-                  _ => maybe(V.t, M.result(T.t), expected, _ => elab_ctor_ref(go, c, f, ct, args), ty => M.bind(Unit, T.t, Constructor.owner(c, family, name, ty), _ => elab_ctor_ref(go, c, f, ct, args))),
-                  _ => maybe(V.t, M.result(T.t), expected, _ => elab_ctor_ref(go, c, f, ct, args), ty => Constructor.expected(go, c, f, ct, args, ty))))
+                  _ => maybe(V.t, M.result(T.t), expected, _ => ConstructorInfer.infer(go, c, f, ct, args), ty => M.bind(Unit, T.t, Constructor.owner(c, family, name, ty), _ => elab_ctor_ref(go, c, f, ct, args))),
+                  _ => maybe(V.t, M.result(T.t), expected, _ => ConstructorInfer.infer(go, c, f, ct, args), ty => Constructor.expected(go, c, f, ct, args, ty))))
 def elab_proj(~go: walker, +c: K.ctx, a: Syn.t, k: F.Int63.t) -> M.result(T.t):
   M.bind(T.t, T.t, go(c, None{}, a), +scrut => M.bind(V.t, T.t, type_of(c, scrut), w => project_type(c, scrut, w, k)))
 def app_head(c: K.ctx, head: Syn.t) -> Maybe<&2, mu_ref>:

@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "base": "8bebcb52cd97bfbec146c0e18c8c0641e6fda14f",
+  "files": [
+    {
+      "path": "Makefile",
+      "before": "bd8536f3b3675de2a36ef821731fe96975df5edeea7ec4899801d175656e2e62",
+      "after": "2bc8289f677fcfd83fa80780109cb208661d45ec860d76dfc606fcd55edfb716"
+    },
+    {
+      "path": "README.md",
+      "before": "d6c518f2ff804e5f1225d73437326c5371a9f636eab35da8720e06f7fa4ac7c5",
+      "after": "3080ab4d719eb3e8b0ccac48e6ca36ce15edb8e468b9f648127b8347021219dd"
+    },
+    {
+      "path": "corpus/refuse/family-parameter-ctor.sole-comb",
+      "before": "84d69d7c41cb5c2b89fd61b9e3dcfa51a52da1c53aec2334104d8f78e63089f5",
+      "after": "30a33d4d1eee8fb6bd5bc54b55314b1b67e5e7d8154b7ba8ba3edbe6d801e981"
+    },
+    {
+      "path": "dev/bend-policy.json",
+      "before": "174abf1c8110c00520be8345329b47da266b8cb2f2f441eecdf36085e169837e",
+      "after": "e29c854d870b28c159832c47783041b58d52155f0e2dc6c2e560fea534f3d310"
+    },
+    {
+      "path": "dev/house-bend.py",
+      "before": "490b740793c27bd9c64adc3bfcbf4422e441d412115b32845da51b9fb748840f",
+      "after": "8508454a1849498ce0ae950ee91f1875ad7a9c4bff46e245e147e4022148bfd7"
+    },
+    {
+      "path": "dev/stage-a-milestones.md",
+      "before": "65cc917bdadf3593be26f1abbea92b97a7212509891912c63efd953d2b97e47c",
+      "after": "1cb26161228f93ed6c066e9990fec0f933f913e103d7073eb4f12a29d6b89514"
+    },
+    {
+      "path": "dev/test-cli.py",
+      "before": "7fefce05c4701d2b01140cde9bab6a00e759b49bfac0db4c069f1e149f341020",
+      "after": "2cd6883172ca3994b42d96e6193f421a9a056d331fc18cd6601b350d37f710e9"
+    },
+    {
+      "path": "dev/test-constructor-inference.py",
+      "before": "missing",
+      "after": "91ec7aa115f1db35bedf8ba2f4bcaf8badfda5ffb864f536478da3ceead77431"
+    },
+    {
+      "path": "dev/test-constructor-parameters.py",
+      "before": "0e01f976158a6683dc8b3b58e7ac3a9c0a2fbae2c5c4e4a9a28b643aa186e886",
+      "after": "b98b454e1a28161b88ed0fd0a00604c9ddf6c2ca3d73472bc37cf57e8ad211aa"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference-cli.json",
+      "before": "missing",
+      "after": "d0c2acb3fff9d6d716def9d79de6ba3ec990b0d1dc3c5257b2ceca86393980e9"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference-gates.stderr.log",
+      "before": "missing",
+      "after": "b5f35e26e34d9df9010b784e8019da66bf47e98c41b6bc70ddc0dc5b17df5385"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference-gates.stdout.log",
+      "before": "missing",
+      "after": "4796a8490f290e852187a514254fd524f9ace317015662220a2305ed61753b15"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference-parameters.json",
+      "before": "missing",
+      "after": "83c5c38e013f860e1a277442a5892a18982423101a5d55ef3091cd03c00f6b06"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference.json",
+      "before": "missing",
+      "after": "3a6d7f614e92278fa389870ab6a508599bce5212bd9ad9b586a3b1856d1060ec"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-inference.md",
+      "before": "missing",
+      "after": "756864d7dd2d648332a41ce826e045a1e4b5cdad9b23a3f82022dff9c4e748d1"
+    },
+    {
+      "path": "dev/validation/stage-a-constructor-parameters.md",
+      "before": "5d262a52b4af15a8a2739a23c720ed749ddaa66d157f26d891a41875e7a836f2",
+      "after": "3ac128a50a5bf2fbadfa9bede010acda5c2ff314c7d6d9e833bd4db28a2ddf45"
+    },
+    {
+      "path": "dev/validation/stage-a-elaboration-mutations.json",
+      "before": "659d11270f4b3491c09eaa7086ada285553980d1ef2f234922ec782cb5c437e9",
+      "after": "7527c993a7836788ec9bf13e9e2d9b749fd8cb203916237466b0c1a0347fe118"
+    },
+    {
+      "path": "dev/validation/stage-a-elaboration.json",
+      "before": "36dd4343b81b47bc0537ac43453a8b89b16726f821816b71cc3470ebf091126c",
+      "after": "5a8796c2de74a9508701b2cea58904b5ecf2851b04669f5e2441ba490c0f7de7"
+    },
+    {
+      "path": "dev/validation/stage-a-program-mutations.json",
+      "before": "3c4e4d2931dbdafe125576c9b98682e2712355bfc4a6b5cd81772191b95b346f",
+      "after": "f9e811f9d892db3931a1138f056b1200c8e29451af79e266536652f2aedbd41d"
+    },
+    {
+      "path": "dev/validation/stage-a-program.json",
+      "before": "0253762d6c127d2aab71142a111f6794d10628ab9d885440df85a5aed853c97e",
+      "after": "7c2e7622ac4167d88716c12c6e9fc0771f664789a57fff9d03d68cdfa5369b71"
+    },
+    {
+      "path": "examples/EXPECTATIONS.json",
+      "before": "1f2eb82f29526c48689e30258c5726c8eb5fd8d82d9c30c65ed6eacc80aca6ea",
+      "after": "eb716c6ce00cd1ab33c0ef32fb1d298291937929b3a1bfa578d62161313b1958"
+    },
+    {
+      "path": "examples/README.md",
+      "before": "5786fce1eef78339fb24647591c1d59172c5438ad45fa3dbda16dc779ba0cbff",
+      "after": "76d88b5c7044c0b8f83d454ddff055dff92da75f72dd6b3250730534e9bb56e3"
+    },
+    {
+      "path": "examples/constructor-inference.sole-comb",
+      "before": "missing",
+      "after": "ef80c2cc17b464450f9fcf44c4a5550ba9980eeec9d79aca31a44af484cd8a71"
+    },
+    {
+      "path": "surface/constructor_infer.bend",
+      "before": "missing",
+      "after": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74"
+    },
+    {
+      "path": "surface/elab.bend",
+      "before": "c2799ec77d194f7558e2273da38fa4a8c8e3ac3bbd805e27ae002c8047bbf59e",
+      "after": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7"
+    }
+  ],
+  "cache_artifacts": [
+    {
+      "path": "_build/sole-comb.js",
+      "sha256": "23ebc5d084223da1541ddd4af77c4ea4d804d29ef682499da1f2c7e4a56bef7e"
+    },
+    {
+      "path": "_build/sole-comb.js.json",
+      "sha256": "4730f6aec2fd4f3e241b40654a0666e8b62f7f6b9a4c42bedd52fff6d47dcb2a"
+    },
+    {
+      "path": "_build/native/sole-comb.exe",
+      "sha256": "850829bb67cbfe809585b137cd5e655172fa5e8acbc277c0e6356debae2bf399"
+    },
+    {
+      "path": "_build/native/sole-comb.exe.json",
+      "sha256": "60c02a6902a1f7fa2e0a49b3186b2847aa2d4988e67fb6c80af114c3d26bf9fd"
+    }
+  ],
+  "cached_build_exit": 0,
+  "smoke": [
+    {
+      "host": "bun",
+      "mode": "checked",
+      "exit": 0,
+      "stdout_sha256": "315f730a5046f68ab815e4b2ffa09480741be69dd863e04426a7eb947258c5f2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "host": "bun",
+      "mode": "erased",
+      "exit": 0,
+      "stdout_sha256": "a38fbfcfa6f92d70ea6bc1d972899f561d93bcda279a4daacd7843f1d3c013f0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "host": "node-worker",
+      "mode": "checked",
+      "exit": 0,
+      "stdout_sha256": "315f730a5046f68ab815e4b2ffa09480741be69dd863e04426a7eb947258c5f2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "host": "node-worker",
+      "mode": "erased",
+      "exit": 0,
+      "stdout_sha256": "a38fbfcfa6f92d70ea6bc1d972899f561d93bcda279a4daacd7843f1d3c013f0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "host": "native",
+      "mode": "checked",
+      "exit": 0,
+      "stdout_sha256": "315f730a5046f68ab815e4b2ffa09480741be69dd863e04426a7eb947258c5f2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "host": "native",
+      "mode": "erased",
+      "exit": 0,
+      "stdout_sha256": "a38fbfcfa6f92d70ea6bc1d972899f561d93bcda279a4daacd7843f1d3c013f0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

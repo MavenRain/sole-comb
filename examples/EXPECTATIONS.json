@@ -17,7 +17,8 @@
     "examples/pair-erasure.sole-comb": 33,
     "examples/families.sole-comb": 23,
     "examples/constructor-parameters.sole-comb": 17,
-    "examples/family-arguments.sole-comb": 4
+    "examples/family-arguments.sole-comb": 4,
+    "examples/constructor-inference.sole-comb": 8
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -88,7 +89,7 @@
     "corpus/refuse/family-arm-quantity.sole-comb": "quantity: the branch binder m is marked 0 and the field marks it w",
     "corpus/refuse/family-arm-duplication.sole-comb": "quantity: the linear binder n must be used exactly once",
     "corpus/refuse/family-default.sole-comb": "wrong leg: default elim arms currently require a collection",
-    "corpus/refuse/family-parameter-ctor.sole-comb": "cannot infer: the constructor box needs an expected type",
+    "corpus/refuse/family-parameter-ctor.sole-comb": "cannot infer: the constructor box needs an expected type or an inferable field for the parameter A",
     "corpus/refuse/family-no-motive.sole-comb": "cannot infer: an elimination at a mu shape needs a motive",
     "corpus/refuse/family-header.sole-comb": "expected '{' after a family header",
     "corpus/refuse/family-group-duplicate.sole-comb": "line 1, column 43: E-FAMILY-CTOR: duplicate constructor mk",
