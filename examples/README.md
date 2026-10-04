@@ -125,6 +125,14 @@ For `mu Token : Type 0 { token : Token }`, `check --print` shows
 def value : Nat := (Elim SMu Token [] ((In SMu Token [] (ACtor token) []) : (Lan SMu Token [] (Sec SColl 0 []))) as x return Nat with | (ACtor token)  => 7)
 ```
 
+`family-default-arms` uses final `else: term` arms at nominal families. The
+default supplies the remaining constructors in declaration order. Each copy
+binds that constructor's fields and is checked against the motive result.
+It covers nullary constructors, multiple fields, linear fields, dependent
+fields, open captures, function results, family parameters and indices.
+`family-default-arms-explicit` supplies each arm independently; both checked
+and erased output must agree. A default must cover at least one constructor.
+
 The public command provides source checking and ordinary, product, sum, pair
 and recursive-family erasure. Wasm build/run, dependent or parameterized
 records, and constructor-labelled arms remain pending. `check --print`

@@ -1,0 +1,680 @@
+{
+  "schema": 1,
+  "scope": "native family defaults through existing checked constructor arms",
+  "hosts": [
+    "bun",
+    "node-worker",
+    "native"
+  ],
+  "sources": {
+    "Makefile": "5a397f06565c2b94c0d108fe6e7884d48e33219727c24203b2ca463c71e248c5",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "corpus/refuse/family-default-domain.sole-comb": "761c88e232afd1dd447195a1da0ae1b663062cb8b4bc3f093b6cc3a149f4c7d3",
+    "corpus/refuse/family-default-empty.sole-comb": "83223c1eae1b970bfbc42114b4d8186881a2538d91b25d6d930366d8082fb927",
+    "corpus/refuse/family-default-excess.sole-comb": "e4b176b0866a2569f894771e2dfd23e8203036213a14b73960337f0723c210b9",
+    "corpus/refuse/family-default-fields.sole-comb": "9b06b5cb89dfc5e71d2b1a64ae533a2662d31777fa8026e0c02e2aae46462eca",
+    "corpus/refuse/family-default-ghost.sole-comb": "74e92ae5be8f3a149889f987e2b12eee953b426901fd21a83a318aa934c5346a",
+    "corpus/refuse/family-default-linear.sole-comb": "9beb640fc16251ca4ed1f6ca36025a6b558133b9c3c3b4a5cf9e551f6e2452fb",
+    "corpus/refuse/family-default-nonlast.sole-comb": "2eb86bc64b5be017c6b5233f07d06a8067107e4647a04dc4bf235c4c2c25983e",
+    "corpus/refuse/family-default-result.sole-comb": "cf8019aef1ca59fdbc550d565f74924142ea999028aceeac825b0e81410fc081",
+    "corpus/refuse/family-default.sole-comb": "77262ea8cb81301a0141e0dc67fbaca7a4c1e37b3ececba94835d576f2a90636",
+    "dev/bend-policy.json": "e29c854d870b28c159832c47783041b58d52155f0e2dc6c2e560fea534f3d310",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "6fce2a808997dd42b764c2e1d8e62197a3087b916bf77796abbf1e7f9ee892f3",
+    "dev/test-cli.py": "59f09c3e07327272936d3d82195492f5df29fb37976f5fb4cd2487f7f1706b86",
+    "dev/test-family-defaults.py": "60158fcc19aba8aba0b5e8f5e98eede0de4f268cf87166b40d665007aa51c6c1",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/EXPECTATIONS.json": "884356e04594579250d1c1d4d498ebfea4c19795d64e444cff8afadc4bf25883",
+    "examples/family-default-arms-explicit.sole-comb": "3d83068485a2c9982c9690b045ab23a6a06d550981aee70d97a47589801ddac1",
+    "examples/family-default-arms.sole-comb": "c69bf268cbae4ccbaef81601272e5444a3bd51f19af29bbd6defe357a8a1890f",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "ffd11b42c0c663fc99409b601af61e86fc91d735361644c661578ab991d963d4",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/family-default-order.sole-comb": "f69a20aa7c75d6b093a62f3c6544fd9dc4bcc0c715eb5a1f4c3af604bcca60c3"
+  },
+  "definitions": 11,
+  "refusals": 9,
+  "observations": [
+    {
+      "host": "bun",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "bun",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "bun",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "bun",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK test/family-default-order.sole-comb defs=2 ok\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun all (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun suffix (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "node-worker",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK test/family-default-order.sole-comb defs=2 ok\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun all (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun suffix (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--print",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\ndef all : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 7 | (ACtor medium)  => 7 | (ACtor dark)  => 7)])\ndef suffix : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) Nat) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return Nat with | (ACtor light)  => 1 | (ACtor medium)  => 2 | (ACtor dark)  => 2)])\ndef function : (Ran SPi w _ (Lan SMu Shade [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w s (Lan SMu Shade [] (Sec SColl 0 [])) [s => (Elim SMu Shade [] s as x return (Ran SPi w _ Nat Nat) with | (ACtor light)  => (Sec SPi w n Nat [n => n]) | (ACtor medium)  => (Sec SPi w n Nat [n => n]) | (ACtor dark)  => (Sec SPi w n Nat [n => n]))])\ndef readPair : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd)))])\ndef pairSuffix : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => a | (ACtor pairB) a b => b | (ACtor pairC) a b => b)])\ndef captured : (Ran SPi w offset Nat (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) Nat)) := (Sec SPi w offset Nat [offset => (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return Nat with | (ACtor pairA) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairB) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)) | (ACtor pairC) a b => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) (Out SPi w a Nat (APt w offset) natAdd)))])])\ndef pairFunction : (Ran SPi w _ (Lan SMu Pair [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w p (Lan SMu Pair [] (Sec SColl 0 [])) [p => (Elim SMu Pair [] p as x return (Ran SPi w _ Nat Nat) with | (ACtor pairA) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairB) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]) | (ACtor pairC) a b => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w a) natAdd))]))])\ndef linearRead : (Ran SPi w _ (Lan SMu Linear [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Linear [] (Sec SColl 0 [])) [p => (Elim SMu Linear [] p as x return Nat with | (ACtor linearA) n => n | (ACtor linearB) n => n)])\ndef last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor packA) A a n => n | (ACtor packB) A a n => n)])\ndef copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])\ndef unbox : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor boxA) n => n | (ACtor boxB) n => n)])\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--print",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "native",
+      "path": "examples/family-default-arms.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "path": "examples/family-default-arms-explicit.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK examples/family-default-arms-explicit.sole-comb defs=11 ok\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun all (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<Shade>; nat; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun suffix (union mu<Shade>) : union nat := KCase mu<Shade> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\nrec [nat; mu<Shade>; leg<mu<Shade>,0>; leg<mu<Shade>,1>; leg<mu<Shade>,2>]\nfun function$0 (union nat) : union nat := KVar 0\nfun function$1 (union nat) : union nat := KVar 0\nfun function$2 (union nat) : union nat := KVar 0\nfun function (union mu<Shade>, union nat) : union nat := KTail (KCase mu<Shade> (KVar 1) [{0 0 (KClos function$0 1 [])}; {1 0 (KClos function$1 1 [])}; {2 0 (KClos function$2 1 [])}]) [KVar 0]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun readPair (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {1 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}; {2 2 (KTail (KGlobal natAdd) [KVar 1; KVar 0])}]\nrec [mu<Pair>; nat; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairSuffix (union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KVar 1)}; {1 2 (KVar 0)}; {2 2 (KVar 0)}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun captured (union nat, union mu<Pair>) : union nat := KCase mu<Pair> (KVar 0) [{0 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {1 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}; {2 2 (KTail (KGlobal natAdd) [KVar 3; KApp (KGlobal natAdd) [KVar 1; KVar 0]])}]\nrec [nat; mu<Pair>; leg<mu<Pair>,0,union nat,union nat>; leg<mu<Pair>,1,union nat,union nat>; leg<mu<Pair>,2,union nat,union nat>]\nfun pairFunction$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]\nfun pairFunction (union mu<Pair>, union nat) : union nat := KTail (KCase mu<Pair> (KVar 1) [{0 2 (KClos pairFunction$0 1 [KVar 1])}; {1 2 (KClos pairFunction$1 1 [KVar 1])}; {2 2 (KClos pairFunction$2 1 [KVar 1])}]) [KVar 0]\nrec [mu<Linear>; nat; leg<mu<Linear>,0,union nat>; leg<mu<Linear>,1,union nat>]\nfun linearRead (union mu<Linear>) : union nat := KCase mu<Linear> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\nrec [mu<Pack>; nat; leg<mu<Pack>,0,union any,union nat>; leg<mu<Pack>,1,union any,union nat>]\nfun last (union mu<Pack>) : union nat := KCase mu<Pack> (KVar 0) [{0 2 (KVar 0)}; {1 2 (KVar 0)}]\nrec [mu<V>; leg<mu<V>,0>; leg<mu<V>,1,union nat,union mu<V>>]\nfun copy (union mu<V>) : union mu<V> := KCase mu<V> (KVar 0) [{0 0 (KTag mu<V> 0 [])}; {1 2 (KTag mu<V> 1 [KVar 1; KVar 0])}]\nrec [mu<Box>; nat; leg<mu<Box>,0,union any>; leg<mu<Box>,1,union any>]\nfun unbox (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-empty.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-fields.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-fields.sole-comb FAIL missing branch: the elim arm for succ must bind each of its fields\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-domain.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-domain.sole-comb FAIL mismatch: the annotation of constructor field n differs from its declared type\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-result.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-linear.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-ghost.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-ghost.sole-comb FAIL quantity: the erased binder n is read in a runtime position\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-excess.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor\n"
+    },
+    {
+      "host": "native",
+      "path": "corpus/refuse/family-default-nonlast.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1\n"
+    },
+    {
+      "host": "native",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK test/family-default-order.sole-comb defs=2 ok\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun all (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun suffix (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]\n",
+      "stderr": ""
+    }
+  ],
+  "mutations": [
+    {
+      "name": "remaining",
+      "compile_exit": 0,
+      "kill": "refused",
+      "host": "bun",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK test/family-default-order.sole-comb FAIL wrong leg: the elimination of B repeats the branch at a\n"
+    },
+    {
+      "name": "coverage",
+      "compile_exit": 0,
+      "kill": "refused",
+      "host": "bun",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "CHECK test/family-default-order.sole-comb FAIL missing branch: the elimination of B has no branch at a\n"
+    },
+    {
+      "name": "body",
+      "compile_exit": 0,
+      "kill": "output-changed",
+      "host": "bun",
+      "path": "test/family-default-order.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK test/family-default-order.sole-comb defs=2 ok\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun all (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 0)}; {1 0 (KLit 0)}; {2 0 (KLit 0)}]\nrec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]\nfun suffix (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 0)}; {2 0 (KLit 0)}]\n",
+      "stderr": ""
+    },
+    {
+      "name": "empty",
+      "compile_exit": 0,
+      "kill": "admitted",
+      "host": "bun",
+      "path": "corpus/refuse/family-default.sole-comb",
+      "mode": "--erased",
+      "exit": 0,
+      "stdout": "CHECK corpus/refuse/family-default.sole-comb defs=1 ok\nrec [mu<N>; nat; leg<mu<N>,0>; leg<mu<N>,1,union mu<N>>]\nfun read (union mu<N>) : union nat := KCase mu<N> (KVar 0) [{0 0 (KLit 0)}; {1 1 (KLit 1)}]\n",
+      "stderr": ""
+    }
+  ],
+  "oracle": "independent explicit expansions and hand-derived erased order probe"
+}

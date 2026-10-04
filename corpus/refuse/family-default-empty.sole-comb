@@ -1,0 +1,3 @@
+mu Empty : Type 0 {}
+axiom empty : Empty
+def read : Nat := elim empty as x in Empty return Nat { else: 0 }

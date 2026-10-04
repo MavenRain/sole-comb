@@ -18,7 +18,9 @@
     "examples/families.sole-comb": 23,
     "examples/constructor-parameters.sole-comb": 17,
     "examples/family-arguments.sole-comb": 4,
-    "examples/constructor-inference.sole-comb": 8
+    "examples/constructor-inference.sole-comb": 8,
+    "examples/family-default-arms.sole-comb": 11,
+    "examples/family-default-arms-explicit.sole-comb": 11
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",
@@ -88,17 +90,26 @@
     "corpus/refuse/family-arm-result.sole-comb": "mismatch: a constructor needs a left former",
     "corpus/refuse/family-arm-quantity.sole-comb": "quantity: the branch binder m is marked 0 and the field marks it w",
     "corpus/refuse/family-arm-duplication.sole-comb": "quantity: the linear binder n must be used exactly once",
-    "corpus/refuse/family-default.sole-comb": "wrong leg: default elim arms currently require a collection",
+    "corpus/refuse/family-default.sole-comb": "a default elim arm must cover at least one remaining constructor",
     "corpus/refuse/family-parameter-ctor.sole-comb": "cannot infer: the constructor box needs an expected type or an inferable field for the parameter A",
     "corpus/refuse/family-no-motive.sole-comb": "cannot infer: an elimination at a mu shape needs a motive",
     "corpus/refuse/family-header.sole-comb": "expected '{' after a family header",
     "corpus/refuse/family-group-duplicate.sole-comb": "line 1, column 43: E-FAMILY-CTOR: duplicate constructor mk",
     "corpus/refuse/family-ctor-earlier-family.sole-comb": "mismatch: E-FAMILY-CTOR: duplicate constructor N",
     "corpus/refuse/family-ctor-family-name.sole-comb": "line 1, column 17: E-FAMILY-CTOR: duplicate constructor N",
-    "corpus/refuse/family-ctor-redeclared.sole-comb": "mismatch: E-FAMILY-CTOR: duplicate constructor zero"
+    "corpus/refuse/family-ctor-redeclared.sole-comb": "mismatch: E-FAMILY-CTOR: duplicate constructor zero",
+    "corpus/refuse/family-default-empty.sole-comb": "a default elim arm must cover at least one remaining constructor",
+    "corpus/refuse/family-default-fields.sole-comb": "the elim arm for succ must bind each of its fields",
+    "corpus/refuse/family-default-domain.sole-comb": "mismatch: the annotation of constructor field n differs from its declared type",
+    "corpus/refuse/family-default-result.sole-comb": "mismatch: a tuple needs a right former as its expected type",
+    "corpus/refuse/family-default-linear.sole-comb": "quantity: the linear binder n must be used exactly once on every runtime path",
+    "corpus/refuse/family-default-ghost.sole-comb": "quantity: the erased binder n is read in a runtime position",
+    "corpus/refuse/family-default-excess.sole-comb": "family elim arm 1 of B has no constructor",
+    "corpus/refuse/family-default-nonlast.sole-comb": "after the final default elim arm"
   },
   "equivalent": {
     "examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",
-    "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb"
+    "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb",
+    "examples/family-default-arms.sole-comb": "examples/family-default-arms-explicit.sole-comb"
   }
 }

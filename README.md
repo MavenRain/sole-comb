@@ -124,7 +124,15 @@ and `g4 : Nat -> Nat`, `w3 (both g4 7)` is accepted. The second parameter of
 `Both` gives the value of A. Nullary and phantom parameters without field
 evidence remain refused.
 
-Recursive definitions, structural recursor sugar, family default arms, complete erased-corpus
+A.5b.3.2e.7 adds a final `else: term` arm for public families. It covers
+the remaining constructors in declaration order and checks each copy with
+that constructor's fields, quantities and motive result. One default value
+must fit every remaining constructor. A copy that does not fit gets the same
+error as the equivalent explicit arm. See the
+[family default examples](examples/family-default-arms.sole-comb) and
+[validation](dev/validation/stage-a-family-defaults.md).
+
+Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
 The constructor inference validation records the current host checks and
@@ -158,6 +166,8 @@ make test-family-erasure # family constructor and match erasure against pinned r
 make test-family-erasure-mutations # family erasure comparisons and eight semantic mutations
 make test-public-family # public families against frozen Kanon output
 make test-public-family-mutations # public families and four sugar mutations
+make test-family-defaults # family defaults, explicit expansions and refusals on all hosts
+make test-family-defaults-mutations # family defaults and four semantic mutations
 make house           # scoped source policies and landed module line budgets
 make bench-preflight # pins and current load; no benchmark samples
 ```

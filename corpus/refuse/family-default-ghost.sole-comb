@@ -1,0 +1,3 @@
+mu Ghost : Type 0 { left : (0 n : Nat) -> Ghost; right : (0 n : Nat) -> Ghost }
+def read : Ghost -> Nat := fun (p : Ghost) =>
+  elim p as x in Ghost return Nat { else: fun (0 n : Nat) => n }

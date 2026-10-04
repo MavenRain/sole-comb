@@ -5,6 +5,7 @@
 .PHONY: test-public-family test-public-family-mutations
 .PHONY: test-constructor-parameters test-constructor-parameters-mutations
 .PHONY: test-constructor-inference test-constructor-inference-mutations
+.PHONY: test-family-defaults test-family-defaults-mutations
 
 R2_MANIFEST ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/manifest.json
 R2_TOOLCHAIN ?= dev/toolchain.json
@@ -18,10 +19,10 @@ R2_PREPARE_PLAN ?= /private/tmp/claude/kan-elim-lang-m0/r2-risk/prepare-plan.jso
 build:
 	python3 -P dev/build.py
 
-check: house test-reference-fixtures test-foundation test-representation test-evaluation test-checking test-pinfront test-elaboration test-program test-erasure test-cli test-core-erasure test-family-layout test-family-erasure test-public-family test-constructor-parameters test-constructor-inference
+check: house test-reference-fixtures test-foundation test-representation test-evaluation test-checking test-pinfront test-elaboration test-program test-erasure test-cli test-core-erasure test-family-layout test-family-erasure test-public-family test-constructor-parameters test-constructor-inference test-family-defaults
 	python3 -P dev/build.py --check
 
-test: build test-bench test-r2 test-r2-run test-r2-prepare house test-reference-fixtures test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations test-cli test-core-erasure-mutations test-family-layout-mutations test-family-erasure-mutations test-public-family-mutations test-constructor-parameters-mutations test-constructor-inference-mutations
+test: build test-bench test-r2 test-r2-run test-r2-prepare house test-reference-fixtures test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations test-cli test-core-erasure-mutations test-family-layout-mutations test-family-erasure-mutations test-public-family-mutations test-constructor-parameters-mutations test-constructor-inference-mutations test-family-defaults-mutations
 	python3 -P dev/pin-check.py
 
 test-bench:
@@ -100,7 +101,7 @@ test-erasure:
 test-erasure-mutations: test-erasure
 	python3 -P dev/test-erasure-mutations.py
 
-gates: test-bench test-r2 test-r2-run test-r2-prepare house test-reference-fixtures test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations test-cli test-core-erasure-mutations test-family-layout-mutations test-family-erasure-mutations test-public-family-mutations test-constructor-parameters-mutations test-constructor-inference-mutations
+gates: test-bench test-r2 test-r2-run test-r2-prepare house test-reference-fixtures test-foundation test-representation test-evaluation test-checking-mutations test-pinfront-mutations test-elaboration-mutations test-program-mutations test-erasure-mutations test-cli test-core-erasure-mutations test-family-layout-mutations test-family-erasure-mutations test-public-family-mutations test-constructor-parameters-mutations test-constructor-inference-mutations test-family-defaults-mutations
 	python3 -P dev/pin-check.py
 	python3 -P dev/build.py --check
 
@@ -142,3 +143,9 @@ test-constructor-inference:
 
 test-constructor-inference-mutations:
 	python3 -P dev/test-constructor-inference.py --mutations
+
+test-family-defaults:
+	python3 -P dev/test-family-defaults.py
+
+test-family-defaults-mutations:
+	python3 -P dev/test-family-defaults.py --mutations

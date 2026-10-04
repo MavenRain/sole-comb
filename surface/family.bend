@@ -98,17 +98,50 @@ def selected(owner: String, key: F.Int63.t, binders: List<&2, S.binder>, value: 
   match found:
     case None{}: M.Abort{E.Wrong_leg{S.cat(["family elim arm ", F.Int63.show(key), " of ", owner, " has no constructor"])}}
     case Some{ct}: branch(ct, binders, value)
+# Only legs reach this helper from the arms helper; the other rows guard other callers.
 def arm(owner: String, ctors: List<&2, P.ctor>, br: S.branch) -> M.result(S.branch):
   match br:
     case S.BrCtor{name, fs, value}: M.Pure{S.BrCtor{name, fs, value}}
-    case S.BrDefault{_}: M.Abort{E.Wrong_leg{"default elim arms currently require a collection"}}
+    case S.BrDefault{_}: M.Abort{E.Wrong_leg{"a family default arm must be expanded before constructor selection"}}
     case S.BrLeg{+key, binders, value}: selected(owner, key, binders, value, ctor_at(ctors, key))
-def arms(+owner: String, +ctors: List<&2, P.ctor>, bs: List<&2, S.branch>) -> M.result(List<&2, S.branch>):
+# Remove an explicit constructor so a default covers only the unhandled ones.
+def without(+name: String, cs: List<&2, P.ctor>) -> List<&2, P.ctor>:
+  match cs:
+    case []: []
+    case +ct <> +rest:
+      L.choose(List<&2, P.ctor>, String.eq(name, P.ctor_name(ct)),
+        _ => rest, _ => ct <> without(name, rest))
+# A selected arm is always a constructor branch, so the leg and default rows cannot occur.
+def after(br: S.branch, cs: List<&2, P.ctor>) -> List<&2, P.ctor>:
+  match br:
+    case S.BrCtor{name, _, _}: without(name, cs)
+    case S.BrLeg{_, _, _}: cs
+    case S.BrDefault{_}: cs
+
+# Each generated arm follows the same field and result-lambda path as an explicit arm.
+def fill(cs: List<&2, P.ctor>, +value: S.t) -> M.result(List<&2, S.branch>):
+  match cs:
+    case []: M.Pure{[]}
+    case ct <> rest:
+      M.bind(S.branch, List<&2, S.branch>, branch(ct, [], value), br =>
+        M.map_result(List<&2, S.branch>, List<&2, S.branch>, tail => br <> tail, fill(rest, value)))
+def default(cs: List<&2, P.ctor>, value: S.t) -> M.result(List<&2, S.branch>):
+  match cs:
+    case []: M.Abort{E.Wrong_leg{"a default elim arm must cover at least one remaining constructor"}}
+    case ct <> rest: fill(ct <> rest, value)
+# The parser yields only legs and closes the arm list after a default, so the
+# nonfinal-default and constructor rows only guard other callers. The constructor
+# row does not check for duplicate or unknown constructor names.
+def arms(+owner: String, +ctors: List<&2, P.ctor>, bs: List<&2, S.branch>, +remaining: List<&2, P.ctor>) -> M.result(List<&2, S.branch>):
   match bs:
     case []: M.Pure{[]}
-    case first <> rest:
-      M.bind(S.branch, List<&2, S.branch>, arm(owner, ctors, first), br =>
-        M.map_result(List<&2, S.branch>, List<&2, S.branch>, tail => br <> tail, arms(owner, ctors, rest)))
+    case S.BrDefault{value} <> []: default(remaining, value)
+    case S.BrDefault{_} <> (_ <> _): M.Abort{E.Wrong_leg{"a default elim arm must be last"}}
+    case S.BrLeg{key, bs, value} <> rest:
+      M.bind(S.branch, List<&2, S.branch>, arm(owner, ctors, S.BrLeg{key, bs, value}), +br =>
+        M.map_result(List<&2, S.branch>, List<&2, S.branch>, tail => br <> tail, arms(owner, ctors, rest, after(br, remaining))))
+    case S.BrCtor{+name, fs, value} <> rest:
+      M.map_result(List<&2, S.branch>, List<&2, S.branch>, tail => S.BrCtor{name, fs, value} <> tail, arms(owner, ctors, rest, without(name, remaining)))
 def expanded(fam: P.family, bs: List<&2, S.branch>) -> M.result(List<&2, S.branch>):
   match fam:
-    case P.Family{name, _, _, _, _, ctors, _}: arms(name, ctors, bs)
+    case P.Family{name, _, _, _, _, +ctors, _}: arms(name, ctors, bs, ctors)

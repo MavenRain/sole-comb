@@ -1,0 +1,3 @@
+mu B : Type 0 { a : B; b : B; c : B }
+def all : B -> Nat := fun (v : B) => elim v as x in B return Nat { else: 7 }
+def suffix : B -> Nat := fun (v : B) => elim v as x in B return Nat { 1; else: 2 }

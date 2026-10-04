@@ -32,11 +32,12 @@ def main():
     selected = set(manifest["positive"]) | set(manifest["negative"])
     found = {str(p.relative_to(ROOT)) for directory in ("examples", "corpus/refuse")
              for p in (ROOT / directory).rglob("*.sole-comb")}
-    if manifest["schema"] != 1 or selected != found or len(selected) != 93 or not all(manifest["negative"].values()):
+    if manifest["schema"] != 1 or selected != found or len(selected) != 103 or not all(manifest["negative"].values()):
         raise RuntimeError("native example census changed; update and review the independent expectations")
     equivalents = manifest["equivalent"]
     if equivalents != {"examples/default-arms.sole-comb": "examples/default-arms-explicit.sole-comb",
-                       "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb"}:
+                       "examples/record-expansion.sole-comb": "examples/record-expansion-explicit.sole-comb",
+                       "examples/family-default-arms.sole-comb": "examples/family-default-arms-explicit.sole-comb"}:
         raise RuntimeError("native sugar equivalences changed; review the independent explicit expansions")
     if not all(a in manifest["positive"] and b in manifest["positive"] for a, b in equivalents.items()):
         raise RuntimeError("native sugar equivalences must refer to checked positive examples")

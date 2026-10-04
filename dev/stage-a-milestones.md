@@ -137,7 +137,14 @@ evidence remain refused.
 This increment starts the UAT.0 constructor requirement probes. UAT revision
 pinning, theorem selection and the transitive axiom inventory remain pending.
 
-Recursive definitions, structural recursor sugar, family default arms, complete erased-corpus
+A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
+constructors already handled by explicit arms and generates checked arms for
+the remainder in declaration order. The public examples cover field quantities,
+dependent fields, parameterized and indexed families, captures and function
+results. Checked and erased output agrees with independent explicit expansions
+on all three hosts. See [family default validation](validation/stage-a-family-defaults.md).
+
+Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
 The constructor inference validation records the current host checks and
