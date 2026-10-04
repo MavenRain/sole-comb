@@ -144,6 +144,13 @@ mentions another member of a mutual group, as it refuses a non-direct self
 occurrence. Public recursor typing, delayed induction hypotheses and their
 erasure remain pending.
 
+A.5b.3.2e.10 adds [uniform-parameter validation](dev/validation/stage-a-recursor-uniform-layout.md)
+for those layouts. Typed conversion checks each recursive child's parameters
+against the declaration parameters, including dependent parameters and erased
+children. Transparent aliases and proof-irrelevant parameters are accepted;
+changed parameters receive an explicit refusal. Public structural recursor
+typing, evaluation and erasure remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

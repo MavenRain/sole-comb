@@ -56,6 +56,36 @@ CASES = (
 )
 TEST_SOURCES = ("test/recursor-layout.bend", "test/program.bend", *(f"test/pinfront/{name}.bend" for name in (
     "elab", "elab_program", "lexer", "order", "parser", "program", "syntax", "token", "totality")))
+NONUNIFORM = "FAIL\nnot yet: recursor layout requires uniform recursive parameters"
+def direct_child(arity, context, former):
+    return golden(arity, context, [f"0:w:child:{former}:child:recursive[]"], [f"0:w:child:{former}:child:recursive[]"])
+
+
+UNIFORM_CASES = tuple(row for row in CASES if row[0] != "alias-field") + (
+    ("swapped-parameters", "mu Duo (0 A : Type 0) (0 B : Type 0) : Type 0 with | duo : (child : Duo B A) -> Duo A B", "Duo", "duo", NONUNIFORM),
+    ("changed-second-parameter", "mu Duo (0 A : Type 0) (0 B : Type 0) : Type 0 with | duo : (child : Duo A Nat) -> Duo A B", "Duo", "duo", NONUNIFORM),
+    ("constant-parameter", "mu L (0 A : Type 0) : Type 0 with | cons : (child : L Nat) -> L A", "L", "cons", NONUNIFORM),
+    ("field-parameter", "mu L (0 A : Type 0) : Type 1 with | cons : (0 B : Type 0) -> (child : L B) -> L A", "L", "cons", NONUNIFORM),
+    ("constant-value-parameter", "mu V (0 n : Nat) : Type 0 with | step : (child : V 0) -> V n", "V", "step", NONUNIFORM),
+    ("field-value-parameter", "mu V (0 n : Nat) : Type 0 with | step : (0 m : Nat) -> (child : V m) -> V n", "V", "step", NONUNIFORM),
+    ("changed-dependent-parameter", "mu D (0 A : Type 0) (0 x : A) : Type 1 with | step : (0 y : A) -> (child : D A y) -> D A x", "D", "step", NONUNIFORM),
+    ("alias-uniform-parameter", "def Id : Type 0 -> Type 0 := fun (A : Type 0) => A\nmu List (0 A : Type 0) : Type 0 with | nil : List A | cons : (head : A) -> (tail : List (Id A)) -> List A", "List", "cons",
+     golden(3, 3, ["0:w:head:A:head:ordinary", "1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]"], ["1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]"])),
+    ("two-uniform-parameters", "mu Duo (0 A : Type 0) (0 B : Type 0) : Type 0 with | duo : (child : Duo A B) -> Duo A B", "Duo", "duo",
+     direct_child(2, 3, "(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B]))")),
+    ("dependent-uniform-parameters", "mu D (0 A : Type 0) (0 x : A) : Type 1 with | step : (child : D A x) -> D A x", "D", "step",
+     direct_child(2, 3, "(Lan SMu D [] (Sec SColl 2 [ => A;  => x]))")),
+    ("zero-changed-parameter", "mu L (0 A : Type 0) : Type 0 with | step : (0 child : L Nat) -> L A", "L", "step", NONUNIFORM),
+    ("uniform-value-parameter", "mu V (0 n : Nat) : Type 0 with | step : (child : V n) -> V n", "V", "step", direct_child(2, 2, "(Lan SMu V [] (Sec SColl 1 [ => n]))")),
+    ("proof-irrelevance", "mu P : Prop with | p : P\nmu F (0 proof : P) : Type 0 with | step : (child : F p) -> F proof", "F", "step",
+     direct_child(2, 2, "(Lan SMu F [] (Sec SColl 1 [ => (In SMu P [] (ACtor p) [])]))")),
+    ("second-child-changed", "mu T (0 A : Type 0) : Type 0 with | leaf : T A | fork : (left : T A) -> (right : T Nat) -> T A", "T", "fork", NONUNIFORM),
+    ("indexed-uniform-parameter", N + "mu V (0 A : Type 0) : (0 i : N) -> Type 0 with | vz : V A zero | vs : (0 i : N) -> (head : A) -> (tail : V A i) -> V A (succ i)", "V", "vs",
+     golden(4, 4, [f"0:0:i:{NT}:i:ordinary", "1:w:head:A:head:ordinary", "2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]"], ["2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]"])),
+    ("indexed-changed-parameter", N + "mu V (0 A : Type 0) : (0 i : N) -> Type 0 with | vz : V A zero | vs : (0 i : N) -> (tail : V Nat i) -> V A (succ i)", "V", "vs", NONUNIFORM),
+)
+# The harness refuses a fourth argument other than uniform.
+UNKNOWN_MODE = ("unknown-mode", N, "N", "zero", "FAIL\nexpected mode uniform")
 
 
 def module(name, path):
@@ -69,6 +99,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--hosts", default="bun,node-worker,native")
     parser.add_argument("--mutations", action="store_true")
+    parser.add_argument("--uniform", action="store_true")
     args = parser.parse_args()
     hosts = args.hosts.split(",")
     if not hosts or len(set(hosts)) != len(hosts) or set(hosts) - {"bun", "node-worker", "native"}:
@@ -77,6 +108,13 @@ def main():
         parser.error("mutations require the Bun host")
     if len(CASES) != 19 or len({row[0] for row in CASES}) != len(CASES):
         raise RuntimeError("recursor layout case count or names changed")
+    cases = UNIFORM_CASES if args.uniform else CASES
+    if len(UNIFORM_CASES) != 34 or len({row[0] for row in UNIFORM_CASES}) != len(UNIFORM_CASES):
+        raise RuntimeError("uniform recursor case count or names changed")
+    mode = ["uniform"] if args.uniform else []
+    global WORK
+    if args.uniform:
+        WORK = ROOT / "_build/recursor-uniform"
     WORK.mkdir(parents=True, exist_ok=True)
     (WORK / "result.json").unlink(missing_ok=True)
     (WORK / "failures.json").unlink(missing_ok=True)
@@ -109,8 +147,9 @@ def main():
         else:
             argv = [pins["tools"]["node"]["path"], "-e", build.node_worker_script(pins), WORK / "checks.js"]
         results = {}
-        for name, text, family, ctor, expected in CASES:
-            result = core.run(f"{host}-{name}", [*argv, text, family, ctor], env)
+        checks = [(*row, mode) for row in cases] + ([(*UNKNOWN_MODE, ["raw"])] if args.uniform else [])
+        for name, text, family, ctor, expected, extra in checks:
+            result = core.run(f"{host}-{name}", [*argv, text, family, ctor, *extra], env)
             if result["stderr"] or result["stdout"] != expected + "\n":
                 failures.append({"host": host, "case": name, "expected": expected + "\n", "observed": result})
             results[name] = result
@@ -129,8 +168,19 @@ def main():
             ("non-direct-refusal", "P.occurs(group, tm)", "False{}", "functional-recursion"),
             ("mutual-group", "reach(fams, fams, [owner])", "[owner]", "mutual-sibling"),
         )
+        mutation_path = "lib/kernel_recursor.bend"
+        if args.uniform:
+            mutation_path = "lib/kernel_recursor_uniform.bend"
+            candidates = (
+                ("skip-conversion", "Q.if_else(R.result(Unit), eq,", "Q.if_else(R.result(Unit), True{},", "constant-parameter"),
+                ("parameter-order", "R.rev_append(V.t, env, [])", "env", "two-uniform-parameters"),
+                ("parameter-scope", "V.var(C.size(prefix))", "V.var(F.Int63.zero)", "dependent-uniform-parameters"),
+                ("skip-children", "diagram(c, params, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
+                ("untyped-conversion", "R.c_conv(C.ctx, C.ops, c, tyv, got, V.var(C.size(prefix)))", "R.c_conv_type(C.ctx, C.ops, c, got, V.var(C.size(prefix)))", "proof-irrelevance"),
+                ("first-child-only", "_ => fields(c, params, rest))", "_ => Done{Unit{}})", "second-child-changed"),
+            )
         closure = build.dependencies(source)
-        original = (ROOT / "lib/kernel_recursor.bend").read_text()
+        original = (ROOT / mutation_path).read_text()
         for name, before, after, witness in candidates:
             if original.count(before) != 1:
                 raise RuntimeError(f"mutation anchor changed: {name}")
@@ -139,23 +189,23 @@ def main():
                 dest = tree / path.relative_to(ROOT)
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(path, dest)
-            (tree / "lib/kernel_recursor.bend").write_text(original.replace(before, after))
+            (tree / mutation_path).write_text(original.replace(before, after))
             mutant_source = tree / "test/recursor-layout.bend"
             output = tree / "checks.js"
             core.run(f"mutant-{name}-check", [binary, mutant_source, "--check-only"], env)
             core.run(f"mutant-{name}-compile", [binary, mutant_source, "-o", output], env)
-            _, text, family, ctor, expected = next(row for row in CASES if row[0] == witness)
-            result = core.run(f"mutant-{name}", [pins["tools"]["bun"]["path"], output, text, family, ctor], env)
+            _, text, family, ctor, expected = next(row for row in cases if row[0] == witness)
+            result = core.run(f"mutant-{name}", [pins["tools"]["bun"]["path"], output, text, family, ctor, *mode], env)
             if result["stderr"] or result["stdout"] == expected + "\n":
                 raise RuntimeError(f"mutation did not produce a clean behavioral mismatch: {name}")
             mutations.append({"name": name, "case": witness, "killed": True, "observation": result})
         if snapshot() != hashes:
             raise RuntimeError("source changed during recursor layout mutations")
-    record = {"schema": 1, "cases": len(CASES), "sources": hashes, "hosts": observations,
+    record = {"schema": 1, "cases": len(cases), "sources": hashes, "hosts": observations,
               "mutations": mutations,
-              "scope": "Direct recursive-field metadata; public recursors and delayed IH evaluation remain pending."}
+              "scope": "Uniform-parameter direct recursive-field metadata; public recursors and delayed IH evaluation remain pending." if args.uniform else "Direct recursive-field metadata; public recursors and delayed IH evaluation remain pending."}
     (WORK / "result.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
-    print(f"RECURSOR-LAYOUT PASS {len(CASES)} cases on {','.join(hosts)}")
+    print(f"RECURSOR-{'UNIFORM' if args.uniform else 'LAYOUT'} PASS {len(cases)} cases on {','.join(hosts)}")
 
 
 if __name__ == "__main__":

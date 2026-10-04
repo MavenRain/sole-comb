@@ -1,0 +1,2 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-1004-recursor-uniform/tree/dev/toolchain.json
+RECURSOR-UNIFORM PASS 34 cases on bun,node-worker,native

@@ -148,6 +148,16 @@ Public branch elaboration, recursor typing, delayed IH evaluation and erasure
 remain pending, so UAT.0 stays open. See
 [recursor layout validation](validation/stage-a-recursor-layout.md).
 
+A.5b.3.2e.10 checks uniform parameters for direct recursive-field layouts in
+`lib/kernel_recursor_uniform.bend`. It compares child arguments in declaration
+order with typed conversion, evaluates dependent parameter domains in their
+declaration prefix, and uses the complete field context for comparison.
+Aliases and proof-irrelevant arguments are accepted. Changed type or value
+parameters, including those of zero-quantity children, are refused. This
+checked metadata is another structural recursor prerequisite; public branch
+typing, delayed induction hypotheses and erasure remain pending. See
+[uniform layout validation](validation/stage-a-recursor-uniform-layout.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,
