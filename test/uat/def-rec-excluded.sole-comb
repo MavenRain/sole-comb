@@ -1,0 +1,2 @@
+mu PN : Type 0 { zeroPN : PN; succPN : PN -> PN }
+def rec count : PN -> Nat := fun (n : PN) => elim n as x in PN return Nat { 0; fun (k : PN) => count k }

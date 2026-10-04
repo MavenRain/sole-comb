@@ -1,0 +1,1 @@
+record Category (0 Obj : Type 0) : Type 1 { Hom : Obj -> Obj -> Type 0 }

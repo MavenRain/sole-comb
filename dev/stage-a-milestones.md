@@ -134,8 +134,10 @@ and `g4 : Nat -> Nat`, `w3 (both g4 7)` is accepted. The second parameter of
 `Both` gives the value of A. Nullary and phantom parameters without field
 evidence remain refused.
 
-This increment starts the UAT.0 constructor requirement probes. UAT revision
-pinning, theorem selection and the transitive axiom inventory remain pending.
+This increment started the UAT.0 constructor requirement probes. The subsequent
+readiness increment pins the UAT revision and dependencies, selected declaration
+types and transitive axiom inventory, with public-source requirement probes.
+See [UAT.0 readiness validation](validation/uat-readiness.md).
 
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
@@ -228,6 +230,13 @@ after M0 acceptance under an explicit M1 semantic-delta gate. The existing
 Stage A and M0 corpus, modes, divergence policy and closure checks remain
 required. The pilot and the full UAT port have separate completion criteria
 in that schedule.
+
+The UAT.0 readiness increment records 21 selected Lean declarations at revision
+`f9d2bc270631eaefb9985c38e0c804b825a7ee2d`, all ten locked dependencies and
+twelve public-source probes. `make test-uat-readiness` checks the immutable
+baseline and current source boundary without requiring Lean for routine gates.
+Structural recursors remain the next Stage A prerequisite. The UAT.0 row stays
+open until they land. The M1 implementations remain pending.
 
 ## Integration gate preservation
 

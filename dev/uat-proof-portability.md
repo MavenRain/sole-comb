@@ -6,6 +6,13 @@ the next Stage A public-source increment. Implementation is required early M1
 work, ahead of new seed breadth, lex2 and conditional brec2 work. Existing M1
 acceptance and CPU performance obligations remain required.
 
+UAT.0 baseline preparation is recorded in
+[the readiness evidence](validation/uat-readiness.md): pinned revisions and
+source hashes, 21 selected declaration types and axiom sets, and twelve
+executable source probes. Field-based constructor inference is landed. The
+UAT.0 row stays open for structural recursors, which remain the next Stage A
+prerequisite. UAT.1 through UAT.5 remain pending.
+
 ## Sequence and acceptance
 
 | Increment | Placement and deliverable | Required evidence |

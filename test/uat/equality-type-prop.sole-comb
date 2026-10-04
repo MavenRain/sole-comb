@@ -1,0 +1,2 @@
+mu Eq (0 A : Type 0) (0 a : A) : (0 b : A) -> Prop { refl : Eq A a a }
+def reflexive : Eq Nat 0 0 := refl

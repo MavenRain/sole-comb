@@ -1,0 +1,5 @@
+UAT BASELINE PASS: 21 declarations, 10 locked dependencies; /private/tmp/claude/kan-elim-lang-m0/review-1004-uat-readiness/tree/_build/uat-readiness/baseline
+UAT READINESS PASS bun: 12 probes
+UAT READINESS PASS node-worker: 12 probes
+UAT READINESS PASS native: 12 probes
+UAT READINESS PASS: 39 observations; _build/uat-readiness/result.json

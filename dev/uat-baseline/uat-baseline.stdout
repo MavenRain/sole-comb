@@ -1,0 +1,115 @@
+CompCatTheory.Category.{u_1, u_2} : Type u_1 → Type (max u_1 (u_2 + 1))
+'CompCatTheory.Category' does not depend on any axioms
+CompCatTheory.Functor.{u_1, u_2, u_3,
+  u_4} : (C : Type u_1) →
+  (D : Type u_3) →
+    [CompCatTheory.Category.{u_1, u_2} C] →
+      [CompCatTheory.Category.{u_3, u_4} D] → Type (max (max (max u_1 u_3) u_2) u_4)
+'CompCatTheory.Functor' does not depend on any axioms
+@CompCatTheory.LeftKanExtension.{u_1, u_2, u_3, u_4, u_5,
+    u_6} : {J : Type u_1} →
+  {C : Type u_3} →
+    {D : Type u_5} →
+      [inst : CompCatTheory.Category.{u_1, u_2} J] →
+        [inst_1 : CompCatTheory.Category.{u_3, u_4} C] →
+          [inst_2 : CompCatTheory.Category.{u_5, u_6} D] →
+            CompCatTheory.Functor.{u_1, u_2, u_3, u_4} J C →
+              CompCatTheory.Functor.{u_1, u_2, u_5, u_6} J D → Type (max (max (max (max u_1 u_3) u_5) u_4) u_6)
+'CompCatTheory.LeftKanExtension' depends on axioms: [propext]
+UnifiedAggregation.SymmetryGroup.{u_1} : Type (u_1 + 1)
+'UnifiedAggregation.SymmetryGroup' does not depend on any axioms
+UnifiedAggregation.GAction.{u_1,
+  u_2} : UnifiedAggregation.SymmetryGroup.{u_1} →
+  (Obj : Type u_2) → [CompCatTheory.Category.{u_2, u_2} Obj] → Type (max u_1 u_2)
+'UnifiedAggregation.GAction' depends on axioms: [propext]
+@UnifiedAggregation.eqRec_heq_dep.{u_1,
+    u_2} : ∀ {α : Sort u_1} {a b : α} (h : Eq.{u_1} a b) {motive : (x : α) → Eq.{u_1} a x → Sort u_2}
+  (refl : motive a ⋯), HEq.{u_2} (Eq.rec.{u_2, u_1} refl h) refl
+'UnifiedAggregation.eqRec_heq_dep' does not depend on any axioms
+@UnifiedAggregation.Functor.ext.{u_1, u_2, u_3,
+    u_4} : ∀ {C : Type u_1} {D : Type u_3} [inst : CompCatTheory.Category.{u_1, u_2} C]
+  [inst_1 : CompCatTheory.Category.{u_3, u_4} D] {F G : CompCatTheory.Functor.{u_1, u_2, u_3, u_4} C D},
+  Eq.{max (u_1 + 1) (u_3 + 1)} (CompCatTheory.Functor.obj.{u_1, u_2, u_3, u_4} F)
+      (CompCatTheory.Functor.obj.{u_1, u_2, u_3, u_4} G) →
+    HEq.{max (max (u_1 + 1) (u_2 + 1)) (u_4 + 1)} (@CompCatTheory.Functor.map.{u_1, u_2, u_3, u_4} C D inst inst_1 F)
+        (@CompCatTheory.Functor.map.{u_1, u_2, u_3, u_4} C D inst inst_1 G) →
+      Eq.{max (max (max (u_1 + 1) (u_3 + 1)) (u_2 + 1)) (u_4 + 1)} F G
+'UnifiedAggregation.Functor.ext' does not depend on any axioms
+@UnifiedAggregation.Functor.ext_pointwise.{u_1, u_2, u_3,
+    u_4} : ∀ {C : Type u_1} {D : Type u_3} [inst : CompCatTheory.Category.{u_1, u_2} C]
+  [inst_1 : CompCatTheory.Category.{u_3, u_4} D] (F G : CompCatTheory.Functor.{u_1, u_2, u_3, u_4} C D),
+  (∀ (X : C),
+      Eq.{u_3 + 1} (CompCatTheory.Functor.obj.{u_1, u_2, u_3, u_4} F X)
+        (CompCatTheory.Functor.obj.{u_1, u_2, u_3, u_4} G X)) →
+    (∀ {X Y : C} (f : CompCatTheory.Category.Hom.{u_1, u_2} X Y),
+        HEq.{u_4 + 1} (CompCatTheory.Functor.map.{u_1, u_2, u_3, u_4} F f)
+          (CompCatTheory.Functor.map.{u_1, u_2, u_3, u_4} G f)) →
+      Eq.{max (max (max (u_1 + 1) (u_3 + 1)) (u_2 + 1)) (u_4 + 1)} F G
+'UnifiedAggregation.Functor.ext_pointwise' depends on axioms: [Quot.sound.{u}]
+@UnifiedAggregation.OrbitHom.ext.{u_1,
+    u_2} : ∀ {Obj : Type u_1} [inst : CompCatTheory.Category.{u_1, u_1} Obj]
+  {G : UnifiedAggregation.SymmetryGroup.{u_2}} {act : UnifiedAggregation.GAction.{u_2, u_1} G Obj}
+  {X Y : UnifiedAggregation.OrbitGroupoid.{u_1, u_2} act} {p q : UnifiedAggregation.OrbitHom.{u_1, u_2} act X Y},
+  Eq.{u_2 + 1} (UnifiedAggregation.OrbitHom.g.{u_1, u_2} p) (UnifiedAggregation.OrbitHom.g.{u_1, u_2} q) →
+    HEq.{u_1 + 1} (UnifiedAggregation.OrbitHom.f.{u_1, u_2} p) (UnifiedAggregation.OrbitHom.f.{u_1, u_2} q) →
+      Eq.{max (u_1 + 1) (u_2 + 1)} p q
+'UnifiedAggregation.OrbitHom.ext' depends on axioms: [propext]
+@UnifiedAggregation.orbitProjection.{u_1,
+    u_2} : {Obj : Type u_1} →
+  [inst : CompCatTheory.Category.{u_1, u_1} Obj] →
+    {G : UnifiedAggregation.SymmetryGroup.{u_2}} →
+      (act : UnifiedAggregation.GAction.{u_2, u_1} G Obj) →
+        CompCatTheory.Functor.{u_1, u_1, u_1, max u_1 u_2} Obj (UnifiedAggregation.OrbitGroupoid.{u_1, u_2} act)
+'UnifiedAggregation.orbitProjection' depends on axioms: [propext]
+@UnifiedAggregation.Aggregation.{u_1, u_2,
+    u_3} : {Obj : Type u_1} →
+  [inst : CompCatTheory.Category.{u_1, u_1} Obj] →
+    {G : UnifiedAggregation.SymmetryGroup.{u_3}} →
+      UnifiedAggregation.GAction.{u_3, u_1} G Obj →
+        {D : Type u_2} →
+          [inst_1 : CompCatTheory.Category.{u_2, u_2} D] →
+            UnifiedAggregation.ChoiceRule.{u_1, u_2} Obj D → Type (max (max (max u_1 u_2) u_1 u_3) u_2)
+'UnifiedAggregation.Aggregation' depends on axioms: [propext]
+@UnifiedAggregation.discreteFunctor.{u_1,
+    u_2} : {α : Type u_1} →
+  {β : Type u_2} →
+    (α → β) →
+      CompCatTheory.Functor.{u_1, u_1, u_2, u_2} (UnifiedAggregation.Discrete.{u_1} α)
+        (UnifiedAggregation.Discrete.{u_2} β)
+'UnifiedAggregation.discreteFunctor' does not depend on any axioms
+UnifiedAggregation.Z2.one_mul : ∀ (x : UnifiedAggregation.Z2), Eq.{1} (UnifiedAggregation.Z2.e.mul x) x
+'UnifiedAggregation.Z2.one_mul' does not depend on any axioms
+UnifiedAggregation.Z2.mul_one : ∀ (x : UnifiedAggregation.Z2), Eq.{1} (x.mul UnifiedAggregation.Z2.e) x
+'UnifiedAggregation.Z2.mul_one' does not depend on any axioms
+UnifiedAggregation.Z2.mul_assoc : ∀ (x y z : UnifiedAggregation.Z2), Eq.{1} ((x.mul y).mul z) (x.mul (y.mul z))
+'UnifiedAggregation.Z2.mul_assoc' does not depend on any axioms
+UnifiedAggregation.Z2.mul_inv : ∀ (x : UnifiedAggregation.Z2), Eq.{1} (x.mul x.inv) UnifiedAggregation.Z2.e
+'UnifiedAggregation.Z2.mul_inv' does not depend on any axioms
+UnifiedAggregation.Z2.inv_mul : ∀ (x : UnifiedAggregation.Z2), Eq.{1} (x.inv.mul x) UnifiedAggregation.Z2.e
+'UnifiedAggregation.Z2.inv_mul' does not depend on any axioms
+UnifiedAggregation.Z2Group : UnifiedAggregation.SymmetryGroup.{0}
+'UnifiedAggregation.Z2Group' does not depend on any axioms
+@UnifiedAggregation.discreteHom_eq.{u_1} : ∀ {α : Type u_1} {X Y : UnifiedAggregation.Discrete.{u_1} α}
+  (h : UnifiedAggregation.DiscreteHom.{u_1} X Y), Eq.{u_1 + 1} X Y
+'UnifiedAggregation.discreteHom_eq' does not depend on any axioms
+@UnifiedAggregation.lan_obj_unique_discrete.{u_1, u_2, u_3, u_4,
+    u_5} : ∀ {J : Type u_1} {C : Type u_3} {α : Type u_5} [inst : CompCatTheory.Category.{u_1, u_2} J]
+  [inst_1 : CompCatTheory.Category.{u_3, u_4} C] {K : CompCatTheory.Functor.{u_1, u_2, u_3, u_4} J C}
+  {F : CompCatTheory.Functor.{u_1, u_2, u_5, u_5} J (UnifiedAggregation.Discrete.{u_5} α)}
+  (L₁ L₂ : CompCatTheory.LeftKanExtension.{u_1, u_2, u_3, u_4, u_5, u_5} K F) (Y : C),
+  Eq.{u_5 + 1}
+    (CompCatTheory.Functor.obj.{u_3, u_4, u_5, u_5}
+      (CompCatTheory.LeftKanExtension.functor.{u_1, u_2, u_3, u_4, u_5, u_5} L₁) Y)
+    (CompCatTheory.Functor.obj.{u_3, u_4, u_5, u_5}
+      (CompCatTheory.LeftKanExtension.functor.{u_1, u_2, u_3, u_4, u_5, u_5} L₂) Y)
+'UnifiedAggregation.lan_obj_unique_discrete' depends on axioms: [propext]
+@UnifiedAggregation.lan_implies_orbit_constant.{u_1} : ∀ {Obj : Type u_1} [inst : CompCatTheory.Category.{u_1, u_1} Obj]
+  {G : UnifiedAggregation.SymmetryGroup.{u_1}} {act : UnifiedAggregation.GAction.{u_1, u_1} G Obj} {α : Type u_1}
+  (F : UnifiedAggregation.ChoiceRule.{u_1, u_1} Obj (UnifiedAggregation.Discrete.{u_1} α))
+  (L : UnifiedAggregation.Aggregation.{u_1, u_1, u_1} act F) (g : UnifiedAggregation.SymmetryGroup.carrier.{u_1} G)
+  (x : Obj),
+  Eq.{u_1 + 1}
+    (CompCatTheory.Functor.obj.{u_1, u_1, u_1, u_1} F
+      (CompCatTheory.Functor.obj.{u_1, u_1, u_1, u_1} (UnifiedAggregation.GAction.act.{u_1, u_1} act g) x))
+    (CompCatTheory.Functor.obj.{u_1, u_1, u_1, u_1} F x)
+'UnifiedAggregation.lan_implies_orbit_constant' depends on axioms: [propext]

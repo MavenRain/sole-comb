@@ -1,0 +1,435 @@
+{
+  "baseline_sha256": "f4f4d0511b6ce5f7dc917f302dae8f40f4c927a6a90e4c6a22dd52ba083619ec",
+  "cases": 12,
+  "hosts": [
+    "bun",
+    "node-worker",
+    "native"
+  ],
+  "observations": [
+    {
+      "exit": 0,
+      "host": "bun",
+      "id": "foundation",
+      "mode": "print",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\ndef flip : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 []))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Elim SMu Z2 [] x as y return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => (In SMu Z2 [] (ACtor g) []) | (ACtor g)  => (In SMu Z2 [] (ACtor e) []))])\ndef multiply : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 [])))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Sec SPi w y (Lan SMu Z2 [] (Sec SColl 0 [])) [y => (Elim SMu Z2 [] x as z return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => y | (ACtor g)  => (Out SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (APt w y) flip))])])\ndef boxed : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])\ndef unboxed : Nat := (Elim SMu Box [] boxed as x return Nat with | (ACtor box) n => n)\ndef head : Nat := (Elim SMu List [] ((In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])]) : (Lan SMu List [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor nil)  => 0 | (ACtor cons) n xs => n)\ndef reflexive : (Lan SMu EqN [0; 0] (Sec SColl 0 [])) := (In SMu EqN [0; 0] (ACtor reflN) [0])\n"
+    },
+    {
+      "exit": 0,
+      "host": "bun",
+      "id": "foundation",
+      "mode": "erased",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun flip (union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 0) [{0 0 (KTag mu<Z2> 1 [])}; {1 0 (KTag mu<Z2> 0 [])}]\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun multiply (union mu<Z2>, union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 1) [{0 0 (KVar 0)}; {1 0 (KTail (KGlobal flip) [KVar 0])}]\nrec [mu<Box>; leg<mu<Box>,0,union any>]\nfun boxed () : union mu<Box> := KTag mu<Box> 0 [KLit 7]\nrec [nat; mu<Box>; leg<mu<Box>,0,union any>]\nfun unboxed () : union nat := KCase mu<Box> (KGlobal boxed) [{0 1 (KVar 0)}]\nrec [nat; mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]\nfun head () : union nat := KCase mu<List> (KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]) [{0 0 (KLit 0)}; {1 2 (KVar 1)}]\nrec [mu<EqN>; leg<mu<EqN>,0>]\nfun reflexive () : union mu<EqN> := KTag mu<EqN> 0 []\n"
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "equality-nat-prop",
+      "mode": "print",
+      "path": "test/uat/equality-nat-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-nat-prop.sole-comb FAIL index above universe: the index a of EqN lives at 1 and EqN is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "equality-type-prop",
+      "mode": "print",
+      "path": "test/uat/equality-type-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-type-prop.sole-comb FAIL index above universe: the index b of Eq lives at 1 and Eq is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "equality-unequal",
+      "mode": "print",
+      "path": "test/uat/equality-unequal.sole-comb",
+      "stderr": "CHECK test/uat/equality-unequal.sole-comb FAIL mismatch: the constructor reflN of EqN gives the index 0 and the type asks for 1\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "dependent-record",
+      "mode": "print",
+      "path": "test/uat/dependent-record.sole-comb",
+      "stderr": "CHECK test/uat/dependent-record.sole-comb FAIL unbound: A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "parameterized-record",
+      "mode": "print",
+      "path": "test/uat/parameterized-record.sole-comb",
+      "stderr": "CHECK test/uat/parameterized-record.sole-comb FAIL line 1, column 8: expected 'name : Type' after 'record', found identifier Category\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "structural-hypothesis",
+      "mode": "print",
+      "path": "test/uat/structural-hypothesis.sole-comb",
+      "stderr": "CHECK test/uat/structural-hypothesis.sole-comb FAIL mismatch: a section needs a right former as its expected type\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "nonstructural-recursion",
+      "mode": "print",
+      "path": "test/uat/nonstructural-recursion.sole-comb",
+      "stderr": "CHECK test/uat/nonstructural-recursion.sole-comb FAIL unbound: count\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "universe-polymorphism",
+      "mode": "print",
+      "path": "test/uat/universe-polymorphism.sole-comb",
+      "stderr": "CHECK test/uat/universe-polymorphism.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier universe\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "instance-resolution",
+      "mode": "print",
+      "path": "test/uat/instance-resolution.sole-comb",
+      "stderr": "CHECK test/uat/instance-resolution.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier instance\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "constructor-unsolved",
+      "mode": "print",
+      "path": "test/uat/constructor-unsolved.sole-comb",
+      "stderr": "CHECK test/uat/constructor-unsolved.sole-comb FAIL cannot infer: the constructor empty needs an expected type or an inferable field for the parameter A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "bun",
+      "id": "def-rec-excluded",
+      "mode": "print",
+      "path": "test/uat/def-rec-excluded.sole-comb",
+      "stderr": "CHECK test/uat/def-rec-excluded.sole-comb FAIL line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim\n",
+      "stdout": ""
+    },
+    {
+      "exit": 0,
+      "host": "node-worker",
+      "id": "foundation",
+      "mode": "print",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\ndef flip : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 []))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Elim SMu Z2 [] x as y return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => (In SMu Z2 [] (ACtor g) []) | (ACtor g)  => (In SMu Z2 [] (ACtor e) []))])\ndef multiply : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 [])))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Sec SPi w y (Lan SMu Z2 [] (Sec SColl 0 [])) [y => (Elim SMu Z2 [] x as z return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => y | (ACtor g)  => (Out SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (APt w y) flip))])])\ndef boxed : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])\ndef unboxed : Nat := (Elim SMu Box [] boxed as x return Nat with | (ACtor box) n => n)\ndef head : Nat := (Elim SMu List [] ((In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])]) : (Lan SMu List [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor nil)  => 0 | (ACtor cons) n xs => n)\ndef reflexive : (Lan SMu EqN [0; 0] (Sec SColl 0 [])) := (In SMu EqN [0; 0] (ACtor reflN) [0])\n"
+    },
+    {
+      "exit": 0,
+      "host": "node-worker",
+      "id": "foundation",
+      "mode": "erased",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun flip (union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 0) [{0 0 (KTag mu<Z2> 1 [])}; {1 0 (KTag mu<Z2> 0 [])}]\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun multiply (union mu<Z2>, union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 1) [{0 0 (KVar 0)}; {1 0 (KTail (KGlobal flip) [KVar 0])}]\nrec [mu<Box>; leg<mu<Box>,0,union any>]\nfun boxed () : union mu<Box> := KTag mu<Box> 0 [KLit 7]\nrec [nat; mu<Box>; leg<mu<Box>,0,union any>]\nfun unboxed () : union nat := KCase mu<Box> (KGlobal boxed) [{0 1 (KVar 0)}]\nrec [nat; mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]\nfun head () : union nat := KCase mu<List> (KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]) [{0 0 (KLit 0)}; {1 2 (KVar 1)}]\nrec [mu<EqN>; leg<mu<EqN>,0>]\nfun reflexive () : union mu<EqN> := KTag mu<EqN> 0 []\n"
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "equality-nat-prop",
+      "mode": "print",
+      "path": "test/uat/equality-nat-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-nat-prop.sole-comb FAIL index above universe: the index a of EqN lives at 1 and EqN is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "equality-type-prop",
+      "mode": "print",
+      "path": "test/uat/equality-type-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-type-prop.sole-comb FAIL index above universe: the index b of Eq lives at 1 and Eq is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "equality-unequal",
+      "mode": "print",
+      "path": "test/uat/equality-unequal.sole-comb",
+      "stderr": "CHECK test/uat/equality-unequal.sole-comb FAIL mismatch: the constructor reflN of EqN gives the index 0 and the type asks for 1\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "dependent-record",
+      "mode": "print",
+      "path": "test/uat/dependent-record.sole-comb",
+      "stderr": "CHECK test/uat/dependent-record.sole-comb FAIL unbound: A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "parameterized-record",
+      "mode": "print",
+      "path": "test/uat/parameterized-record.sole-comb",
+      "stderr": "CHECK test/uat/parameterized-record.sole-comb FAIL line 1, column 8: expected 'name : Type' after 'record', found identifier Category\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "structural-hypothesis",
+      "mode": "print",
+      "path": "test/uat/structural-hypothesis.sole-comb",
+      "stderr": "CHECK test/uat/structural-hypothesis.sole-comb FAIL mismatch: a section needs a right former as its expected type\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "nonstructural-recursion",
+      "mode": "print",
+      "path": "test/uat/nonstructural-recursion.sole-comb",
+      "stderr": "CHECK test/uat/nonstructural-recursion.sole-comb FAIL unbound: count\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "universe-polymorphism",
+      "mode": "print",
+      "path": "test/uat/universe-polymorphism.sole-comb",
+      "stderr": "CHECK test/uat/universe-polymorphism.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier universe\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "instance-resolution",
+      "mode": "print",
+      "path": "test/uat/instance-resolution.sole-comb",
+      "stderr": "CHECK test/uat/instance-resolution.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier instance\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "constructor-unsolved",
+      "mode": "print",
+      "path": "test/uat/constructor-unsolved.sole-comb",
+      "stderr": "CHECK test/uat/constructor-unsolved.sole-comb FAIL cannot infer: the constructor empty needs an expected type or an inferable field for the parameter A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "node-worker",
+      "id": "def-rec-excluded",
+      "mode": "print",
+      "path": "test/uat/def-rec-excluded.sole-comb",
+      "stderr": "CHECK test/uat/def-rec-excluded.sole-comb FAIL line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim\n",
+      "stdout": ""
+    },
+    {
+      "exit": 0,
+      "host": "native",
+      "id": "foundation",
+      "mode": "print",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\ndef flip : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 []))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Elim SMu Z2 [] x as y return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => (In SMu Z2 [] (ACtor g) []) | (ACtor g)  => (In SMu Z2 [] (ACtor e) []))])\ndef multiply : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 [])))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Sec SPi w y (Lan SMu Z2 [] (Sec SColl 0 [])) [y => (Elim SMu Z2 [] x as z return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => y | (ACtor g)  => (Out SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (APt w y) flip))])])\ndef boxed : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])\ndef unboxed : Nat := (Elim SMu Box [] boxed as x return Nat with | (ACtor box) n => n)\ndef head : Nat := (Elim SMu List [] ((In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])]) : (Lan SMu List [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor nil)  => 0 | (ACtor cons) n xs => n)\ndef reflexive : (Lan SMu EqN [0; 0] (Sec SColl 0 [])) := (In SMu EqN [0; 0] (ACtor reflN) [0])\n"
+    },
+    {
+      "exit": 0,
+      "host": "native",
+      "id": "foundation",
+      "mode": "erased",
+      "path": "examples/uat-foundation.sole-comb",
+      "stderr": "",
+      "stdout": "CHECK examples/uat-foundation.sole-comb defs=6 ok\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun flip (union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 0) [{0 0 (KTag mu<Z2> 1 [])}; {1 0 (KTag mu<Z2> 0 [])}]\nrec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]\nfun multiply (union mu<Z2>, union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 1) [{0 0 (KVar 0)}; {1 0 (KTail (KGlobal flip) [KVar 0])}]\nrec [mu<Box>; leg<mu<Box>,0,union any>]\nfun boxed () : union mu<Box> := KTag mu<Box> 0 [KLit 7]\nrec [nat; mu<Box>; leg<mu<Box>,0,union any>]\nfun unboxed () : union nat := KCase mu<Box> (KGlobal boxed) [{0 1 (KVar 0)}]\nrec [nat; mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]\nfun head () : union nat := KCase mu<List> (KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]) [{0 0 (KLit 0)}; {1 2 (KVar 1)}]\nrec [mu<EqN>; leg<mu<EqN>,0>]\nfun reflexive () : union mu<EqN> := KTag mu<EqN> 0 []\n"
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "equality-nat-prop",
+      "mode": "print",
+      "path": "test/uat/equality-nat-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-nat-prop.sole-comb FAIL index above universe: the index a of EqN lives at 1 and EqN is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "equality-type-prop",
+      "mode": "print",
+      "path": "test/uat/equality-type-prop.sole-comb",
+      "stderr": "CHECK test/uat/equality-type-prop.sole-comb FAIL index above universe: the index b of Eq lives at 1 and Eq is declared at 0\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "equality-unequal",
+      "mode": "print",
+      "path": "test/uat/equality-unequal.sole-comb",
+      "stderr": "CHECK test/uat/equality-unequal.sole-comb FAIL mismatch: the constructor reflN of EqN gives the index 0 and the type asks for 1\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "dependent-record",
+      "mode": "print",
+      "path": "test/uat/dependent-record.sole-comb",
+      "stderr": "CHECK test/uat/dependent-record.sole-comb FAIL unbound: A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "parameterized-record",
+      "mode": "print",
+      "path": "test/uat/parameterized-record.sole-comb",
+      "stderr": "CHECK test/uat/parameterized-record.sole-comb FAIL line 1, column 8: expected 'name : Type' after 'record', found identifier Category\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "structural-hypothesis",
+      "mode": "print",
+      "path": "test/uat/structural-hypothesis.sole-comb",
+      "stderr": "CHECK test/uat/structural-hypothesis.sole-comb FAIL mismatch: a section needs a right former as its expected type\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "nonstructural-recursion",
+      "mode": "print",
+      "path": "test/uat/nonstructural-recursion.sole-comb",
+      "stderr": "CHECK test/uat/nonstructural-recursion.sole-comb FAIL unbound: count\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "universe-polymorphism",
+      "mode": "print",
+      "path": "test/uat/universe-polymorphism.sole-comb",
+      "stderr": "CHECK test/uat/universe-polymorphism.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier universe\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "instance-resolution",
+      "mode": "print",
+      "path": "test/uat/instance-resolution.sole-comb",
+      "stderr": "CHECK test/uat/instance-resolution.sole-comb FAIL line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier instance\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "constructor-unsolved",
+      "mode": "print",
+      "path": "test/uat/constructor-unsolved.sole-comb",
+      "stderr": "CHECK test/uat/constructor-unsolved.sole-comb FAIL cannot infer: the constructor empty needs an expected type or an inferable field for the parameter A\n",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "host": "native",
+      "id": "def-rec-excluded",
+      "mode": "print",
+      "path": "test/uat/def-rec-excluded.sole-comb",
+      "stderr": "CHECK test/uat/def-rec-excluded.sole-comb FAIL line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim\n",
+      "stdout": ""
+    }
+  ],
+  "schema": 1,
+  "sources": {
+    "Makefile": "a32530339f80521eee51627e5620b441534d305657c95b59af3d54f71a7a4def",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/capture-uat-baseline.py": "edc559600523f74985c267d8c9b9ce35f8b61487ab5a687f886ef58cd784be51",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/test-uat-harness.py": "29739f1b56b3db18cc9b64d1bb6cbadbd9d7a931854a8e6c61697ad73ffe4fda",
+    "dev/test-uat-readiness.py": "4fa495dc756c1481f5e4dcf641b88a0a140746e72c2083dd5684b7ad2bf651b1",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "dev/uat-baseline/uat-baseline-build.stdout": "06a5f9b063d5f0dabd935a0481efffb059865f90ae5d056892d81c49c814c963",
+    "dev/uat-baseline/uat-baseline.json": "f4f4d0511b6ce5f7dc917f302dae8f40f4c927a6a90e4c6a22dd52ba083619ec",
+    "dev/uat-baseline/uat-baseline.stdout": "0320f1f3b087d2ba23eac58b5634e0b64ecabb1cf3baeeae4b99947ee734f641",
+    "dev/uat-readiness.json": "5b9ade4f181ba6482e542eaab201b15d422d1b29bf02751bb9e45709a2138478",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/uat-foundation.sole-comb": "c33e58e30eb0354e346c1c886a4dedf9f4dd9850058579243164fb46cc8f7100",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "206df2fdc6e629cda6f21d49827edadb30790bfc7389d05ddced8cec84a7eb6c",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "ffd11b42c0c663fc99409b601af61e86fc91d735361644c661578ab991d963d4",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/uat-baseline.lean": "75f602a649a7b9141aae9eddd7d6d56df3dce6d266310d0bc8481ded6c63753c",
+    "test/uat/constructor-unsolved.sole-comb": "0473003dcee3dc0ce87eb1cf2d18b98e64c368afcb98dbb43b49b204f52602a8",
+    "test/uat/def-rec-excluded.sole-comb": "fc28095ddac46f35e5986f0c35ada415fbe600204405439aeeff6d168d55636a",
+    "test/uat/dependent-record.sole-comb": "b2612b44918e814a886e65b7e9b4b1ce73c850b4ed3eb1ea101908a122231beb",
+    "test/uat/equality-nat-prop.sole-comb": "d113981442773736d16ee81f9675d03cbbe75e2c3327be49abd7a00b1dd6bff3",
+    "test/uat/equality-type-prop.sole-comb": "d1b46a661b6158105a42c6254b807996009150bc62b028f0019a86e5875d5212",
+    "test/uat/equality-unequal.sole-comb": "282b19e95f17c92482864dea2f5c56efa4b59edb187c31a702c261ff2e7e9d65",
+    "test/uat/instance-resolution.sole-comb": "5ec173c59c683b14fe751f158853e0b23d3e795077a14a4998daecfb2cb51330",
+    "test/uat/nonstructural-recursion.sole-comb": "1e315558111cd40caca83e0af8225eb2f560bcb33439fd6bae86bb17853b06af",
+    "test/uat/parameterized-record.sole-comb": "9076b91acd47bf98a1b26db875b93c91530c39aa85470eaadebd27544e1b58fe",
+    "test/uat/structural-hypothesis.sole-comb": "dabd99f367fe7b4107bdd6dbf7987faa9f849c5bab25d843aacf28c4228a3ce3",
+    "test/uat/universe-polymorphism.sole-comb": "335bd1b702c1b5ad189654ccb182e418d95a40b7e5906bbc53ef3193c12c4816"
+  },
+  "stage": "UAT.0"
+}

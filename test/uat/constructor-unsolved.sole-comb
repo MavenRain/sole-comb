@@ -1,0 +1,2 @@
+mu Phantom (0 A : Type 0) : Type 0 { empty : Phantom A }
+def ambiguous : Nat := elim empty as x in Phantom return Nat { 0 }

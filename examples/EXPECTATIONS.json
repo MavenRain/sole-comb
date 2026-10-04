@@ -20,7 +20,8 @@
     "examples/family-arguments.sole-comb": 4,
     "examples/constructor-inference.sole-comb": 8,
     "examples/family-default-arms.sole-comb": 11,
-    "examples/family-default-arms-explicit.sole-comb": 11
+    "examples/family-default-arms-explicit.sole-comb": 11,
+    "examples/uat-foundation.sole-comb": 6
   },
   "negative": {
     "corpus/refuse/legacy-case.sole-comb": "E-R4-MATCH",

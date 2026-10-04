@@ -1,0 +1,90 @@
+python3 -P dev/test-uat-harness.py
+python3 -P dev/test-uat-readiness.py
+UAT READINESS PASS bun: 12 probes
+UAT READINESS PASS node-worker: 12 probes
+UAT READINESS PASS native: 12 probes
+UAT READINESS PASS: 39 observations; _build/uat-readiness/result.json
+python3 -P dev/test-cli.py
+PASS public bun: examples/identity.sole-comb
+PASS public bun: examples/arithmetic.sole-comb
+PASS public bun: examples/finite-elim.sole-comb
+PASS public bun: examples/motive.sole-comb
+PASS public bun: examples/function-arms.sole-comb
+PASS public bun: examples/default-arms.sole-comb
+PASS public bun: examples/default-arms-explicit.sole-comb
+PASS public bun: examples/records.sole-comb
+PASS public bun: examples/record-expansion.sole-comb
+PASS public bun: examples/record-expansion-explicit.sole-comb
+PASS public bun: examples/erasure.sole-comb
+PASS public bun: examples/product-erasure.sole-comb
+PASS public bun: examples/sum-erasure.sole-comb
+PASS public bun: examples/pair-erasure.sole-comb
+PASS public bun: examples/families.sole-comb
+PASS public bun: examples/constructor-parameters.sole-comb
+PASS public bun: examples/family-arguments.sole-comb
+PASS public bun: examples/constructor-inference.sole-comb
+PASS public bun: examples/family-default-arms.sole-comb
+PASS public bun: examples/family-default-arms-explicit.sole-comb
+PASS public bun: examples/uat-foundation.sole-comb
+PASS public bun: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public bun: examples/family-default-arms.sole-comb equals explicit kernel expansion
+PASS public bun: record field types, indices, namespaces and binder hygiene
+PASS public bun: 104 native files and 2 lexical boundary cases
+PASS public node-worker: examples/identity.sole-comb
+PASS public node-worker: examples/arithmetic.sole-comb
+PASS public node-worker: examples/finite-elim.sole-comb
+PASS public node-worker: examples/motive.sole-comb
+PASS public node-worker: examples/function-arms.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb
+PASS public node-worker: examples/default-arms-explicit.sole-comb
+PASS public node-worker: examples/records.sole-comb
+PASS public node-worker: examples/record-expansion.sole-comb
+PASS public node-worker: examples/record-expansion-explicit.sole-comb
+PASS public node-worker: examples/erasure.sole-comb
+PASS public node-worker: examples/product-erasure.sole-comb
+PASS public node-worker: examples/sum-erasure.sole-comb
+PASS public node-worker: examples/pair-erasure.sole-comb
+PASS public node-worker: examples/families.sole-comb
+PASS public node-worker: examples/constructor-parameters.sole-comb
+PASS public node-worker: examples/family-arguments.sole-comb
+PASS public node-worker: examples/constructor-inference.sole-comb
+PASS public node-worker: examples/family-default-arms.sole-comb
+PASS public node-worker: examples/family-default-arms-explicit.sole-comb
+PASS public node-worker: examples/uat-foundation.sole-comb
+PASS public node-worker: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public node-worker: examples/family-default-arms.sole-comb equals explicit kernel expansion
+PASS public node-worker: record field types, indices, namespaces and binder hygiene
+PASS public node-worker: 104 native files and 2 lexical boundary cases
+PASS public native: examples/identity.sole-comb
+PASS public native: examples/arithmetic.sole-comb
+PASS public native: examples/finite-elim.sole-comb
+PASS public native: examples/motive.sole-comb
+PASS public native: examples/function-arms.sole-comb
+PASS public native: examples/default-arms.sole-comb
+PASS public native: examples/default-arms-explicit.sole-comb
+PASS public native: examples/records.sole-comb
+PASS public native: examples/record-expansion.sole-comb
+PASS public native: examples/record-expansion-explicit.sole-comb
+PASS public native: examples/erasure.sole-comb
+PASS public native: examples/product-erasure.sole-comb
+PASS public native: examples/sum-erasure.sole-comb
+PASS public native: examples/pair-erasure.sole-comb
+PASS public native: examples/families.sole-comb
+PASS public native: examples/constructor-parameters.sole-comb
+PASS public native: examples/family-arguments.sole-comb
+PASS public native: examples/constructor-inference.sole-comb
+PASS public native: examples/family-default-arms.sole-comb
+PASS public native: examples/family-default-arms-explicit.sole-comb
+PASS public native: examples/uat-foundation.sole-comb
+PASS public native: examples/default-arms.sole-comb equals explicit kernel expansion
+PASS public native: examples/record-expansion.sole-comb equals explicit kernel expansion
+PASS public native: examples/family-default-arms.sole-comb equals explicit kernel expansion
+PASS public native: record field types, indices, namespaces and binder hygiene
+PASS public native: 104 native files and 2 lexical boundary cases
+PASS public compiler: 325 command observations; source hashes stable
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 54 files, 43 line budgets, 63 reviewed unsafe sites, 41 catchalls
+python3 -P dev/test-reference-fixtures.py

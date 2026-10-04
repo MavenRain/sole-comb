@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "stage": "UAT.0",
+  "cases": [
+    {
+      "id": "foundation",
+      "path": "examples/uat-foundation.sole-comb",
+      "milestone": "UAT.0",
+      "status": "landed",
+      "definitions": 6,
+      "requirement": "Finite group operations, field-based constructor inference and fixed-universe family indices check and erase. Group laws and equality in Prop remain separate requirements."
+    },
+    {
+      "id": "equality-nat-prop",
+      "path": "test/uat/equality-nat-prop.sole-comb",
+      "milestone": "UAT.1",
+      "status": "blocked",
+      "diagnostic": "index above universe: the index a of EqN lives at 1 and EqN is declared at 0",
+      "requirement": "Nat-indexed equality in Prop with higher-universe indices."
+    },
+    {
+      "id": "equality-type-prop",
+      "path": "test/uat/equality-type-prop.sole-comb",
+      "milestone": "UAT.1",
+      "status": "blocked",
+      "diagnostic": "index above universe: the index b of Eq lives at 1 and Eq is declared at 0",
+      "requirement": "Type-parameterized equality in Prop, followed by singleton elimination and dependent transport."
+    },
+    {
+      "id": "equality-unequal",
+      "path": "test/uat/equality-unequal.sole-comb",
+      "milestone": "UAT.1",
+      "status": "required-refusal",
+      "diagnostic": "mismatch: the constructor reflN of EqN gives the index 0 and the type asks for 1",
+      "requirement": "Unequal endpoints must remain refused when equality admission expands."
+    },
+    {
+      "id": "dependent-record",
+      "path": "test/uat/dependent-record.sole-comb",
+      "milestone": "UAT.2",
+      "status": "blocked",
+      "diagnostic": "unbound: A",
+      "requirement": "Later record fields depend on earlier type fields."
+    },
+    {
+      "id": "parameterized-record",
+      "path": "test/uat/parameterized-record.sole-comb",
+      "milestone": "UAT.2",
+      "status": "blocked",
+      "diagnostic": "line 1, column 8: expected 'name : Type' after 'record', found identifier Category",
+      "requirement": "Parameterized Category, Functor and GAction records with explicit dictionaries."
+    },
+    {
+      "id": "structural-hypothesis",
+      "path": "test/uat/structural-hypothesis.sole-comb",
+      "milestone": "UAT.2",
+      "status": "blocked",
+      "diagnostic": "mismatch: a section needs a right former as its expected type",
+      "requirement": "An elim branch receives a recursive-field induction hypothesis, without general recursion."
+    },
+    {
+      "id": "nonstructural-recursion",
+      "path": "test/uat/nonstructural-recursion.sole-comb",
+      "milestone": "UAT.2",
+      "status": "required-refusal",
+      "diagnostic": "unbound: count",
+      "requirement": "Nonstructural self-reference stays refused when the structural recursor lands."
+    },
+    {
+      "id": "universe-polymorphism",
+      "path": "test/uat/universe-polymorphism.sole-comb",
+      "milestone": "UAT.3",
+      "status": "blocked",
+      "diagnostic": "line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier universe",
+      "requirement": "Prenex universe declarations and independently instantiated object and morphism universes."
+    },
+    {
+      "id": "instance-resolution",
+      "path": "test/uat/instance-resolution.sole-comb",
+      "milestone": "UAT.3",
+      "status": "blocked",
+      "diagnostic": "line 1, column 1: expected 'def NAME :', 'def NAME.FIELD :', 'def rec NAME :', 'axiom NAME :', 'axiom NAME.FIELD :', 'record NAME :', 'mu NAME' or 'mutual', found identifier instance",
+      "requirement": "Bounded instance resolution with explicit dictionary terms."
+    },
+    {
+      "id": "constructor-unsolved",
+      "path": "test/uat/constructor-unsolved.sole-comb",
+      "milestone": "UAT.0",
+      "status": "required-refusal",
+      "diagnostic": "cannot infer: the constructor empty needs an expected type or an inferable field for the parameter A",
+      "requirement": "Unconstrained phantom parameters cannot be guessed."
+    },
+    {
+      "id": "def-rec-excluded",
+      "path": "test/uat/def-rec-excluded.sole-comb",
+      "milestone": "UAT.0",
+      "status": "required-refusal",
+      "diagnostic": "line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim",
+      "requirement": "def rec stays excluded. Structural recursion uses elim and recursive-field induction hypotheses."
+    }
+  ]
+}

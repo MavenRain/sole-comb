@@ -1,0 +1,2 @@
+universe u
+def identity : (0 A : Type u) -> A -> A := fun (0 A : Type u) (a : A) => a

@@ -3,6 +3,11 @@
 A language with Kan extensions as its type-forming primitives and one primitive
 sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
 
+UAT.0 preparation now pins the selected Lean proof baseline and its dependencies,
+records theorem types and transitive axioms, and checks the current public-source
+prerequisites on all three hosts. See the [readiness evidence](dev/validation/uat-readiness.md)
+and [UAT implementation schedule](dev/uat-proof-portability.md).
+
 The public compiler now checks `.sole-comb` source files through production
 modules under `surface/` and the real kernel. Start with:
 

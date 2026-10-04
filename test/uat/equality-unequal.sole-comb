@@ -1,0 +1,2 @@
+mu EqN : (0 a : Nat) -> (0 b : Nat) -> Type 0 { reflN : (0 n : Nat) -> EqN n n }
+def unequal : EqN 0 1 := reflN 0

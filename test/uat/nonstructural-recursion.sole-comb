@@ -1,0 +1,2 @@
+mu PN : Type 0 { zeroPN : PN; succPN : PN -> PN }
+def count : PN -> Nat := fun (n : PN) => count (succPN n)

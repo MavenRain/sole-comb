@@ -1,0 +1,357 @@
+{
+  "axioms": {
+    "CompCatTheory.Category": [],
+    "CompCatTheory.Functor": [],
+    "CompCatTheory.LeftKanExtension": [
+      "propext"
+    ],
+    "UnifiedAggregation.Aggregation": [
+      "propext"
+    ],
+    "UnifiedAggregation.Functor.ext": [],
+    "UnifiedAggregation.Functor.ext_pointwise": [
+      "Quot.sound.{u}"
+    ],
+    "UnifiedAggregation.GAction": [
+      "propext"
+    ],
+    "UnifiedAggregation.OrbitHom.ext": [
+      "propext"
+    ],
+    "UnifiedAggregation.SymmetryGroup": [],
+    "UnifiedAggregation.Z2.inv_mul": [],
+    "UnifiedAggregation.Z2.mul_assoc": [],
+    "UnifiedAggregation.Z2.mul_inv": [],
+    "UnifiedAggregation.Z2.mul_one": [],
+    "UnifiedAggregation.Z2.one_mul": [],
+    "UnifiedAggregation.Z2Group": [],
+    "UnifiedAggregation.discreteFunctor": [],
+    "UnifiedAggregation.discreteHom_eq": [],
+    "UnifiedAggregation.eqRec_heq_dep": [],
+    "UnifiedAggregation.lan_implies_orbit_constant": [
+      "propext"
+    ],
+    "UnifiedAggregation.lan_obj_unique_discrete": [
+      "propext"
+    ],
+    "UnifiedAggregation.orbitProjection": [
+      "propext"
+    ]
+  },
+  "baseline": {
+    "dependencies": {
+      "BibtexQuery": {
+        "revision": "5d31b64fb703c5d77f6ef4d1fb958f9bdf1ea539",
+        "sources": {
+          "BibtexQuery.lean": "78732bb84e45cadb50b1d54060a7946e5c1e75a8439b53e55a2e2c76766de898",
+          "BibtexQuery/Entry.lean": "2de406f9a998052a9dddde43fbb58ce1444775586afd3059c1a03b6395e4dd45",
+          "BibtexQuery/Format.lean": "8bac1db6d3d3ff921cae1ba52b7fe7bf8d0ec26024bff1575f9c77cb7219bed3",
+          "BibtexQuery/Main.lean": "ad2d9f145e1c9a8bac1f6f8eccd4b0983b9aad899d659f7ba0da3c044a403d9e",
+          "BibtexQuery/Name.lean": "a1bfcc6685468b85d27f0ba03b31fe472614dc05ecb9d368959868403ee2de33",
+          "BibtexQuery/ParsecExtra.lean": "9c378e8a9c2c9c750c731dfe9a28e28234d708d6adeb1bff0abc0a5d2ffbf68c",
+          "BibtexQuery/Parser.lean": "4d6707b83dadc7e260e9ee8b6d58cc263aa1344002f006217cba81b9637d7ee6",
+          "BibtexQuery/Query.lean": "9542dd21a1f7c489256bde9310bb743768d05670e2b9ec318e9499db1ba0add2",
+          "BibtexQuery/String.lean": "dfaf0be3a8149a61fba7c02dd3ae3fe865628efaccd577b9bbc1e62bd7c3be77",
+          "BibtexQuery/TexDiacritics.lean": "96f532e0da09b6c21be34df3b127c9cd632008d95616d486cff926cfc5ab69b4",
+          "BibtexQuery/Xml.lean": "19ec2e669b88f712ae75e7a4d9ed6d4d1bffddcfaaa0b4e2caedfc1635dcc1a9",
+          "lake-manifest.json": "34d2b47f9f3ce568b5695160888375e13b9a31aef4c2377b15713a0d33115272",
+          "lakefile.toml": "2d7aa4439f3877d2ad3393ce884ffbed14caf93792753108a884864ba0be5ac6",
+          "lean-toolchain": "b70e83fdafb733d5d011c8dd1dec4e9c4979566fb5a3c2b603ac0c1dfdb15971"
+        },
+        "url": "https://github.com/dupuisf/BibtexQuery"
+      },
+      "Cli": {
+        "revision": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c",
+        "sources": {
+          "Cli.lean": "552ac95bbae12a1d54a0c582f171860f07eb9bbc2a4380e9cd873ec818d571b9",
+          "Cli/Basic.lean": "e325b55b12eca6a94bd44d591c10f019b7ba130c33d0c3c6680ba392c26654d7",
+          "Cli/Extensions.lean": "1560fcd5ffe33ac7d0ac2e4470430d20f814fff53d516ea40596721ae5be5031",
+          "CliTest/Example.lean": "7f8d03f3aa0e63e74c34ae244799882bea020f4119fe00ac8f6099667e0797af",
+          "CliTest/Tests.lean": "0bfe19e6d3d7ce8794924b2f7d7743d09f14b05b54dfd75df00ec58d17012338",
+          "lake-manifest.json": "f608bac5ccb22b59292584eb7fb4497c327e780a17e7afb8d584ce5d79ad0b70",
+          "lakefile.toml": "188aaec6ddb57f411c11b95c3ece85ff26ab9ae8085371fee47e1dc855c4e186",
+          "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+        },
+        "url": "https://github.com/leanprover/lean4-cli"
+      },
+      "MD4Lean": {
+        "revision": "6a3fb240133bcb7e1a066fdc784b3fdc304e3fc5",
+        "sources": {
+          "MD4Lean.lean": "9f3cea35b783bc70aaff9d31b87e3c2b288b5cc607f4a7b397b1e3a1213031d4",
+          "MD4LeanTest.lean": "9ada97cc418e18622219113e18b6a610a50249467c4c73aafab6c167068b5851",
+          "MD4LeanTest/Parser.lean": "43b4684f8676b552d0aee9820baaf9ec34d133fe7a4747da1cb55c25c37e6592",
+          "MD4LeanTestDriver.lean": "55e7d8c9352193daa72f80fc9d2c6caac807b1cce39ffb0a4956f3a19ff6d349",
+          "Main.lean": "dd4e7b85b0c8812785b0678bd05b8d4185f4f30428a413a87923c38a91d1a349",
+          "lake-manifest.json": "e6a52fefebe3f7e85914ad0d09abd12a49202505e614a85a8b091767e7a0be57",
+          "lakefile.lean": "a9c7d0f4e9031623f0effb6468d2b0cef12ce2516ac76afe285d9ef7e4f50564",
+          "lean-toolchain": "9cfb1ab9951dba1fe8ba3df3ed50b53a0aa89e6554e929bdceae0a5a1c6563eb"
+        },
+        "url": "https://github.com/acmepjz/md4lean"
+      },
+      "UnicodeBasic": {
+        "revision": "a2e430a4c9d3ad24078b8581fe0162fc5b0c9a6c",
+        "sources": {
+          ".vscode/settings.json": "2b70ae3b903c429b872fb5f59fd2a50b5576822c446439d4eb9336c665088190",
+          "UnicodeBasic.lean": "722295a4d1c9de8519d22a17cbf759609f3292b63fbd42259c18fe10599a4176",
+          "UnicodeBasic/CharacterDatabase.lean": "1024968742f7ae6f9750154d81bc9aeac73066af3f20ab165a8717b9167c5e67",
+          "UnicodeBasic/Hangul.lean": "5748c747d55134e6e6bee028e5d15d1bc181bf96141a85d4744e0259b3ccaca7",
+          "UnicodeBasic/TableLookup.lean": "840b9577f76ab306259ce193c89a1bc9133d81e500f2514c65345d385319fff6",
+          "UnicodeBasic/Types.lean": "2a2af26f26cf32d96b180c779e4ce4f6e6a7e7a590bd8824b94add26f8b7d34f",
+          "UnicodeData.lean": "a1d05161ba682cfaf48eadba41b8c9052846512324cc4ff3cd09988c87bc6f03",
+          "UnicodeData/Aliases.lean": "8a520a78e108fc45d31b3dd26e37dacf037db24236a6252e51cea6ab7f6cd6b3",
+          "UnicodeData/Basic.lean": "c3e8248adeddba62e42fc386f9e8dba79f01b0c2e4463e4c39a5fc7955674fef",
+          "UnicodeData/PropList.lean": "88f4822fdffc781e803bfda1260203880e3cf485ead1567937f20540f99d3cfd",
+          "UnicodeData/Scripts.lean": "3779aeceb73f39e1d5c466f543cb5c4a989ee28c7c814bd156fd2bbf5800e46d",
+          "UnicodeDocs.lean": "018be31ff3300875bf2ad1507c7d7b97ba8eabcb7b0520752a309d1f3aa7611d",
+          "docs/lakefile.toml": "48a3ba8cb93c4d0a48e29a1317cd5006932fc02b1e33df941680414c7a54cb59",
+          "lake-manifest.json": "d9658a78ef40bc761152950f54b13927ae93499a459a45c9d7bbbf352fabe17d",
+          "lakefile.lean": "f6b5b9d6f4d3c43338f0a601d833703467cc058c6ad4c63d95f4f93ed041171e",
+          "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+          "lookup.lean": "dcf7ff23371af11e6dd0048187fea4437e11e0c888ac155641172f9c357dfb29",
+          "makeCLib.lean": "0444b3b790af8a8515e5e728dbc8ba257ea55ae026f53c31927024d1d1f8c97e",
+          "makeTables.lean": "afa9c4243c62c742f71aef221db49c80458f85f17469d5d5942857a534935f20",
+          "testTables.lean": "2c6b02b314fd46f1d6f3c1185f2217a7ef37d67b48d31f3bf221039a2918da52"
+        },
+        "url": "https://github.com/fgdorais/lean4-unicode-basic"
+      },
+      "arrow-cat": {
+        "revision": "127313688f2072ec998f622a4baa5176aa811e9f",
+        "sources": {
+          "ArrowCat.lean": "4f3457f9d2e9f81b829c83da5005cc3a905ee644a101e1e93e841fe012b5728d",
+          "ArrowCat/Arrow.lean": "304851199d6cb4856b65da77a82993f3cb67f856a5c654d3aa24cad1dfba4c87",
+          "ArrowCat/Basic.lean": "0654ea72e5a41d2ed65149b050a8a99a20a35c95a967f287e614cab095a509c3",
+          "ArrowCat/Geanakoplos.lean": "ba8c6a14018fbb4c9b15100930f5913548e9946243029a0de89e4363694bbacb",
+          "ArrowCat/Move.lean": "b5452678dc6a78df88bdf8bc304f7eb1cb748dc841e9ce330a8cc998c27f424f",
+          "ArrowCat/Pivotal.lean": "bbc0d44dd9246da32f103058d22953b87b7b32b09e6255ded23f411608633475",
+          "ArrowCat/Swap.lean": "7227f616b1237d37781852059abd552aa2b407691e35bfae9389453fd6d182e3",
+          "lake-manifest.json": "666facfb7fbd64fb62abcccaa736780f3570443f2fda742542b8aafcd325a6dd",
+          "lakefile.lean": "10514344eea74a22e3d90d6323200ade148cb25c21ca7e7b8f1030c538c8f44c",
+          "lean-toolchain": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+        },
+        "url": "https://github.com/MavenRain/arrow-cat.git"
+      },
+      "comp-cat-theory": {
+        "revision": "f52108114a8fea202cf45faec19f062a4cd28eeb",
+        "sources": {
+          "CompCatTheory.lean": "d15481ef926782008b453f86e0c8511155846192a2a65b9ad2850de79bdf27cf",
+          "CompCatTheory/Collapse/Adjunction.lean": "35aad4c66741c423fb18097c6cea25b8555367130618f406752c68daac86630e",
+          "CompCatTheory/Collapse/Coend.lean": "be5b1e13fdc3291db22a41371bb8ebc81160d81faef089a253ae4d45801f8d25",
+          "CompCatTheory/Collapse/Colimit.lean": "ae3bd151573b28a91cd8de6135d49e128642f76a84257456c39921028247de85",
+          "CompCatTheory/Collapse/End.lean": "1f38ee77637597c855496a618e88decd3fa1e6171b1a94c3c9b2208bf493c08c",
+          "CompCatTheory/Collapse/Exponential.lean": "ce82c5db06e62647fcee1d5937436461d10b48fb0270e875c9d1e8c462e2ca9f",
+          "CompCatTheory/Collapse/Factorization.lean": "9b1c5a18c570f4f7507310a7e1b12940f52c119dc7c50219dfaf1bfb3948d5af",
+          "CompCatTheory/Collapse/FreeAlgebra.lean": "29db42bf162bdfd69689131e07db3b1384d14686d3491689383f5f5c72c515ba",
+          "CompCatTheory/Collapse/Limit.lean": "38b8bad6074f9c4c6dfd3ef0f3c3bb20d422caa504779bdffb23709d4f0f896b",
+          "CompCatTheory/Collapse/MonadAlgebra.lean": "5466ff7ac04c7f9962b26380119f13124b929050918e3bc9d67e763e572e63cb",
+          "CompCatTheory/Collapse/Monoidal.lean": "4b1404b301323c5b9701c2abb5a098034b44e87fad99dc2e7d159d2707c5b7e0",
+          "CompCatTheory/Collapse/Optic.lean": "d174d4ec71937ac68cf075031f4311b626f568ca95df6fc615e997c77caf488d",
+          "CompCatTheory/Collapse/SubobjectClassifier.lean": "24c2294f94db0a8fd5146d646c435c71e791dc4ab24f9f3390932930d6c9a97b",
+          "CompCatTheory/Collapse/SymmetricMonoidal.lean": "1e1c3c5275a73cf3d373c0b93f23bdb678482a7e78b4f18d49b7f36509488401",
+          "CompCatTheory/Foundation/Category.lean": "e6b16b5964b8ab839b30f101abbdd10fe055fb9674086b66a16b9b3029f17984",
+          "CompCatTheory/Foundation/Opposite.lean": "bfcff6608f9a5bbe900f5fbfbee0369c67e71920e8cc61249eb135cef81ef52d",
+          "CompCatTheory/Foundation/Product.lean": "668e0232021a33a9115aec0be8413cd10eda2a74b9b11bdb89bc2c1dbc6e7a50",
+          "CompCatTheory/Foundation/Terminal.lean": "2137e0694993051ccc12f220845f3d31a39e6b4479c965a1e5200cc0121e43fb",
+          "CompCatTheory/Foundation/TwistedArrow.lean": "9868607a18668111352d23de54d3dc378691c18489bdb4e6a9d23abea232eb6c",
+          "CompCatTheory/Primitive/KanExtension.lean": "4bff3fec30a0a4614a3a48fb3eae05f3408b9f9d1a6825496e87566edbd1c614",
+          "lake-manifest.json": "a8d77845696054cc0b52940851d8a52b919d20ea327dd774b47707850a25ded4",
+          "lakefile.toml": "389474dcc8ab9366896212707a6adf4210a86e5eb5c918853ac7dd0f2c68e847",
+          "lean-toolchain": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+        },
+        "url": "https://github.com/MavenRain/comp-cat-theory.git"
+      },
+      "doc-gen4": {
+        "revision": "0bc516c1b9db83658d6475c40d9b1ed71219b921",
+        "sources": {
+          "DocGen4.lean": "cc592a65966c12381aaa3049f1ac327e12f4adeae2286cbdf8f39d54c181fa70",
+          "DocGen4/DB.lean": "2fa9d613af9a4f3f93a4bf73f1a5111be96529f3807a485c229417ec4bbf5971",
+          "DocGen4/DB/Read.lean": "57cb46c79da6d40a02da50fe2f40386e2fac0404de801286a1544563ebdac7e7",
+          "DocGen4/DB/Schema.lean": "679c2f378fd25b14cc7f3ff54dd65121875959e5e699c6a6467aae14e86ac78a",
+          "DocGen4/DB/VersoDocString.lean": "93ffb34d858e3d3cda012a90201de6e45f7be94b44329dce3d5e82979ede972f",
+          "DocGen4/Helpers.lean": "890a85183bb5975842e11a412ef9d5b31511c9f7c69a6519ced9851cdee06771",
+          "DocGen4/Load.lean": "01b97245a4bf441ed26bf52d62f4d01cedcc13ed9a796bcb12db52a36857721c",
+          "DocGen4/Output.lean": "8ba30ed6c886ba7515f38de57033f15883364d310ba1b6c829dc43bb0376de4e",
+          "DocGen4/Output/Arg.lean": "74dd8c2c61c0503c8e92abe6bb4fbfbb5d6f8d0a2db07c2f088ecc8566cae25a",
+          "DocGen4/Output/Base.lean": "e44a09dfb326fcbe2a0b23f683e7b492e6fd9ece0368e8c7c68797990a2df08b",
+          "DocGen4/Output/Bibtex.lean": "2447c6e8443faa93879a31a609670fe0916df94c0da429d94b32bde3cf6e91e8",
+          "DocGen4/Output/Class.lean": "e57a08a05d746c2d125235c6bd6feea7e95eb3cd4ce41ec4ac00a43aec69f452",
+          "DocGen4/Output/ClassInductive.lean": "beda4b5acda65ff1d71cfb9875746f090c312334f8d1c3834c429000e5fd9a7b",
+          "DocGen4/Output/Definition.lean": "99770f340e511c821498b7591dcc62f85bcae6d409789f0f1adc7e98b8283d15",
+          "DocGen4/Output/DocString.lean": "83d8b6b92895afc1b9325eb8cbd4525a552d5bb0bd33eacbb6fab1c9f5c9a035",
+          "DocGen4/Output/Find.lean": "9c036464d501e057bf0f1ce8ec7af116bc1052882fc354a8571e8d948d3f5346",
+          "DocGen4/Output/FoundationalTypes.lean": "6d259ef39a853243e7a8f0cc0a2ba7f1243d7d515b94fb096231c2cd41519f4e",
+          "DocGen4/Output/Index.lean": "eeffc9273ccd5ef7648b73c11f2ea079e778181a327d84487d48eb9a017dc572",
+          "DocGen4/Output/Inductive.lean": "f89b920f272e1042900894e174f26b4a4feb5755440a249581c754d849d835ff",
+          "DocGen4/Output/Instance.lean": "af2ea8e68027c07c236e56f43034f8b82321c5c988dfd03a3026421b8bc37482",
+          "DocGen4/Output/Module.lean": "ad4da007099acd61544238d7e91d10076988deb5c7aa232516b9dc5081a53acc",
+          "DocGen4/Output/Navbar.lean": "dae3e9d064a79b07766206ec52263be724169d2b6aed1f8b13bca23895465f77",
+          "DocGen4/Output/NotFound.lean": "7a9b0c5fb4e4bb5318345475572fd023f2361627c179b0e6b8a9283c3963ce8b",
+          "DocGen4/Output/References.lean": "0117faade2c5651f1929f1b87dec1e10efe95b9e45b40193fc06587739323fcd",
+          "DocGen4/Output/Search.lean": "8c4a28f433bfa039be18dc22ce262aa7e4a59f0b95e56807922858292c430ab6",
+          "DocGen4/Output/SourceLinker.lean": "3ce161f8f9d5063e0f90fb84d48fe20dd67bee9e738a74cb35a3b66abbaafdc8",
+          "DocGen4/Output/Structure.lean": "c539a2a19c9ec94f7164b4bbfc5b3bef4c2d781990c284fd931684ca9b65e9d0",
+          "DocGen4/Output/Tactics.lean": "dd4cf64ff969a99184665f386cb88ce488bec7b33a04d7009434edb36286901e",
+          "DocGen4/Output/Template.lean": "03b4e338960331c9ccddceac3c7ec0d649cae58b2aa2e3e63080f8a5e9c98a49",
+          "DocGen4/Output/ToHtmlFormat.lean": "d3aefa234a9a924f2cb88ca5557e1ac239551fa0128f98e722991508995dec8e",
+          "DocGen4/Output/ToJson.lean": "b51eb36a289a48d75feeb85c1729905991891a7ce27addd42240f0750183aea3",
+          "DocGen4/Process.lean": "c2fa7f9477e7b239bd5712d10358863ae85d618120a5eeea5fe56cf8b3dac358",
+          "DocGen4/Process/Analyze.lean": "f2862eb74cc5b7e2beac668c5e439b96adb5c9be57234b511280020b57375acf",
+          "DocGen4/Process/Attributes.lean": "1cf0dead5bdf776e34bb4b812001cd56fae15ba2021ab91e5f5952a1b1a77286",
+          "DocGen4/Process/AxiomInfo.lean": "072669602b02b7c8ae8547d010c1ebf5487ee1277b2153a6ae828c9a0cf3fdf6",
+          "DocGen4/Process/Base.lean": "c9bf90232de9e0366eab2b85fc7af1cf21d0c9b6649a24740882e11fa7ea5a7f",
+          "DocGen4/Process/ClassInfo.lean": "70afb322a7898a3e4ba26de9d3ee48c00142183230691597fd4cc58fc4d4f328",
+          "DocGen4/Process/DefinitionInfo.lean": "9654378bb88aaa1b7446a043bc7cedfbd317f609d422006b3455b73a015a9cbf",
+          "DocGen4/Process/DocInfo.lean": "1cc56e88e63f31e6e3fce0d0760fe76fc1c2590e4503e9ad94ff5b5ce91a4e1d",
+          "DocGen4/Process/Hierarchy.lean": "b4a77ae51b9d4ab6cf8d88dc5b7e2ea6ca1e06b7b3cf5361469a8b2362e47fd5",
+          "DocGen4/Process/InductiveInfo.lean": "271caf1b10a812a6437395a416f20d3e24c112896042131ebf640ac8cbf6c506",
+          "DocGen4/Process/InstanceInfo.lean": "3c8892e847ef50352e3c93b33871c4bd11d07ab09008d65c9b3d1776719b015a",
+          "DocGen4/Process/NameInfo.lean": "aeddc1d5be238ca13648bc28505d571d73b75b42cececac36ff3fa3db21b13f6",
+          "DocGen4/Process/OpaqueInfo.lean": "c3910f602cf49d29588779ef20e5434162b4620d0929492ebf808a496ac7d217",
+          "DocGen4/Process/StructureInfo.lean": "56ee2d626028be36502342d0ff614b3acf78130355701064b1dfae172e0461cc",
+          "DocGen4/Process/TheoremInfo.lean": "934d1d7ad51203389cc4b012e27094c215972349186a5c9eff25c858d137f99c",
+          "DocGen4/RenderedCode.lean": "3af1c1563a67be2a2e5526a5807af6684aaa9401ca5649e6961e74ec72797e8e",
+          "Main.lean": "beadedf143f4ee0717ec29546f7e6f02e3748ef9185c4fbd7a4454e98bc4983f",
+          "lake-manifest.json": "aeae353eec66d31a153ee1d6397c96bbbdcce06dbc12cda71d3ef17878312464",
+          "lakefile.lean": "0701a87bc82d0bf544c09b53a276191ca08edf83958cba0562c2ee0ddcf24bdf",
+          "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+        },
+        "url": "https://github.com/leanprover/doc-gen4"
+      },
+      "kan-saturation": {
+        "revision": "86361a45d09650d23c37bfb1586c0b826c8a3572",
+        "sources": {
+          "KanSaturation.lean": "8829395340ac5bf1d5500d5b23690898f20ffc6a428c8fa956c1486cc09c49a2",
+          "KanSaturation/Core/Collapse.lean": "370c5829532377dd2668ca77ca3a27ab394784007cbe7db09ada26993e0c163a",
+          "KanSaturation/Core/Constraint.lean": "0a4cafec38d597393e5048101c756dd56d82972df5d32e8963c1d31c64bc7f6b",
+          "KanSaturation/Core/Engine.lean": "a07c60c152ce2414460f05ded0e44df19cbc72acbf7b9707a174280bf4cf02a0",
+          "KanSaturation/Core/Eval.lean": "81cbcf339c309c9ca6e1390289ceda101b1956092ca50fa561fa0f80a6a51e34",
+          "KanSaturation/Core/OrderedField.lean": "12e2f9d5cda1a246f839c61a54a5265f4de305ab5b1c8e0bf07cffbdf01165e5",
+          "KanSaturation/Core/Reflect.lean": "23ad030ca6a904d4abe142863134ae4242acceb0063c045e0429f3774446d649",
+          "KanSaturation/Core/Saturation.lean": "25f25607bfffd05c1f7ffe85f5d7f4ca004f39322599ecc6228644e4724adb92",
+          "KanSaturation/Instances/Integer.lean": "d93a9f5cb6ac28ebc7d87fdef0f4b898d60cfaeb3318e2ad47c42e3d2728dc8e",
+          "KanSaturation/Instances/OrderedField.lean": "6f3a757c7fd3f738c2b02604fde368d3256172b687ebb7212f6494e88685c161",
+          "KanSaturation/Tactic/Reify.lean": "1a7d6d038d007a1ef3a94d556378c9183f4d60206fd045752f762553e0bf3763",
+          "KanSaturation/Tactic/Saturate.lean": "4a538891f5efb9be48deaa988fb30ae55e30b1ec5b0c14c8c6d93c8f7a9f6ecf",
+          "KanSaturation/Tactic/SaturateField.lean": "7d578c87eb33649068476de833a9a65118e046c6c2b6795f6c4b241d1564fc6d",
+          "KanSaturationExamples.lean": "1942e263cfc1e8515c7062b53bd27afe427fdd9c0b8a2815f363d4832a56c15c",
+          "KanSaturationExamples/IntegerDemo.lean": "ef44249d855296538d6043718ba23321c736d9d851932577f5c0414ddbf59520",
+          "KanSaturationExamples/OrderedFieldDemo.lean": "46d7025bb39e9c1193a2ce83ea8bbf20f648d6287f08df7f2497f020442674cc",
+          "lake-manifest.json": "3ac5c3bf16ca86682c51c2b1c2027840f99450a9b0730a7e2193a3bae7d5edf2",
+          "lakefile.lean": "95a3363435165a27519a72a3cbd96ece7db21585fc4cc89dfbed4aed19b15078",
+          "lean-toolchain": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+        },
+        "url": "https://github.com/MavenRain/kan-saturation.git"
+      },
+      "kan-tactics": {
+        "revision": "f914eaa6b499580929a0da547809b39f02e529cb",
+        "sources": {
+          "KanTactics.lean": "d4c2c1b4e9a766f66c499eec759b71b7eaa70521e41410cb12ae19b17e3cf1d0",
+          "KanTactics/Examples/LanAlongIdentity.lean": "cbcd3b7834d520580b5eab3cff49da87d16a4631be30e75bb979f95972983809",
+          "KanTactics/Examples/SmokeTest.lean": "26dd1d3330f9a64e3355b17c9e8709e57e51cc7e9e764e360bab8c5dfbad4d6e",
+          "KanTactics/Tactic/AdjUnit.lean": "b2b5aa9729d4f0f7a368be91b282cd3ba8be969608288793b4c980f69ae8a3c0",
+          "KanTactics/Tactic/Colimit.lean": "3610f585b47c2eaea43ffa82a636edc46139ed05558a66d1e0f23b5f2ead0e6b",
+          "KanTactics/Tactic/Core.lean": "8918de69bb4838d924aa6e350359f6f1509727d5fc744bcb0bf0cbee96c757b9",
+          "KanTactics/Tactic/Decompose.lean": "60c0b7e54a070c41b2aef8f4bb1dd1e7490f3bc0fac8b6c10be909c88fe1e506",
+          "KanTactics/Tactic/Identity.lean": "a8572a910cdb4e79f8f566134a382ad121d2def1f404472689dc6408a84d9dfd",
+          "KanTactics/Tactic/InitialAlgebra.lean": "178cba4fe2525c9c23dde2814d1131570f05b45cd3a697cb86fb9ddb34f2f0ec",
+          "KanTactics/Tactic/Normalize.lean": "dcaa943bbece183c0c2e5e91da7e3e26043a18749d71ea5c9df8505a13cd4d8e",
+          "KanTactics/Tactic/Precomposition.lean": "ae81a5b85603e546998eea190c3f305d99b29505e2122f8cc9e780bdfac260ab",
+          "KanTactics/Tactic/Transport.lean": "fa2433ea5845ab96a2eca56e27290f45474582f429cf758b26483102cf1ecde6",
+          "lake-manifest.json": "18a0718e723dc6aee899295a29b48ba300c34eb7fb74a78909105c88da81c9e3",
+          "lakefile.lean": "818ea519915215591a483860bb7d23cd88b02ab85879b35ee388f7adf8d3efa4",
+          "lean-toolchain": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+        },
+        "url": "https://github.com/MavenRain/kan-tactics.git"
+      },
+      "leansqlite": {
+        "revision": "0be4df908d1a8e75b58961041e2b4973692623df",
+        "sources": {
+          "SQLite.lean": "f559fc25c9d29dce811ae5de5e7b8ecafe5791f253a9254b782f276123abd864",
+          "SQLite/Blob.lean": "fa40460c30ca331d1f63db306144f2434e0995a04e2177bf2e0dd8cfd701a151",
+          "SQLite/Blob/Classes.lean": "140921485cabdf032177c20ff2934df70ccf1dd713285c495c58b1252d948fa3",
+          "SQLite/Blob/Deriving.lean": "462dd1f75873c4675a6bd36cb475e9884f668296975ad06fe751f555f391717a",
+          "SQLite/Blob/Instances.lean": "153d7760476dee3a68d811507317b691d90096e1ce02f2305945628bb91ffe79",
+          "SQLite/FFI.lean": "e64fbb3ed936d90c1105ef033cd3e4974c5e10221d68eaa2ce55882c1be41700",
+          "SQLite/Interpolation.lean": "20f0c710268fa084c49f3f6d0474619b71b22b2516f3118e73c354be6faa8293",
+          "SQLite/LowLevel.lean": "f031271535963e61caacf1f393f7b0da5c20d508a20b8f09edd75ee3ca8f3d4d",
+          "SQLite/QueryParam.lean": "b0818181dcbfcebf20c05ab62fc794fefea2914468cb07be5edd48cdd3031f1c",
+          "SQLite/QueryResult.lean": "17960ab6b1c7c7fb5bc54ccf0843ecc1d34eeba762f4a385ab7091c27adffb0c",
+          "SQLite/QueryResult/Deriving.lean": "718fb1aa13fdff040cd1a1037c71c079886b4d1dda44b01912afd9c530193b6b",
+          "lake-manifest.json": "319a30fcf0e03a389503a5b19cba89fefb20185a201d91adad1c8c5c93bd7ba3",
+          "lakefile.lean": "c9a14d3b316a10476af05be7ae23b7914ccce87d760d1bf47486fd46d1998e64",
+          "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+          "tests/SQLiteTest.lean": "84d1981837986744bb05ef17f631b4a64d3f5caa7250086f200233148b9ce559",
+          "tests/SQLiteTest/Blob.lean": "11aa7f3f4cd7240554655aa368945bb3668f4f8707b909912ea286e0a0de0f1e",
+          "tests/SQLiteTest/BlobDeriving.lean": "8f55373e2d181fbdfc953214b08397205cd6dca9b685963f59ab0919515d8b38",
+          "tests/SQLiteTest/Deriving.lean": "9ad945c0d76380a72094f2d6af4395c8c52ac9232d0fb04031140f7bfe0163f8",
+          "tests/SQLiteTest/Framework.lean": "8fac0622c6c99ad1ac603793086b8449c17dc18a1810c6a39ef997dac59b4e97",
+          "tests/SQLiteTest/Sha3.lean": "a43a64bf266160b19e49f944215d68fc6eed8c291564799f709f7ced1aa2e33a",
+          "tests/TestMain.lean": "4d0cc5258788870b3dc37aad1e66697465aba202d86139b9438873f7a022099e",
+          "tests/lake-manifest.json": "498962059d1d4db955a2fe82e37c5488f02bd6f5110fde5a600e50b68c8d3995",
+          "tests/lakefile.lean": "09399a2c12e1a4ab542a00620e2d65cbb6b4087c88e3566053cfe8450bca460d"
+        },
+        "url": "https://github.com/leanprover/leansqlite"
+      }
+    },
+    "manifest_sha256": "cef87a0b16afe1049f57c07c29e6eff4ea82ca15056fadec34220be34674e326",
+    "revision": "f9d2bc270631eaefb9985c38e0c804b825a7ee2d",
+    "sources": {
+      "UnifiedAggregation.lean": "839d722270923a52e2853b723a332af263364e938273f8218c6bdab46fc342d6",
+      "UnifiedAggregation/Aggregation.lean": "c95d29da96d2fc0318521a435b83f81bba6256c34845db1727cb7987dfebce7b",
+      "UnifiedAggregation/Bridge.lean": "29cf1097322d7c7afd70f6ea501ec561bf71b432a84f62fb3e3775b19115050d",
+      "UnifiedAggregation/Bridge/ArrowDebreu.lean": "60f77019a543420af5c8b90da2f2bb424a27b1507bad4d6e502a6fca07103f6e",
+      "UnifiedAggregation/Bridge/ArrowImpossibility.lean": "1cdc4fcf66a2d8a684220b598bea9e5c561a155454a1c402c3af3f9621f6fcab",
+      "UnifiedAggregation/Bridge/Potts.lean": "9c96c8513f7b2363410f6d0eeccf50bd009df1417cc2a810ff8afdcf57ac46d5",
+      "UnifiedAggregation/Bridge/SchellingIsing.lean": "aa9448b800b5ce023ba347926fd0b91794273277d41764c252cb4d6c8a153766",
+      "UnifiedAggregation/Characterization.lean": "8ac201070c61e27a50d17cfaec6445091bf95db4694fb5c6fe6e2f5e3ebca0f3",
+      "UnifiedAggregation/ChoiceRule.lean": "886a2d925f96e4482c2f1c59a0b1a69f7f59350187837af266c5ded4bbdadbea",
+      "UnifiedAggregation/ConfigSpace.lean": "7b9bec8d6c527a10737e91ab44b3892daaeaf4cf64e3de9b5460d884e758254a",
+      "UnifiedAggregation/Discrete.lean": "801c44e065cc1ffc562d980cf6ecc746c1452c1da756660137d9adeb88d113b5",
+      "UnifiedAggregation/FunctorExt.lean": "aa2cf6a7f45b64473028c0d2e1fa5b774a3695f456fde4b747c885a3786e477f",
+      "UnifiedAggregation/HeqTransport.lean": "128a9a22e97b6f9569bb69f25219dec61ff3d7275ce0be36911204fe29c2f94d",
+      "UnifiedAggregation/Indiscrete.lean": "bb788a51d0cce2b0dbcb2563f199ca86d689d8d0b3e38a562878a82e79718e05",
+      "UnifiedAggregation/Regimes.lean": "32ceba950748f8e3c7d08f81c0243d40b9f67829c2e23834f8d8501355589b6b",
+      "UnifiedAggregation/SymmetricGroup.lean": "7adbbb2f59358e5a522f06b4847805cfe1d76fcfd038e253ead8c04edba72d02",
+      "UnifiedAggregation/Trichotomy.lean": "937b51d79c2aacb81b5d1762a7d054fb576dcd9ba9f432c1ca24458b80daa600",
+      "UnifiedAggregation/TrichotomyWitnesses.lean": "b316e6a877e1a6caa080ad73a25f6534b8a5949e7e5daed0987d3c0b9273cfea",
+      "UnifiedAggregation/Z2Group.lean": "1587056c6c22f21aa15dbec180deb85f20e92b984fab543914565bcd984325cd",
+      "lake-manifest.json": "cef87a0b16afe1049f57c07c29e6eff4ea82ca15056fadec34220be34674e326",
+      "lakefile.toml": "efacbd6fdbdf72ffe817a8ccd78241cfacb84e75d87dd77dadcee4f23498990f",
+      "lean-toolchain": "e0a7032ab1976a37a3e1e823816b4f490d462c1e864b21e1999c33cdac76e263"
+    },
+    "toolchain": "leanprover/lean4:v4.31.0"
+  },
+  "build_stdout_sha256": "06a5f9b063d5f0dabd935a0481efffb059865f90ae5d056892d81c49c814c963",
+  "declarations": [
+    "CompCatTheory.Category",
+    "CompCatTheory.Functor",
+    "CompCatTheory.LeftKanExtension",
+    "UnifiedAggregation.SymmetryGroup",
+    "UnifiedAggregation.GAction",
+    "UnifiedAggregation.eqRec_heq_dep",
+    "UnifiedAggregation.Functor.ext",
+    "UnifiedAggregation.Functor.ext_pointwise",
+    "UnifiedAggregation.OrbitHom.ext",
+    "UnifiedAggregation.orbitProjection",
+    "UnifiedAggregation.Aggregation",
+    "UnifiedAggregation.discreteFunctor",
+    "UnifiedAggregation.Z2.one_mul",
+    "UnifiedAggregation.Z2.mul_one",
+    "UnifiedAggregation.Z2.mul_assoc",
+    "UnifiedAggregation.Z2.mul_inv",
+    "UnifiedAggregation.Z2.inv_mul",
+    "UnifiedAggregation.Z2Group",
+    "UnifiedAggregation.discreteHom_eq",
+    "UnifiedAggregation.lan_obj_unique_discrete",
+    "UnifiedAggregation.lan_implies_orbit_constant"
+  ],
+  "lean_version": "Lean (version 4.31.0, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "modules": [
+    "UnifiedAggregation.Characterization",
+    "UnifiedAggregation.FunctorExt",
+    "UnifiedAggregation.Z2Group"
+  ],
+  "schema": 1,
+  "script_sha256": "75f602a649a7b9141aae9eddd7d6d56df3dce6d266310d0bc8481ded6c63753c",
+  "stage": "UAT.0",
+  "stdout_sha256": "0320f1f3b087d2ba23eac58b5634e0b64ecabb1cf3baeeae4b99947ee734f641"
+}
