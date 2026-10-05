@@ -178,6 +178,16 @@ Ambient captures, the scrutinee and the result type of the elimination,
 public elimination hypotheses, delayed recursive evaluation, recursor erasure
 and families without constructors remain pending.
 
+A.5b.3.2e.15 adds [checked recursor scrutinee and result types](dev/validation/stage-a-recursor-elim.md).
+The kernel checks the scrutinee of one recursor in the scope of the
+declaration parameters. The scrutinee type must be the eliminated family at
+the declaration parameters. The kernel then checks the branch list and gives
+the result type at the inferred indices and the scrutinee value. Ambient
+locals and captures, scrutinee types at instantiated parameters, routing of
+the kernel `Elim` term, public elimination hypothesis syntax, delayed
+recursive evaluation, recursor erasure and families without constructors
+remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

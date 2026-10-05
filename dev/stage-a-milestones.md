@@ -200,6 +200,20 @@ elimination hypotheses, delayed recursive evaluation, erasure and families
 without constructors remain pending. See
 [cover validation](validation/stage-a-recursor-cover.md).
 
+A.5b.3.2e.15 checks the recursor scrutinee and the result type in
+`lib/kernel_recursor_elim.bend`. It takes one family, a scrutinee with its
+quantity, one motive and the full branch list. The steps follow the kernel
+elimination rule. The scrutinee is inferred in the scope of the declaration
+parameters. Its type must be a left former at the eliminated family, and its
+parameters must be the declaration parameters. The coverage check of
+A.5b.3.2e.14 then runs. The result type is the motive at the inferred
+indices and the scrutinee value. The result usage is the scrutinee usage in
+sequence with the scaled branch usage. Ambient locals and captures,
+scrutinee types at instantiated parameters, routing of the kernel `Elim`
+term to this entry, public elimination hypothesis syntax, delayed recursive
+evaluation, erasure and families without constructors remain pending. See
+[elimination validation](validation/stage-a-recursor-elim.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

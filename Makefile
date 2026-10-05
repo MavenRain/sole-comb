@@ -212,3 +212,14 @@ test-recursor-cover:
 
 test-recursor-cover-mutations:
 	python3 -P dev/test-recursor-cover.py --mutations
+
+.PHONY: test-recursor-elim test-recursor-elim-mutations
+
+check: test-recursor-elim
+test gates: test-recursor-elim-mutations
+
+test-recursor-elim:
+	python3 -P dev/test-recursor-elim.py
+
+test-recursor-elim-mutations:
+	python3 -P dev/test-recursor-elim.py --mutations
