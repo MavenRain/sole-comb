@@ -201,3 +201,14 @@ test-recursor-body:
 
 test-recursor-body-mutations:
 	python3 -P dev/test-recursor-body.py --mutations
+
+.PHONY: test-recursor-cover test-recursor-cover-mutations
+
+check: test-recursor-cover
+test gates: test-recursor-cover-mutations
+
+test-recursor-cover:
+	python3 -P dev/test-recursor-cover.py
+
+test-recursor-cover-mutations:
+	python3 -P dev/test-recursor-cover.py --mutations

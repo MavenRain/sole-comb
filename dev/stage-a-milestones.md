@@ -188,6 +188,18 @@ back to the parameters. Constructor coverage, ambient captures, public
 elimination hypotheses, delayed recursive evaluation and erasure remain
 pending. See [body validation](validation/stage-a-recursor-body.md).
 
+A.5b.3.2e.14 checks recursor branch coverage in
+`lib/kernel_recursor_cover.bend`. It takes one family, one motive and the
+full branch list. A family without constructors is refused. The kernel
+coverage rule runs before any body: each constructor has one branch, and
+each branch key is a constructor of the family. The body check of
+A.5b.3.2e.13 then runs for each constructor in declaration order. The first
+refusal stops the walk. The result is the join of the branch usages. Ambient
+captures, the scrutinee and the result type of the elimination, public
+elimination hypotheses, delayed recursive evaluation, erasure and families
+without constructors remain pending. See
+[cover validation](validation/stage-a-recursor-cover.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

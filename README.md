@@ -170,6 +170,14 @@ every field and every hypothesis with the planned quantity. Constructor
 coverage, ambient captures, public elimination hypotheses, delayed recursive
 evaluation and recursor erasure remain pending.
 
+A.5b.3.2e.14 adds [checked recursor branch coverage](dev/validation/stage-a-recursor-cover.md).
+The kernel checks the full branch list of one family. Each constructor must
+have one branch, and each branch must name a constructor. The kernel then
+checks each branch body in declaration order and joins the branch usages.
+Ambient captures, the scrutinee and the result type of the elimination,
+public elimination hypotheses, delayed recursive evaluation, recursor erasure
+and families without constructors remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.
