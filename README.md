@@ -157,6 +157,13 @@ and self-dependent result types, and applies the existing universe restriction
 on elimination from propositions. Public branch binders, delayed recursive
 evaluation and recursor erasure remain pending.
 
+A.5b.3.2e.12 adds [checked recursor branch types](dev/validation/stage-a-recursor-branch.md).
+It binds the constructor fields, then one induction hypothesis for each
+direct recursive child. The kernel checks every binder domain and the
+elimination target. Affine recursive children receive an explicit refusal.
+Branch bodies, public elimination hypotheses, delayed recursive evaluation
+and recursor erasure remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

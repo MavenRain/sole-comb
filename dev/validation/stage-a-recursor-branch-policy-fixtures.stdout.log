@@ -1,0 +1,4 @@
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 58 files, 46 line budgets, 63 reviewed unsafe sites, 41 catchalls
+python3 -P dev/test-reference-fixtures.py

@@ -179,3 +179,14 @@ test-recursor-motive:
 
 test-recursor-motive-mutations:
 	python3 -P dev/test-recursor-motive.py --mutations
+
+.PHONY: test-recursor-branch test-recursor-branch-mutations
+
+check: test-recursor-branch
+test gates: test-recursor-branch-mutations
+
+test-recursor-branch:
+	python3 -P dev/test-recursor-branch.py
+
+test-recursor-branch-mutations:
+	python3 -P dev/test-recursor-branch.py --mutations

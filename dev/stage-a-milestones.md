@@ -167,6 +167,17 @@ returned plan keeps hypothesis types separate from constructor fields. Public
 branch binders, delayed recursive evaluation and erasure remain pending. See
 [motive validation](validation/stage-a-recursor-motive.md).
 
+A.5b.3.2e.12 checks recursor branch types in
+`lib/kernel_recursor_branch.bend`. It reuses the checked motive plan and
+binds the constructor fields in declaration order, then one hypothesis for
+each direct recursive child. A zero child gives a zero hypothesis and a many
+child gives a many hypothesis. The planner refuses an affine child. The
+target is the motive at the constructor indices and value. The kernel
+checks each domain in its prefix context and the target after all binders.
+Branch bodies, public elimination hypotheses, delayed recursive evaluation
+and erasure remain pending. See
+[branch validation](validation/stage-a-recursor-branch.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,
