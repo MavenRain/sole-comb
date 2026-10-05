@@ -151,6 +151,12 @@ children. Transparent aliases and proof-irrelevant parameters are accepted;
 changed parameters receive an explicit refusal. Public structural recursor
 typing, evaluation and erasure remain pending.
 
+A.5b.3.2e.11 adds [checked recursor motives and hypothesis types](dev/validation/stage-a-recursor-motive.md).
+It checks the motive in the declaration parameter context, preserves indexed
+and self-dependent result types, and applies the existing universe restriction
+on elimination from propositions. Public branch binders, delayed recursive
+evaluation and recursor erasure remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

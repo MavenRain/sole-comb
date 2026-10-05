@@ -1,0 +1,829 @@
+{
+  "cases": 43,
+  "hosts": {
+    "bun": {
+      "alias-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "dependent-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:A:Type 1:A:ordinary;1:0:x:A:x:ordinary;2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nih=2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nlevel=1\ntypes=2:child:A\n"
+      },
+      "dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nih=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "direct": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:Nat\n"
+      },
+      "indexed-constant": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:Nat\n"
+      },
+      "indexed-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:(Lan SMu Tag [i] (Sec SColl 0 []))\n"
+      },
+      "indexed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=4\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:head:A:head:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nlevel=1\ntypes=2:tail:A\n"
+      },
+      "invalid-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "invalid-nullary-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "large-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a large elimination out of a proposition needs a subsingleton family at P\n"
+      },
+      "large-subsingleton": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "layout-changed-dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-changed-second-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-functional-recursion": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout supports direct recursive fields only\n"
+      },
+      "layout-indexed-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: the family Missing is not declared\n"
+      },
+      "layout-mutual-mixed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-sibling": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-three-cycle": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-second-child-changed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-source-alias-refusal": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: a family that is not strictly positive arrives at M2\n"
+      },
+      "layout-swapped-parameters": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-wrong-constructor": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: absent is not a constructor of N\n"
+      },
+      "layout-zero-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of an elimination at N names no family\n"
+      },
+      "multiple-quantities": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:Nat;1:ghost:Nat;3:right:Nat\n"
+      },
+      "multiple-self-domains": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:(Lan SMu At [left] (Sec SColl 0 []));1:ghost:(Lan SMu At [ghost] (Sec SColl 0 []));3:right:(Lan SMu At [right] (Sec SColl 0 []))\n"
+      },
+      "nonrecursive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=4\nfields=0:w:left:A:left:ordinary;1:w:right:B:right:ordinary\nih=\nlevel=1\ntypes=\n"
+      },
+      "nullary": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "parameter-order": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "parameter-scope": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "parameter-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:(Lan SMu At [tail] (Sec SColl 1 [ => A]))\n"
+      },
+      "parameters-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 2 [ => A;  => B]))\n"
+      },
+      "self-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 0 []))\n"
+      },
+      "small-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=0\ntypes=\n"
+      },
+      "two-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:Nat:i:ordinary;1:0:j:Nat:j:ordinary;2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nih=2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nlevel=1\ntypes=2:child:(Lan SMu Tag [j; i] (Sec SColl 0 []))\n"
+      },
+      "unknown-mode": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nexpected a known motive mode\n"
+      },
+      "wrong-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive is built for Wrong and the scrutinee is at N\n"
+      },
+      "wrong-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of V binds 0 indices and the family has 1\n"
+      }
+    },
+    "native": {
+      "alias-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "dependent-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:A:Type 1:A:ordinary;1:0:x:A:x:ordinary;2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nih=2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nlevel=1\ntypes=2:child:A\n"
+      },
+      "dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nih=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "direct": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:Nat\n"
+      },
+      "indexed-constant": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:Nat\n"
+      },
+      "indexed-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:(Lan SMu Tag [i] (Sec SColl 0 []))\n"
+      },
+      "indexed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=4\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:head:A:head:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nlevel=1\ntypes=2:tail:A\n"
+      },
+      "invalid-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "invalid-nullary-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "large-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a large elimination out of a proposition needs a subsingleton family at P\n"
+      },
+      "large-subsingleton": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "layout-changed-dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-changed-second-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-functional-recursion": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout supports direct recursive fields only\n"
+      },
+      "layout-indexed-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: the family Missing is not declared\n"
+      },
+      "layout-mutual-mixed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-sibling": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-three-cycle": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-second-child-changed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-source-alias-refusal": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: a family that is not strictly positive arrives at M2\n"
+      },
+      "layout-swapped-parameters": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-wrong-constructor": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: absent is not a constructor of N\n"
+      },
+      "layout-zero-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of an elimination at N names no family\n"
+      },
+      "multiple-quantities": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:Nat;1:ghost:Nat;3:right:Nat\n"
+      },
+      "multiple-self-domains": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:(Lan SMu At [left] (Sec SColl 0 []));1:ghost:(Lan SMu At [ghost] (Sec SColl 0 []));3:right:(Lan SMu At [right] (Sec SColl 0 []))\n"
+      },
+      "nonrecursive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=4\nfields=0:w:left:A:left:ordinary;1:w:right:B:right:ordinary\nih=\nlevel=1\ntypes=\n"
+      },
+      "nullary": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "parameter-order": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "parameter-scope": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "parameter-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:(Lan SMu At [tail] (Sec SColl 1 [ => A]))\n"
+      },
+      "parameters-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 2 [ => A;  => B]))\n"
+      },
+      "self-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 0 []))\n"
+      },
+      "small-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=0\ntypes=\n"
+      },
+      "two-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:Nat:i:ordinary;1:0:j:Nat:j:ordinary;2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nih=2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nlevel=1\ntypes=2:child:(Lan SMu Tag [j; i] (Sec SColl 0 []))\n"
+      },
+      "unknown-mode": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nexpected a known motive mode\n"
+      },
+      "wrong-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive is built for Wrong and the scrutinee is at N\n"
+      },
+      "wrong-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of V binds 0 indices and the family has 1\n"
+      }
+    },
+    "node-worker": {
+      "alias-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "dependent-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:A:Type 1:A:ordinary;1:0:x:A:x:ordinary;2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nih=2:w:child:(Lan SMu D [A; x] (Sec SColl 0 [])):child:recursive[A,x]\nlevel=1\ntypes=2:child:A\n"
+      },
+      "dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nih=0:w:child:(Lan SMu D [] (Sec SColl 2 [ => A;  => x])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "direct": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:Nat\n"
+      },
+      "indexed-constant": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:Nat\n"
+      },
+      "indexed-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:value:Nat:value:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 0 [])):tail:recursive[i]\nlevel=1\ntypes=2:tail:(Lan SMu Tag [i] (Sec SColl 0 []))\n"
+      },
+      "indexed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=4\nfields=0:0:i:(Lan SMu N [] (Sec SColl 0 [])):i:ordinary;1:w:head:A:head:ordinary;2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nih=2:w:tail:(Lan SMu V [i] (Sec SColl 1 [ => A])):tail:recursive[i]\nlevel=1\ntypes=2:tail:A\n"
+      },
+      "invalid-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "invalid-nullary-motive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a term used as a type is not a universe:  ((Lan SMu N [] (Sec SColl 0 [])) : Type 1)\n"
+      },
+      "large-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nuniverse: a large elimination out of a proposition needs a subsingleton family at P\n"
+      },
+      "large-subsingleton": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "layout-changed-dependent-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-changed-second-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-constant-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-field-value-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-functional-recursion": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout supports direct recursive fields only\n"
+      },
+      "layout-indexed-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: the family Missing is not declared\n"
+      },
+      "layout-mutual-mixed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-sibling": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-mutual-three-cycle": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout does not support mutual families\n"
+      },
+      "layout-second-child-changed": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-source-alias-refusal": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: a family that is not strictly positive arrives at M2\n"
+      },
+      "layout-swapped-parameters": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "layout-wrong-constructor": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: absent is not a constructor of N\n"
+      },
+      "layout-zero-changed-parameter": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nnot yet: recursor layout requires uniform recursive parameters\n"
+      },
+      "missing-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of an elimination at N names no family\n"
+      },
+      "multiple-quantities": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:Nat;1:ghost:Nat;3:right:Nat\n"
+      },
+      "multiple-self-domains": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:(Lan SMu At [left] (Sec SColl 0 []));1:ghost:(Lan SMu At [ghost] (Sec SColl 0 []));3:right:(Lan SMu At [right] (Sec SColl 0 []))\n"
+      },
+      "nonrecursive": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=4\nfields=0:w:left:A:left:ordinary;1:w:right:B:right:ordinary\nih=\nlevel=1\ntypes=\n"
+      },
+      "nullary": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      },
+      "parameter-order": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:A\n"
+      },
+      "parameter-scope": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:A\n"
+      },
+      "parameter-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=3 context=3\nfields=0:w:head:A:head:ordinary;1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nih=1:w:tail:(Lan SMu List [] (Sec SColl 1 [ => A])):tail:recursive[]\nlevel=1\ntypes=1:tail:(Lan SMu At [tail] (Sec SColl 1 [ => A]))\n"
+      },
+      "parameters-self": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=3\nfields=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nih=0:w:child:(Lan SMu Duo [] (Sec SColl 2 [ => A;  => B])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 2 [ => A;  => B]))\n"
+      },
+      "self-domain": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:(Lan SMu At [child] (Sec SColl 0 []))\n"
+      },
+      "small-proposition": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=0\ntypes=\n"
+      },
+      "two-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:Nat:i:ordinary;1:0:j:Nat:j:ordinary;2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nih=2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nlevel=1\ntypes=2:child:(Lan SMu Tag [j; i] (Sec SColl 0 []))\n"
+      },
+      "unknown-mode": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nexpected a known motive mode\n"
+      },
+      "wrong-family": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive is built for Wrong and the scrutinee is at N\n"
+      },
+      "wrong-indices": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the motive of V binds 0 indices and the family has 1\n"
+      }
+    }
+  },
+  "mutations": [
+    {
+      "case": "invalid-nullary-motive",
+      "killed": true,
+      "name": "skip-motive-type",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      }
+    },
+    {
+      "case": "wrong-family",
+      "killed": true,
+      "name": "skip-family",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=2 context=1\nfields=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nih=0:w:child:(Lan SMu N [] (Sec SColl 0 [])):child:recursive[]\nlevel=1\ntypes=0:child:Nat\n"
+      }
+    },
+    {
+      "case": "large-proposition",
+      "killed": true,
+      "name": "skip-large",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=0 context=0\nfields=\nih=\nlevel=1\ntypes=\n"
+      }
+    },
+    {
+      "case": "parameters-self",
+      "killed": true,
+      "name": "parameter-diagram",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nmismatch: the term has type ((Lan SMu Duo [] (Sec SColl 2 [ => B;  => B])) : Type 1) and the expected type is (Lan SMu Duo [] (Sec SColl 2 [ => A;  => B]))\n"
+      }
+    },
+    {
+      "case": "two-indices",
+      "killed": true,
+      "name": "index-order",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=4 context=3\nfields=0:0:i:Nat:i:ordinary;1:0:j:Nat:j:ordinary;2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nih=2:w:child:(Lan SMu D [j; i] (Sec SColl 0 [])):child:recursive[j,i]\nlevel=1\ntypes=2:child:(Lan SMu Tag [i; j] (Sec SColl 0 []))\n"
+      }
+    },
+    {
+      "case": "multiple-self-domains",
+      "killed": true,
+      "name": "wrong-self",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:(Lan SMu At [left] (Sec SColl 0 []));1:ghost:(Lan SMu At [left] (Sec SColl 0 []));3:right:(Lan SMu At [left] (Sec SColl 0 []))\n"
+      }
+    },
+    {
+      "case": "parameter-scope",
+      "killed": true,
+      "name": "parameter-environment",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "FAIL\nunbound: de Bruijn index 1 is outside the environment\n"
+      }
+    },
+    {
+      "case": "multiple-quantities",
+      "killed": true,
+      "name": "drop-later-children",
+      "observation": {
+        "exit": 0,
+        "stderr": "",
+        "stdout": "arity=7 context=4\nfields=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];2:w:label:Nat:label:ordinary;3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nih=0:1:left:(Lan SMu T [] (Sec SColl 0 [])):left:recursive[];1:0:ghost:(Lan SMu T [] (Sec SColl 0 [])):ghost:recursive[];3:w:right:(Lan SMu T [] (Sec SColl 0 [])):right:recursive[]\nlevel=1\ntypes=0:left:Nat\n"
+      }
+    }
+  ],
+  "schema": 1,
+  "scope": "Checked recursor motives and direct-child hypothesis types; public branch binders, delayed evaluation and erasure remain pending.",
+  "sources": {
+    "Makefile": "5f07a6efe2c4643f0ada254668bd5710c6c7547db267a668a6a32a4c47abcceb",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/bend-policy.json": "e29c854d870b28c159832c47783041b58d52155f0e2dc6c2e560fea534f3d310",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "00a364a0a855d54aea3311f11160e98512f53459c3f17b01ea9e1ebc334f295a",
+    "dev/reference-fixtures.py": "7b74e199dda17d6c9baf52ebbe3fba938088f1c326a25600a1169f9c371df7e6",
+    "dev/reference-fixtures/core-erasure.json": "8e5750c3365bfd27d432fd8151f6656a1a7375940207ca5695e99a0ce14a5127",
+    "dev/reference-fixtures/manifest.json": "513ae29a13957cda3f1f606146138264f49286b207724d8cbdb75258379a80f6",
+    "dev/test-core-erasure-mutations.py": "51cb9607e0f30244fae356e73abd9903e0bfabcafc86049c8302e326e02b8c2e",
+    "dev/test-core-erasure.py": "360bbdf46c11508652ef84847a6375bb1d76d6577de12c0c25e17e1f80686dfa",
+    "dev/test-recursor-layout.py": "b46834a1728519c1a0930eab1309d0afaf97070a597a6f2a4a98b9c51d067320",
+    "dev/test-recursor-motive.py": "b9c751e853e36797825a43ad550e3a62e3ff9d4ced93c3fb9fc8bc9ac847c63f",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/arithmetic.sole-comb": "1ead9e3f8c1a443d97d96d52f5edace4e419c365f70804315302c84ed6e0e22f",
+    "examples/erasure.sole-comb": "dd2facd96825aea117c8ecfcf1033416512e452ae983688960d13eca4831a4fe",
+    "examples/finite-elim.sole-comb": "3d1f94e8637cd6bece43fec32e3cd201299fcf05138e3492516c46a1ebbbb345",
+    "examples/identity.sole-comb": "abb67ea5136a550581d9883b98202c52e2a9438dd38c4a376190362d0d57d43b",
+    "examples/pair-erasure.sole-comb": "4d26e873e06cf8674865ef9fb061331c84fd5eeec09b07c76b1889dfddd28621",
+    "examples/product-erasure.sole-comb": "7ecc30756f5952f456bbe208b64e0c95226e6c69d18264b50e9c3e555ae2d46c",
+    "examples/records.sole-comb": "728499d68434b2273d598f99092fa51a89862ab7204ceea58d8ffe3d0316b4de",
+    "examples/sum-erasure.sole-comb": "1c430e8282c92cae6f657edbe4c766e8cc1fa09330493f9e233ecb6834904f6e",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "eb7233cabb1d30a528bc22dc6da6d28f7da8d39520eda00dbea4ea30a8ea8518",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_recursor.bend": "65fe127a220eee7c370a975345f04ec7a59ae84b68e7b9714772691ee160dfd3",
+    "lib/kernel_recursor_motive.bend": "18df692c79db0b1a9fe72319759f297bb350f8506875d9044c9aab4b345ef72f",
+    "lib/kernel_recursor_uniform.bend": "3722e0151752989515b7e9b345cb76e46bc84b5369c2d35232f196e4d1fe2047",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "ffd11b42c0c663fc99409b601af61e86fc91d735361644c661578ab991d963d4",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/core-erasure.bend": "b0c0cc205715768c6fc7033302e0647ba88a4a4b57ac75acddc6bdf5553c8525",
+    "test/finite-elim-erasure.kan": "1958610c60b65a05b220c4fe7da6c3305f815b3e39ba7ce4e9a880c954269903",
+    "test/pair-erasure.kan": "27fa423ac0b8fc469b992fdb0cbeac62ee68f17548a25d9a85f8709e695d37cb",
+    "test/pinfront/elab.bend": "3b5c1ca90e7ef7ced4b863f3da9ba4f777b031299898c18e60f50af2f87d91d5",
+    "test/pinfront/elab_program.bend": "cb44fe829bd5bc01f79e9549f3adb402235377f94322d10a36cbea85255ba03e",
+    "test/pinfront/lexer.bend": "004811c89310de98da986c592d4fc30e206b241746502581bbb65dc2a743935f",
+    "test/pinfront/order.bend": "73d7d6f8cd48e6833252cce122a9ec0b0c0af65b76d3c8862184309f15acc2ac",
+    "test/pinfront/parser.bend": "e9a1dd4691bc9b1e8ff44757c527e29330b85965b085d373c31be45a545a296c",
+    "test/pinfront/program.bend": "4a8676c0bf2c35bb4ab7a4b71ac02cf5e3f834ef548f811ccdcd89a6f388e57d",
+    "test/pinfront/syntax.bend": "71f5a5f965b263440532d504aa9381feda28a3f514eaaafdc52f516135c652b2",
+    "test/pinfront/token.bend": "80eb80a04a1416b92fd858b9f477cb776140863629cb61203f1c7e8977d7943f",
+    "test/pinfront/totality.bend": "40d1cb63b6bb84e143e59dd8d0ba56b2897cf29d45f09acffdee5c67ed44a7c4",
+    "test/product-erasure.kan": "17b0d0ffa8caa2d4cc4d282d85519033d48cad007da43ae1b012e21aa5e12614",
+    "test/program.bend": "4e6ceb9418a552c2a99149d95f3380a03b70b6a2df73336b240bb38adead536a",
+    "test/records-erasure.kan": "95e37f03d9b6d1bde7a048ee46e78b702c61106ce552f7c01c169c324f0eb79e",
+    "test/recursor-layout.bend": "b565014aa4c4466aacb285a6aa999ccff116e0997789fcecfc3951b2d06ce458",
+    "test/recursor-motive.bend": "f996d4885d741ea8d29a68d30665119de411c652d38010b250cbc034e0207a8e",
+    "test/sum-erasure.kan": "3aa1dacc19a944af465eaa407688fc71af1c023305a8416a317e9fe4ac8186e4"
+  }
+}

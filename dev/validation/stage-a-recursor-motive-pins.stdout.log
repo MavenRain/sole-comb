@@ -1,0 +1,1 @@
+PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/private/tmp/claude/kan-elim-lang-m0/review-1004-recursor-motive/tree/dev/toolchain.json

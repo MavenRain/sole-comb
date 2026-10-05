@@ -158,6 +158,15 @@ checked metadata is another structural recursor prerequisite; public branch
 typing, delayed induction hypotheses and erasure remain pending. See
 [uniform layout validation](validation/stage-a-recursor-uniform-layout.md).
 
+A.5b.3.2e.11 checks recursor motives and constructs the type of each recursive
+field's induction hypothesis in `lib/kernel_recursor_motive.bend`. It reuses
+uniform layout validation, checks the family and index binders, and preserves
+the existing proposition elimination restriction. Motives are scoped under
+declaration parameters and applied to each child's indices and value. The
+returned plan keeps hypothesis types separate from constructor fields. Public
+branch binders, delayed recursive evaluation and erasure remain pending. See
+[motive validation](validation/stage-a-recursor-motive.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

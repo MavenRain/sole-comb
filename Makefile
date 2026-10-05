@@ -168,3 +168,14 @@ test-recursor-uniform:
 
 test-recursor-uniform-mutations:
 	python3 -P dev/test-recursor-layout.py --uniform --mutations
+
+.PHONY: test-recursor-motive test-recursor-motive-mutations
+
+check: test-recursor-motive
+test gates: test-recursor-motive-mutations
+
+test-recursor-motive:
+	python3 -P dev/test-recursor-motive.py
+
+test-recursor-motive-mutations:
+	python3 -P dev/test-recursor-motive.py --mutations

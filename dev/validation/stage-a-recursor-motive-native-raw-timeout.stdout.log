@@ -1,0 +1,5 @@
+python3 -P dev/test-house.py
+python3 -P dev/house-bend.py
+HOUSE PASS scoped host policy: 57 files, 45 line budgets, 63 reviewed unsafe sites, 41 catchalls
+python3 -P dev/test-recursor-layout.py
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-branch-types/dev/toolchain.json

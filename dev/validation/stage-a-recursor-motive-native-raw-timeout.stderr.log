@@ -1,0 +1,29 @@
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.053s
+
+OK
+Traceback (most recent call last):
+  File "/Users/oobi/Documents/gpt5/sole-comb-branch-types/dev/test-recursor-layout.py", line 212, in <module>
+    main()
+    ~~~~^^
+  File "/Users/oobi/Documents/gpt5/sole-comb-branch-types/dev/test-recursor-layout.py", line 143, in main
+    core.run("native-build", [binary, source, "-o", WORK / "checks.exe"], env)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/oobi/Documents/gpt5/sole-comb-branch-types/dev/test-core-erasure.py", line 90, in run
+    result = subprocess.run(list(map(str, argv)), cwd=cwd, env=env, capture_output=True, timeout=900)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2154, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1268, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/Users/oobi/Documents/attest/_tools/bend/bin/bend', '/Users/oobi/Documents/gpt5/sole-comb-branch-types/test/recursor-layout.bend', '-o', '/Users/oobi/Documents/gpt5/sole-comb-branch-types/_build/recursor-layout/checks.exe']' timed out after 900 seconds
+make: *** [test-recursor-layout] Error 1
