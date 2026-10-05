@@ -190,3 +190,14 @@ test-recursor-branch:
 
 test-recursor-branch-mutations:
 	python3 -P dev/test-recursor-branch.py --mutations
+
+.PHONY: test-recursor-body test-recursor-body-mutations
+
+check: test-recursor-body
+test gates: test-recursor-body-mutations
+
+test-recursor-body:
+	python3 -P dev/test-recursor-body.py
+
+test-recursor-body-mutations:
+	python3 -P dev/test-recursor-body.py --mutations

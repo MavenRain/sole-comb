@@ -164,6 +164,12 @@ elimination target. Affine recursive children receive an explicit refusal.
 Branch bodies, public elimination hypotheses, delayed recursive evaluation
 and recursor erasure remain pending.
 
+A.5b.3.2e.13 adds [checked recursor branch bodies](dev/validation/stage-a-recursor-body.md).
+The kernel checks one branch body against its branch plan. The leg must bind
+every field and every hypothesis with the planned quantity. Constructor
+coverage, ambient captures, public elimination hypotheses, delayed recursive
+evaluation and recursor erasure remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

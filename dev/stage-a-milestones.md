@@ -178,6 +178,16 @@ Branch bodies, public elimination hypotheses, delayed recursive evaluation
 and erasure remain pending. See
 [branch validation](validation/stage-a-recursor-branch.md).
 
+A.5b.3.2e.13 checks recursor branch bodies in
+`lib/kernel_recursor_body.bend`. It takes the branch plan of A.5b.3.2e.12 and
+one leg. The leg must bind every field and every hypothesis, and each leg
+quantity must agree with the plan. The scope is the declaration parameters,
+then the leg binders with the plan quantities and domains. The kernel checks
+the body against the plan target at the runtime mode and closes the usage
+back to the parameters. Constructor coverage, ambient captures, public
+elimination hypotheses, delayed recursive evaluation and erasure remain
+pending. See [body validation](validation/stage-a-recursor-body.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,
