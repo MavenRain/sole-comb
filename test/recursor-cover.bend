@@ -115,7 +115,7 @@ def planned(+c: C.ctx, owner: String, grade: Q.t, fam: P.family, mo: T.motive, b
 def checked(+owner: String, +mode: String, grade: Q.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
-      +c = C.bind("ambient", Q.Many{}, V.VNeutral{V.HGlobal{"Nat"}, []}, C.make(globals, B.create(16384n)))
+      +c = C.make(globals, B.create(16384n))
       R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, grade, fam, motive(owner, mode, fam), branches))
 
 def started(source: String, owner: String, mode: String, grade: String, rest: List<String>) -> R.result(String):

@@ -44,8 +44,8 @@ def typed(+c: C.ctx, +mode: Q.t, +owner: String, scrut: T.t, +mo: T.motive, bran
   match inf:
     case F.Pair2{ty, su}: R.bind(view, R.inferred, former(origin, ty), v => viewed(c, mode, owner, scrut, mo, branches, fam, origin, su, v))
 
-# The scrutinee scope is the declaration parameters. This does not capture ambient locals or instantiate parameters.
+# The scope is the given context, then the declaration parameters. This does not instantiate parameters.
 def check(+c: C.ctx, +mode: Q.t, +owner: String, +sq: Q.t, +scrut: T.t, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(R.inferred):
   R.bind(P.family, R.inferred, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
-    R.bind(C.ctx, R.inferred, Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c))), +origin =>
+    R.bind(C.ctx, R.inferred, Rec.parameters(R.family_params(fam), c), +origin =>
       R.bind(R.inferred, R.inferred, Rec.rules(R.inferred, origin, R.infer_scrutinee(C.ctx, C.ops, origin, mode, sq, scrut)), inf => typed(c, mode, owner, scrut, mo, branches, fam, origin, inf))))

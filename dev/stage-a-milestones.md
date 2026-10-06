@@ -214,6 +214,17 @@ term to this entry, public elimination hypothesis syntax, delayed recursive
 evaluation, erasure and families without constructors remain pending. See
 [elimination validation](validation/stage-a-recursor-elim.md).
 
+A.5b.3.2e.16 runs the checked recursor under the given context. Each
+recursor module extends the given context with the declaration parameters.
+The scrutinee, the motive and the branch bodies index the leg binders first,
+then the declaration parameters, then the given locals. The uniform
+validation compares recursive parameters at the levels of the given context.
+The result usage covers the given locals, and the owner of a local closes
+it. Scrutinee types at instantiated parameters, routing of the kernel `Elim`
+term to this entry, public elimination hypothesis syntax, delayed recursive
+evaluation, erasure and families without constructors remain pending. See
+[ambient validation](validation/stage-a-recursor-ambient.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

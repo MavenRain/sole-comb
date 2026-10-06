@@ -44,10 +44,10 @@ def leg(+origin: C.ctx, +mode: Q.t, +key: String, value: Branch.plan, lg: T.leg)
           R.bind(Unit, Q.usage, arity(key, R.length(F.Pair2<Q.t, String>, marks), R.length(Branch.binder, bs)), _ =>
             R.bind(C.ctx, Q.usage, scope(marks, bs, origin), inner => body(origin, mode, tm, target, inner)))
 
-# One branch leg against its plan, in the declaration context. This does not check
-# constructor coverage, capture ambient locals, bind public elimination hypotheses,
-# or evaluate a recursive call.
+# One branch leg against its plan, under the given context and the declaration
+# parameters. This does not check constructor coverage, bind public elimination
+# hypotheses, or evaluate a recursive call.
 def check(+c: C.ctx, +mode: Q.t, +owner: String, +key: String, +mo: T.motive, lg: T.leg) -> R.result(Q.usage):
   R.bind(Branch.plan, Q.usage, Branch.layout(c, owner, key, mo), value =>
     R.bind(P.family, Q.usage, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-      R.bind(C.ctx, Q.usage, Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c))), origin => leg(origin, mode, key, value, lg))))
+      R.bind(C.ctx, Q.usage, Rec.parameters(R.family_params(fam), c), origin => leg(origin, mode, key, value, lg))))

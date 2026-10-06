@@ -51,4 +51,4 @@ def motive(+origin: C.ctx, +owner: String, +fam: P.family, +mo: T.motive, raw: R
 def layout(+c: C.ctx, +owner: String, +key: String, mo: T.motive) -> R.result(plan):
   R.bind(P.family, plan, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
     R.bind(Rec.plan, plan, Uniform.layout(c, owner, key), raw =>
-      R.bind(C.ctx, plan, Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c))), origin => motive(origin, owner, fam, mo, raw))))
+      R.bind(C.ctx, plan, Rec.parameters(R.family_params(fam), c), origin => motive(origin, owner, fam, mo, raw))))

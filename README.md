@@ -188,6 +188,14 @@ the kernel `Elim` term, public elimination hypothesis syntax, delayed
 recursive evaluation, recursor erasure and families without constructors
 remain pending.
 
+A.5b.3.2e.16 adds [ambient locals and captures for the checked recursor](dev/validation/stage-a-recursor-ambient.md).
+The kernel checks the recursor in the given context, then the declaration
+parameters. The scrutinee, the motive and the branch bodies can read the
+given locals, and the result usage reports their reads. Scrutinee types at
+instantiated parameters, routing of the kernel `Elim` term, public
+elimination hypothesis syntax, delayed recursive evaluation, recursor
+erasure and families without constructors remain pending.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

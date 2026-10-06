@@ -62,7 +62,7 @@ def report(value: Motive.plan) -> String:
 def checked(+owner: String, key: String, mode: String, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
-      +c = C.bind("ambient", Q.Many{}, V.VNeutral{V.HGlobal{"Nat"}, []}, C.make(globals, B.create(16384n)))
+      +c = C.make(globals, B.create(16384n))
       R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
         R.map_result(Motive.plan, String, report, Motive.layout(c, owner, key, make(owner, mode, fam))))
 

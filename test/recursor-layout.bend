@@ -43,7 +43,7 @@ def selected(+c: C.ctx, +owner: String, +key: String, uniform: Bool) -> R.result
 def checked(owner: String, key: String, +uniform: Bool, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
-      R.map_result(Rec.plan, String, plan => report(plan), selected(C.bind("ambient", Q.Many{}, V.VNeutral{V.HGlobal{"Nat"}, []}, C.make(globals, B.create(16384n))), owner, key, uniform))
+      R.map_result(Rec.plan, String, plan => report(plan), selected(C.make(globals, B.create(16384n)), owner, key, uniform))
 def result_text(value: R.result(String)) -> String:
   match value:
     case Fail{e}: String.append("FAIL\n", E.to_string(e))

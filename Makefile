@@ -223,3 +223,14 @@ test-recursor-elim:
 
 test-recursor-elim-mutations:
 	python3 -P dev/test-recursor-elim.py --mutations
+
+.PHONY: test-recursor-ambient test-recursor-ambient-mutations
+
+check: test-recursor-ambient
+test gates: test-recursor-ambient-mutations
+
+test-recursor-ambient:
+	python3 -P dev/test-recursor-ambient.py
+
+test-recursor-ambient-mutations:
+	python3 -P dev/test-recursor-ambient.py --mutations

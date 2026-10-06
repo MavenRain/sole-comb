@@ -190,7 +190,6 @@ def main():
             ("check-outer-mode", "Q.runtime(mode)", "mode", "linear-direct"),
             ("close-erased-mode", "C.size(origin), mode, uses)", "C.size(origin), Q.Zero{}, uses)", "linear-twice"),
             ("close-size", "inner, C.size(origin),", "inner, C.size(inner),", "linear-twice"),
-            ("ambient-origin", "C.make(C.globals(c), C.budget(c))", "c", "ambient-not-captured"),
         )
         for name, before, after, witness in candidates:
             if original.count(before) != 1:

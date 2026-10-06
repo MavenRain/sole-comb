@@ -164,7 +164,6 @@ def main():
         candidates = (
             ("field-quantity", "Field{position, q, x, w,", "Field{position, Q.Many{}, x, w,", "quantities-and-order"),
             ("field-value", "V.var(C.size(c))", "V.var(F.Int63.zero)", "dependent-field"),
-            ("ambient-context", "parameters(params, C.make(C.globals(c), C.budget(c)))", "parameters(params, c)", "nullary"),
             ("non-direct-refusal", "P.occurs(group, tm)", "False{}", "functional-recursion"),
             ("mutual-group", "reach(fams, fams, [owner])", "[owner]", "mutual-sibling"),
         )
@@ -175,9 +174,9 @@ def main():
                 ("skip-conversion", "Q.if_else(R.result(Unit), eq,", "Q.if_else(R.result(Unit), True{},", "constant-parameter"),
                 ("parameter-order", "R.rev_append(V.t, env, [])", "env", "two-uniform-parameters"),
                 ("parameter-scope", "V.var(C.size(prefix))", "V.var(F.Int63.zero)", "dependent-uniform-parameters"),
-                ("skip-children", "diagram(c, params, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
+                ("skip-children", "diagram(base, c, params, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
                 ("untyped-conversion", "R.c_conv(C.ctx, C.ops, c, tyv, got, V.var(C.size(prefix)))", "R.c_conv_type(C.ctx, C.ops, c, got, V.var(C.size(prefix)))", "proof-irrelevance"),
-                ("first-child-only", "_ => fields(c, params, rest))", "_ => Done{Unit{}})", "second-child-changed"),
+                ("first-child-only", "_ => fields(base, c, params, rest))", "_ => Done{Unit{}})", "second-child-changed"),
             )
         closure = build.dependencies(source)
         original = (ROOT / mutation_path).read_text()
