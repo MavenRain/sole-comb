@@ -1,0 +1,2 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+RECURSOR-INSTANCE PASS cases=48 hosts=bun,node-worker mutants=0

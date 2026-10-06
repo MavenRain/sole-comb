@@ -234,3 +234,18 @@ test-recursor-ambient:
 
 test-recursor-ambient-mutations:
 	python3 -P dev/test-recursor-ambient.py --mutations
+
+.PHONY: test-recursor-instance test-recursor-instance-mutations test-recursor-instance-native
+
+check: test-recursor-instance
+test gates: test-recursor-instance-mutations
+
+test-recursor-instance:
+	python3 -P dev/test-recursor-instance.py --hosts bun,node-worker
+
+test-recursor-instance-mutations:
+	python3 -P dev/test-recursor-instance.py --hosts bun,node-worker --mutations
+
+# Native remains informational until this suite compiles within the harness deadline.
+test-recursor-instance-native:
+	python3 -P dev/test-recursor-instance.py --hosts native

@@ -21,11 +21,11 @@ def module(name, path):
 ELIM = module("recursor_elim_cases", ROOT / "dev/test-recursor-elim.py")
 BODY = ELIM.BODY
 accept, other = ELIM.accept, ELIM.other
-OUT_N, OUT_T, NAT, VS = ELIM.OUT_N, ELIM.OUT_T, ELIM.NAT, ELIM.VS
+OUT_N, OUT_T, NAT, VS, NAT_T = ELIM.OUT_N, ELIM.OUT_T, ELIM.NAT, ELIM.VS, ELIM.NT
 EMPTY = OUT_N + "\nmu E : Type 0 with"
 TREE = OUT_N + "\nmu T (0 A : Type 0) : Type 0 with | leaf : T A | fork : (left : T A) -> (right : T Nat) -> T A"
 NO_CONSTRUCTORS = "FAIL\nnot yet: recursor coverage for a family without constructors is not supported"
-NOT_UNIFORM = "FAIL\nnot yet: recursor layout requires uniform recursive parameters"
+TYPE_1 = "Type 1"
 UNKNOWN_CONTEXT = "FAIL\nmismatch: expected a known context"
 
 
@@ -44,6 +44,8 @@ def at_none(row):
 # iv (0 i : N, v : V i). A term indexes the leg binders first, then the declaration parameters, then the given locals.
 # The origin count is the given locals plus the declaration parameters. A usage row lists the innermost variable first.
 # The elim rows run again without a given local. Their expected outputs do not change.
+# A scrutinee type at a declaration parameter reads the given locals: a local of type N is not a parameter of type Type 0.
+# The kernel checks such a leg against Type 1, the universe of the parameter domain; the mismatch names that universe.
 RETURN = ("zero v0", "succ v2 w c w ih")
 ONCE = ("zero v0", "succ v0 w c w ih")
 BOXED = ("box pair 1 value",)
@@ -60,12 +62,12 @@ LOCAL = (
     ("linear-scrutinee-and-branch", BODY.BOX, "B", "result", "1", "1", "box-local", "m1", BOXED, accept(1, OUT_T, "m:w..w")),
     ("linear-twice-closed", BODY.BOX, "B", "result", "1", "1", "box-local", "m1-closed", BOXED, BODY.linear("m")),
     ("vector-local-index", BODY.VEC, "V", "index", "w", "w", "p0", "iv", VECTOR, accept(2, BODY.former("Tag", "i"), "v:w..w")),
-    ("list-under-local", ELIM.LIST, "List", "result", "w", "w", "nil", "n", ("nil near", "cons deep w h w t w ih"), accept(2, OUT_T, "n:w..w")),
+    ("list-under-local", ELIM.LIST, "List", "result", "w", "w", "nil", "n", ("nil near", "cons deep w h w t w ih"), BODY.mismatch(NAT_T, TYPE_1)),
     ("two-locals", OUT_N, "N", "result", "w", "w", "p1", "nk", ("zero stop", "succ far w c w ih"), accept(2, OUT_T, "k:0..w;n:w..w")),
     ("self-under-local", BODY.AT, "N", "self", "w", "w", "one", "n", ELIM.SELF, accept(1, BODY.former("At", ELIM.ONE_V))),
     ("vector-index-under-local", BODY.VEC, "V", "index", "w", "w", "vz", "n", VECTOR, accept(1, BODY.former("Tag", ELIM.ZERO_V))),
-    ("pair-parameters-under-local", ELIM.P, "P", "result", "w", "w", "pair", "n", ("p stop",), accept(3, OUT_T)),
-    ("parameters-under-local", ELIM.U, "U", "constant", "1", "1", "keep-y", "n", ELIM.KEEP_X, accept(3, "Nat", "y:w..w;x:1..1")),
+    ("pair-parameters-under-local", ELIM.P, "P", "result", "w", "w", "pair", "n", ("p stop",), unbound(1)),
+    ("parameters-under-local", ELIM.U, "U", "constant", "1", "1", "keep-y", "n", ELIM.KEEP_X, unbound(1)),
     ("erased-mode-local", OUT_N, "N", "result", "0", "0", "p0", "n0", NAT, accept(1, OUT_T)),
     ("erased-local-scrutinee", OUT_N, "N", "result", "w", "w", "p0", "n0", NAT, BODY.erased("n")),
     ("erased-local-quantity", OUT_N, "N", "result", "w", "0", "p0", "n0", NAT, ELIM.ERASED),
@@ -74,21 +76,22 @@ LOCAL = (
     ("local-other-family", OUT_N, "Out", "result", "w", "w", "p0", "n", ("stop stop",), other("N", "Out")),
     ("scrutinee-above-context", OUT_N, "N", "result", "w", "w", "p1", "n", NAT, unbound(1)),
     ("body-above-context", OUT_N, "N", "constant", "w", "w", "zero", "m", ("zero v1", "succ v0 w c w ih"), unbound(1)),
-    ("non-uniform-under-local", TREE, "T", "result", "w", "w", "leaf-a", "n", ("leaf stop", "fork stop w left w right w ihl w ihr"), NOT_UNIFORM),
+    ("non-uniform-under-local", TREE, "T", "result", "w", "w", "leaf-a", "n", ("leaf stop", "fork stop w left w right w ihl w ihr"), BODY.mismatch(NAT_T, TYPE_1)),
     ("unknown-context", OUT_N, "N", "result", "w", "w", "zero", "bogus", NAT, UNKNOWN_CONTEXT),
 )
 CASES = NONE + LOCAL
-# Each mutant puts one scope site back on a context without the given locals.
-SCOPE = "Rec.parameters(R.family_params(fam), c)"
+# Each mutant puts one scope site back on a context without the given locals. The uniform site needs a given local
+# of type Type 0: its mutant lives in the instance suite.
+SCOPE = "Rec.open(scope, R.family_params(fam), c)"
 FRESH = "C.make(C.globals(c), C.budget(c))"
-DROPPED = f"Rec.parameters(R.family_params(fam), {FRESH})"
+DROPPED = f"Rec.open(scope, R.family_params(fam), {FRESH})"
 MUTANTS = (
-    ("elim-drops-locals", "lib/kernel_recursor_elim.bend", SCOPE, DROPPED, "local-scrutinee"),
+    ("elim-drops-locals", "lib/kernel_recursor_elim.bend", SCOPE, DROPPED, "local-motive"),
+    ("cover-drops-locals", "lib/kernel_recursor_elim.bend", "Cover.check(c, scope, mode, owner, mo, branches)", f"Cover.check({FRESH}, scope, mode, owner, mo, branches)", "local-body"),
     ("body-drops-locals", "lib/kernel_recursor_body.bend", SCOPE, DROPPED, "local-body"),
     ("motive-drops-locals", "lib/kernel_recursor_motive.bend", SCOPE, DROPPED, "local-motive"),
     ("branch-drops-locals", "lib/kernel_recursor_branch.bend", SCOPE, DROPPED, "self-under-local"),
-    ("constructor-drops-locals", "lib/kernel_recursor.bend", "parameters(params, c)", f"parameters(params, {FRESH})", "vector-index-under-local"),
-    ("uniform-drops-locals", "lib/kernel_recursor_uniform.bend", "validate(c, R.family_params(fam), plan)", f"validate({FRESH}, R.family_params(fam), plan)", "list-under-local"),
+    ("constructor-drops-locals", "lib/kernel_recursor.bend", "open(scope, params, c)", f"open(scope, params, {FRESH})", "vector-index-under-local"),
 )
 
 
@@ -173,7 +176,7 @@ def main():
     if snapshot() != hashes:
         raise RuntimeError("source changed during ambient validation")
     record = {"schema": 1, "cases": len(CASES), "sources": hashes, "hosts": observations, "mutations": mutations,
-              "scope": "Checked recursor under given locals: the scope is the given context, then the declaration parameters, and the scrutinee, the motive and the bodies can read the given locals; scrutinee types at instantiated parameters, routing of the kernel Elim term, public elim hypotheses, delayed recursive evaluation, erasure, families without constructors, mutual and nondirect recursion remain pending."}
+              "scope": "Checked recursor under given locals: the scope is the given context, then the declaration parameters defined at the scrutinee values; the scrutinee is inferred in the given context, and the motive and the bodies can read the given locals; routing of the kernel Elim term, public elim hypotheses, delayed recursive evaluation, erasure, families without constructors, mutual and nondirect recursion remain pending."}
     (WORK / "result.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     print(f"RECURSOR-AMBIENT PASS cases={len(CASES)} hosts={','.join(hosts)} mutants={len(mutations)}")
 

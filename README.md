@@ -196,6 +196,19 @@ instantiated parameters, routing of the kernel `Elim` term, public
 elimination hypothesis syntax, delayed recursive evaluation, recursor
 erasure and families without constructors remain pending.
 
+A.5b.3.2e.17 adds [checked recursor scrutinees at instantiated parameters](dev/validation/stage-a-recursor-instance.md).
+The kernel infers the scrutinee in the given context. The scrutinee type
+gives the declaration parameters their values, and the parameters open as
+erased aliases defined at those values. The motive, the branch bodies, the
+field types and the uniform validation see the values. Routing of the
+kernel `Elim` term to this entry, parameter rows in the result usage,
+public elimination hypothesis syntax, delayed recursive evaluation,
+recursor erasure and families without constructors remain pending.
+
+The instance Make targets validate Bun and Node worker. Native compilation
+remains an explicit `make test-recursor-instance-native` check; the recorded
+native run exceeded the unchanged 900-second harness deadline.
+
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
 pending.

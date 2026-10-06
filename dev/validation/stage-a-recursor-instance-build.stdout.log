@@ -1,0 +1,3 @@
+PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-comb/dev/toolchain.json
+BUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only
+BUILD sole-comb js check OK wall_s=14.929 child_cpu_s=9.030

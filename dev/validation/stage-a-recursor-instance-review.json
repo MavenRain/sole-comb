@@ -1,0 +1,440 @@
+{
+  "base": "c447d49535390c7bd8090b8648e1ae3eec50a4b4",
+  "before_fix_witnesses": [
+    {
+      "recorded_utc": "2026-10-06T10:34:26.109523+00:00",
+      "records": {
+        "base_HEAD": {
+          "command_argv": [
+            "/Users/oobi/.bun/bin/bun",
+            "_build/recursor-elim/checks.js",
+            "mu N : Type 0 with | zero : N | succ : (child : N) -> N\nmu Out : Type 0 with | stop : Out | both : (field : N) -> (previous : Out) -> Out",
+            "N",
+            "result",
+            "w",
+            "w",
+            "zero-bad-shape",
+            "zero",
+            "stop",
+            "/",
+            "succ",
+            "both",
+            "w",
+            "n",
+            "w",
+            "ih"
+          ],
+          "cwd": "/Users/oobi/Documents/gpt5/sole-comb-review-20261006/recursor_elim_base_probe",
+          "exit_code": 0,
+          "source_sha256": {
+            "lib/kernel_recursor_elim.bend": "a620ca08b4414a34812b65ed2d27c7694a4dc307aa6dd84f397c1daf8255d363",
+            "test/recursor-elim.bend": "655b1d3adadab56695fb6698a3056492372fa3652d114d44ce9c013a18fa03db"
+          },
+          "stderr": "",
+          "stdout": "FAIL\nnot yet: recursor scrutinee parameters other than the declaration parameters are not supported\n"
+        },
+        "staged_before_guard": {
+          "command_argv": [
+            "/Users/oobi/.bun/bin/bun",
+            "_build/recursor-elim/checks.js",
+            "mu N : Type 0 with | zero : N | succ : (child : N) -> N\nmu Out : Type 0 with | stop : Out | both : (field : N) -> (previous : Out) -> Out",
+            "N",
+            "result",
+            "w",
+            "w",
+            "zero-bad-shape",
+            "zero",
+            "stop",
+            "/",
+            "succ",
+            "both",
+            "w",
+            "n",
+            "w",
+            "ih"
+          ],
+          "cwd": "/Users/oobi/Documents/gpt5/sole-comb-review-20261006/recursor_elim_probe",
+          "exit_code": 0,
+          "source_sha256": {
+            "lib/kernel_recursor_elim.bend": "8264dd4ab63ed06f5c8827b68c0cc8952aa6961232089b786712216ecdc4ebdd",
+            "test/recursor-elim.bend": "655b1d3adadab56695fb6698a3056492372fa3652d114d44ce9c013a18fa03db"
+          },
+          "stderr": "",
+          "stdout": "PASS origin=0 type=(Lan SMu Out [] (Sec SColl 0 [])) uses=\n"
+        }
+      },
+      "schema": 1,
+      "witness": "T.Ann{N.zero, T.Lan{SMu N [], T.Sec{SColl 1, []}}}"
+    },
+    {
+      "command_argv": [
+        "/Users/oobi/.bun/bin/bun",
+        "_build/recursor-instance/checks.js",
+        "mu N : Type 0 with | zero : N | succ : (child : N) -> N\nmu Out : Type 0 with | stop : Out | both : (field : N) -> (previous : Out) -> Out\nmu List (0 A : Type 0) : Type 0 with | nil : List A | cons : (head : A) -> (tail : List A) -> List A",
+        "List",
+        "result",
+        "w",
+        "w",
+        "nil-bound-leg",
+        "none",
+        "nil",
+        "stop",
+        "/",
+        "cons",
+        "v0",
+        "w",
+        "h",
+        "w",
+        "t",
+        "w",
+        "ih"
+      ],
+      "cwd": "/Users/oobi/Documents/gpt5/sole-comb-review-20261006/recursor_elim_guard_probe",
+      "exit_code": 0,
+      "recorded_utc": "2026-10-06T10:41:24.220085+00:00",
+      "schema": 1,
+      "source_sha256": {
+        "lib/kernel_recursor_elim.bend": "34ff63717e6dad34953e91a177d7c4b7e759b1de45a6f52ec751ff6c82bb9bf1",
+        "lib/kernel_recursor_instance.bend": "5a9bf006b8f2f40ca2a0bcf9ecd4c10ceeda8efc4a584a3f17834d9281033505",
+        "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+        "test/recursor-instance.bend": "38a4fcc9f6aa7fb7ec3752f452d082a236ac566b7df1738a83bb03be47bd5b74"
+      },
+      "stderr": "",
+      "stdout": "PASS origin=1 type=(Lan SMu Out [] (Sec SColl 0 [])) uses=\n",
+      "witness": "T.Ann{List.nil, List[N] with one parameter leg T.Leg{[zero binder ignored], N}}"
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "make",
+        "test-recursor-instance"
+      ],
+      "cases": 53,
+      "elapsed_seconds": 107.36,
+      "exit_code": 0,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "mutations": 0,
+      "name": "checks",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "python3 -P dev/test-recursor-instance.py --hosts bun,node-worker\nPINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-INSTANCE PASS cases=53 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "527662067c95c65cad6f823b8a56c40af7cac3007ec16b91b31b57827b6e2d44"
+    },
+    {
+      "argv": [
+        "make",
+        "test-recursor-instance-mutations"
+      ],
+      "cases": 53,
+      "elapsed_seconds": 1333.9,
+      "exit_code": 0,
+      "hosts": [
+        "bun",
+        "node-worker"
+      ],
+      "mutations": 11,
+      "name": "mutations",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "python3 -P dev/test-recursor-instance.py --hosts bun,node-worker --mutations\nPINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-INSTANCE PASS cases=53 hosts=bun,node-worker mutants=11\n",
+      "stdout_sha256": "005b59253a4b43b75cb39f6bb3491c3136b17b8bea7c636e353937c7d067bde6"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-layout.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 50.26,
+      "exit_code": 0,
+      "name": "layout",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-LAYOUT PASS 19 cases on bun,node-worker\n",
+      "stdout_sha256": "3e6c1bf1a00c0a6340b49e5afbad4fac0a750f31ac319c038afb2fe324583981"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-layout.py",
+        "--hosts",
+        "bun,node-worker",
+        "--mutations"
+      ],
+      "elapsed_seconds": 440.89,
+      "exit_code": 0,
+      "name": "layout-mutations",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-LAYOUT PASS 19 cases on bun,node-worker\n",
+      "stdout_sha256": "3e6c1bf1a00c0a6340b49e5afbad4fac0a750f31ac319c038afb2fe324583981"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-layout.py",
+        "--hosts",
+        "bun,node-worker",
+        "--uniform"
+      ],
+      "elapsed_seconds": 135.92,
+      "exit_code": 0,
+      "name": "uniform",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-UNIFORM PASS 34 cases on bun,node-worker\n",
+      "stdout_sha256": "6aa0870507beff6a2cc0c32709d9838afa04c943975430af0a1726692cae0d59"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-motive.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 255.5,
+      "exit_code": 0,
+      "name": "motive",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-MOTIVE PASS cases=43 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "2142cbe995b1f4184621a8c30a534d068c5ca6de8da504f2944f0ee53bffb776"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-branch.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 210.81,
+      "exit_code": 0,
+      "name": "branch",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-BRANCH PASS cases=44 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "93ddbcdb3d5a7eac21e3c34b7d84fe6a6a80a1de993702dca160eb61655153e4"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-body.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 225.75,
+      "exit_code": 0,
+      "name": "body",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-BODY PASS cases=46 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "91bb539538a14b6a6437cdb9ad7b33b4c0a9b7c287b77faf429cf10dfdb15379"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-cover.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 131.3,
+      "exit_code": 0,
+      "name": "cover",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-COVER PASS cases=45 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "fcdbf2b7d9c0cda04b863e212f579517b97907871648b12f30cd9b075326a70f"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-elim.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 47.06,
+      "exit_code": 0,
+      "name": "elim",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-ELIM PASS cases=43 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "d62abece21740bea0a9cbe7539f2fe6d32bedf5ea3c4d624ff9313951bc12e25"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/test-recursor-ambient.py",
+        "--hosts",
+        "bun,node-worker"
+      ],
+      "elapsed_seconds": 84.2,
+      "exit_code": 0,
+      "name": "ambient",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nRECURSOR-AMBIENT PASS cases=69 hosts=bun,node-worker mutants=0\n",
+      "stdout_sha256": "92a5589ae3f678dfd3047309183d0b4decd4d2f78e2b43157aca57794a61c3d3"
+    },
+    {
+      "argv": [
+        "make",
+        "house"
+      ],
+      "elapsed_seconds": 0.46,
+      "exit_code": 0,
+      "name": "policy-fixtures",
+      "stderr": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.042s\n\nOK\n",
+      "stderr_sha256": "c4b291384fa0cc2dca67ec8b64635952be1810db8eab5e0aeb677e1b3c2a7f73",
+      "stdout": "python3 -P dev/test-house.py\npython3 -P dev/house-bend.py\nHOUSE PASS scoped host policy: 63 files, 51 line budgets, 63 reviewed unsafe sites, 41 catchalls\n",
+      "stdout_sha256": "cfbc1cb7ad6b620773027c415e978506338459fb45b6ba17994a4ede7a11a671"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/build.py",
+        "--check"
+      ],
+      "elapsed_seconds": 11.25,
+      "exit_code": 0,
+      "name": "build",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\nBUILD sole-comb js check: /Users/oobi/Documents/attest/_tools/bend/bin/bend bin/sole-comb.bend --check-only\nBUILD sole-comb js check OK wall_s=10.629 child_cpu_s=8.099\n",
+      "stdout_sha256": "0c7180d306f5b61f1858d87157265ce4d277b6db8281a06bde81f03c6c04143d"
+    },
+    {
+      "argv": [
+        "python3",
+        "-P",
+        "dev/pin-check.py"
+      ],
+      "elapsed_seconds": 0.74,
+      "exit_code": 0,
+      "name": "pins",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/Users/oobi/Documents/gpt5/sole-comb-review-20261006/tree/dev/toolchain.json\n",
+      "stdout_sha256": "30c391efc3972e5f43c0856b74df9e7ba9c11dce7fbab4b78c3a8cffa2ab2ee0"
+    }
+  ],
+  "limitations": [
+    "Native is not revalidated; the original native compile timed out after 900 seconds.",
+    "The complete make gates suite was not run.",
+    "Malformed-diagram witnesses use the low-level Elim.check API; parsed source reachability is unverified."
+  ],
+  "schema": 1,
+  "sources": {
+    "Makefile": "e2c773e79ab2e707eb071ac043c580897c84086b1497ca5fa9460d1130904be2",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/bend-policy.json": "e29c854d870b28c159832c47783041b58d52155f0e2dc6c2e560fea534f3d310",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/house-bend.py": "8239519646ac0f9b92b05ea2417756e06efddf58182cd8068a3c95c732eac4e1",
+    "dev/reference-fixtures.py": "7b74e199dda17d6c9baf52ebbe3fba938088f1c326a25600a1169f9c371df7e6",
+    "dev/reference-fixtures/core-erasure.json": "8e5750c3365bfd27d432fd8151f6656a1a7375940207ca5695e99a0ce14a5127",
+    "dev/reference-fixtures/manifest.json": "513ae29a13957cda3f1f606146138264f49286b207724d8cbdb75258379a80f6",
+    "dev/test-core-erasure-mutations.py": "51cb9607e0f30244fae356e73abd9903e0bfabcafc86049c8302e326e02b8c2e",
+    "dev/test-core-erasure.py": "360bbdf46c11508652ef84847a6375bb1d76d6577de12c0c25e17e1f80686dfa",
+    "dev/test-recursor-ambient.py": "c5344b6b273ab4f2258506b54c668f1f99297332b8b981cd20181636c1796a1f",
+    "dev/test-recursor-body.py": "fa95ee224f38296b8dfda8ffc189f5754da1579ec81faca30fbd326675d4afc6",
+    "dev/test-recursor-elim.py": "d43d30c2d749e9db05e179117271cec0bddbdeb094f9c65e6c572c7b2fb9b4df",
+    "dev/test-recursor-instance.py": "9c9e0777c6433cd0c0d70fc7c7ae7a88a2354fa8734968ce5d73d416b451339e",
+    "dev/test-recursor-layout.py": "aa2c5f4b5fc89c834d0626d112968f9472875222c2b058a10f29ad03c9299fe3",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "examples/arithmetic.sole-comb": "1ead9e3f8c1a443d97d96d52f5edace4e419c365f70804315302c84ed6e0e22f",
+    "examples/erasure.sole-comb": "dd2facd96825aea117c8ecfcf1033416512e452ae983688960d13eca4831a4fe",
+    "examples/finite-elim.sole-comb": "3d1f94e8637cd6bece43fec32e3cd201299fcf05138e3492516c46a1ebbbb345",
+    "examples/identity.sole-comb": "abb67ea5136a550581d9883b98202c52e2a9438dd38c4a376190362d0d57d43b",
+    "examples/pair-erasure.sole-comb": "4d26e873e06cf8674865ef9fb061331c84fd5eeec09b07c76b1889dfddd28621",
+    "examples/product-erasure.sole-comb": "7ecc30756f5952f456bbe208b64e0c95226e6c69d18264b50e9c3e555ae2d46c",
+    "examples/records.sole-comb": "728499d68434b2273d598f99092fa51a89862ab7204ceea58d8ffe3d0316b4de",
+    "examples/sum-erasure.sole-comb": "1c430e8282c92cae6f657edbe4c766e8cc1fa09330493f9e233ecb6834904f6e",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "b453a6c4d9baedf7dee3f9a775a0484719d0d4dcdbab6b1c9ecfde0c0ec3ca9a",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "eb7233cabb1d30a528bc22dc6da6d28f7da8d39520eda00dbea4ea30a8ea8518",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_recursor.bend": "79bc7978ac78b9f6d069ad9c56b0b691b02f94753676fea3fbc85ab5f8d5d131",
+    "lib/kernel_recursor_body.bend": "91e0b1c46fdf9c17a04ca1d54b18c081f1200fca0e84d9ae24eb8244454ede68",
+    "lib/kernel_recursor_branch.bend": "78de725ca0be41e4cd1ab737e5c6fbbb278cc51e1f7486493caab52c728353db",
+    "lib/kernel_recursor_cover.bend": "3c1545b6c0db482d364628aafd18926c8439bea3f1fd70344f40e5f7382cb670",
+    "lib/kernel_recursor_elim.bend": "34ff63717e6dad34953e91a177d7c4b7e759b1de45a6f52ec751ff6c82bb9bf1",
+    "lib/kernel_recursor_group.bend": "1eb12c10773b7fcc0b74dbee3741e2188d0e1235264c9d001368062f63e8cb01",
+    "lib/kernel_recursor_instance.bend": "236b9e151bcb340cb888db94bb7e133a7e71c204780a48aa4cc5773d4e7319d8",
+    "lib/kernel_recursor_motive.bend": "4d9a2bf44ced6efaa35685f4d2b4d54341acea98fd237fdb03c40ddf4c6ba266",
+    "lib/kernel_recursor_uniform.bend": "7613d62f7590d70bb716bd9b6517c59f9d170e8e3f850bf72389393603767af8",
+    "lib/kernel_rules.bend": "05d61e6498129813389011df1706d97406bacdd1beca2040597694532f897154",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "sole-comb": "8cc3e75f0a891de26e75dff0ba2d4498aa323c49cd9a0e1befbabb2d81789e1a",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "ffd11b42c0c663fc99409b601af61e86fc91d735361644c661578ab991d963d4",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/core-erasure.bend": "b0c0cc205715768c6fc7033302e0647ba88a4a4b57ac75acddc6bdf5553c8525",
+    "test/finite-elim-erasure.kan": "1958610c60b65a05b220c4fe7da6c3305f815b3e39ba7ce4e9a880c954269903",
+    "test/pair-erasure.kan": "27fa423ac0b8fc469b992fdb0cbeac62ee68f17548a25d9a85f8709e695d37cb",
+    "test/pinfront/elab.bend": "3b5c1ca90e7ef7ced4b863f3da9ba4f777b031299898c18e60f50af2f87d91d5",
+    "test/pinfront/elab_program.bend": "cb44fe829bd5bc01f79e9549f3adb402235377f94322d10a36cbea85255ba03e",
+    "test/pinfront/lexer.bend": "004811c89310de98da986c592d4fc30e206b241746502581bbb65dc2a743935f",
+    "test/pinfront/order.bend": "73d7d6f8cd48e6833252cce122a9ec0b0c0af65b76d3c8862184309f15acc2ac",
+    "test/pinfront/parser.bend": "e9a1dd4691bc9b1e8ff44757c527e29330b85965b085d373c31be45a545a296c",
+    "test/pinfront/program.bend": "4a8676c0bf2c35bb4ab7a4b71ac02cf5e3f834ef548f811ccdcd89a6f388e57d",
+    "test/pinfront/syntax.bend": "71f5a5f965b263440532d504aa9381feda28a3f514eaaafdc52f516135c652b2",
+    "test/pinfront/token.bend": "80eb80a04a1416b92fd858b9f477cb776140863629cb61203f1c7e8977d7943f",
+    "test/pinfront/totality.bend": "40d1cb63b6bb84e143e59dd8d0ba56b2897cf29d45f09acffdee5c67ed44a7c4",
+    "test/product-erasure.kan": "17b0d0ffa8caa2d4cc4d282d85519033d48cad007da43ae1b012e21aa5e12614",
+    "test/program.bend": "4e6ceb9418a552c2a99149d95f3380a03b70b6a2df73336b240bb38adead536a",
+    "test/records-erasure.kan": "95e37f03d9b6d1bde7a048ee46e78b702c61106ce552f7c01c169c324f0eb79e",
+    "test/recursor-instance.bend": "2c68c99690b8e64761c6627d657e3b3dd26341741a11f4d0f7f96c7379cb9419",
+    "test/recursor-layout.bend": "c3659e71578a0434f236076aa833b9964211305bab7e3e0a5506d4a43d85b877",
+    "test/recursor-motive.bend": "a802dd693b5e12fa3d216a77753e48a121db995a569c15cf21d663eb038bc2bf",
+    "test/sum-erasure.kan": "3aa1dacc19a944af465eaa407688fc71af1c023305a8416a317e9fe4ac8186e4"
+  }
+}

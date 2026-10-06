@@ -47,7 +47,7 @@ def leg(+origin: C.ctx, +mode: Q.t, +key: String, value: Branch.plan, lg: T.leg)
 # One branch leg against its plan, under the given context and the declaration
 # parameters. This does not check constructor coverage, bind public elimination
 # hypotheses, or evaluate a recursive call.
-def check(+c: C.ctx, +mode: Q.t, +owner: String, +key: String, +mo: T.motive, lg: T.leg) -> R.result(Q.usage):
-  R.bind(Branch.plan, Q.usage, Branch.layout(c, owner, key, mo), value =>
+def check(+c: C.ctx, +scope: Rec.scope, +mode: Q.t, +owner: String, +key: String, +mo: T.motive, lg: T.leg) -> R.result(Q.usage):
+  R.bind(Branch.plan, Q.usage, Branch.layout(c, scope, owner, key, mo), value =>
     R.bind(P.family, Q.usage, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-      R.bind(C.ctx, Q.usage, Rec.parameters(R.family_params(fam), c), origin => leg(origin, mode, key, value, lg))))
+      R.bind(C.ctx, Q.usage, Rec.open(scope, R.family_params(fam), c), origin => leg(origin, mode, key, value, lg))))

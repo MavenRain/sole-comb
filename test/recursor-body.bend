@@ -78,7 +78,7 @@ def report(+origin: C.ctx, uses: Q.usage) -> String:
   String.concat(["PASS origin=", F.Int63.show(C.size(origin)), " used=", K.join(";", used(C.locals(origin), F.Int63.pred(C.size(origin)), uses))])
 
 def planned(+c: C.ctx, owner: String, key: String, grade: Q.t, fam: P.family, mo: T.motive, lg: T.leg) -> R.result(String):
-  R.bind(Q.usage, String, Body.check(c, grade, owner, key, mo, lg), uses =>
+  R.bind(Q.usage, String, Body.check(c, Rec.Abstract{}, grade, owner, key, mo, lg), uses =>
     R.map_result(C.ctx, String, origin => report(origin, uses), Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c)))))
 
 def checked(+owner: String, key: String, +mode: String, grade: Q.t, lg: T.leg, value: Program.checked) -> R.result(String):

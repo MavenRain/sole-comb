@@ -99,21 +99,21 @@ CASES = (
     ("empty-family", EMPTY, "E", "result", "w", (), "FAIL\nnot yet: recursor coverage for a family without constructors is not supported"),
     ("unknown-mode", OUT_N, "N", "bogus", "w", (Z, S), "FAIL\nexpected a known motive mode"),
 )
-WALK = "walk(names, c, mode, owner, mo, branches)"
+WALK = "walk(names, c, scope, mode, owner, mo, branches)"
 COVER = "Rec.rules(Unit, c, R.mu_cover(C.ctx, owner, names, branches))"
 MUTANTS = (
     ("drop-coverage", COVER, "Done{Unit{}}", "extra-key"),
     ("coverage-after-bodies", f"R.bind(Unit, Q.usage, {COVER}, _ => {WALK})",
      f"R.bind(Q.usage, Q.usage, {WALK}, uses => R.map_result(Unit, Q.usage, _ => uses, {COVER}))", "wrong-body-and-missing"),
     ("walk-branch-order", f"_ => {WALK}",
-     "_ => R.bind(List<&2, String>, Q.usage, Rec.rules(List<&2, String>, c, R.mu_keys(C.ctx, owner, branches)), keys => walk(keys, c, mode, owner, mo, branches))", "both-wrong-reversed"),
-    ("first-constructor-only", "walk(rest, c, mode, owner, mo, branches)",
+     "_ => R.bind(List<&2, String>, Q.usage, Rec.rules(List<&2, String>, c, R.mu_keys(C.ctx, owner, branches)), keys => walk(keys, c, scope, mode, owner, mo, branches))", "both-wrong-reversed"),
+    ("first-constructor-only", "walk(rest, c, scope, mode, owner, mo, branches)",
      "R.map_result(F.Int63.t, Q.usage, _ => Q.unreachable, Done{R.length(String, rest)})", "wrong-last-body"),
     ("fixed-key", "R.branch_leg(V.VACtor{key}, branches)", 'R.branch_leg(V.VACtor{"zero"}, branches)', "nat"),
     ("sequence-join", "Q.alternative(uses, tail)", "Q.sequence(uses, tail)", "join-every-branch"),
     ("empty-base", "case []: Done{Q.unreachable}", "case []: Done{Q.empty}", "join-every-branch"),
     ("drop-empty-guard", "inhabited(all)", "Done{all}", "empty-family"),
-    ("erased-bodies", "Body.check(c, mode, owner, key, mo, lg)", "Body.check(c, Q.Zero{}, owner, key, mo, lg)", "zero-hypothesis-runtime"),
+    ("erased-bodies", "Body.check(c, scope, mode, owner, key, mo, lg)", "Body.check(c, scope, Q.Zero{}, owner, key, mo, lg)", "zero-hypothesis-runtime"),
 )
 
 

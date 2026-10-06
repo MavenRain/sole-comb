@@ -30,9 +30,9 @@ P = OUT_N + "\nmu P (0 A : Type 0) (0 B : Type 0) : Type 0 with | p : P A B"
 LIN = ("mu Out : Type 0 with | stop : Out | one : (1 only : Nat) -> Out | both : (1 field : Nat) -> (1 previous : Nat) -> Out\n"
        "mu L (x : Nat) (y : Nat) : Type 0 with | hold : (1 value : Nat) -> L x y")
 INDEX_0 = "FAIL\nunbound: de Bruijn index 0 is outside the context"
+INDEX_1 = "FAIL\nunbound: de Bruijn index 1 is outside the context"
 BARE = "FAIL\ncannot infer: an injection has no type of its own;  it needs an expected type"
 NOT_FORMER = "FAIL\nmismatch: the scrutinee is not a left former"
-OTHER_PARAMETERS = "FAIL\nnot yet: recursor scrutinee parameters other than the declaration parameters are not supported"
 ERASED = "FAIL\nquantity: an erased scrutinee cannot be eliminated at runtime"
 WRONG = "FAIL\nmismatch: the motive is built for Wrong and the scrutinee is at N"
 
@@ -57,6 +57,7 @@ def other(found, owner):
 # A group is a key, a body, then quantity and name pairs. Body index 0 is the last leg binder.
 # A variable read records its checking mode. A constructor argument is read at the mode times the field quantity.
 # The result usage is the scrutinee usage in sequence with the branch usage scaled by the checking mode.
+# The scrutinee is inferred in the given context, which is empty here: a scrutinee type at a declaration parameter is unbound.
 Z, S = "zero stop", "succ both w n w ih"
 NAT = (Z, S)
 SELF = ("zero at-zero", "succ next w n w ih")
@@ -71,33 +72,33 @@ CASES = (
     ("nat-linear", OUT_N, "N", "result", "1", "1", "zero", NAT, accept(0, OUT_T)),
     ("self-zero", BODY.AT, "N", "self", "w", "w", "zero", SELF, accept(0, BODY.former("At", ZERO_V))),
     ("self-one", BODY.AT, "N", "self", "w", "w", "one", SELF, accept(0, BODY.former("At", ONE_V))),
-    ("list-nil", LIST, "List", "result", "w", "w", "nil", ("nil stop", "cons v0 w h w t w ih"), accept(1, OUT_T)),
+    ("list-nil", LIST, "List", "result", "w", "w", "nil", ("nil stop", "cons v0 w h w t w ih"), INDEX_0),
     ("vector-constant", VEC, "V", "result", "w", "w", "vz", ("vz stop", "vs v0 " + VS), accept(0, OUT_T)),
     ("vector-index", BODY.VEC, "V", "index", "w", "w", "vz", ("vz tag-zero", "vs grow " + VS), accept(0, BODY.former("Tag", ZERO_V))),
-    ("pair-parameters", P, "P", "result", "w", "w", "pair", ("p stop",), accept(2, OUT_T)),
+    ("pair-parameters", P, "P", "result", "w", "w", "pair", ("p stop",), INDEX_1),
     ("erased-mode", OUT_N, "N", "result", "0", "0", "zero", NAT, accept(0, OUT_T)),
     ("erased-mode-many", OUT_N, "N", "result", "0", "w", "one", NAT, accept(0, OUT_T)),
-    ("erased-mode-parameter", U, "U", "constant", "0", "0", "keep-x", KEEP_X, accept(2, "Nat")),
-    ("field-many-scrutinee", U, "U", "constant", "w", "w", "keep-x", KEEP_V, accept(2, "Nat", "x:w..w")),
-    ("field-many-branch", U, "U", "constant", "1", "1", "keep-y", KEEP_X, accept(2, "Nat", "y:w..w;x:1..1")),
-    ("scrutinee-read-1-1", LIN, "L", "result", "1", "1", "hold-x", HOLD_V, accept(2, OUT_T, "x:1..1")),
-    ("scrutinee-read-1-w", LIN, "L", "result", "1", "w", "hold-x", HOLD_V, accept(2, OUT_T, "x:w..w")),
-    ("scrutinee-read-w-1", LIN, "L", "result", "w", "1", "hold-x", HOLD_V, accept(2, OUT_T, "x:w..w")),
-    ("scrutinee-read-w-w", LIN, "L", "result", "w", "w", "hold-x", HOLD_V, accept(2, OUT_T, "x:w..w")),
-    ("branch-read-1-1", LIN, "L", "result", "1", "1", "hold-y", HOLD_X, accept(2, OUT_T, "y:1..1;x:1..1")),
-    ("branch-read-1-w", LIN, "L", "result", "1", "w", "hold-y", HOLD_X, accept(2, OUT_T, "y:w..w;x:1..1")),
-    ("branch-read-w-1", LIN, "L", "result", "w", "1", "hold-y", HOLD_X, accept(2, OUT_T, "y:w..w;x:w..w")),
-    ("branch-read-w-w", LIN, "L", "result", "w", "w", "hold-y", HOLD_X, accept(2, OUT_T, "y:w..w;x:w..w")),
-    ("both-read-1-1", LIN, "L", "result", "1", "1", "hold-x", HOLD_X, accept(2, OUT_T, "x:w..w")),
-    ("both-read-w-w", LIN, "L", "result", "w", "w", "hold-x", HOLD_X, accept(2, OUT_T, "x:w..w")),
+    ("erased-mode-parameter", U, "U", "constant", "0", "0", "keep-x", KEEP_X, INDEX_1),
+    ("field-many-scrutinee", U, "U", "constant", "w", "w", "keep-x", KEEP_V, INDEX_1),
+    ("field-many-branch", U, "U", "constant", "1", "1", "keep-y", KEEP_X, INDEX_1),
+    ("scrutinee-read-1-1", LIN, "L", "result", "1", "1", "hold-x", HOLD_V, INDEX_1),
+    ("scrutinee-read-1-w", LIN, "L", "result", "1", "w", "hold-x", HOLD_V, INDEX_1),
+    ("scrutinee-read-w-1", LIN, "L", "result", "w", "1", "hold-x", HOLD_V, INDEX_1),
+    ("scrutinee-read-w-w", LIN, "L", "result", "w", "w", "hold-x", HOLD_V, INDEX_1),
+    ("branch-read-1-1", LIN, "L", "result", "1", "1", "hold-y", HOLD_X, INDEX_1),
+    ("branch-read-1-w", LIN, "L", "result", "1", "w", "hold-y", HOLD_X, INDEX_1),
+    ("branch-read-w-1", LIN, "L", "result", "w", "1", "hold-y", HOLD_X, INDEX_1),
+    ("branch-read-w-w", LIN, "L", "result", "w", "w", "hold-y", HOLD_X, INDEX_1),
+    ("both-read-1-1", LIN, "L", "result", "1", "1", "hold-x", HOLD_X, INDEX_1),
+    ("both-read-w-w", LIN, "L", "result", "w", "w", "hold-x", HOLD_X, INDEX_1),
     ("untypable", OUT_N, "N", "result", "w", "w", "p0", NAT, INDEX_0),
     ("bare-constructor", OUT_N, "N", "result", "w", "w", "bare", NAT, BARE),
-    ("erased-parameter-read", P, "P", "result", "w", "w", "p1", ("p stop",), BODY.erased("A")),
-    ("not-a-former", BODY.WRAP, "Wrap", "constant", "w", "w", "p0", ("wrap v0",), NOT_FORMER),
-    ("universe-parameter", P, "P", "result", "0", "0", "p0", ("p stop",), NOT_FORMER),
+    ("erased-parameter-read", P, "P", "result", "w", "w", "p1", ("p stop",), INDEX_1),
+    ("not-a-former", BODY.WRAP, "Wrap", "constant", "w", "w", "p0", ("wrap v0",), INDEX_0),
+    ("universe-parameter", P, "P", "result", "0", "0", "p0", ("p stop",), INDEX_0),
     ("other-family", OUT_N, "Out", "result", "w", "w", "zero", ("stop stop",), other("N", "Out")),
-    ("parameter-other-family", JOIN, "W", "result", "w", "w", "p0", ("a stop", "b stop"), other("Out", "W")),
-    ("other-parameters", P, "P", "result", "w", "w", "pair-swapped", ("p stop",), OTHER_PARAMETERS),
+    ("parameter-other-family", JOIN, "W", "result", "w", "w", "p0", ("a stop", "b stop"), INDEX_0),
+    ("other-parameters", P, "P", "result", "w", "w", "pair-swapped", ("p stop",), INDEX_0),
     ("erased-scrutinee-many", OUT_N, "N", "result", "w", "0", "zero", NAT, ERASED),
     ("erased-scrutinee-linear", OUT_N, "N", "result", "1", "0", "zero", NAT, ERASED),
     ("missing-branch", OUT_N, "N", "result", "w", "w", "zero", (Z,), missing("N", "succ")),
@@ -110,22 +111,18 @@ CASES = (
     ("affine-child", AFF, "T", "result", "w", "w", "leaf", ("leaf stop", "fork stop"), BODY.AFFINE),
     ("unknown-mode", OUT_N, "N", "bogus", "w", "w", "zero", NAT, "FAIL\nexpected a known motive mode"),
 )
-COVER = "Cover.check(c, mode, owner, mo, branches)"
-INFER = "R.infer_scrutinee(C.ctx, C.ops, origin, mode, sq, scrut)"
-TYPED = f"R.bind(R.inferred, R.inferred, Rec.rules(R.inferred, origin, {INFER}), inf => typed(c, mode, owner, scrut, mo, branches, fam, origin, inf))"
-USAGE = "Q.sequence(su, Q.scale(mode, bu))"
+COVER = "Cover.check(c, scope, mode, owner, mo, branches)"
+INFER = "R.infer_scrutinee(C.ctx, C.ops, c, mode, sq, scrut)"
+TYPED = f"R.bind(R.inferred, R.inferred, Rec.rules(R.inferred, c, {INFER}), inf => typed(c, mode, owner, scrut, mo, branches, fam, inf))"
+# The parameter and usage mutants live in the instance suite: no elim row has a given local, and every elim row at a
+# family with declaration parameters fails at the scrutinee.
 MUTANTS = (
     ("drop-family-name", "named(owner, n)", "Done{Unit{}}", "other-family"),
-    ("drop-parameter-check", "uniform(origin, owner, fam, w, ixv)", "Done{Unit{}}", "other-parameters"),
-    ("coverage-before-scrutinee", TYPED, f"R.bind(Q.usage, R.inferred, {COVER}, _ => {TYPED})", "untypable-and-missing"),
+    ("coverage-before-scrutinee", TYPED, f"R.bind(Q.usage, R.inferred, Cover.check(c, Rec.Abstract{{}}, mode, owner, mo, branches), _ => {TYPED})", "untypable-and-missing"),
     ("drop-coverage", COVER, "Done{Q.unreachable}", "missing-branch"),
-    ("result-fixed-index", "R.mu_result(C.ctx, C.ops, origin, mo, ixv, sv)",
-     'R.mu_result(C.ctx, C.ops, origin, mo, [V.VIn{S.SMu{"N", []}, V.VACtor{"succ"}, []}], sv)', "vector-index"),
-    ("result-fixed-value", "R.c_eval(C.ctx, C.ops, origin, scrut)", 'R.c_eval(C.ctx, C.ops, origin, T.In{S.SMu{"N", []}, T.ACtor{"zero"}, []})', "self-one"),
-    ("alternative-join", USAGE, "Q.alternative(su, Q.scale(mode, bu))", "both-read-1-1"),
-    ("drop-scale", USAGE, "Q.sequence(su, bu)", "branch-read-w-1"),
-    ("drop-scrutinee-usage", USAGE, "Q.scale(mode, bu)", "scrutinee-read-1-1"),
-    ("fixed-scrutinee-quantity", INFER, "R.infer_scrutinee(C.ctx, C.ops, origin, mode, Q.Many{}, scrut)", "erased-scrutinee-many"),
+    ("result-drops-indices", "R.mu_result(C.ctx, C.ops, origin, mo, ixv, sv)", "R.mu_result(C.ctx, C.ops, origin, mo, [], sv)", "vector-index"),
+    ("result-other-value", "R.c_eval(C.ctx, C.ops, c, scrut)", "R.c_eval(C.ctx, C.ops, c, T.Var{F.Int63.zero})", "self-one"),
+    ("fixed-scrutinee-quantity", INFER, "R.infer_scrutinee(C.ctx, C.ops, c, mode, Q.Many{}, scrut)", "erased-scrutinee-many"),
 )
 
 
@@ -212,7 +209,7 @@ def main():
     if snapshot() != hashes:
         raise RuntimeError("source changed during elim validation")
     record = {"schema": 1, "cases": len(CASES), "sources": hashes, "hosts": observations, "mutations": mutations,
-              "scope": "Checked recursor scrutinee typing and the elimination result type over the declaration parameters; ambient locals and captures, scrutinee types at instantiated parameters, routing of the kernel Elim term, public elim hypotheses, delayed recursive evaluation, erasure, families without constructors, mutual and nondirect recursion remain pending."}
+              "scope": "Checked recursor scrutinee typing in the given context and the elimination result type over the declaration parameters defined at the scrutinee values; ambient locals and captures, routing of the kernel Elim term, public elim hypotheses, delayed recursive evaluation, erasure, families without constructors, mutual and nondirect recursion remain pending."}
     (WORK / "result.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     print(f"RECURSOR-ELIM PASS cases={len(CASES)} hosts={','.join(hosts)} mutants={len(mutations)}")
 

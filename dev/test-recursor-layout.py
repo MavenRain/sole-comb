@@ -173,14 +173,15 @@ def main():
             candidates = (
                 ("skip-conversion", "Q.if_else(R.result(Unit), eq,", "Q.if_else(R.result(Unit), True{},", "constant-parameter"),
                 ("parameter-order", "R.rev_append(V.t, env, [])", "env", "two-uniform-parameters"),
-                ("parameter-scope", "V.var(C.size(prefix))", "V.var(F.Int63.zero)", "dependent-uniform-parameters"),
-                ("skip-children", "diagram(base, c, params, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
-                ("untyped-conversion", "R.c_conv(C.ctx, C.ops, c, tyv, got, V.var(C.size(prefix)))", "R.c_conv_type(C.ctx, C.ops, c, got, V.var(C.size(prefix)))", "proof-irrelevance"),
-                ("first-child-only", "_ => fields(base, c, params, rest))", "_ => Done{Unit{}})", "second-child-changed"),
+                ("parameter-scope", "V.var(level)", "V.var(F.Int63.zero)", "dependent-uniform-parameters"),
+                ("skip-children", "diagram(base, scope, c, params, expected, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
+                ("untyped-conversion", "R.c_conv(C.ctx, C.ops, c, tyv, got, e)", "R.c_conv_type(C.ctx, C.ops, c, got, e)", "proof-irrelevance"),
+                ("first-child-only", "_ => fields(base, scope, c, params, expected, rest))", "_ => Done{Unit{}})", "second-child-changed"),
             )
         closure = build.dependencies(source)
-        original = (ROOT / mutation_path).read_text()
         for name, before, after, witness in candidates:
+            candidate_path = "lib/kernel_recursor_group.bend" if name == "mutual-group" else mutation_path
+            original = (ROOT / candidate_path).read_text()
             if original.count(before) != 1:
                 raise RuntimeError(f"mutation anchor changed: {name}")
             tree = WORK / f"mutant-{name}"
@@ -188,7 +189,7 @@ def main():
                 dest = tree / path.relative_to(ROOT)
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(path, dest)
-            (tree / mutation_path).write_text(original.replace(before, after))
+            (tree / candidate_path).write_text(original.replace(before, after))
             mutant_source = tree / "test/recursor-layout.bend"
             output = tree / "checks.js"
             core.run(f"mutant-{name}-check", [binary, mutant_source, "--check-only"], env)

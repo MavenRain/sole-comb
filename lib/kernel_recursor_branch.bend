@@ -84,8 +84,8 @@ def assemble(+origin: C.ctx, +owner: String, +key: String, +mo: T.motive, ct: P.
 
 # One branch type in the declaration context. This does not check a branch body,
 # bind public elimination hypotheses, or evaluate a recursive call.
-def layout(+c: C.ctx, +owner: String, +key: String, +mo: T.motive) -> R.result(plan):
+def layout(+c: C.ctx, +scope: Rec.scope, +owner: String, +key: String, +mo: T.motive) -> R.result(plan):
   R.bind(P.family, plan, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
-    R.bind(Motive.plan, plan, Motive.layout(c, owner, key, mo), value =>
+    R.bind(Motive.plan, plan, Motive.layout(c, scope, owner, key, mo), value =>
       R.bind(P.ctor, plan, R.require(P.ctor, P.ctor_of(key, fam), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct =>
-        R.bind(C.ctx, plan, Rec.parameters(R.family_params(fam), c), origin => assemble(origin, owner, key, mo, ct, value)))))
+        R.bind(C.ctx, plan, Rec.open(scope, R.family_params(fam), c), origin => assemble(origin, owner, key, mo, ct, value)))))

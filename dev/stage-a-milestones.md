@@ -225,6 +225,18 @@ term to this entry, public elimination hypothesis syntax, delayed recursive
 evaluation, erasure and families without constructors remain pending. See
 [ambient validation](validation/stage-a-recursor-ambient.md).
 
+A.5b.3.2e.17 checks the recursor scrutinee at instantiated parameters. The
+scrutinee is inferred in the given context, and its type gives the
+declaration parameters their values. Each recursor module opens the
+parameters as erased aliases defined at those values, so the motive, the
+branch bodies and the field types see the values. The uniform validation
+compares recursive parameters with the values. The result usage covers the
+given locals and the parameters. Routing of the kernel `Elim` term to this
+entry, parameter rows in the result usage, public elimination hypothesis
+syntax, delayed recursive evaluation, erasure and families without
+constructors remain pending. See
+[instance validation](validation/stage-a-recursor-instance.md).
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

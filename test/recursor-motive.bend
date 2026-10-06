@@ -64,7 +64,7 @@ def checked(+owner: String, key: String, mode: String, value: Program.checked) -
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
       R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-        R.map_result(Motive.plan, String, report, Motive.layout(c, owner, key, make(owner, mode, fam))))
+        R.map_result(Motive.plan, String, report, Motive.layout(c, Rec.Abstract{}, owner, key, make(owner, mode, fam))))
 
 def known(+mode: String, modes: List<&2, String>) -> Bool:
   match modes:

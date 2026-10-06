@@ -18,17 +18,17 @@ def inhabited(names: List<&2, String>) -> R.result(List<&2, String>):
     case name <> rest: Done{name <> rest}
 
 # Bodies follow the declaration order. The usage is the join over every branch.
-def walk(names: List<&2, String>, +c: C.ctx, +mode: Q.t, +owner: String, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(Q.usage):
+def walk(names: List<&2, String>, +c: C.ctx, +scope: Rec.scope, +mode: Q.t, +owner: String, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(Q.usage):
   match names:
     case []: Done{Q.unreachable}
     case +key <> rest:
       R.bind(T.leg, Q.usage, R.require(T.leg, R.branch_leg(V.VACtor{key}, branches), E.Missing_branch{String.concat(["the elimination of ", owner, " has no branch at ", key])}), lg =>
-        R.bind(Q.usage, Q.usage, Body.check(c, mode, owner, key, mo, lg), uses =>
-          R.map_result(Q.usage, Q.usage, tail => Q.alternative(uses, tail), walk(rest, c, mode, owner, mo, branches))))
+        R.bind(Q.usage, Q.usage, Body.check(c, scope, mode, owner, key, mo, lg), uses =>
+          R.map_result(Q.usage, Q.usage, tail => Q.alternative(uses, tail), walk(rest, c, scope, mode, owner, mo, branches))))
 
 # Coverage is decided before any body: each constructor has one branch and each branch names a constructor.
-def check(+c: C.ctx, +mode: Q.t, +owner: String, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(Q.usage):
+def check(+c: C.ctx, +scope: Rec.scope, +mode: Q.t, +owner: String, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(Q.usage):
   R.bind(P.family, Q.usage, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
     R.bind(List<&2, String>, Q.usage, Rec.rules(List<&2, String>, c, R.mu_ctor_names(C.ctx, owner, fam)), all =>
       R.bind(List<&2, String>, Q.usage, inhabited(all), +names =>
-        R.bind(Unit, Q.usage, Rec.rules(Unit, c, R.mu_cover(C.ctx, owner, names, branches)), _ => walk(names, c, mode, owner, mo, branches)))))
+        R.bind(Unit, Q.usage, Rec.rules(Unit, c, R.mu_cover(C.ctx, owner, names, branches)), _ => walk(names, c, scope, mode, owner, mo, branches)))))

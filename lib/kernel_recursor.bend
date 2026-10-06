@@ -7,6 +7,7 @@ import ./kernel_eval.bend as EV
 import ./kernel_global.bend as G
 import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
+import ./kernel_recursor_group.bend as Group
 import ./kernel_rules.bend as R
 import ./kernel_term.bend as T
 import ./kernel_value.bend as V
@@ -22,42 +23,37 @@ type plan is Data:
 def rules(-A: Data, +c: C.ctx, value: R.program<C.ctx, A>) -> R.result(A):
   C.result_of(A, C.drive(A, value, C.budget(c)))
 
-def parameters(tele: P.telescope, +c: C.ctx) -> R.result(C.ctx):
+# The declaration parameters open as abstract locals, or as locals defined at the parameter values of a
+# scrutinee type. A defined parameter is not a hypothesis of the motive or the bodies: its quantity is Zero.
+type scope is Data:
+  Abstract{}
+  Instance{values: List<&2, V.t>}
+
+def abstract(tele: P.telescope, +c: C.ctx) -> R.result(C.ctx):
   match tele:
     case []: Done{c}
     case F.Pair2{q, F.Pair2{x, ty}} <> rest:
-      R.bind(V.t, C.ctx, EV.eval(C.globals(c), C.env(c), ty), tyv => parameters(rest, C.bind(x, q, tyv, c)))
+      R.bind(V.t, C.ctx, EV.eval(C.globals(c), C.env(c), ty), tyv => abstract(rest, C.bind(x, q, tyv, c)))
 
-# The group holds the families whose constructor fields reach the owner. Families are
-# declared in order, so an owner field can mention only the owner and its mutual siblings.
-def reaches(+names: List<&2, String>, ctors: List<&2, P.ctor>) -> Bool:
-  match ctors:
-    case []: False{}
-    case P.Ctor{_, args, _, _, _} <> rest: Bool.or(P.self_rec(names, args), reaches(names, rest))
+def instance(tele: P.telescope, values: List<&2, V.t>, +c: C.ctx) -> R.result(C.ctx):
+  match tele, values:
+    case [], []: Done{c}
+    case [], _ <> _: Fail{E.Mismatch{R.wrong_pack}}
+    case _ <> _, []: Fail{E.Mismatch{R.wrong_pack}}
+    case F.Pair2{_, F.Pair2{x, ty}} <> rest, v <> tail:
+      R.bind(V.t, C.ctx, EV.eval(C.globals(c), C.env(c), ty), tyv => instance(rest, tail, C.define(x, Q.Zero{}, tyv, v, c)))
 
-def admit(yes: Bool, n: String, +tail: List<&2, String>) -> List<&2, String>:
-  F.choose(List<&2, String>, yes, n <> tail, tail)
+def open(scope: scope, tele: P.telescope, +c: C.ctx) -> R.result(C.ctx):
+  match scope:
+    case Abstract{}: abstract(tele, c)
+    case Instance{values}: instance(tele, values, c)
 
-def joining(+names: List<&2, String>, fams: List<&2, F.Pair2<String, P.family>>) -> List<&2, String>:
-  match fams:
-    case []: []
-    case F.Pair2{+n, P.Family{_, _, _, _, _, ctors, _}} <> rest:
-      admit(Bool.and(Bool.not(T.member(n, names)), reaches(names, ctors)), n, joining(names, rest))
+def parameters(tele: P.telescope, +c: C.ctx) -> R.result(C.ctx): open(Abstract{}, tele, c)
 
-def extend(+names: List<&2, String>, added: List<&2, String>, next: List<&2, String> -> List<&2, String>) -> List<&2, String>:
-  match added:
-    case []: names
-    case n <> more: next(List.append(&2, String, n <> more, names))
-
-# A round that adds no family is the fixpoint. Every other round adds one or more families,
-# so one round of fuel for each declared family is sufficient.
-def reach(fuel: List<&2, F.Pair2<String, P.family>>, +fams: List<&2, F.Pair2<String, P.family>>, +names: List<&2, String>) -> List<&2, String>:
-  match fuel:
-    case []: names
-    case _ <> rest: extend(names, joining(names, fams), grown => reach(rest, fams, grown))
-
-def members(+fams: List<&2, F.Pair2<String, P.family>>, owner: String) -> List<&2, String>:
-  reach(fams, fams, [owner])
+def install(scope: scope, x: String, q: Q.t, tyv: V.t, v: V.t, +c: C.ctx) -> C.ctx:
+  match scope:
+    case Abstract{}: C.bind(x, q, tyv, c)
+    case Instance{_}: C.define(x, Q.Zero{}, tyv, v, c)
 
 def refusal(+owner: String, tm: T.t) -> E.t:
   E.Not_yet{F.choose(String, P.occurs([owner], tm), "recursor layout supports direct recursive fields only", "recursor layout does not support mutual families")}
@@ -93,18 +89,18 @@ def fields(+owner: String, +group: List<&2, String>, tele: P.telescope, +c: C.ct
             R.map_result(plan, plan, tail => prepend(Field{position, q, x, w, V.var(C.size(c)), role}, tail),
               fields(owner, group, rest, C.bind(x, q, w, c), F.Int63.succ(position))))))
 
-def constructor(+c: C.ctx, owner: String, group: List<&2, String>, params: P.telescope, value: P.ctor) -> R.result(plan):
+def constructor(+c: C.ctx, scope: scope, owner: String, group: List<&2, String>, params: P.telescope, value: P.ctor) -> R.result(plan):
   match value:
     case P.Ctor{_, tele, _, _, _}:
-      R.bind(C.ctx, plan, parameters(params, c), fresh => fields(owner, group, tele, fresh, F.Int63.zero))
+      R.bind(C.ctx, plan, open(scope, params, c), fresh => fields(owner, group, tele, fresh, F.Int63.zero))
 
-def family(+c: C.ctx, +owner: String, group: List<&2, String>, +key: String, +value: P.family) -> R.result(plan):
+def family(+c: C.ctx, scope: scope, +owner: String, group: List<&2, String>, +key: String, +value: P.family) -> R.result(plan):
   match value:
     case P.Family{_, params, _, _, _, _, _}:
-      R.bind(P.ctor, plan, R.require(P.ctor, P.ctor_of(key, value), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct => constructor(c, owner, group, params, ct))
+      R.bind(P.ctor, plan, R.require(P.ctor, P.ctor_of(key, value), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct => constructor(c, scope, owner, group, params, ct))
 
-def layout(+c: C.ctx, +owner: String, key: String) -> R.result(plan):
-  R.bind(P.family, plan, rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam => family(c, owner, members(G.family_list(C.globals(c)), owner), key, fam))
+def layout(+c: C.ctx, scope: scope, +owner: String, key: String) -> R.result(plan):
+  R.bind(P.family, plan, rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam => family(c, scope, owner, Group.members(G.family_list(C.globals(c)), owner), key, fam))
 
 # The IH list is separate from constructor fields. No body-binder order is implied.
 def hypotheses(fs: List<&2, field>) -> List<&2, field>:

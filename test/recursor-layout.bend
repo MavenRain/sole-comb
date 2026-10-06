@@ -39,7 +39,7 @@ def report(+value: Rec.plan) -> String:
 def selected(+c: C.ctx, +owner: String, +key: String, uniform: Bool) -> R.result(Rec.plan):
   Q.if_else(R.result(Rec.plan), String.eq(owner, "@alias-field"),
     _ => Rec.fields("N", ["N"], [F.Pair2{Q.Many{}, F.Pair2{"child", T.Global{"Alias"}}}], C.make(C.globals(c), C.budget(c)), F.Int63.zero),
-    _ => Q.if_else(R.result(Rec.plan), uniform, _ => Uniform.layout(c, owner, key), _ => Rec.layout(c, owner, key)))
+    _ => Q.if_else(R.result(Rec.plan), uniform, _ => Uniform.layout(c, Rec.Abstract{}, owner, key), _ => Rec.layout(c, Rec.Abstract{}, owner, key)))
 def checked(owner: String, key: String, +uniform: Bool, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:

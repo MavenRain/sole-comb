@@ -63,7 +63,7 @@ def probe(+origin: C.ctx, +mode: String, value: Branch.plan) -> R.result(String)
           _ => Branch.certify(List.append(&2, Branch.binder, bs, [Branch.Binder{F.Int63.zero, Q.Many{}, "bad", V.var(C.size(origin)), Branch.FieldBinder{}}]), origin, ty)))
 
 def planned(+c: C.ctx, +owner: String, +key: String, +mode: String, +fam: P.family, +mo: T.motive) -> R.result(String):
-  R.bind(Branch.plan, String, Branch.layout(c, owner, key, mo), +value =>
+  R.bind(Branch.plan, String, Branch.layout(c, Rec.Abstract{}, owner, key, mo), +value =>
     R.bind(C.ctx, String, Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c))), +origin =>
       Q.if_else(R.result(String), MotiveCase.known(mode, ["ill-formed-target", "ill-formed-binder"]),
         _ => probe(origin, mode, value),
