@@ -30,7 +30,7 @@ def binders(+c: C.ctx, bs: List<&2, Branch.binder>) -> List<&2, String>:
 def agree(+c: C.ctx, +ordinary: V.t, +ty: V.t) -> String:
   Q.if_else(String, String.eq(C.pp_value(c, ordinary), C.pp_value(c, ty)), _ => "same", _ => String.concat(["differs: ", C.pp_value(c, ordinary)]))
 
-def report(pair: F.Pair2<C.ctx, V.t>, value: Branch.plan) -> String:
+def report(pair: F.Pair2<C.ctx, V.t>, value: Branch.plan<C.ctx>) -> String:
   match pair:
     case F.Pair2{+inner, +ordinary}:
       match value:
@@ -55,16 +55,16 @@ def ordinary(+origin: C.ctx, +owner: String, +key: String, mo: T.motive, +ct: P.
   R.bind(R.binding_state<C.ctx>, F.Pair2<C.ctx, V.t>, Bridge.rules(R.binding_state<C.ctx>, origin, R.mu_bind_fields(C.ctx, C.ops, origin, R.ctor_args(ct), marks(R.ctor_args(ct)), R.BindingState{origin, C.env(origin), []})), state => elimination(origin, owner, key, mo, ct, state))
 
 # Certificate probes: a non-type target, or a non-type binder after the plan's binders.
-def probe(+origin: C.ctx, +mode: String, value: Branch.plan) -> R.result(String):
+def probe(+origin: C.ctx, +mode: String, value: Branch.plan<C.ctx>) -> R.result(String):
   match value:
     case Branch.Plan{_, _, +bs, ty}:
       R.map_result(C.ctx, String, _ => "the certificate accepted an ill-formed plan",
         Q.if_else(R.result(C.ctx), String.eq(mode, "ill-formed-target"),
-          _ => Branch.certify(bs, origin, V.var(C.size(origin))),
-          _ => Branch.certify(List.append(&2, Branch.binder, bs, [Branch.Binder{F.Int63.zero, Q.Many{}, "bad", V.var(C.size(origin)), Branch.FieldBinder{}}]), origin, ty)))
+          _ => Bridge.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, bs, origin, V.var(C.size(origin)))),
+          _ => Bridge.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, List.append(&2, Branch.binder, bs, [Branch.Binder{F.Int63.zero, Q.Many{}, "bad", V.var(C.size(origin)), Branch.FieldBinder{}}]), origin, ty))))
 
 def planned(+c: C.ctx, +owner: String, +key: String, +mode: String, +fam: P.family, +mo: T.motive) -> R.result(String):
-  R.bind(Branch.plan, String, Branch.layout(c, Rec.Abstract{}, owner, key, mo), +value =>
+  R.bind(Branch.plan<C.ctx>, String, Bridge.rules(Branch.plan<C.ctx>, c, Branch.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key, mo)), +value =>
     R.bind(C.ctx, String, Bridge.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c)))), +origin =>
       Q.if_else(R.result(String), MotiveCase.known(mode, ["ill-formed-target", "ill-formed-binder"]),
         _ => probe(origin, mode, value),

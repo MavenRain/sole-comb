@@ -1,14 +1,11 @@
 # Checked branch types for direct structural recursor layouts.
 import Base
 import ./foundation.bend as F
-import ./kernel_check.bend as C
 import ./kernel_error.bend as E
-import ./kernel_eval.bend as EV
 import ./kernel_level.bend as L
 import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
 import ./kernel_recursor.bend as Rec
-import ./kernel_recursor_bridge.bend as Bridge
 import ./kernel_recursor_motive.bend as Motive
 import ./kernel_rules.bend as R
 import ./kernel_shape.bend as S
@@ -20,8 +17,8 @@ type kind is Data:
   HypothesisBinder{child: F.Int63.t}
 type binder is Data:
   Binder{position: F.Int63.t, quantity: Q.t, name: String, domain: V.t, kind: kind}
-type plan is Data:
-  Plan{motive: Motive.plan, context: C.ctx, binders: List<&2, binder>, target: V.t}
+type plan<-C: Data> is Data:
+  Plan{motive: Motive.plan<C>, context: C, binders: List<&2, binder>, target: V.t}
 
 # Computing a hypothesis consumes its child. An affine child cannot also be used in the body.
 def grade(q: Q.t) -> R.result(Q.t):
@@ -56,37 +53,37 @@ def hypotheses(hs: List<&2, Motive.hypothesis>, +fs: List<&2, Rec.field>, +count
 
 # The ordinary elimination target: the motive at the declared indices and the constructor
 # value. Indices use the parameter and field environment. The motive uses the parameters.
-def target(+origin: C.ctx, +owner: String, +key: String, mo: T.motive, ct: P.ctor, +c: C.ctx, fs: List<&2, Rec.field>) -> R.result(V.t):
-  R.bind(List<&2, V.t>, V.t, Bridge.rules(List<&2, V.t>, c, R.mu_values(C.ctx, C.ops, c, C.env(c), R.ctor_indices(ct))), +idx =>
-    Bridge.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, values(fs)})))
+def target(~C: Data, ~op: R.check_ops<C>, +origin: C, +owner: String, +key: String, mo: T.motive, ct: P.ctor, +c: C, fs: List<&2, Rec.field>) -> R.program<C, V.t>:
+  R.pbind(C, List<&2, V.t>, V.t, R.mu_values(C, op, c, R.o_env(C, R.c_runtime(C, op), c), R.ctor_indices(ct)), +idx =>
+    R.mu_result(C, op, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, values(fs)}))
 
-def formation(+c: C.ctx, value: V.t) -> R.result(Unit):
-  R.bind(T.t, Unit, EV.quote(C.globals(c), C.size(c), value), tm =>
-    R.map_result(L.t, Unit, _ => Unit{}, Bridge.rules(L.t, c, R.c_univ(C.ctx, C.ops, c, tm))))
+def formation(~C: Data, ~op: R.check_ops<C>, +c: C, value: V.t) -> R.program<C, Unit>:
+  R.pbind(C, T.t, Unit, R.lift(C, T.t, R.o_quote(C, R.c_runtime(C, op), c, value)), tm =>
+    R.pmap(C, L.t, Unit, _ => Unit{}, R.c_univ(C, op, c, tm)))
 
 # Each domain is checked in its own prefix: parameters, earlier fields, earlier hypotheses.
 # The target is checked after every binder. The result is the complete branch context.
-def certify(bs: List<&2, binder>, +c: C.ctx, +ty: V.t) -> R.result(C.ctx):
+def certify(~C: Data, ~op: R.check_ops<C>, bs: List<&2, binder>, +c: C, +ty: V.t) -> R.program<C, C>:
   match bs:
-    case []: R.map_result(Unit, C.ctx, _ => c, formation(c, ty))
+    case []: R.pmap(C, Unit, C, _ => c, formation(C, op, c, ty))
     case Binder{_, q, name, +domain, _} <> rest:
-      R.bind(Unit, C.ctx, formation(c, domain), _ => certify(rest, C.bind(name, q, domain, c), ty))
+      R.pbind(C, Unit, C, formation(C, op, c, domain), _ => certify(C, op, rest, R.c_bind(C, op, c, name, q, domain), ty))
 
-def finish(+origin: C.ctx, +value: Motive.plan, +bs: List<&2, binder>, +ty: V.t) -> R.result(plan):
-  R.map_result(C.ctx, plan, scope => Plan{value, scope, bs, ty}, certify(bs, origin, ty))
+def finish(~C: Data, ~op: R.check_ops<C>, +origin: C, +value: Motive.plan<C>, +bs: List<&2, binder>, +ty: V.t) -> R.program<C, plan<C>>:
+  R.pmap(C, C, plan<C>, scope => Plan{value, scope, bs, ty}, certify(C, op, bs, origin, ty))
 
-def assemble(+origin: C.ctx, +owner: String, +key: String, +mo: T.motive, ct: P.ctor, +value: Motive.plan) -> R.result(plan):
+def assemble(~C: Data, ~op: R.check_ops<C>, +origin: C, +owner: String, +key: String, +mo: T.motive, ct: P.ctor, +value: Motive.plan<C>) -> R.program<C, plan<C>>:
   match value:
     case Motive.Plan{raw, _, hs}:
       match raw:
         case Rec.Plan{+c, +fs}:
-          R.bind(List<&2, binder>, plan, hypotheses(hs, fs, R.length(Rec.field, fs)), ihs =>
-            R.bind(V.t, plan, target(origin, owner, key, mo, ct, c, fs), ty => finish(origin, value, List.append(&2, binder, fields(fs), ihs), ty)))
+          R.pbind(C, List<&2, binder>, plan<C>, R.lift(C, List<&2, binder>, hypotheses(hs, fs, R.length(Rec.field, fs))), ihs =>
+            R.pbind(C, V.t, plan<C>, target(C, op, origin, owner, key, mo, ct, c, fs), ty => finish(C, op, origin, value, List.append(&2, binder, fields(fs), ihs), ty)))
 
 # One branch type in the declaration context. This does not check a branch body,
 # bind public elimination hypotheses, or evaluate a recursive call.
-def layout(+c: C.ctx, +scope: Rec.scope, +owner: String, +key: String, +mo: T.motive) -> R.result(plan):
-  R.bind(P.family, plan, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
-    R.bind(Motive.plan, plan, Motive.layout(c, scope, owner, key, mo), value =>
-      R.bind(P.ctor, plan, R.require(P.ctor, P.ctor_of(key, fam), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct =>
-        R.bind(C.ctx, plan, Bridge.rules(C.ctx, c, Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)), origin => assemble(origin, owner, key, mo, ct, value)))))
+def layout(~C: Data, ~op: R.check_ops<C>, +c: C, +scope: Rec.scope, +owner: String, +key: String, +mo: T.motive) -> R.program<C, plan<C>>:
+  R.pbind(C, P.family, plan<C>, R.mu_family(C, op, c, owner), +fam =>
+    R.pbind(C, Motive.plan<C>, plan<C>, Motive.layout(C, op, c, scope, owner, key, mo), value =>
+      R.pbind(C, P.ctor, plan<C>, R.crequire(C, P.ctor, P.ctor_of(key, fam), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct =>
+        R.pbind(C, C, plan<C>, Rec.open(C, op, scope, R.family_params(fam), c), origin => assemble(C, op, origin, owner, key, mo, ct, value)))))

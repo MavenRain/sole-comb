@@ -111,14 +111,14 @@ CASES = (
     ("affine-child", AFF, "T", "result", "w", "w", "leaf", ("leaf stop", "fork stop"), BODY.AFFINE),
     ("unknown-mode", OUT_N, "N", "bogus", "w", "w", "zero", NAT, "FAIL\nexpected a known motive mode"),
 )
-COVER = "Cover.check(c, scope, mode, owner, mo, branches)"
+COVER = "Bridge.rules(Q.usage, c, Cover.check(C.ctx, C.ops, c, scope, mode, owner, mo, branches))"
 INFER = "R.infer_scrutinee(C.ctx, C.ops, c, mode, sq, scrut)"
 TYPED = f"R.bind(R.inferred, R.inferred, Bridge.rules(R.inferred, c, {INFER}), inf => typed(c, mode, owner, scrut, mo, branches, fam, inf))"
 # The parameter and usage mutants live in the instance suite: no elim row has a given local, and every elim row at a
 # family with declaration parameters fails at the scrutinee.
 MUTANTS = (
     ("drop-family-name", "named(owner, n)", "Done{Unit{}}", "other-family"),
-    ("coverage-before-scrutinee", TYPED, f"R.bind(Q.usage, R.inferred, Cover.check(c, Rec.Abstract{{}}, mode, owner, mo, branches), _ => {TYPED})", "untypable-and-missing"),
+    ("coverage-before-scrutinee", TYPED, f"R.bind(Q.usage, R.inferred, Bridge.rules(Q.usage, c, Cover.check(C.ctx, C.ops, c, Rec.Abstract{{}}, mode, owner, mo, branches)), _ => {TYPED})", "untypable-and-missing"),
     ("drop-coverage", COVER, "Done{Q.unreachable}", "missing-branch"),
     ("result-drops-indices", "R.mu_result(C.ctx, C.ops, origin, mo, ixv, sv)", "R.mu_result(C.ctx, C.ops, origin, mo, [], sv)", "vector-index"),
     ("result-other-value", "R.c_eval(C.ctx, C.ops, c, scrut)", "R.c_eval(C.ctx, C.ops, c, T.Var{F.Int63.zero})", "self-one"),

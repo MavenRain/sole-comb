@@ -54,7 +54,7 @@ def hypotheses(+c: C.ctx, hs: List<&2, Motive.hypothesis>) -> List<&2, String>:
     case Motive.Hypothesis{position, name, ty} <> rest:
       String.concat([F.Int63.show(position), ":", name, ":", C.pp_value(c, ty)]) <> hypotheses(c, rest)
 
-def report(value: Motive.plan) -> String:
+def report(value: Motive.plan<C.ctx>) -> String:
   match value:
     case Motive.Plan{+raw, lvl, hs}:
       match raw:
@@ -65,7 +65,7 @@ def checked(+owner: String, key: String, mode: String, value: Program.checked) -
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
       R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-        R.map_result(Motive.plan, String, report, Motive.layout(c, Rec.Abstract{}, owner, key, make(owner, mode, fam))))
+        R.map_result(Motive.plan<C.ctx>, String, report, Bridge.rules(Motive.plan<C.ctx>, c, Motive.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key, make(owner, mode, fam)))))
 
 def known(+mode: String, modes: List<&2, String>) -> Bool:
   match modes:

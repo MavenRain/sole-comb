@@ -42,7 +42,7 @@ def result(+c: C.ctx, +origin: C.ctx, +mode: Q.t, mo: T.motive, scrut: T.t, ixv:
 # Coverage and bodies run after the family name check.
 def scoped(+c: C.ctx, +mode: Q.t, +owner: String, scrut: T.t, +mo: T.motive, branches: List<&2, F.Pair2<T.addr, T.leg>>, fam: P.family, su: Q.usage, ixv: List<&2, V.t>, +scope: Rec.scope) -> R.result(R.inferred):
   R.bind(C.ctx, R.inferred, Bridge.rules(C.ctx, c, Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)), origin =>
-    R.bind(Q.usage, R.inferred, Cover.check(c, scope, mode, owner, mo, branches), bu => result(c, origin, mode, mo, scrut, ixv, su, bu)))
+    R.bind(Q.usage, R.inferred, Bridge.rules(Q.usage, c, Cover.check(C.ctx, C.ops, c, scope, mode, owner, mo, branches)), bu => result(c, origin, mode, mo, scrut, ixv, su, bu)))
 
 def viewed(+c: C.ctx, +mode: Q.t, +owner: String, scrut: T.t, +mo: T.motive, branches: List<&2, F.Pair2<T.addr, T.leg>>, +fam: P.family, su: Q.usage, v: view) -> R.result(R.inferred):
   match v:

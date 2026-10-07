@@ -80,18 +80,22 @@ LOCAL = (
     ("unknown-context", OUT_N, "N", "result", "w", "w", "zero", "bogus", NAT, UNKNOWN_CONTEXT),
 )
 CASES = NONE + LOCAL
-# Each mutant puts one scope site back on a context without the given locals. The uniform site needs a given local
-# of type Type 0: its mutant lives in the instance suite. The generic constructor path is probed at its concrete caller.
+# Concrete scope mutants drop the given locals. Generic scope mutants shift their indices with an extra binder.
+# Keep each internal scope boundary covered as well as the caller. The uniform site's local of type Type 0
+# is covered in the instance suite.
 SCOPE = "Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)"
 FRESH = "C.make(C.globals(c), C.budget(c))"
 DROPPED = f"Rec.open(C.ctx, C.ops, scope, R.family_params(fam), {FRESH})"
+GENERIC_SCOPE = "Rec.open(C, op, scope, R.family_params(fam), c)"
+SHIFTED = 'R.c_bind(C, op, c, "shift", Q.Many{}, V.var(F.Int63.zero))'
+GENERIC_SHIFTED = f"Rec.open(C, op, scope, R.family_params(fam), {SHIFTED})"
 MUTANTS = (
     ("elim-drops-locals", "lib/kernel_recursor_elim.bend", SCOPE, DROPPED, "local-motive"),
-    ("cover-drops-locals", "lib/kernel_recursor_elim.bend", "Cover.check(c, scope, mode, owner, mo, branches)", f"Cover.check({FRESH}, scope, mode, owner, mo, branches)", "local-body"),
-    ("body-drops-locals", "lib/kernel_recursor_body.bend", SCOPE, DROPPED, "local-body"),
-    ("motive-drops-locals", "lib/kernel_recursor_motive.bend", SCOPE, DROPPED, "local-motive"),
-    ("branch-drops-locals", "lib/kernel_recursor_branch.bend", SCOPE, DROPPED, "self-under-local"),
-    ("constructor-drops-locals", "lib/kernel_recursor_motive.bend", "Uniform.layout(C.ctx, C.ops, c, scope, owner, key)", f"Uniform.layout(C.ctx, C.ops, {FRESH}, scope, owner, key)", "vector-index-under-local"),
+    ("cover-drops-locals", "lib/kernel_recursor_elim.bend", "Cover.check(C.ctx, C.ops, c, scope, mode, owner, mo, branches)", f"Cover.check(C.ctx, C.ops, {FRESH}, scope, mode, owner, mo, branches)", "local-body"),
+    ("body-shifts-locals", "lib/kernel_recursor_body.bend", GENERIC_SCOPE, GENERIC_SHIFTED, "local-body"),
+    ("motive-shifts-locals", "lib/kernel_recursor_motive.bend", GENERIC_SCOPE, GENERIC_SHIFTED, "local-motive"),
+    ("branch-shifts-locals", "lib/kernel_recursor_branch.bend", GENERIC_SCOPE, GENERIC_SHIFTED, "self-under-local"),
+    ("constructor-shifts-locals", "lib/kernel_recursor_motive.bend", "Uniform.layout(C, op, c, scope, owner, key)", f"Uniform.layout(C, op, {SHIFTED}, scope, owner, key)", "vector-index-under-local"),
 )
 
 

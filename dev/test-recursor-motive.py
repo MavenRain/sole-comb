@@ -131,14 +131,14 @@ def main():
         mutation_path = "lib/kernel_recursor_motive.bend"
         original = (ROOT / mutation_path).read_text()
         candidates = (
-            ("skip-motive-type", "R.mu_motive_lvl(C.ctx, C.ops, origin, owner, fam, valid, diagram(R.family_params(fam), origin), Some{R.family_level(fam)}, C.env(origin))", "R.Pure{L.one}", "invalid-nullary-motive"),
-            ("skip-family", "R.mu_motive_view(C.ctx, owner, count, count, mo, mo)", "R.Pure{mo}", "wrong-family"),
-            ("skip-large", "R.mu_large(C.ctx, owner, fam, lvl)", "R.Pure{Unit{}}", "large-proposition"),
+            ("skip-motive-type", "R.mu_motive_lvl(C, op, origin, owner, fam, valid, diagram(C, op, R.family_params(fam), origin), Some{R.family_level(fam)}, R.o_env(C, R.c_runtime(C, op), origin))", "R.Pure{L.one}", "invalid-nullary-motive"),
+            ("skip-family", "R.mu_motive_view(C, owner, count, count, mo, mo)", "R.Pure{mo}", "wrong-family"),
+            ("skip-large", "R.mu_large(C, owner, fam, lvl)", "R.Pure{Unit{}}", "large-proposition"),
             ("parameter-diagram", "T.Var{R.length(F.Pair2<Q.t, F.Pair2<String, T.t>>, rest)}", "T.Var{F.Int63.zero}", "parameters-self"),
             ("index-order", "mo, indices, value)", "mo, R.rev_append(V.t, indices, []), value)", "two-indices"),
             ("wrong-self", "mo, indices, value)", "mo, indices, V.var(F.Int63.zero))", "multiple-self-domains"),
-            ("parameter-environment", "hypotheses(origin, mo, fs)", "hypotheses(C.make(C.globals(origin), C.budget(origin)), mo, fs)", "parameter-scope"),
-            ("drop-later-children", "hypotheses(origin, mo, rest)))", "Done{[]}))", "multiple-quantities"),
+            ("parameter-environment", "hypotheses(C, op, origin, mo, fs)", 'hypotheses(C, op, R.c_bind(C, op, origin, "shift", Q.Many{}, V.var(F.Int63.zero)), mo, fs)', "parameter-scope"),
+            ("drop-later-children", "hypotheses(C, op, origin, mo, rest)))", "R.Pure{[]}))", "multiple-quantities"),
         )
         for name, before, after, witness in candidates:
             if original.count(before) != 1:

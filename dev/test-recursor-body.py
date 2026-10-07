@@ -185,11 +185,11 @@ def main():
             ("drop-arity-guard", "F.Int63.equal(got, want)", "True{}", "too-few"),
             ("skip-quantity", "name, marked, declared)", "name, marked, marked)", "field-quantity"),
             ("source-swap", 'case Branch.FieldBinder{}: "field"', 'case Branch.FieldBinder{}: "hypothesis"', "field-quantity"),
-            ("skip-close", "R.c_close(C.ctx, C.ops, inner, C.size(origin), mode, uses)", "R.Pure{uses}", "linear-dropped"),
+            ("skip-close", "R.c_close(C, op, inner, R.c_size(C, op, origin), mode, uses)", "R.Pure{uses}", "linear-dropped"),
             ("check-erased-mode", "Q.runtime(mode)", "Q.Zero{}", "zero-field-runtime"),
             ("check-outer-mode", "Q.runtime(mode)", "mode", "linear-direct"),
-            ("close-erased-mode", "C.size(origin), mode, uses)", "C.size(origin), Q.Zero{}, uses)", "linear-twice"),
-            ("close-size", "inner, C.size(origin),", "inner, C.size(inner),", "linear-twice"),
+            ("close-erased-mode", "R.c_size(C, op, origin), mode, uses)", "R.c_size(C, op, origin), Q.Zero{}, uses)", "linear-twice"),
+            ("close-size", "inner, R.c_size(C, op, origin),", "inner, R.c_size(C, op, inner),", "linear-twice"),
         )
         for name, before, after, witness in candidates:
             if original.count(before) != 1:
