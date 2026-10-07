@@ -7,6 +7,7 @@ import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
 import ./kernel_recursor.bend as Rec
 import ./kernel_recursor_branch.bend as Branch
+import ./kernel_recursor_bridge.bend as Bridge
 import ./kernel_rules.bend as R
 import ./kernel_term.bend as T
 import ./kernel_value.bend as V
@@ -24,12 +25,12 @@ def scope(marks: List<&2, F.Pair2<Q.t, String>>, bs: List<&2, Branch.binder>, +c
       match bs:
         case []: Fail{E.Mismatch{"a recursor branch binder has no plan binder"}}
         case Branch.Binder{_, +declared, _, domain, kind} <> tail:
-          R.bind(Unit, C.ctx, Rec.rules(Unit, c, R.binder_quantity(C.ctx, "recursor branch binder", source(kind), name, marked, declared)), _ =>
+          R.bind(Unit, C.ctx, Bridge.rules(Unit, c, R.binder_quantity(C.ctx, "recursor branch binder", source(kind), name, marked, declared)), _ =>
             scope(rest, tail, C.bind(name, declared, domain, c)))
 
 # The body is checked at the runtime mode. The close returns the usage of the parameters only.
 def body(+origin: C.ctx, +mode: Q.t, tm: T.t, target: V.t, +inner: C.ctx) -> R.result(Q.usage):
-  Rec.rules(Q.usage, inner, R.pbind(C.ctx, Q.usage, Q.usage, R.c_check(C.ctx, C.ops, inner, Q.runtime(mode), tm, target), uses =>
+  Bridge.rules(Q.usage, inner, R.pbind(C.ctx, Q.usage, Q.usage, R.c_check(C.ctx, C.ops, inner, Q.runtime(mode), tm, target), uses =>
     R.c_close(C.ctx, C.ops, inner, C.size(origin), mode, uses)))
 
 def arity(+key: String, +got: F.Int63.t, +want: F.Int63.t) -> R.result(Unit):
@@ -49,5 +50,5 @@ def leg(+origin: C.ctx, +mode: Q.t, +key: String, value: Branch.plan, lg: T.leg)
 # hypotheses, or evaluate a recursive call.
 def check(+c: C.ctx, +scope: Rec.scope, +mode: Q.t, +owner: String, +key: String, +mo: T.motive, lg: T.leg) -> R.result(Q.usage):
   R.bind(Branch.plan, Q.usage, Branch.layout(c, scope, owner, key, mo), value =>
-    R.bind(P.family, Q.usage, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-      R.bind(C.ctx, Q.usage, Rec.open(scope, R.family_params(fam), c), origin => leg(origin, mode, key, value, lg))))
+    R.bind(P.family, Q.usage, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
+      R.bind(C.ctx, Q.usage, Bridge.rules(C.ctx, c, Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)), origin => leg(origin, mode, key, value, lg))))

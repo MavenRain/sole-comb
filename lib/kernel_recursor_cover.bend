@@ -7,6 +7,7 @@ import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
 import ./kernel_recursor.bend as Rec
 import ./kernel_recursor_body.bend as Body
+import ./kernel_recursor_bridge.bend as Bridge
 import ./kernel_rules.bend as R
 import ./kernel_term.bend as T
 import ./kernel_value.bend as V
@@ -28,7 +29,7 @@ def walk(names: List<&2, String>, +c: C.ctx, +scope: Rec.scope, +mode: Q.t, +own
 
 # Coverage is decided before any body: each constructor has one branch and each branch names a constructor.
 def check(+c: C.ctx, +scope: Rec.scope, +mode: Q.t, +owner: String, +mo: T.motive, +branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(Q.usage):
-  R.bind(P.family, Q.usage, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
-    R.bind(List<&2, String>, Q.usage, Rec.rules(List<&2, String>, c, R.mu_ctor_names(C.ctx, owner, fam)), all =>
+  R.bind(P.family, Q.usage, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
+    R.bind(List<&2, String>, Q.usage, Bridge.rules(List<&2, String>, c, R.mu_ctor_names(C.ctx, owner, fam)), all =>
       R.bind(List<&2, String>, Q.usage, inhabited(all), +names =>
-        R.bind(Unit, Q.usage, Rec.rules(Unit, c, R.mu_cover(C.ctx, owner, names, branches)), _ => walk(names, c, scope, mode, owner, mo, branches)))))
+        R.bind(Unit, Q.usage, Bridge.rules(Unit, c, R.mu_cover(C.ctx, owner, names, branches)), _ => walk(names, c, scope, mode, owner, mo, branches)))))

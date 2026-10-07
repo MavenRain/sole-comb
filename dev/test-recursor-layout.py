@@ -163,7 +163,7 @@ def main():
     if args.mutations:
         candidates = (
             ("field-quantity", "Field{position, q, x, w,", "Field{position, Q.Many{}, x, w,", "quantities-and-order"),
-            ("field-value", "V.var(C.size(c))", "V.var(F.Int63.zero)", "dependent-field"),
+            ("field-value", "V.var(R.c_size(C, op, c))", "V.var(F.Int63.zero)", "dependent-field"),
             ("non-direct-refusal", "P.occurs(group, tm)", "False{}", "functional-recursion"),
             ("mutual-group", "reach(fams, fams, [owner])", "[owner]", "mutual-sibling"),
         )
@@ -171,12 +171,12 @@ def main():
         if args.uniform:
             mutation_path = "lib/kernel_recursor_uniform.bend"
             candidates = (
-                ("skip-conversion", "Q.if_else(R.result(Unit), eq,", "Q.if_else(R.result(Unit), True{},", "constant-parameter"),
+                ("skip-conversion", "R.pchoose(C, Unit, eq,", "R.pchoose(C, Unit, True{},", "constant-parameter"),
                 ("parameter-order", "R.rev_append(V.t, env, [])", "env", "two-uniform-parameters"),
                 ("parameter-scope", "V.var(level)", "V.var(F.Int63.zero)", "dependent-uniform-parameters"),
-                ("skip-children", "diagram(base, scope, c, params, expected, V.as_lan(ty))", "Done{Unit{}}", "field-parameter"),
-                ("untyped-conversion", "R.c_conv(C.ctx, C.ops, c, tyv, got, e)", "R.c_conv_type(C.ctx, C.ops, c, got, e)", "proof-irrelevance"),
-                ("first-child-only", "_ => fields(base, scope, c, params, expected, rest))", "_ => Done{Unit{}})", "second-child-changed"),
+                ("skip-children", "diagram(C, op, base, scope, c, params, expected, V.as_lan(ty))", "R.Pure{Unit{}}", "field-parameter"),
+                ("untyped-conversion", "R.c_conv(C, op, c, tyv, got, e)", "R.c_conv_type(C, op, c, got, e)", "proof-irrelevance"),
+                ("first-child-only", "_ => fields(C, op, base, scope, c, params, expected, rest))", "_ => R.Pure{Unit{}})", "second-child-changed"),
             )
         closure = build.dependencies(source)
         for name, before, after, witness in candidates:

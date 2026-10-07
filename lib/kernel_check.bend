@@ -91,7 +91,7 @@ def close(affine: Bool, +c: ctx, lower: F.Int63.t, mode: Q.t, uses: Q.usage) -> 
 def quote_value(+c: ctx, value: V.t) -> R.result(T.t): EV.quote(globals(c), size(c), value)
 
 def runtime_ops() -> R.ops<ctx>:
-  R.Ops{_ => _ => Fail{E.Mismatch{"internal universe request outside the checking interpreter"}}, c => v => EV.whnf(globals(c), v), bind, size, env, c => e => t => EV.eval(globals(c), e, t), c => v => quote_value(c, v), c => h => head_ty(c, h), c => n => G.find_family(n, globals(c))}
+  R.Ops{_ => _ => Fail{E.Mismatch{"internal universe request outside the checking interpreter"}}, c => v => EV.whnf(globals(c), v), bind, define, size, env, c => e => t => EV.eval(globals(c), e, t), c => v => quote_value(c, v), c => h => head_ty(c, h), c => n => G.find_family(n, globals(c)), c => G.family_list(globals(c))}
 
 def ops() -> R.check_ops<ctx>: R.CheckOps{runtime_ops, c => s => q => uses => close(False{}, c, s, q, uses), c => v => pp_value(c, v)}
 

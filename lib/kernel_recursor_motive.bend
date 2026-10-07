@@ -6,6 +6,7 @@ import ./kernel_level.bend as L
 import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
 import ./kernel_recursor.bend as Rec
+import ./kernel_recursor_bridge.bend as Bridge
 import ./kernel_recursor_uniform.bend as Uniform
 import ./kernel_rules.bend as R
 import ./kernel_shape.bend as S
@@ -15,7 +16,7 @@ import ./kernel_value.bend as V
 type hypothesis is Data:
   Hypothesis{position: F.Int63.t, name: String, domain: V.t}
 type plan is Data:
-  Plan{layout: Rec.plan, level: L.t, hypotheses: List<&2, hypothesis>}
+  Plan{layout: Rec.plan<C.ctx>, level: L.t, hypotheses: List<&2, hypothesis>}
 
 # Parameters are stored in declaration order, with the last at index zero.
 def legs(tele: P.telescope) -> List<&2, T.leg>:
@@ -33,22 +34,22 @@ def hypotheses(+origin: C.ctx, +mo: T.motive, fs: List<&2, Rec.field>) -> R.resu
     case []: Done{[]}
     case Rec.Field{_, _, _, _, _, Rec.Ordinary{}} <> rest: hypotheses(origin, mo, rest)
     case Rec.Field{position, _, name, _, value, Rec.Direct{indices}} <> rest:
-      R.bind(V.t, List<&2, hypothesis>, Rec.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, indices, value)), ty =>
+      R.bind(V.t, List<&2, hypothesis>, Bridge.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, indices, value)), ty =>
         R.map_result(List<&2, hypothesis>, List<&2, hypothesis>, tail => Hypothesis{position, name, ty} <> tail, hypotheses(origin, mo, rest)))
 
-def checked(+origin: C.ctx, +mo: T.motive, lvl: L.t, +raw: Rec.plan) -> R.result(plan):
+def checked(+origin: C.ctx, +mo: T.motive, lvl: L.t, +raw: Rec.plan<C.ctx>) -> R.result(plan):
   match raw:
     case Rec.Plan{_, fs}: R.map_result(List<&2, hypothesis>, plan, hs => Plan{raw, lvl, hs}, hypotheses(origin, mo, fs))
 
-def motive(+origin: C.ctx, +owner: String, +fam: P.family, +mo: T.motive, raw: Rec.plan) -> R.result(plan):
+def motive(+origin: C.ctx, +owner: String, +fam: P.family, +mo: T.motive, raw: Rec.plan<C.ctx>) -> R.result(plan):
   +count = R.length(F.Pair2<Q.t, F.Pair2<String, T.t>>, R.family_indices(fam))
-  R.bind(T.motive, plan, Rec.rules(T.motive, origin, R.mu_motive_view(C.ctx, owner, count, count, mo, mo)), valid =>
-    R.bind(L.t, plan, Rec.rules(L.t, origin, R.mu_motive_lvl(C.ctx, C.ops, origin, owner, fam, valid, diagram(R.family_params(fam), origin), Some{R.family_level(fam)}, C.env(origin))), +lvl =>
-      R.bind(Unit, plan, Rec.rules(Unit, origin, R.mu_large(C.ctx, owner, fam, lvl)), _ => checked(origin, mo, lvl, raw))))
+  R.bind(T.motive, plan, Bridge.rules(T.motive, origin, R.mu_motive_view(C.ctx, owner, count, count, mo, mo)), valid =>
+    R.bind(L.t, plan, Bridge.rules(L.t, origin, R.mu_motive_lvl(C.ctx, C.ops, origin, owner, fam, valid, diagram(R.family_params(fam), origin), Some{R.family_level(fam)}, C.env(origin))), +lvl =>
+      R.bind(Unit, plan, Bridge.rules(Unit, origin, R.mu_large(C.ctx, owner, fam, lvl)), _ => checked(origin, mo, lvl, raw))))
 
 # Motives are scoped under declaration parameters, then indices, then self.
 # This plan does not introduce body binders or evaluate a recursive call.
 def layout(+c: C.ctx, +scope: Rec.scope, +owner: String, +key: String, mo: T.motive) -> R.result(plan):
-  R.bind(P.family, plan, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
-    R.bind(Rec.plan, plan, Uniform.layout(c, scope, owner, key), raw =>
-      R.bind(C.ctx, plan, Rec.open(scope, R.family_params(fam), c), origin => motive(origin, owner, fam, mo, raw))))
+  R.bind(P.family, plan, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
+    R.bind(Rec.plan<C.ctx>, plan, Bridge.rules(Rec.plan<C.ctx>, c, Uniform.layout(C.ctx, C.ops, c, scope, owner, key)), raw =>
+      R.bind(C.ctx, plan, Bridge.rules(C.ctx, c, Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)), origin => motive(origin, owner, fam, mo, raw))))

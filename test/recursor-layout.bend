@@ -6,6 +6,7 @@ import ../lib/kernel_check.bend as C
 import ../lib/kernel_error.bend as E
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
+import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_recursor_uniform.bend as Uniform
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_term.bend as T
@@ -33,17 +34,17 @@ def fields(+c: C.ctx, fs: List<&2, Rec.field>) -> List<&2, String>:
     case []: []
     case Rec.Field{position, q, name, ty, value, kind} <> rest:
       String.concat([F.Int63.show(position), ":", quantity(q), ":", name, ":", C.pp_value(c, ty), ":", C.pp_value(c, value), ":", role(c, kind)]) <> fields(c, rest)
-def report(+value: Rec.plan) -> String:
+def report(+value: Rec.plan<C.ctx>) -> String:
   match value:
-    case Rec.Plan{+c, +fs}: String.concat(["arity=", F.Int63.show(Rec.arity(value)), " context=", F.Int63.show(C.size(c)), "\nfields=", K.join(";", fields(c, fs)), "\nih=", K.join(";", fields(c, Rec.hypotheses(fs)))])
-def selected(+c: C.ctx, +owner: String, +key: String, uniform: Bool) -> R.result(Rec.plan):
-  Q.if_else(R.result(Rec.plan), String.eq(owner, "@alias-field"),
-    _ => Rec.fields("N", ["N"], [F.Pair2{Q.Many{}, F.Pair2{"child", T.Global{"Alias"}}}], C.make(C.globals(c), C.budget(c)), F.Int63.zero),
-    _ => Q.if_else(R.result(Rec.plan), uniform, _ => Uniform.layout(c, Rec.Abstract{}, owner, key), _ => Rec.layout(c, Rec.Abstract{}, owner, key)))
+    case Rec.Plan{+c, +fs}: String.concat(["arity=", F.Int63.show(Rec.arity(C.ctx, value)), " context=", F.Int63.show(C.size(c)), "\nfields=", K.join(";", fields(c, fs)), "\nih=", K.join(";", fields(c, Rec.hypotheses(fs)))])
+def selected(+c: C.ctx, +owner: String, +key: String, uniform: Bool) -> R.result(Rec.plan<C.ctx>):
+  Q.if_else(R.result(Rec.plan<C.ctx>), String.eq(owner, "@alias-field"),
+    _ => Bridge.rules(Rec.plan<C.ctx>, c, Rec.fields(C.ctx, C.ops, "N", ["N"], [F.Pair2{Q.Many{}, F.Pair2{"child", T.Global{"Alias"}}}], C.make(C.globals(c), C.budget(c)), F.Int63.zero)),
+    _ => Q.if_else(R.result(Rec.plan<C.ctx>), uniform, _ => Bridge.rules(Rec.plan<C.ctx>, c, Uniform.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key)), _ => Bridge.rules(Rec.plan<C.ctx>, c, Rec.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key))))
 def checked(owner: String, key: String, +uniform: Bool, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
-      R.map_result(Rec.plan, String, plan => report(plan), selected(C.make(globals, B.create(16384n)), owner, key, uniform))
+      R.map_result(Rec.plan<C.ctx>, String, plan => report(plan), selected(C.make(globals, B.create(16384n)), owner, key, uniform))
 def result_text(value: R.result(String)) -> String:
   match value:
     case Fail{e}: String.append("FAIL\n", E.to_string(e))

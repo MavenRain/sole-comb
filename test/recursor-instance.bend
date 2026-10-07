@@ -8,6 +8,7 @@ import ../lib/kernel_level.bend as L
 import ../lib/kernel_positivity.bend as P
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
+import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_recursor_elim.bend as Elim
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
@@ -180,7 +181,7 @@ def context(rows: List<&2, F.Pair2<String, entry>>, +name: String) -> Maybe<&2, 
 
 # A closed context runs the binder check of every scope variable on the result usage. An open context reports the usage.
 def closed(+origin: C.ctx, shut: Bool, grade: Q.t, uses: Q.usage) -> R.result(Unit):
-  Q.if_else(R.result(Unit), shut, _ => R.map_result(Q.usage, Unit, _ => Unit{}, Rec.rules(Q.usage, origin, R.c_close(C.ctx, C.ops, origin, F.Int63.zero, grade, uses))), _ => Done{Unit{}})
+  Q.if_else(R.result(Unit), shut, _ => R.map_result(Q.usage, Unit, _ => Unit{}, Bridge.rules(Q.usage, origin, R.c_close(C.ctx, C.ops, origin, F.Int63.zero, grade, uses))), _ => Done{Unit{}})
 
 def shown(+origin: C.ctx, shut: Bool, grade: Q.t, inf: R.inferred) -> R.result(String):
   match inf:
@@ -189,14 +190,14 @@ def shown(+origin: C.ctx, shut: Bool, grade: Q.t, inf: R.inferred) -> R.result(S
 # The report scope is the scope of the check: the given locals, then the declaration parameters.
 def planned(+c: C.ctx, shut: Bool, owner: String, +grade: Q.t, sq: Q.t, scrut: T.t, fam: P.family, mo: T.motive, branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(String):
   R.bind(R.inferred, String, Elim.check(c, grade, owner, sq, scrut, mo, branches), inf =>
-    R.bind(C.ctx, String, Rec.parameters(R.family_params(fam), c), +origin => shown(origin, shut, grade, inf)))
+    R.bind(C.ctx, String, Bridge.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), c)), +origin => shown(origin, shut, grade, inf)))
 
 def scoped(+owner: String, +mode: String, grade: Q.t, sq: Q.t, scrut: T.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, shut: Bool, +c: C.ctx) -> R.result(String):
-  R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, shut, owner, grade, sq, scrut, fam, motive(owner, mode, fam), branches))
+  R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, shut, owner, grade, sq, scrut, fam, motive(owner, mode, fam), branches))
 
-def rooted(owner: String, mode: String, grade: Q.t, sq: Q.t, scrut: T.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, row: entry, base: C.ctx) -> R.result(String):
+def rooted(owner: String, mode: String, grade: Q.t, sq: Q.t, scrut: T.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, row: entry, +base: C.ctx) -> R.result(String):
   match row:
-    case F.Pair2{shut, locals}: R.bind(C.ctx, String, Rec.parameters(locals, base), c => scoped(owner, mode, grade, sq, scrut, branches, shut, c))
+    case F.Pair2{shut, locals}: R.bind(C.ctx, String, Bridge.rules(C.ctx, base, Rec.parameters(C.ctx, C.ops, locals, base)), c => scoped(owner, mode, grade, sq, scrut, branches, shut, c))
 
 def checked(owner: String, mode: String, grade: Q.t, sq: Q.t, scrut: T.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, row: entry, value: Program.checked) -> R.result(String):
   match value:

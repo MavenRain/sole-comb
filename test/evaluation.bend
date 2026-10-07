@@ -132,6 +132,10 @@ def bind(name: String, q: Q.t, ty: V.t, +ctx: Context) -> Context:
   match ctx:
     case Context{g, size, env, h, p, b}: Context{g, F.Int63.succ(size), V.var(size) <> env, h, p, b}
 
+def define(name: String, q: Q.t, ty: V.t, value: V.t, +ctx: Context) -> Context:
+  match ctx:
+    case Context{g, size, env, h, p, b}: Context{g, F.Int63.succ(size), value <> env, h, p, b}
+
 def size(ctx: Context) -> F.Int63.t:
   match ctx:
     case Context{_, n, _, _, _, _}: n
@@ -156,8 +160,12 @@ def family(ctx: Context, name: String) -> Maybe<&2, Pos.family>:
   match ctx:
     case Context{g, _, _, _, _, _}: G.find_family(name, g)
 
+def families(ctx: Context) -> List<&2, F.Pair2<String, Pos.family>>:
+  match ctx:
+    case Context{g, _, _, _, _, _}: G.family_list(g)
+
 def ops() -> R.ops<Context>:
-  R.Ops{infer_univ, whnf, n => q => ty => c => bind(n, q, ty, c), size, env, eval_env, quote, head_ty, family}
+  R.Ops{infer_univ, whnf, n => q => ty => c => bind(n, q, ty, c), n => q => ty => v => c => define(n, q, ty, v, c), size, env, eval_env, quote, head_ty, family, families}
 
 def conv(ctx: Context, ty: V.t, a: V.t, b: V.t) -> String:
   bool_result(CV.conv(Context, ops, ctx, ty, a, b))

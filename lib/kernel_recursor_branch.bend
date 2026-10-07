@@ -8,6 +8,7 @@ import ./kernel_level.bend as L
 import ./kernel_positivity.bend as P
 import ./kernel_quantity.bend as Q
 import ./kernel_recursor.bend as Rec
+import ./kernel_recursor_bridge.bend as Bridge
 import ./kernel_recursor_motive.bend as Motive
 import ./kernel_rules.bend as R
 import ./kernel_shape.bend as S
@@ -56,12 +57,12 @@ def hypotheses(hs: List<&2, Motive.hypothesis>, +fs: List<&2, Rec.field>, +count
 # The ordinary elimination target: the motive at the declared indices and the constructor
 # value. Indices use the parameter and field environment. The motive uses the parameters.
 def target(+origin: C.ctx, +owner: String, +key: String, mo: T.motive, ct: P.ctor, +c: C.ctx, fs: List<&2, Rec.field>) -> R.result(V.t):
-  R.bind(List<&2, V.t>, V.t, Rec.rules(List<&2, V.t>, c, R.mu_values(C.ctx, C.ops, c, C.env(c), R.ctor_indices(ct))), +idx =>
-    Rec.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, values(fs)})))
+  R.bind(List<&2, V.t>, V.t, Bridge.rules(List<&2, V.t>, c, R.mu_values(C.ctx, C.ops, c, C.env(c), R.ctor_indices(ct))), +idx =>
+    Bridge.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, values(fs)})))
 
 def formation(+c: C.ctx, value: V.t) -> R.result(Unit):
   R.bind(T.t, Unit, EV.quote(C.globals(c), C.size(c), value), tm =>
-    R.map_result(L.t, Unit, _ => Unit{}, Rec.rules(L.t, c, R.c_univ(C.ctx, C.ops, c, tm))))
+    R.map_result(L.t, Unit, _ => Unit{}, Bridge.rules(L.t, c, R.c_univ(C.ctx, C.ops, c, tm))))
 
 # Each domain is checked in its own prefix: parameters, earlier fields, earlier hypotheses.
 # The target is checked after every binder. The result is the complete branch context.
@@ -85,7 +86,7 @@ def assemble(+origin: C.ctx, +owner: String, +key: String, +mo: T.motive, ct: P.
 # One branch type in the declaration context. This does not check a branch body,
 # bind public elimination hypotheses, or evaluate a recursive call.
 def layout(+c: C.ctx, +scope: Rec.scope, +owner: String, +key: String, +mo: T.motive) -> R.result(plan):
-  R.bind(P.family, plan, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
+  R.bind(P.family, plan, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam =>
     R.bind(Motive.plan, plan, Motive.layout(c, scope, owner, key, mo), value =>
       R.bind(P.ctor, plan, R.require(P.ctor, P.ctor_of(key, fam), E.Unbound{String.concat([key, " is not a constructor of ", owner])}), ct =>
-        R.bind(C.ctx, plan, Rec.open(scope, R.family_params(fam), c), origin => assemble(origin, owner, key, mo, ct, value)))))
+        R.bind(C.ctx, plan, Bridge.rules(C.ctx, c, Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)), origin => assemble(origin, owner, key, mo, ct, value)))))

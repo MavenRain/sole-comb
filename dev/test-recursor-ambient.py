@@ -81,17 +81,17 @@ LOCAL = (
 )
 CASES = NONE + LOCAL
 # Each mutant puts one scope site back on a context without the given locals. The uniform site needs a given local
-# of type Type 0: its mutant lives in the instance suite.
-SCOPE = "Rec.open(scope, R.family_params(fam), c)"
+# of type Type 0: its mutant lives in the instance suite. The generic constructor path is probed at its concrete caller.
+SCOPE = "Rec.open(C.ctx, C.ops, scope, R.family_params(fam), c)"
 FRESH = "C.make(C.globals(c), C.budget(c))"
-DROPPED = f"Rec.open(scope, R.family_params(fam), {FRESH})"
+DROPPED = f"Rec.open(C.ctx, C.ops, scope, R.family_params(fam), {FRESH})"
 MUTANTS = (
     ("elim-drops-locals", "lib/kernel_recursor_elim.bend", SCOPE, DROPPED, "local-motive"),
     ("cover-drops-locals", "lib/kernel_recursor_elim.bend", "Cover.check(c, scope, mode, owner, mo, branches)", f"Cover.check({FRESH}, scope, mode, owner, mo, branches)", "local-body"),
     ("body-drops-locals", "lib/kernel_recursor_body.bend", SCOPE, DROPPED, "local-body"),
     ("motive-drops-locals", "lib/kernel_recursor_motive.bend", SCOPE, DROPPED, "local-motive"),
     ("branch-drops-locals", "lib/kernel_recursor_branch.bend", SCOPE, DROPPED, "self-under-local"),
-    ("constructor-drops-locals", "lib/kernel_recursor.bend", "open(scope, params, c)", f"open(scope, params, {FRESH})", "vector-index-under-local"),
+    ("constructor-drops-locals", "lib/kernel_recursor_motive.bend", "Uniform.layout(C.ctx, C.ops, c, scope, owner, key)", f"Uniform.layout(C.ctx, C.ops, {FRESH}, scope, owner, key)", "vector-index-under-local"),
 )
 
 

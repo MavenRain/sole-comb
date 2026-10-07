@@ -175,7 +175,7 @@ def main():
             ("admit-affine", 'Fail{E.Not_yet{"recursor hypotheses for affine recursive fields are not supported"}}', "Done{Q.One{}}", "affine-child"),
             ("index-order", "R.mu_result(C.ctx, C.ops, origin, mo, idx,", "R.mu_result(C.ctx, C.ops, origin, mo, R.rev_append(V.t, idx, []),", "two-indices"),
             ("drop-constructor-fields", "V.VACtor{key}, values(fs)}", "V.VACtor{key}, []}", "self-direct"),
-            ("skip-formation", "Rec.rules(L.t, c, R.c_univ(C.ctx, C.ops, c, tm))", "Done{L.one}", "ill-formed-target"),
+            ("skip-formation", "Bridge.rules(L.t, c, R.c_univ(C.ctx, C.ops, c, tm))", "Done{L.one}", "ill-formed-target"),
             ("hypothesis-position", "hypotheses(hs, fs, R.length(Rec.field, fs))", "hypotheses(hs, fs, F.Int63.succ(R.length(Rec.field, fs)))", "direct"),
             ("child-lookup", "F.Int63.equal(p, position)", "F.Int63.equal(p, F.Int63.succ(position))", "multiple-children"),
             ("drop-later-hypotheses", "hypotheses(rest, fs, F.Int63.succ(count))))", "Done{[]}))", "multiple-children"),

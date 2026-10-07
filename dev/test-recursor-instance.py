@@ -110,12 +110,12 @@ MUTANTS = (
     ("usage-drops-scrutinee", "lib/kernel_recursor_elim.bend", USAGE, "Q.scale(mode, bu)", "local-list-linear"),
     ("usage-drops-branches", "lib/kernel_recursor_elim.bend", USAGE, "su", "parameter-value"),
     ("scale-many", "lib/kernel_recursor_elim.bend", "Q.scale(mode, bu)", "Q.scale(Q.Many{}, bu)", "local-list-head-linear"),
-    ("instance-keeps-quantity", "lib/kernel_recursor.bend", "instance(rest, tail, C.define(x, Q.Zero{}, tyv, v, c))", "instance(rest, tail, C.define(x, Q.Many{}, tyv, v, c))", "parameter-slot-read"),
-    ("open-abstract-for-instance", "lib/kernel_recursor.bend", "case Instance{values}: instance(tele, values, c)", "case Instance{_}: abstract(tele, c)", "parameter-value"),
-    ("targets-abstract-for-instance", "lib/kernel_recursor_uniform.bend", "case Rec.Instance{values}: values", "case Rec.Instance{_}: levels(tele, C.size(c))", "uniform-at-nat"),
+    ("instance-keeps-quantity", "lib/kernel_recursor.bend", "instance(C, op, rest, tail, R.c_define(C, op, c, x, Q.Zero{}, tyv, v))", "instance(C, op, rest, tail, R.c_define(C, op, c, x, Q.Many{}, tyv, v))", "parameter-slot-read"),
+    ("open-abstract-for-instance", "lib/kernel_recursor.bend", "case Instance{values}: instance(C, op, tele, values, c)", "case Instance{_}: abstract(C, op, tele, c)", "parameter-value"),
+    ("targets-abstract-for-instance", "lib/kernel_recursor_uniform.bend", "case Rec.Instance{values}: values", "case Rec.Instance{_}: levels(tele, R.c_size(C, op, c))", "uniform-at-nat"),
     ("uniform-flips-compare", "lib/kernel_recursor_uniform.bend",
-     "eq,\n                _ => arguments(c, scope, rest, tail, es, Rec.install(scope, x, q, tyv, e, prefix)),\n                _ => Fail{mismatch()})))",
-     "eq,\n                _ => Fail{mismatch()},\n                _ => arguments(c, scope, rest, tail, es, Rec.install(scope, x, q, tyv, e, prefix)))))", "cons-at-n"),
+     "eq,\n                _ => arguments(C, op, c, scope, rest, tail, es, Rec.install(C, op, scope, x, q, tyv, e, prefix)),\n                _ => R.Abort{mismatch()})))",
+     "eq,\n                _ => R.Abort{mismatch()},\n                _ => arguments(C, op, c, scope, rest, tail, es, Rec.install(C, op, scope, x, q, tyv, e, prefix)))))", "cons-at-n"),
 )
 
 

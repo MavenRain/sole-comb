@@ -8,6 +8,7 @@ import ../lib/kernel_positivity.bend as P
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
 import ../lib/kernel_recursor_body.bend as Body
+import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
 import ../lib/kernel_term.bend as T
@@ -79,13 +80,13 @@ def report(+origin: C.ctx, uses: Q.usage) -> String:
 
 def planned(+c: C.ctx, owner: String, key: String, grade: Q.t, fam: P.family, mo: T.motive, lg: T.leg) -> R.result(String):
   R.bind(Q.usage, String, Body.check(c, Rec.Abstract{}, grade, owner, key, mo, lg), uses =>
-    R.map_result(C.ctx, String, origin => report(origin, uses), Rec.parameters(R.family_params(fam), C.make(C.globals(c), C.budget(c)))))
+    R.map_result(C.ctx, String, origin => report(origin, uses), Bridge.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c))))))
 
 def checked(+owner: String, key: String, +mode: String, grade: Q.t, lg: T.leg, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
-      R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, key, grade, fam, motive(owner, mode, fam), lg))
+      R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, key, grade, fam, motive(owner, mode, fam), lg))
 
 def started(source: String, owner: String, key: String, mode: String, grade: String, body: String, rest: List<String>) -> R.result(String):
   R.bind(Q.t, String, R.require(Q.t, quantity(grade), E.Mismatch{"expected a checking mode 0, 1 or w"}), q =>

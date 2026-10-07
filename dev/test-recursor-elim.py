@@ -113,7 +113,7 @@ CASES = (
 )
 COVER = "Cover.check(c, scope, mode, owner, mo, branches)"
 INFER = "R.infer_scrutinee(C.ctx, C.ops, c, mode, sq, scrut)"
-TYPED = f"R.bind(R.inferred, R.inferred, Rec.rules(R.inferred, c, {INFER}), inf => typed(c, mode, owner, scrut, mo, branches, fam, inf))"
+TYPED = f"R.bind(R.inferred, R.inferred, Bridge.rules(R.inferred, c, {INFER}), inf => typed(c, mode, owner, scrut, mo, branches, fam, inf))"
 # The parameter and usage mutants live in the instance suite: no elim row has a given local, and every elim row at a
 # family with declaration parameters fails at the scrutinee.
 MUTANTS = (

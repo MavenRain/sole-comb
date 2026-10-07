@@ -237,7 +237,7 @@ type program<-C: Data, -A: Data> is Type:
   Request{task: task<C>, resume: result(answer) -> program<C, A>}
 
 type ops<-C: Data> is Type:
-  Ops{infer_univ: C -> T.t -> result(L.t), whnf: C -> V.t -> result(V.t), bind: String -> Q.t -> V.t -> C -> C, size: C -> F.Int63.t, env: C -> List<&2, V.t>, eval_env: C -> List<&2, V.t> -> T.t -> result(V.t), quote: C -> V.t -> result(T.t), head_ty: C -> V.head -> result(V.t), family: C -> String -> Maybe<&2, Pos.family>}
+  Ops{infer_univ: C -> T.t -> result(L.t), whnf: C -> V.t -> result(V.t), bind: String -> Q.t -> V.t -> C -> C, define: String -> Q.t -> V.t -> V.t -> C -> C, size: C -> F.Int63.t, env: C -> List<&2, V.t>, eval_env: C -> List<&2, V.t> -> T.t -> result(V.t), quote: C -> V.t -> result(T.t), head_ty: C -> V.head -> result(V.t), family: C -> String -> Maybe<&2, Pos.family>, families: C -> List<&2, F.Pair2<String, Pos.family>>}
 
 def option_case(-C: Data, -A: Data, option: Maybe<&2, A>, next: A -> program<C, Bool>) -> program<C, Bool>:
   match option:
@@ -356,39 +356,47 @@ def run(~C: Data, ~dispatch: task<C> -> program<C, answer>, -A: Data, value: pro
 
 def o_infer_univ(-C: Data, ops: ops<C>, ctx: C, term: T.t) -> result(L.t):
   match ops:
-    case Ops{f, _, _, _, _, _, _, _, _}: f(ctx, term)
+    case Ops{f, _, _, _, _, _, _, _, _, _, _}: f(ctx, term)
 
 def o_whnf(-C: Data, ops: ops<C>, ctx: C, value: V.t) -> result(V.t):
   match ops:
-    case Ops{_, f, _, _, _, _, _, _, _}: f(ctx, value)
+    case Ops{_, f, _, _, _, _, _, _, _, _, _}: f(ctx, value)
 
 def o_bind(-C: Data, ops: ops<C>, name: String, quantity: Q.t, ty: V.t, ctx: C) -> C:
   match ops:
-    case Ops{_, _, f, _, _, _, _, _, _}: f(name, quantity, ty, ctx)
+    case Ops{_, _, f, _, _, _, _, _, _, _, _}: f(name, quantity, ty, ctx)
+
+def o_define(-C: Data, ops: ops<C>, name: String, quantity: Q.t, ty: V.t, value: V.t, ctx: C) -> C:
+  match ops:
+    case Ops{_, _, _, f, _, _, _, _, _, _, _}: f(name, quantity, ty, value, ctx)
 
 def o_size(-C: Data, ops: ops<C>, ctx: C) -> F.Int63.t:
   match ops:
-    case Ops{_, _, _, f, _, _, _, _, _}: f(ctx)
+    case Ops{_, _, _, _, f, _, _, _, _, _, _}: f(ctx)
 
 def o_env(-C: Data, ops: ops<C>, ctx: C) -> List<&2, V.t>:
   match ops:
-    case Ops{_, _, _, _, f, _, _, _, _}: f(ctx)
+    case Ops{_, _, _, _, _, f, _, _, _, _, _}: f(ctx)
 
 def o_eval_env(-C: Data, ops: ops<C>, ctx: C, env: List<&2, V.t>, term: T.t) -> result(V.t):
   match ops:
-    case Ops{_, _, _, _, _, f, _, _, _}: f(ctx, env, term)
+    case Ops{_, _, _, _, _, _, f, _, _, _, _}: f(ctx, env, term)
 
 def o_quote(-C: Data, ops: ops<C>, ctx: C, value: V.t) -> result(T.t):
   match ops:
-    case Ops{_, _, _, _, _, _, f, _, _}: f(ctx, value)
+    case Ops{_, _, _, _, _, _, _, f, _, _, _}: f(ctx, value)
 
 def o_head_ty(-C: Data, ops: ops<C>, ctx: C, head: V.head) -> result(V.t):
   match ops:
-    case Ops{_, _, _, _, _, _, _, f, _}: f(ctx, head)
+    case Ops{_, _, _, _, _, _, _, _, f, _, _}: f(ctx, head)
 
 def o_family(-C: Data, ops: ops<C>, ctx: C, name: String) -> Maybe<&2, Pos.family>:
   match ops:
-    case Ops{_, _, _, _, _, _, _, _, f}: f(ctx, name)
+    case Ops{_, _, _, _, _, _, _, _, _, f, _}: f(ctx, name)
+
+def o_families(-C: Data, ops: ops<C>, ctx: C) -> List<&2, F.Pair2<String, Pos.family>>:
+  match ops:
+    case Ops{_, _, _, _, _, _, _, _, _, _, f}: f(ctx)
 
 def zero_complete(names: List<&2, String>, family: Pos.family) -> Bool:
   match names:
@@ -736,6 +744,8 @@ def c_open(~C: Data, ~op: check_ops<C>, ctx: C, clo: V.closure, args: List<&2, V
     case V.Closure{env, body}: lift(C, V.t, o_eval_env(C, c_runtime(C, op), ctx, rev_append(V.t, args, env), body))
 
 def c_bind(~C: Data, ~op: check_ops<C>, ctx: C, x: String, q: Q.t, ty: V.t) -> C: o_bind(C, c_runtime(C, op), x, q, ty, ctx)
+
+def c_define(~C: Data, ~op: check_ops<C>, ctx: C, x: String, q: Q.t, ty: V.t, value: V.t) -> C: o_define(C, c_runtime(C, op), x, q, ty, value, ctx)
 
 def c_size(~C: Data, ~op: check_ops<C>, ctx: C) -> F.Int63.t: o_size(C, c_runtime(C, op), ctx)
 

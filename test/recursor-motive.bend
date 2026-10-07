@@ -7,6 +7,7 @@ import ../lib/kernel_level.bend as L
 import ../lib/kernel_positivity.bend as P
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
+import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_recursor_motive.bend as Motive
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
@@ -63,7 +64,7 @@ def checked(+owner: String, key: String, mode: String, value: Program.checked) -
   match value:
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
-      R.bind(P.family, String, Rec.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
+      R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), fam =>
         R.map_result(Motive.plan, String, report, Motive.layout(c, Rec.Abstract{}, owner, key, make(owner, mode, fam))))
 
 def known(+mode: String, modes: List<&2, String>) -> Bool:
