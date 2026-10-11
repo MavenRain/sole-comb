@@ -8,7 +8,6 @@ import ../lib/kernel_positivity.bend as P
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
 import ../lib/kernel_recursor_branch.bend as Branch
-import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_recursor_motive.bend as Motive
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
@@ -48,11 +47,11 @@ def marks(tele: P.telescope) -> List<&2, F.Pair2<Q.t, String>>:
 def elimination(+origin: C.ctx, +owner: String, +key: String, mo: T.motive, ct: P.ctor, state: R.binding_state<C.ctx>) -> R.result(F.Pair2<C.ctx, V.t>):
   match state:
     case R.BindingState{inner, env, vals}:
-      R.bind(List<&2, V.t>, F.Pair2<C.ctx, V.t>, Bridge.rules(List<&2, V.t>, origin, R.mu_values(C.ctx, C.ops, origin, env, R.ctor_indices(ct))), +idx =>
-        R.map_result(V.t, F.Pair2<C.ctx, V.t>, ty => F.Pair2{inner, ty}, Bridge.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, R.rev_append(V.t, vals, [])}))))
+      R.bind(List<&2, V.t>, F.Pair2<C.ctx, V.t>, C.rules(List<&2, V.t>, origin, R.mu_values(C.ctx, C.ops, origin, env, R.ctor_indices(ct))), +idx =>
+        R.map_result(V.t, F.Pair2<C.ctx, V.t>, ty => F.Pair2{inner, ty}, C.rules(V.t, origin, R.mu_result(C.ctx, C.ops, origin, mo, idx, V.VIn{S.SMu{owner, idx}, V.VACtor{key}, R.rev_append(V.t, vals, [])}))))
 
 def ordinary(+origin: C.ctx, +owner: String, +key: String, mo: T.motive, +ct: P.ctor) -> R.result(F.Pair2<C.ctx, V.t>):
-  R.bind(R.binding_state<C.ctx>, F.Pair2<C.ctx, V.t>, Bridge.rules(R.binding_state<C.ctx>, origin, R.mu_bind_fields(C.ctx, C.ops, origin, R.ctor_args(ct), marks(R.ctor_args(ct)), R.BindingState{origin, C.env(origin), []})), state => elimination(origin, owner, key, mo, ct, state))
+  R.bind(R.binding_state<C.ctx>, F.Pair2<C.ctx, V.t>, C.rules(R.binding_state<C.ctx>, origin, R.mu_bind_fields(C.ctx, C.ops, origin, R.ctor_args(ct), marks(R.ctor_args(ct)), R.BindingState{origin, C.env(origin), []})), state => elimination(origin, owner, key, mo, ct, state))
 
 # Certificate probes: a non-type target, or a non-type binder after the plan's binders.
 def probe(+origin: C.ctx, +mode: String, value: Branch.plan<C.ctx>) -> R.result(String):
@@ -60,12 +59,12 @@ def probe(+origin: C.ctx, +mode: String, value: Branch.plan<C.ctx>) -> R.result(
     case Branch.Plan{_, _, +bs, ty}:
       R.map_result(C.ctx, String, _ => "the certificate accepted an ill-formed plan",
         Q.if_else(R.result(C.ctx), String.eq(mode, "ill-formed-target"),
-          _ => Bridge.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, bs, origin, V.var(C.size(origin)))),
-          _ => Bridge.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, List.append(&2, Branch.binder, bs, [Branch.Binder{F.Int63.zero, Q.Many{}, "bad", V.var(C.size(origin)), Branch.FieldBinder{}}]), origin, ty))))
+          _ => C.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, bs, origin, V.var(C.size(origin)))),
+          _ => C.rules(C.ctx, origin, Branch.certify(C.ctx, C.ops, List.append(&2, Branch.binder, bs, [Branch.Binder{F.Int63.zero, Q.Many{}, "bad", V.var(C.size(origin)), Branch.FieldBinder{}}]), origin, ty))))
 
 def planned(+c: C.ctx, +owner: String, +key: String, +mode: String, +fam: P.family, +mo: T.motive) -> R.result(String):
-  R.bind(Branch.plan<C.ctx>, String, Bridge.rules(Branch.plan<C.ctx>, c, Branch.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key, mo)), +value =>
-    R.bind(C.ctx, String, Bridge.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c)))), +origin =>
+  R.bind(Branch.plan<C.ctx>, String, C.rules(Branch.plan<C.ctx>, c, Branch.layout(C.ctx, C.ops, c, Rec.Abstract{}, owner, key, mo)), +value =>
+    R.bind(C.ctx, String, C.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c)))), +origin =>
       Q.if_else(R.result(String), MotiveCase.known(mode, ["ill-formed-target", "ill-formed-binder"]),
         _ => probe(origin, mode, value),
         _ => R.bind(P.ctor, String, R.require(P.ctor, P.ctor_of(key, fam), E.Unbound{"the branch constructor is not declared"}), ct =>
@@ -75,7 +74,7 @@ def checked(+owner: String, +key: String, +mode: String, value: Program.checked)
   match value:
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
-      R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, key, mode, fam, MotiveCase.make(owner, mode, fam)))
+      R.bind(P.family, String, C.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, key, mode, fam, MotiveCase.make(owner, mode, fam)))
 
 def run(args: List<String>) -> IO(Unit):
   match args:

@@ -237,6 +237,19 @@ syntax, delayed recursive evaluation, erasure and families without
 constructors remain pending. See
 [instance validation](validation/stage-a-recursor-instance.md).
 
+A.5b.3.2e.18 completes the generic recursor boundary refactors of 2e.18a
+and 2e.18b and adds kernel Elim routing at inference and checking. A
+recursive constructor leg with more binders than fields selects the
+checked recursor; other terms keep kernel case analysis. Parameter aliases
+close out of branch usage, and evaluation refuses delayed recursive
+branches. The final route suite passes 41 cases on Bun and Node worker and
+kills 10 Bun mutations, with no pinned checking expectation changes.
+Native route and the incomplete native integration gates remain unvalidated
+at the unchanged memory cap. Public hypothesis syntax, recursive iota,
+erasure, empty-family recursors, mutual and affine routed families remain
+pending. See [route validation](validation/stage-a-recursor-route.md), which
+also records 2e.18a, USER-validated 2e.18b, and both parts of 2e.18c.
+
 A.5b.3.2e.7 adds final default arms for public families. Expansion tracks the
 constructors already handled by explicit arms and generates checked arms for
 the remainder in declaration order. The public examples cover field quantities,

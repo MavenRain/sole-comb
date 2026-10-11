@@ -16,6 +16,8 @@ import ./kernel_rules.bend as R
 import ./kernel_eval.bend as EV
 import ./kernel_conv.bend as CV
 import ./kernel_pp.bend as PP
+import ./kernel_recursor_elim.bend as Elim
+import ./kernel_recursor_route.bend as Route
 
 type local is Data:
   Local{name: String, quantity: Q.t, ty: V.t}
@@ -333,6 +335,25 @@ def let_body(+c: ctx, +mode: Q.t, x: String, +ty: T.t, +definition: T.t, body: c
       R.pbind(ctx, Q.usage, R.inferred, check_request(c, Q.runtime(mode), definition, tyv), +uses =>
         R.pbind(ctx, V.t, R.inferred, R.c_eval(ctx, ops, c, definition), v => let_continue(c, mode, x, tyv, v, uses, linear_definition(locals(c), F.Int63.pred(size(c)), uses), body)))))
 
+# The family of a mu elimination whose leg binds hypotheses. None keeps the term on the kernel rule.
+def routed(+c: ctx, s: S.t<T.t>, bs: List<&2, F.Pair2<T.addr, T.leg>>) -> Maybe<&2, String>:
+  match s:
+    case S.SPi{_, _, _}: None{}
+    case S.SColl{_}: None{}
+    case S.SPar{_, _}: None{}
+    case S.SMu{+n, _}: F.maybe_when(String, Route.routes(G.find_family(n, globals(c)), bs), n)
+    case S.SNu{_, _}: None{}
+
+def recursor(+c: ctx, +mode: Q.t, owner: Maybe<&2, String>, s: S.t<T.t>, scrut: T.t, sq: Q.t, mo: Maybe<&2, T.motive>, bs: List<&2, F.Pair2<T.addr, T.leg>>, expected: Maybe<&2, V.t>) -> R.program<ctx, R.inferred>:
+  match owner:
+    case None{}: R.elim_elim(ctx, ops, c, mode, T.Elimination{s, scrut, sq, mo, bs}, expected)
+    case Some{n}: R.pbind(ctx, T.motive, R.inferred, R.crequire(ctx, T.motive, mo, E.Cannot_infer{"an elimination at a mu shape needs a motive"}), m => Elim.check(ctx, ops, c, mode, n, sq, scrut, m, bs))
+
+# A kernel Elim term routes to the checked recursor when a leg binds hypotheses; every other term stays on the kernel rule.
+def route(+c: ctx, +mode: Q.t, e: T.elim, expected: Maybe<&2, V.t>) -> R.program<ctx, R.inferred>:
+  match e:
+    case T.Elimination{+s, scrut, sq, mo, +bs}: recursor(c, mode, routed(c, s, bs), s, scrut, sq, mo, bs, expected)
+
 def infer_node(+c: ctx, +mode: Q.t, tm: T.t) -> R.program<ctx, R.inferred>:
   match tm:
     case T.Var{+ix}: R.pbind(ctx, local, R.inferred, R.crequire(ctx, local, R.at(local, ix, locals(c)), E.Unbound{String.concat(["de Bruijn index ", F.Int63.show(ix), " is outside the context"])}), entry => infer_local(c, mode, ix, entry))
@@ -340,7 +361,7 @@ def infer_node(+c: ctx, +mode: Q.t, tm: T.t) -> R.program<ctx, R.inferred>:
     case T.Lan{s, d}: R.pmap(ctx, L.t, R.inferred, l => F.Pair2{V.VUniv{l}, Q.empty}, R.form(ctx, ops, c, s, d, None{}, False{}))
     case T.Ran{s, d}: R.pmap(ctx, L.t, R.inferred, l => F.Pair2{V.VUniv{l}, Q.empty}, R.form(ctx, ops, c, s, d, None{}, True{}))
     case T.Out{s, a, head}: R.elim_out(ctx, ops, c, mode, s, a, head)
-    case T.Elim{e}: R.elim_elim(ctx, ops, c, mode, e, None{})
+    case T.Elim{e}: route(c, mode, e, None{})
     case T.Let{x, ty, d, body}: let_body(c, mode, x, ty, d, inner => infer_request(inner, mode, body))
     case T.Ann{tm, +ty}: R.pbind(ctx, L.t, R.inferred, univ_request(c, ty), _ => R.pbind(ctx, V.t, R.inferred, R.c_eval(ctx, ops, c, ty), +tyv => R.pmap(ctx, Q.usage, R.inferred, uses => F.Pair2{tyv, uses}, check_request(c, mode, tm, tyv))))
     case T.Global{n}: R.lift(ctx, R.inferred, R.map_result(V.t, R.inferred, ty => F.Pair2{ty, Q.empty}, head_ty(c, V.HGlobal{n})))
@@ -353,7 +374,7 @@ def check_node(+c: ctx, +mode: Q.t, tm: T.t, +expected: V.t) -> R.program<ctx, Q
   match tm:
     case T.Sec{s, legs}: R.intro_sec(ctx, ops, c, mode, s, legs, expected)
     case T.In{s, a, args}: R.intro_in(ctx, ops, c, mode, s, a, args, expected)
-    case T.Elim{e}: R.pbind(ctx, R.inferred, Q.usage, R.elim_elim(ctx, ops, c, mode, e, Some{expected}), value => inferred_check(c, expected, value))
+    case T.Elim{e}: R.pbind(ctx, R.inferred, Q.usage, route(c, mode, e, Some{expected}), value => inferred_check(c, expected, value))
     case T.Lan{s, d}: check_former(c, s, d, expected, False{})
     case T.Ran{s, d}: check_former(c, s, d, expected, True{})
     case T.Let{x, ty, d, body}: R.pmap(ctx, R.inferred, Q.usage, inferred_uses, let_body(c, mode, x, ty, d, inner => R.pmap(ctx, Q.usage, R.inferred, uses => F.Pair2{expected, uses}, check_request(inner, mode, body, expected))))
@@ -382,6 +403,10 @@ def drive(-A: Data, value: R.program<ctx, A>, +remaining: B.t) -> fuelled<A>:
     case R.Abort{e}: Fuelled{Fail{e}, remaining}
     case R.Request{+job, resume}:
       with_fuel(R.answer, A, polled(remaining, poll(job, remaining), next => drive(R.answer, dispatch(job), next)), answer => next => drive(A, resume(answer), next))
+
+# Run a checking program on the budget of the given context.
+def rules(-A: Data, +c: ctx, value: R.program<ctx, A>) -> R.result(A):
+  result_of(A, drive(A, value, budget(c)))
 
 def infer_with_budget(+c: ctx, mode: Q.t, tm: T.t) -> fuelled<V.t>:
   drive(V.t, R.pmap(ctx, R.inferred, V.t, inferred_type, infer_request(c, Q.runtime(mode), tm)), budget(c))

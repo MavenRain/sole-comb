@@ -205,6 +205,18 @@ kernel `Elim` term to this entry, parameter rows in the result usage,
 public elimination hypothesis syntax, delayed recursive evaluation,
 recursor erasure and families without constructors remain pending.
 
+A.5b.3.2e.18 adds [kernel Elim routing to checked recursors](dev/validation/stage-a-recursor-route.md)
+after the generic kernel-program refactors in 2e.18a and 2e.18b. Both kernel
+Elim sites route when a recursive constructor leg binds more binders than
+its fields; other terms retain kernel case analysis. The result closes
+parameter aliases out of branch usage, and evaluation refuses delayed
+recursive branches. The final route checks pass 41 cases on Bun and Node
+worker and kill 10 Bun mutations, with the pinned checking oracle unchanged.
+Native route and the incomplete native integration gates remain unvalidated
+at the unchanged memory cap. Public hypothesis syntax, recursive iota,
+recursor erasure, empty-family recursors, mutual and affine routed families
+remain pending.
+
 The instance Make targets validate Bun and Node worker. Native compilation
 remains an explicit `make test-recursor-instance-native` check; the recorded
 native run exceeded the unchanged 900-second harness deadline.

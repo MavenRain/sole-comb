@@ -7,7 +7,6 @@ import ../lib/kernel_error.bend as E
 import ../lib/kernel_positivity.bend as P
 import ../lib/kernel_quantity.bend as Q
 import ../lib/kernel_recursor.bend as Rec
-import ../lib/kernel_recursor_bridge.bend as Bridge
 import ../lib/kernel_recursor_elim.bend as Elim
 import ../lib/kernel_rules.bend as R
 import ../lib/kernel_shape.bend as S
@@ -126,14 +125,14 @@ def shown(+origin: C.ctx, inf: R.inferred) -> String:
     case F.Pair2{ty, uses}: report(origin, ty, uses)
 
 def planned(+c: C.ctx, owner: String, grade: Q.t, sq: Q.t, scrut: T.t, fam: P.family, mo: T.motive, branches: List<&2, F.Pair2<T.addr, T.leg>>) -> R.result(String):
-  R.bind(R.inferred, String, Elim.check(c, grade, owner, sq, scrut, mo, branches), inf =>
-    R.map_result(C.ctx, String, origin => shown(origin, inf), Bridge.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c))))))
+  R.bind(R.inferred, String, C.rules(R.inferred, c, Elim.check(C.ctx, C.ops, c, grade, owner, sq, scrut, mo, branches)), inf =>
+    R.map_result(C.ctx, String, origin => shown(origin, inf), C.rules(C.ctx, c, Rec.parameters(C.ctx, C.ops, R.family_params(fam), C.make(C.globals(c), C.budget(c))))))
 
 def checked(+owner: String, +mode: String, grade: Q.t, sq: Q.t, scrut: T.t, branches: List<&2, F.Pair2<T.addr, T.leg>>, value: Program.checked) -> R.result(String):
   match value:
     case Program.Checked{globals, _}:
       +c = C.make(globals, B.create(16384n))
-      R.bind(P.family, String, Bridge.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, grade, sq, scrut, fam, motive(owner, mode, fam), branches))
+      R.bind(P.family, String, C.rules(P.family, c, R.mu_family(C.ctx, C.ops, c, owner)), +fam => planned(c, owner, grade, sq, scrut, fam, motive(owner, mode, fam), branches))
 
 def started(source: String, owner: String, mode: String, grade: String, sq: String, scrut: String, rest: List<String>) -> R.result(String):
   R.bind(Q.t, String, R.require(Q.t, quantity(grade), E.Mismatch{"expected a checking mode 0, 1 or w"}), q =>

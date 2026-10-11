@@ -489,10 +489,11 @@ def beta_pair(-C: Data, ev: evaluator(C), env: List<&2, V.t>, point: Maybe<&2, F
     case Some{F.Pair2{_, value}}, Some{fibre}, Some{F.Pair2{_, T.Leg{_, body}}}:
       pmap(C, V.t, Maybe<&2, V.t>, x => Some{x}, ev(fibre <> value <> env, body))
 
-def beta_body(-C: Data, ev: evaluator(C), env: List<&2, V.t>, args: List<&2, V.t>, branch: Maybe<&2, T.leg>) -> program<C, Maybe<&2, V.t>>:
+def beta_body(-C: Data, ev: evaluator(C), env: List<&2, V.t>, +args: List<&2, V.t>, branch: Maybe<&2, T.leg>) -> program<C, Maybe<&2, V.t>>:
   match branch:
     case None{}: Pure{None{}}
-    case Some{T.Leg{_, body}}: pmap(C, V.t, Maybe<&2, V.t>, x => Some{x}, ev(rev_append(V.t, args, env), body))
+    case Some{T.Leg{bs, body}}:
+      pchoose(C, Maybe<&2, V.t>, F.Int63.equal(advance(F.Int63.zero, List.length(&2, F.Pair2<Q.t, String>, bs)), advance(F.Int63.zero, List.length(&2, V.t, args))), _ => pmap(C, V.t, Maybe<&2, V.t>, x => Some{x}, ev(rev_append(V.t, args, env), body)), _ => Abort{E.Not_yet{"delayed recursive evaluation of a recursor branch is not supported"}})
 
 def freeze(-C: Data, stepped: program<C, Maybe<&2, V.t>>, value: V.t, frame: V.spine) -> program<C, V.t>:
   pbind(C, Maybe<&2, V.t>, V.t, stepped, option => freeze_option(C, value, frame, option))

@@ -249,3 +249,18 @@ test-recursor-instance-mutations:
 # Native remains informational until this suite compiles within the harness deadline.
 test-recursor-instance-native:
 	python3 -P dev/test-recursor-instance.py --hosts native
+
+.PHONY: test-recursor-route test-recursor-route-mutations test-recursor-route-native
+
+check: test-recursor-route
+test gates: test-recursor-route-mutations
+
+test-recursor-route:
+	python3 -P dev/test-recursor-route.py --hosts bun,node-worker
+
+test-recursor-route-mutations:
+	python3 -P dev/test-recursor-route.py --hosts bun,node-worker --mutations
+
+# Native remains informational until this suite compiles within the harness deadline.
+test-recursor-route-native:
+	python3 -P dev/test-recursor-route.py --hosts native

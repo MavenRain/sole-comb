@@ -1,0 +1,917 @@
+{
+  "base_commit": "52e654b53291f71c9a3220ff08b55585f7c361c8",
+  "cases": 41,
+  "evidence_limits": [
+    "Source hashes were captured on 2026-10-11; they are a separately dated snapshot, not hashes recovered from the 2026-10-07 runs.",
+    "The native attempt removed the prior harness result.json before its CAP-KILL. No per-case result or per-mutant observation is reconstructed.",
+    "Original Part 1 cd1/cr1..cr5 summaries and the c3 harness-writer summary are not retained; the saved Part 1 ledger supplies its recorded results.",
+    "Final native route, Part 2 native core-erasure and pinfront, and Part 2 CLI native/compiler legs remain unvalidated."
+  ],
+  "history": {
+    "2e.18a": {
+      "change": "Layout, uniform, instance and group helpers moved to generic kernel programs; bridge retained.",
+      "user_commit": "7109d78",
+      "validation": "Historical USER commit reports validation and a native representation compilation timeout. Original numerical summaries unavailable; no fresh run claimed."
+    },
+    "2e.18b": {
+      "change": "Motive, branch, body and coverage checks moved to generic kernel programs.",
+      "user_commit": "52e654b",
+      "user_mutation_changes": "Generic ambient context-shift mutations and the motive parameter-environment mutation preserved.",
+      "validation": "validated by the USER"
+    },
+    "2e.18c_part_1": {
+      "change": "Elimination entry ported; kernel_check.rules added; bridge deleted; adapters and mutations re-anchored without drops.",
+      "validation_source": "Saved Part 1 ledger, plus retained cs1, cr5e and cr6 summaries."
+    },
+    "2e.18c_part_2": {
+      "change": "Kernel Elim routing requires excess binders at a recursive constructor, at both inference and checking. Parameter aliases close out of branch usage. Delayed recursive evaluation is refused. Native route remains unvalidated.",
+      "final_mutant_added": "routes-nonrecursive",
+      "pinned_expectation_changes": 0,
+      "route_row_change": "routed-nonrecursive-extra -> kernel-nonrecursive-extra",
+      "ruling": "(b): require recursive constructor and excess binders; preserve pinned A.4 oracle."
+    }
+  },
+  "hosts": {
+    "bun": {
+      "cases": 41,
+      "comment_fix_rerun": "cr14c",
+      "phase": "cr13",
+      "status": "PASS"
+    },
+    "native": {
+      "peak_mb": 4081,
+      "phase": "cr15",
+      "reason": "CAP-KILL before any route case line",
+      "retried": false,
+      "status": "NOT VALIDATED"
+    },
+    "node-worker": {
+      "cases": 41,
+      "phase": "cr13",
+      "status": "PASS"
+    }
+  },
+  "mutations": {
+    "count": 10,
+    "host": "bun",
+    "individual_observations_retained": false,
+    "names": [
+      "routes-never",
+      "routes-always-at-mu",
+      "routes-on-equal",
+      "routes-on-fewer",
+      "routes-nonrecursive",
+      "routes-first-leg",
+      "infer-site-unrouted",
+      "check-site-unrouted",
+      "eval-guard-dropped",
+      "eval-guard-inverted"
+    ],
+    "not_killable_by_harness": [
+      "close-dropped",
+      "close-at-origin-size",
+      "motive-none-ignored"
+    ],
+    "phase": "cr13",
+    "status": "PASS"
+  },
+  "part_1_index": "75ca6a76b9ce60d0717c2739d237d6fcdb2ded92",
+  "progress": {
+    "part_1_ledger": "Part 1 gate ledger for the records: cd1 8/8 compile; cr1..cr4 counts above; cr5 evaluation PASS 3083MB, program PASS 3466MB (stage-a-program.json KEEP+STAGE), coreerasure CAP-KILL 4462MB after JS + native PASS lines (claim JS only), cr5b representation CAP-KILL 4126MB (JS PASS, native unclaimed), cr5c pinfront CAP-KILL 4032MB (superseded by cs1), cs1 pinfront PASS all 3 hosts 3600MB, cr5d checking CAP-KILL 5757MB (JS PASS, native unclaimed), cr5e cli PASS 154MB, cr6 GREEN.",
+    "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/progress-18c.md",
+    "sha256": "276cbd00deaf7e60fdf76c9862780d1e5a637ab4272ffe8c1b348f594ac8703d"
+  },
+  "record_kind": "saved-gate-ledger",
+  "route_cases": [
+    "kernel-zero",
+    "kernel-succ",
+    "kernel-nil",
+    "kernel-cons",
+    "kernel-pair",
+    "kernel-local-uses",
+    "kernel-empty",
+    "kernel-check",
+    "routed-zero",
+    "routed-succ",
+    "routed-hypothesis",
+    "routed-cons",
+    "routed-closed-parameters",
+    "routed-local-list-linear",
+    "routed-parameter-value",
+    "routed-head-linear",
+    "routed-linear-body",
+    "routed-indexed",
+    "routed-uniform-tree",
+    "routed-check",
+    "routed-three-binders",
+    "routed-mixed-legs",
+    "routed-hypothesis-quantity",
+    "routed-field-quantity",
+    "routed-parameter-runtime",
+    "routed-no-motive",
+    "routed-other-family",
+    "routed-affine",
+    "routed-check-wrong",
+    "routed-missing-branch",
+    "kernel-zero-binders",
+    "kernel-nonrecursive-extra",
+    "kernel-missing-branch",
+    "kernel-unknown-key",
+    "kernel-no-motive",
+    "kernel-check-wrong",
+    "kernel-unknown-scrutinee",
+    "eval-routed-succ",
+    "eval-routed-zero",
+    "eval-fields-succ",
+    "eval-fields-zero"
+  ],
+  "route_mutants": [
+    "routes-never",
+    "routes-always-at-mu",
+    "routes-on-equal",
+    "routes-on-fewer",
+    "routes-nonrecursive",
+    "routes-first-leg",
+    "infer-site-unrouted",
+    "check-site-unrouted",
+    "eval-guard-dropped",
+    "eval-guard-inverted"
+  ],
+  "schema": 1,
+  "scope": "Kernel Elim routing requires excess binders at a recursive constructor, at both inference and checking. Parameter aliases close out of branch usage. Delayed recursive evaluation is refused. Native route remains unvalidated.",
+  "source_snapshot_date": "2026-10-11",
+  "sources": {
+    "Makefile": "78a955b9c7ca245d3b3d6d2773a18d9a23e3a5a3a20e1aa6a46b24daa2bc6806",
+    "bin/sole-comb.bend": "1d957ca1742e27cbdd15289c090681ffdfc801a0f41ca50d12047efb4a75157b",
+    "dev/bench.py": "c52d48172b03083cbe219b95a32a836c145833821bb28458c4e1f1c984f63baa",
+    "dev/build.py": "1ab30851bbe6123ad533b8d0c0535ad4f4314f2274407cf71b8fc9d78de40b38",
+    "dev/capture-uat-baseline.py": "edc559600523f74985c267d8c9b9ce35f8b61487ab5a687f886ef58cd784be51",
+    "dev/checking-cases.py": "cfa0db65a2750cd45910b36f6a28c7ee3af269f2cf901c7ee6e60f75fb631dd7",
+    "dev/cli.py": "1b124b6925e6eedb3a6e1e4150a149387acf5c4234a8138c159bb38484c8400c",
+    "dev/elaboration-cases.py": "31385e786620e6d51b7b4d13669e97df75761ae0f8b5dd83ce6133ab5a2568cb",
+    "dev/erasure-cases.py": "052e45b585e704bb872baa569c704286602a9ecfe12b5a0bfca1d5220a1c476b",
+    "dev/evaluation-cases.py": "480c3f533a18148bf5e3b85c260206f9a5d77b10920c3ac1b0c6b8b1c65030a4",
+    "dev/house-bend.py": "0e36b83d513784eeda6070070710366e3095674fb88d4a538f9e2f83c4be771d",
+    "dev/makefile-graph.py": "94ba1b4d67591c94cb57f8e4bcfa9a06d285e8221db4a7f90bd5263db4684665",
+    "dev/pin-check.py": "fc34309e4cccac54ebc7d37a7ea42662420935cc8ebf38b8eae47d6fbd2c59b9",
+    "dev/pinfront-cases.py": "9b32d0de06e0a02e04d7511011815ed16fa7ad5463dd5f0a0cd1640673a92e72",
+    "dev/program-cases.py": "c1f315278708fb879039f677d46bc168decb96a54fc5d124e92367e6e108c68e",
+    "dev/r2-prepare.py": "03861c1b56eac3edd0b1fef72bbedd445b66253c0de95692f45338f73279d703",
+    "dev/r2-risk.py": "79d27dc484191698f7f682d5fb65a291fca69995e525bb7f68d69028120874e8",
+    "dev/r2-run.py": "77fc14befb19a701ff83ec73a6e68e5e299a63462c45327e109bd415299c8f97",
+    "dev/reference-fixtures.py": "7b74e199dda17d6c9baf52ebbe3fba938088f1c326a25600a1169f9c371df7e6",
+    "dev/test-bench.py": "4855eca72d8414727e566675c33adb2119736b26dc7b34e14c05759cf063f0ed",
+    "dev/test-build.py": "ffda268e8f15a707fc22f191ab544f5f16eeca7239fd2d3b4910e7a7e8ecb263",
+    "dev/test-checking-mutations.py": "4764360aaec39a38c36b2de6f6c6e602ca10c2cce510977c3226a2bb7685e0a7",
+    "dev/test-checking.py": "152ce792fa140df1458316f942bbfb8c84dc24d3ff727a18b3f0e2b21f2351ab",
+    "dev/test-cli.py": "4e2abe536c693b6575a3a683509df9a62bac01e1ca9ec33700a8d55390fcba56",
+    "dev/test-constructor-inference.py": "91ec7aa115f1db35bedf8ba2f4bcaf8badfda5ffb864f536478da3ceead77431",
+    "dev/test-constructor-parameters.py": "b98b454e1a28161b88ed0fd0a00604c9ddf6c2ca3d73472bc37cf57e8ad211aa",
+    "dev/test-core-erasure-mutations.py": "51cb9607e0f30244fae356e73abd9903e0bfabcafc86049c8302e326e02b8c2e",
+    "dev/test-core-erasure.py": "360bbdf46c11508652ef84847a6375bb1d76d6577de12c0c25e17e1f80686dfa",
+    "dev/test-elaboration-mutations.py": "dc11c234514f610f7218343ed457cb8f257d2d59b3e6296084485bff3453cf36",
+    "dev/test-elaboration.py": "3f298b2c5b72d1820fa49dc057e9a17450f8c4420a36461f4d142864353d1535",
+    "dev/test-erasure-mutations.py": "70156b0e12fe6b9592312c370f936c7e313842359a4d6a8db370066540991cc6",
+    "dev/test-erasure.py": "909c7d985217b4f78e1968eb91fe3912c54922d80a1c61dbbf33c8ae50e62412",
+    "dev/test-evaluation.py": "3180cb18119943c4a54187494ed1556227cde53468c11404d4a38e0310963f2b",
+    "dev/test-family-defaults.py": "60158fcc19aba8aba0b5e8f5e98eede0de4f268cf87166b40d665007aa51c6c1",
+    "dev/test-family-erasure.py": "4d703f2525d282eb6a7e22cd5f4c90ef055eb18c815b0513523637b1fb10b94e",
+    "dev/test-family-layout.py": "0056498fa556dc517a080947a3e2cb69597d3ff1fb78de654760feb84b8c71db",
+    "dev/test-foundation.py": "6d595a64fc950420dec48f96966c787be32f828573659da90f38a792df4d006b",
+    "dev/test-house.py": "7f3f5916cdf18e743d912f09ee61b1d8bea2a7947dbaa4a03dd718016e5237bd",
+    "dev/test-pin-check.py": "c8fd1d09b0fe6b9530c3c9ed30c36add100c9f56067f6588b3af22d3fd7e2802",
+    "dev/test-pinfront-harness.py": "8399a9f13e55dabbc26f5cfc3ff85188185c989f319f293fcb0407568840de9f",
+    "dev/test-pinfront-mutations.py": "e31c037f841b1e81c39dbd67c870b45e4ef090977d7e8bfde510936d439f3cff",
+    "dev/test-pinfront.py": "890e39db6cd07cad79ec9138b378fe107dcad3a53ba8eaa1f08d7e4f1b7481c4",
+    "dev/test-program-harness.py": "b0673bf113c31fa3aa3063f3134a358f442a26cb9c5787ee1bf9d28a5885012e",
+    "dev/test-program-mutations.py": "573218976c49a5ef02dffb8eb1032132589fbcc3dc42f6818c20a20566e30030",
+    "dev/test-program.py": "db89cd70990d120a8e346f0de4ac3ec2eaa95eeb781454d36ed704e484b61fd9",
+    "dev/test-public-family.py": "414baf58260a93e84fb3df7801a570d879771d4245e9f34bce185bf454e2e3f9",
+    "dev/test-r2-prepare.py": "5b118f92a7c2def9bef9a9eea67d7ef91a58fa10c540015c79f9de72c5de6236",
+    "dev/test-r2-risk.py": "d5e7253a42e7e12484d05fd01b5a2c6f0794f688388b0ae6f0c8bf29c304a141",
+    "dev/test-r2-run.py": "192a2e4cb8007dacf6c085b77a9396892d62be046ef5cf0634e5a87029746dd1",
+    "dev/test-recursor-ambient.py": "22be5f496e1c86e6b71967b6d9cd826a231ffcbb2f13a366734385a0bc0d2384",
+    "dev/test-recursor-body.py": "36b81fb67208d523e1180e1a2874aa89aeb8800403aa3cf58826eac1c87310e5",
+    "dev/test-recursor-branch.py": "3aba9bebe656e323d3fd74fab67f9fd9da5e7006508ffb73af11ab0fe211b2be",
+    "dev/test-recursor-cover.py": "fffbbb8beefdca3165b27f97aa0f7dd82d05eb7fc1894a335909afa90b13d4d8",
+    "dev/test-recursor-elim.py": "830df9f5e65a46d75b8535327b42e0cd339494f9216a79bdb6dc31261ec8a9a6",
+    "dev/test-recursor-instance.py": "f1c94570dd8f5f4b00387594a5d00440216c18f8ab25c21a7b7773306e187827",
+    "dev/test-recursor-layout.py": "7ac6b7edc6404ecc550b254bfeeffce88bce351aee6af9d5e09e09aa84bcd301",
+    "dev/test-recursor-motive.py": "bcadd69581d8e88f04f7df870b27788658f42830375d95922175f975b7a53057",
+    "dev/test-recursor-route.py": "65dfe626dd85fc30bc38fb81333a0117f25a4e40218dd0bf922c9ba43f7ffbb2",
+    "dev/test-reference-fixtures.py": "284c672a0f1bb71d606f804b14844544c27e54269ff0b4419853a1dab80e7fa2",
+    "dev/test-representation.py": "fffee3944881fe50cf94d99e0b7874b4e3b274d6161b3dbea79d753fa0d58b9d",
+    "dev/test-uat-harness.py": "29739f1b56b3db18cc9b64d1bb6cbadbd9d7a931854a8e6c61697ad73ffe4fda",
+    "dev/test-uat-readiness.py": "4fa495dc756c1481f5e4dcf641b88a0a140746e72c2083dd5684b7ad2bf651b1",
+    "dev/toolchain.json": "29d7e0d6cb49ad245fb08733bd4400aa03dc9477bbf308119bb60fed015083cc",
+    "dev/validation/stage-a-checking-oracle.tsv": "07985ef824d0de4274ccf9e35edcb3259690f10864cf0910c115d33ff0aff925",
+    "dev/validation/stage-a-erasure-observations.tsv": "21b1fe1a254a67fcfd8c871a3eb5e81b7fa10002ed29a561bb6f914641f30e7a",
+    "dev/validation/stage-a-evaluation-oracle.tsv": "e5c9a128b44a73093ef02876f649af187b13afbc508a7833c324c84205f8c65a",
+    "erase/core.bend": "6c8f7f05d260d042c5a279fb863fb3a699f732c2628297d8ab62cdd70881c23b",
+    "erase/dependencies.bend": "7ddb42eeccc93de4d0548d9019cf7d0276da8ed62019fdfcbbeefbb1ca54b9da",
+    "erase/eterm.bend": "8fa575f8aa104437a132bef3433e6b62757c6421d567ec884fc9ef4e13ad4cf5",
+    "erase/family.bend": "67d215a1b7fc303ad1c729354b1c7bc3e0e4281dcaf5c8ec38f794303799820b",
+    "erase/mu.bend": "7989a80d414a5f8d23f63d2af85f7b1355978bf8f389c8e65b4e50a52a9da635",
+    "erase/pair.bend": "fe7f483de98b1ef3e4dc707bda5bc6fd52077317717c6afd8af6251e13945d9b",
+    "erase/runtime.bend": "e491b3092cc37e688a2c813aa3ccf94604911700116163068d58049d9719cf88",
+    "erase/sum.bend": "0863e52049d223b2af13da5094f3305ca6b6bf82f7d098818934bf50423f4f0b",
+    "erase/type.bend": "d795a852718acc387398e6052816b30825f5d035162501ce200e2083b879567b",
+    "lib/foundation.bend": "9ed7101710f5453697098d9ec75ae85edb871905a5daedac7bfbf43d315f7486",
+    "lib/kernel_budget.bend": "33393532edeb655b885340dd4f26f475277a27b4947127325152e2db62a36ba5",
+    "lib/kernel_check.bend": "167fd1cab8d4e58fa2dc9209a8451355189589f78a026fcdd1f857c3f323a965",
+    "lib/kernel_conv.bend": "2dec09ba281c6230f8029072601080dc1ade5a7645c1c0828396947d040e3d5c",
+    "lib/kernel_error.bend": "341691b209f598cda08350c9c653879e0e2d5e074cbad8fa2da1b32ae201c877",
+    "lib/kernel_eval.bend": "3c9a6ee3d6e27775c9217be2e6ab41af5eac0e18afaca246a800288b55c1bc56",
+    "lib/kernel_global.bend": "eb7233cabb1d30a528bc22dc6da6d28f7da8d39520eda00dbea4ea30a8ea8518",
+    "lib/kernel_level.bend": "b7a61ae1ddeddbc3c6a04b9df900709eb88a5c1d5d264dcdea60debc8fa23d6d",
+    "lib/kernel_literal.bend": "f81d34fee2af621863e1a87dc29a1051b736d0ebe4dde9a30f15eeff19808805",
+    "lib/kernel_positivity.bend": "b8584bbb695b086bf8b203c026acf21436ee7593640825f0cd121df5df51ab2f",
+    "lib/kernel_pp.bend": "2604caff9f16c51ef9325ea2689f554d0f386a597107d9ddd398493092d5b242",
+    "lib/kernel_prim.bend": "5d89c6a3dffd139da67b6740606ae2b272f7eb827d7921530a1bdb7d59b4e110",
+    "lib/kernel_quantity.bend": "e51210374ab975381f5dd1c20b24d90d39a135ff4d021a194c5d6ce4f859035b",
+    "lib/kernel_recursor.bend": "08c3c0545bcb3efc85c100a60261f196782ff57dcdb15b8e991242a55918a0a3",
+    "lib/kernel_recursor_body.bend": "d6db4b9eb566ff84faa49b70d76bfbeffc48adfb38d30228a57549a7c729f50d",
+    "lib/kernel_recursor_branch.bend": "3fa97ebdcc50cf890e1667856f7fc872868787037d0be965f1e99fdb2a22bef1",
+    "lib/kernel_recursor_cover.bend": "581436a1f0dbfe218b8852a9993e5ed167f9311f73a7fcc06b8871b215fde88d",
+    "lib/kernel_recursor_elim.bend": "3c7c862774527b33291b406579785593f3b04a99b0fdd9a13846fc736f1bec62",
+    "lib/kernel_recursor_group.bend": "1eb12c10773b7fcc0b74dbee3741e2188d0e1235264c9d001368062f63e8cb01",
+    "lib/kernel_recursor_instance.bend": "7e87a01fdfd7c950324b10fb2692e642f4fe94f114ed7147c284e09031e12869",
+    "lib/kernel_recursor_motive.bend": "d13700cb20886cd9c6d17058b2d458f3de7f5a464ec7249e801aa3b6e1fc8a7b",
+    "lib/kernel_recursor_route.bend": "b4f625e9c3a0536b0e9f68c15f21ddd44ebe9ced02e55ecf306adc063d90ed69",
+    "lib/kernel_recursor_uniform.bend": "bfd44348a57648188f4d14b369923a81d4e8bd9053b1b734782cd7155d26a160",
+    "lib/kernel_rules.bend": "7e6055cef304f8cf105466230c1be0a55d56c891f902b4780da5eb8b5feb5e63",
+    "lib/kernel_shape.bend": "f1bcdbab32f8a649a537c81b6054c246fe6336e54612483e92e00d1363add989",
+    "lib/kernel_spec_count.bend": "ddb939b890712c3f1db95b9603317a6a681f0a82de9e40ca4be72f7811df9861",
+    "lib/kernel_term.bend": "5deb14aad13409fd3b5db063b9b612d6b3fd965c5c9b431c558c0f50b47fb0e5",
+    "lib/kernel_value.bend": "21e232d2905e3c4eb505e71081cf6d85f2654ac5a911c60464cdec8088d13235",
+    "surface/check.bend": "9fda5a605d60779bf58fbd42f9812c6ee085d259e480815d5595dc844512afd8",
+    "surface/constructor.bend": "e89aa83c1d93cff0dd07b485ab6bca35831425834d62ccfc6ba1d01bb9019677",
+    "surface/constructor_infer.bend": "4dc6d38f4652b6147ca8bdbaa09129dff3834cc23d1c190cbf044d0d09c6ad74",
+    "surface/elab.bend": "790d4c2f2e3e10edc4335785a24ef3fb2df9125bd0370e1d1a266375240846f7",
+    "surface/elab_program.bend": "ff592843bcca45fcf10f21c1ca27da1df08f514ab6d892e756ddce6a3f820810",
+    "surface/family.bend": "ffd11b42c0c663fc99409b601af61e86fc91d735361644c661578ab991d963d4",
+    "surface/lexer.bend": "5753a9217ea4b7834a0fe6cd8dcf206b63282001dbb220e147f6ee579581d912",
+    "surface/order.bend": "9b537ec9ed04df8fbfa06e446badd6e39b8a1218537ede7850863b7c877280c4",
+    "surface/parser.bend": "eb2414e7398d81805ed3c3c9aaa5d9db9483b880a0a654ac6983044850af0782",
+    "surface/program.bend": "1b47ab3f4121672ca02f32b760357edce79d0e0b9fba30296d8c01a674fda5df",
+    "surface/record.bend": "58d332f03c53fc0dbbeb4fcf3575d1829e4fbf9971d6410fdfc358a6b968dfd4",
+    "surface/source.bend": "cc54d96797a8c2639eebef2d496a04f83b9da5f646cf30af46674c7cbd2c469f",
+    "surface/sugar.bend": "b1c0c76982005573236f8dbb9dfda4462089ac3f0d78de56a596809f86181fad",
+    "surface/syntax.bend": "990fcf5bc49944c234d35e347b0ef3568df3852cd6950e6cd190f12790afc1fa",
+    "surface/token.bend": "dda2cae2feb743aa1801f49c8e0a02ae6bf877af7f918bf4b03cc3944d61f518",
+    "surface/totality.bend": "51b2f0b7cf3dc35e35b7361835fb4d008f0fb2ebb9a05537b928a55ce622d1eb",
+    "test/checking.bend": "27db015f2a283fd68ba6953b4af2f3ba624d53b6a685fb9e4dc75f5f5eae4a8a",
+    "test/core-erasure.bend": "b0c0cc205715768c6fc7033302e0647ba88a4a4b57ac75acddc6bdf5553c8525",
+    "test/elaboration-driver.bend": "531fbd9087f0a980ec96a5b9cd7060edb32c53d06d0fb173213d6304ea1d43cf",
+    "test/elaboration.bend": "122d15da2bcc8e68f7611bd54f50ca8b500344cd3d32c8e416087bfa9baf2d65",
+    "test/erasure.bend": "417882b638eb2b5bcf1288cb100f462d18c4a216df3adfcb3158d9400961a491",
+    "test/evaluation.bend": "d4893f7fda1408226eabf18eb69597227662c505ef1b03147f4488c7d8fd4521",
+    "test/family-erasure.bend": "5757e73e07eb588d3b48d8fed05825468911a542f41ab7b9bdc1141f20f06993",
+    "test/family-layout.bend": "4dfdf3a10d8b5d65bf72a40b9bf4da3f6ff796bc06e7ca3df59ef85ce3e91b27",
+    "test/foundation.bend": "cc647ec6407f2d39c30abc6f75b6abb9c92213dc600183bf3e112d5d1d20c533",
+    "test/kanon/SURVIVORS.tsv": "7516545ba947b1d4285208a5cf6760ce98910dc73bedc33423cc94a994e84307",
+    "test/pinfront-native.bend": "10d93b9cde3f5157ca27f3dd5d5452a381380581c208426b0f15c1fb17afe037",
+    "test/pinfront/elab.bend": "3b5c1ca90e7ef7ced4b863f3da9ba4f777b031299898c18e60f50af2f87d91d5",
+    "test/pinfront/elab_program.bend": "cb44fe829bd5bc01f79e9549f3adb402235377f94322d10a36cbea85255ba03e",
+    "test/pinfront/lexer.bend": "004811c89310de98da986c592d4fc30e206b241746502581bbb65dc2a743935f",
+    "test/pinfront/observe.bend": "0d2aac04d4d208203081f1bb7011414864bb9e0ba5e105a88e8d0e7f8a715c84",
+    "test/pinfront/order.bend": "73d7d6f8cd48e6833252cce122a9ec0b0c0af65b76d3c8862184309f15acc2ac",
+    "test/pinfront/parser.bend": "e9a1dd4691bc9b1e8ff44757c527e29330b85965b085d373c31be45a545a296c",
+    "test/pinfront/program.bend": "4a8676c0bf2c35bb4ab7a4b71ac02cf5e3f834ef548f811ccdcd89a6f388e57d",
+    "test/pinfront/syntax.bend": "71f5a5f965b263440532d504aa9381feda28a3f514eaaafdc52f516135c652b2",
+    "test/pinfront/token.bend": "80eb80a04a1416b92fd858b9f477cb776140863629cb61203f1c7e8977d7943f",
+    "test/pinfront/totality.bend": "40d1cb63b6bb84e143e59dd8d0ba56b2897cf29d45f09acffdee5c67ed44a7c4",
+    "test/program-contract.bend": "95742ab6221102a95f1d8d404f2a9a926819573a3e871b4ca449bf12e10cf163",
+    "test/program-driver.bend": "4172572147ae90c48cea8edb8ccd8559a3b9c02fac9b4f2875426aae02045ac2",
+    "test/program.bend": "4e6ceb9418a552c2a99149d95f3380a03b70b6a2df73336b240bb38adead536a",
+    "test/recursor-ambient.bend": "085aa4312b1e6bbfb6d2650e5ba76110c57329af1055709966fe03630d5d40bb",
+    "test/recursor-body.bend": "aff5c60ce69a9ba8d8e47043c482e38135c9460f08aff9ed7c4379e004c40a1c",
+    "test/recursor-branch.bend": "8f622bf38aa90b966789f3b5b5ee19890740369f93d2c4eeb2766b18259dfe2f",
+    "test/recursor-cover.bend": "52568323dee0bc287ed1a0ad3cdf17a690f0c29c0a567802eaf5ea5137888d34",
+    "test/recursor-elim.bend": "6792c7738633482b0cca09409c7185b77360aea05e939f1845dfe65cf1e89404",
+    "test/recursor-instance.bend": "8ce98d4daff7913ed46da91684eb4e8f30c34769c527060f154dacbcc27dc7d2",
+    "test/recursor-layout.bend": "89bf3ce248a2294084fda4cc0b6dc8736216e1f8d87a7ac34e83f4cb213897d7",
+    "test/recursor-motive.bend": "ed44d69ddf78bc10ce955e44750813c901a598c436f3d51a6e9ed2cf650e74ef",
+    "test/recursor-route.bend": "d551cb8de111ec6e15ae49e1842cbeefed079e55f5cc4e4ef13da4172700447a",
+    "test/representation.bend": "c2df35f47871dd1f4a7472bd82ba765e3de8ad34552b1a655ce8cb393909a5db"
+  },
+  "summaries": {
+    "cd10": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd10.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 987,
+          "seconds": 28,
+          "task": "compile"
+        }
+      ],
+      "sha256": "29e76c94bb476c34d66b785c43c02df1f9b14d54f8f94b8d23da839c9a551c98",
+      "text": "compile rc=0 secs=28 peak=987MB \n"
+    },
+    "cd11": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd11.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "",
+          "peak_mb": 5,
+          "seconds": 2,
+          "task": "compile"
+        }
+      ],
+      "sha256": "a1e275fff5c349991bbdb40eb05f0853311f7948428afae383779e893636d9d6",
+      "text": "compile rc=1 secs=2 peak=5MB \n"
+    },
+    "cd12": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd12.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 1225,
+          "seconds": 10,
+          "task": "compile"
+        }
+      ],
+      "sha256": "2c7b9256ec208147060643e3ce46ac651dcceabef7576f389ed4af97b243fba9",
+      "text": "compile rc=0 secs=10 peak=1225MB \n"
+    },
+    "cd4": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd4.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "",
+          "peak_mb": 6,
+          "seconds": 3,
+          "task": "compileinstance"
+        }
+      ],
+      "sha256": "c1f3c1c8f2b2357a33a958a01d1fa82d4287c52353ff922172d1f667af96149e",
+      "text": "compileinstance rc=1 secs=3 peak=6MB \n"
+    },
+    "cd5": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd5.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "",
+          "peak_mb": 287,
+          "seconds": 24,
+          "task": "compileinstance"
+        }
+      ],
+      "sha256": "decabb47b2301e30a324bee63f5fefcce68b8d2087f28e4dfd3ac37108a4005d",
+      "text": "compileinstance rc=1 secs=24 peak=287MB \n"
+    },
+    "cd6": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd6.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "",
+          "peak_mb": 288,
+          "seconds": 7,
+          "task": "compileinstance"
+        }
+      ],
+      "sha256": "8d2871f8f1face66ca073457e0eb3930716aa9eba4ff0c2191b21736504cf00e",
+      "text": "compileinstance rc=1 secs=7 peak=288MB \n"
+    },
+    "cd7": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd7.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 640,
+          "seconds": 107,
+          "task": "compileinstance"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 1081,
+          "seconds": 62,
+          "task": "compileelim"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 806,
+          "seconds": 34,
+          "task": "compileambient"
+        }
+      ],
+      "sha256": "30123db28326ab6ff068b3694657c57c551124c04b2babaae2275520f7bc72b0",
+      "text": "compileinstance rc=0 secs=107 peak=640MB \ncompileelim rc=0 secs=62 peak=1081MB \ncompileambient rc=0 secs=34 peak=806MB \n"
+    },
+    "cd8": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd8.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 671,
+          "seconds": 94,
+          "task": "compilemotive"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 844,
+          "seconds": 25,
+          "task": "compilebranch"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 886,
+          "seconds": 28,
+          "task": "compilebody"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 719,
+          "seconds": 8,
+          "task": "compilecover"
+        },
+        {
+          "exit_code": 0,
+          "observation": "",
+          "peak_mb": 837,
+          "seconds": 18,
+          "task": "compilelayout"
+        }
+      ],
+      "sha256": "089581fbfc274914dacc95a217142f1b6aa3c6fe86d3aa6a225eb61cdf2a2c82",
+      "text": "compilemotive rc=0 secs=94 peak=671MB \ncompilebranch rc=0 secs=25 peak=844MB \ncompilebody rc=0 secs=28 peak=886MB \ncompilecover rc=0 secs=8 peak=719MB \ncompilelayout rc=0 secs=18 peak=837MB \n"
+    },
+    "cd9": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cd9.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "",
+          "peak_mb": 784,
+          "seconds": 13,
+          "task": "compile"
+        }
+      ],
+      "sha256": "b27f749fb16baac298faaab312519a1c5c7d244ad4262833adb75706ac53db7d",
+      "text": "compile rc=1 secs=13 peak=784MB \n"
+    },
+    "cr10": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr10.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=9",
+          "peak_mb": 2660,
+          "seconds": 105,
+          "task": "routemut"
+        }
+      ],
+      "sha256": "d049809ef3b8e05c9ca646d3770a76197e5e5b8f273498d3d3e65faf8eb49138",
+      "text": "routemut rc=0 secs=105 peak=2660MB RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=9\n"
+    },
+    "cr11": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr11.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2536,
+          "seconds": 19,
+          "task": "routejs"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-LAYOUT PASS 19 cases on bun,node-worker",
+          "peak_mb": 2486,
+          "seconds": 12,
+          "task": "layout"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-UNIFORM PASS 34 cases on bun,node-worker",
+          "peak_mb": 2405,
+          "seconds": 19,
+          "task": "uniform"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-MOTIVE PASS cases=43 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2135,
+          "seconds": 22,
+          "task": "motive"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-BRANCH PASS cases=44 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2555,
+          "seconds": 16,
+          "task": "branch"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-BODY PASS cases=46 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2509,
+          "seconds": 21,
+          "task": "body"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-COVER PASS cases=45 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2598,
+          "seconds": 18,
+          "task": "cover"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-LAYOUT PASS 19 cases on bun",
+          "peak_mb": 2731,
+          "seconds": 41,
+          "task": "layoutmut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-UNIFORM PASS 34 cases on bun",
+          "peak_mb": 2808,
+          "seconds": 53,
+          "task": "uniformmut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-MOTIVE PASS cases=43 hosts=bun mutants=8",
+          "peak_mb": 2729,
+          "seconds": 69,
+          "task": "motivemut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-BRANCH PASS cases=44 hosts=bun mutants=9",
+          "peak_mb": 2759,
+          "seconds": 86,
+          "task": "branchmut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-BODY PASS cases=46 hosts=bun mutants=8",
+          "peak_mb": 2480,
+          "seconds": 72,
+          "task": "bodymut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-COVER PASS cases=45 hosts=bun mutants=9",
+          "peak_mb": 2761,
+          "seconds": 73,
+          "task": "covermut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "PASS A.3 native INFO: 251 cases",
+          "peak_mb": 3510,
+          "seconds": 27,
+          "task": "evaluation"
+        },
+        {
+          "exit_code": 0,
+          "observation": "PASS A.5b.2 native: 245 files, 2 modes",
+          "peak_mb": 3808,
+          "seconds": 866,
+          "task": "program"
+        },
+        {
+          "exit_code": 247,
+          "observation": "PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal",
+          "peak_mb": 4066,
+          "seconds": 25,
+          "task": "coreerasure"
+        }
+      ],
+      "sha256": "bb2445cce01efa664580bb95ea8271f219f9b4972305d75379e7668fda390277",
+      "text": "routejs rc=0 secs=19 peak=2536MB RECURSOR-ROUTE PASS cases=41 hosts=bun,node-worker mutants=0\nlayout rc=0 secs=12 peak=2486MB RECURSOR-LAYOUT PASS 19 cases on bun,node-worker\nuniform rc=0 secs=19 peak=2405MB RECURSOR-UNIFORM PASS 34 cases on bun,node-worker\nmotive rc=0 secs=22 peak=2135MB RECURSOR-MOTIVE PASS cases=43 hosts=bun,node-worker mutants=0\nbranch rc=0 secs=16 peak=2555MB RECURSOR-BRANCH PASS cases=44 hosts=bun,node-worker mutants=0\nbody rc=0 secs=21 peak=2509MB RECURSOR-BODY PASS cases=46 hosts=bun,node-worker mutants=0\ncover rc=0 secs=18 peak=2598MB RECURSOR-COVER PASS cases=45 hosts=bun,node-worker mutants=0\nlayoutmut rc=0 secs=41 peak=2731MB RECURSOR-LAYOUT PASS 19 cases on bun\nuniformmut rc=0 secs=53 peak=2808MB RECURSOR-UNIFORM PASS 34 cases on bun\nmotivemut rc=0 secs=69 peak=2729MB RECURSOR-MOTIVE PASS cases=43 hosts=bun mutants=8\nbranchmut rc=0 secs=86 peak=2759MB RECURSOR-BRANCH PASS cases=44 hosts=bun mutants=9\nbodymut rc=0 secs=72 peak=2480MB RECURSOR-BODY PASS cases=46 hosts=bun mutants=8\ncovermut rc=0 secs=73 peak=2761MB RECURSOR-COVER PASS cases=45 hosts=bun mutants=9\nevaluation rc=0 secs=27 peak=3510MB PASS A.3 native INFO: 251 cases\nprogram rc=0 secs=866 peak=3808MB PASS A.5b.2 native: 245 files, 2 modes\ncoreerasure rc=247 secs=25 peak=4066MB PASS public erasure node-worker: 8 oracle comparisons, 3 pair goldens, 1 refusal\ncoreerasure CAP-KILL\n"
+    },
+    "cr11b": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr11b.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "PASS A.2 native INFO: 465 cases",
+          "peak_mb": 3655,
+          "seconds": 23,
+          "task": "representation"
+        },
+        {
+          "exit_code": 247,
+          "observation": "PASS A.5a pinned parser fixtures: 561 cases, 68 independent expectations",
+          "peak_mb": 4308,
+          "seconds": 11,
+          "task": "pinfront"
+        }
+      ],
+      "sha256": "31530b088f270036cf3379c839da613b0e67b190441b6d5569e6ae4ace855782",
+      "text": "representation rc=0 secs=23 peak=3655MB PASS A.2 native INFO: 465 cases\npinfront rc=247 secs=11 peak=4308MB PASS A.5a pinned parser fixtures: 561 cases, 68 independent expectations\npinfront CAP-KILL\n"
+    },
+    "cr11c": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr11c.summary",
+      "rows": [
+        {
+          "exit_code": 2,
+          "observation": "PASS A.4 pinned reference fixtures: 291 cases",
+          "peak_mb": 693,
+          "seconds": 4,
+          "task": "checking"
+        },
+        {
+          "exit_code": 247,
+          "observation": "PASS public node-worker: 104 native files and 2 lexical boundary cases",
+          "peak_mb": 4212,
+          "seconds": 93,
+          "task": "cli"
+        }
+      ],
+      "sha256": "3d93760c07ff4fa47c0f55398cc6aee15f7523326f1fbfc0251812716ee63a88",
+      "text": "checking rc=2 secs=4 peak=693MB PASS A.4 pinned reference fixtures: 291 cases\ncli rc=247 secs=93 peak=4212MB PASS public node-worker: 104 native files and 2 lexical boundary cases\ncli CAP-KILL\n"
+    },
+    "cr12": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr12.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "PASS A.4 native INFO: 291 cases",
+          "peak_mb": 3133,
+          "seconds": 84,
+          "task": "checking"
+        }
+      ],
+      "sha256": "b850ec0403cdd002a2ff772c0812cb0835418f73129bf59523b8798e5ff918ce",
+      "text": "checking rc=0 secs=84 peak=3133MB PASS A.4 native INFO: 291 cases\n"
+    },
+    "cr13": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr13.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0",
+          "peak_mb": 2779,
+          "seconds": 14,
+          "task": "routebun"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=10",
+          "peak_mb": 2725,
+          "seconds": 150,
+          "task": "routemut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2604,
+          "seconds": 33,
+          "task": "routejs"
+        }
+      ],
+      "sha256": "16b86b84c815a083aecbeff14df6a99e45c503f21f2ef65eedbfce63bab455c4",
+      "text": "routebun rc=0 secs=14 peak=2779MB RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0\nroutemut rc=0 secs=150 peak=2725MB RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=10\nroutejs rc=0 secs=33 peak=2604MB RECURSOR-ROUTE PASS cases=41 hosts=bun,node-worker mutants=0\n"
+    },
+    "cr14": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr14.summary",
+      "rows": [
+        {
+          "exit_code": 247,
+          "observation": "PASS public node-worker: 104 native files and 2 lexical boundary cases",
+          "peak_mb": 4425,
+          "seconds": 162,
+          "task": "cli"
+        }
+      ],
+      "sha256": "48062adce7915de702904d8b05e03c105955ea7145ad97439c00cdc5ad4f6244",
+      "text": "cli rc=247 secs=162 peak=4425MB PASS public node-worker: 104 native files and 2 lexical boundary cases\ncli CAP-KILL\n"
+    },
+    "cr14b": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr14b.summary",
+      "rows": [
+        {
+          "exit_code": 2,
+          "observation": "HOUSE FAIL lib/kernel_recursor_route.bend: exceeds 32 physical lines",
+          "peak_mb": 6,
+          "seconds": 2,
+          "task": "policy"
+        },
+        {
+          "exit_code": 0,
+          "observation": "BUILD sole-comb js check OK wall_s=2.568 child_cpu_s=4.331",
+          "peak_mb": 1330,
+          "seconds": 5,
+          "task": "build"
+        },
+        {
+          "exit_code": 0,
+          "observation": "PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/Users/",
+          "peak_mb": 2,
+          "seconds": 2,
+          "task": "pins"
+        }
+      ],
+      "sha256": "9584d6ffd1cc726e86055f9d8d7f932c76f106434aeaa4dca679360de4030b81",
+      "text": "policy rc=2 secs=2 peak=6MB HOUSE FAIL lib/kernel_recursor_route.bend: exceeds 32 physical lines\nbuild rc=0 secs=5 peak=1330MB BUILD sole-comb js check OK wall_s=2.568 child_cpu_s=4.331\npins rc=0 secs=2 peak=2MB PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/Users/\n"
+    },
+    "cr14c": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr14c.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "python3 -P dev/test-reference-fixtures.py",
+          "peak_mb": 5,
+          "seconds": 2,
+          "task": "policy"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0",
+          "peak_mb": 2624,
+          "seconds": 23,
+          "task": "routebun"
+        }
+      ],
+      "sha256": "1852551c71fd41e10d9ba08ef5871f8207a018fb9a281d26aaaeae5653c41ca2",
+      "text": "policy rc=0 secs=2 peak=5MB python3 -P dev/test-reference-fixtures.py\nroutebun rc=0 secs=23 peak=2624MB RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0\n"
+    },
+    "cr15": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr15.summary",
+      "rows": [
+        {
+          "exit_code": 247,
+          "observation": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-",
+          "peak_mb": 4081,
+          "seconds": 14,
+          "task": "routenative"
+        }
+      ],
+      "sha256": "788e23b965ed74115867fd2223ddff9e73ec5b01cc9da95c601f637be96c5a64",
+      "text": "routenative rc=247 secs=14 peak=4081MB PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-\nroutenative CAP-KILL\n"
+    },
+    "cr5e": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr5e.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "PASS public compiler: 325 command observations; source hashes stable",
+          "peak_mb": 154,
+          "seconds": 211,
+          "task": "cli"
+        }
+      ],
+      "sha256": "7dea0fa4a7195ed16d93811942e5b35dd5cdefca26a57733553c20e1d92087e9",
+      "text": "cli rc=0 secs=211 peak=154MB PASS public compiler: 325 command observations; source hashes stable\n"
+    },
+    "cr6": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr6.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "python3 -P dev/test-reference-fixtures.py",
+          "peak_mb": 6,
+          "seconds": 2,
+          "task": "policy"
+        },
+        {
+          "exit_code": 0,
+          "observation": "BUILD sole-comb js check OK wall_s=7.577 child_cpu_s=8.709",
+          "peak_mb": 1309,
+          "seconds": 8,
+          "task": "build"
+        },
+        {
+          "exit_code": 0,
+          "observation": "PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/Users/",
+          "peak_mb": 2,
+          "seconds": 3,
+          "task": "pins"
+        }
+      ],
+      "sha256": "0fc960589b5f93b447be0e79658cebae83992cc817d9caa059c928bd338f982a",
+      "text": "policy rc=0 secs=2 peak=6MB python3 -P dev/test-reference-fixtures.py\nbuild rc=0 secs=8 peak=1309MB BUILD sole-comb js check OK wall_s=7.577 child_cpu_s=8.709\npins rc=0 secs=3 peak=2MB PINCHECK PASS groups=bend,kanon,tools,limits checks=34 failed=0 warned=0 toolchain=/Users/\n"
+    },
+    "cr7": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr7.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-INSTANCE PASS cases=53 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2245,
+          "seconds": 170,
+          "task": "instance"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ELIM PASS cases=43 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2126,
+          "seconds": 55,
+          "task": "elim"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-AMBIENT PASS cases=69 hosts=bun,node-worker mutants=0",
+          "peak_mb": 2050,
+          "seconds": 72,
+          "task": "ambient"
+        }
+      ],
+      "sha256": "99cdbbbfd54fda36b91f7175ac87e94ad6733e63f100b9d811b48de4b7c28587",
+      "text": "instance rc=0 secs=170 peak=2245MB RECURSOR-INSTANCE PASS cases=53 hosts=bun,node-worker mutants=0\nelim rc=0 secs=55 peak=2126MB RECURSOR-ELIM PASS cases=43 hosts=bun,node-worker mutants=0\nambient rc=0 secs=72 peak=2050MB RECURSOR-AMBIENT PASS cases=69 hosts=bun,node-worker mutants=0\n"
+    },
+    "cr8": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr8.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-INSTANCE PASS cases=53 hosts=bun mutants=11",
+          "peak_mb": 2850,
+          "seconds": 225,
+          "task": "instancemut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ELIM PASS cases=43 hosts=bun mutants=6",
+          "peak_mb": 2695,
+          "seconds": 102,
+          "task": "elimmut"
+        },
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-AMBIENT PASS cases=69 hosts=bun mutants=6",
+          "peak_mb": 2790,
+          "seconds": 121,
+          "task": "ambientmut"
+        }
+      ],
+      "sha256": "1061b40fd4c1cbeac2edfb4f7c99c873d4c65ee4e9d6c9bf08b7c58184bf360d",
+      "text": "instancemut rc=0 secs=225 peak=2850MB RECURSOR-INSTANCE PASS cases=53 hosts=bun mutants=11\nelimmut rc=0 secs=102 peak=2695MB RECURSOR-ELIM PASS cases=43 hosts=bun mutants=6\nambientmut rc=0 secs=121 peak=2790MB RECURSOR-AMBIENT PASS cases=69 hosts=bun mutants=6\n"
+    },
+    "cr9": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr9.summary",
+      "rows": [
+        {
+          "exit_code": 1,
+          "observation": "PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-",
+          "peak_mb": 2219,
+          "seconds": 15,
+          "task": "routebun"
+        }
+      ],
+      "sha256": "6bff0a81e635095741b38dd656bbbba21c1d520cb17af5fd74bf5ece07301617",
+      "text": "routebun rc=1 secs=15 peak=2219MB PINCHECK PASS groups=bend checks=6 failed=0 warned=0 toolchain=/Users/oobi/Documents/sole-\n"
+    },
+    "cr9b": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cr9b.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0",
+          "peak_mb": 2129,
+          "seconds": 45,
+          "task": "routebun"
+        }
+      ],
+      "sha256": "b703ecb45550a7b87701cb6266bf102a185fee859b135abb7d0242ac01418cf6",
+      "text": "routebun rc=0 secs=45 peak=2129MB RECURSOR-ROUTE PASS cases=41 hosts=bun mutants=0\n"
+    },
+    "cs1": {
+      "path": "/private/tmp/claude/kan-elim-lang-m0/build-1006-recursor-route/work/cs1.summary",
+      "rows": [
+        {
+          "exit_code": 0,
+          "observation": "PASS A.5a native INFO: 561 cases",
+          "peak_mb": 3600,
+          "seconds": 812,
+          "task": "pinfront"
+        }
+      ],
+      "sha256": "19dc16a15e7ff78d2b88aef610fdd0714355a8765af03954603597dc325e50ad",
+      "text": "pinfront rc=0 secs=812 peak=3600MB PASS A.5a native INFO: 561 cases\n"
+    }
+  },
+  "superseded_runs": {
+    "cd11": "cd12",
+    "cd9": "cd10",
+    "cr10": "cr13",
+    "cr11c/checking": "cr12",
+    "cr14b/policy": "cr14c/policy",
+    "cr9": "cr9b"
+  },
+  "verdicts": {
+    "cli_cap_kills": "Native public executable rebuild after Part 2 source changes; executable dated October 6 at 21:28. Cap unchanged.",
+    "cr14b_house_failure": "Route helper exceeded the 32-line budget; header comment folded; cr14c policy and Bun route rerun pass.",
+    "kernel-empty": "Harness expectation wrong; changed to e:1..w. Kernel and pinned oracle unchanged.",
+    "parameter_expectations": "No old-suite printed expectation changes; zero-quantity parameter reads never print.",
+    "stage_a_program": "KEEP+STAGE per USER ruling. Only source hashes changed against Part 1 index; counts and observations unchanged."
+  }
+}

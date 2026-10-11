@@ -101,15 +101,15 @@ CASES = (
 # Each mutant breaks one instance site. The harness names the file of each mutant: the scope value and the value
 # order and the result usage live in the elim module, the defined parameter in the recursor module, and the expected
 # parameter list and its comparison in the uniform module.
-USAGE = "Q.sequence(su, Q.scale(mode, bu))"
+USAGE = "Q.sequence(su, Q.scale(mode, bu2))"
 MUTANTS = (
     ("diagram-width-unchecked", "lib/kernel_recursor_instance.bend", "F.Int63.equal(actual, width)", "True{}", "zero-bad-shape"),
     ("parameter-binders-unchecked", "lib/kernel_recursor_instance.bend", "nullary(legs)", "True{}", "nil-bound-parameter"),
     ("instance-as-abstract", "lib/kernel_recursor_elim.bend", "Rec.Instance{vals}", "Rec.Abstract{}", "parameter-value"),
     ("drop-reverse", "lib/kernel_recursor_elim.bend", "R.rev_append(V.t, env, [])", "env", "parameter-second"),
-    ("usage-drops-scrutinee", "lib/kernel_recursor_elim.bend", USAGE, "Q.scale(mode, bu)", "local-list-linear"),
+    ("usage-drops-scrutinee", "lib/kernel_recursor_elim.bend", USAGE, "Q.scale(mode, bu2)", "local-list-linear"),
     ("usage-drops-branches", "lib/kernel_recursor_elim.bend", USAGE, "su", "parameter-value"),
-    ("scale-many", "lib/kernel_recursor_elim.bend", "Q.scale(mode, bu)", "Q.scale(Q.Many{}, bu)", "local-list-head-linear"),
+    ("scale-many", "lib/kernel_recursor_elim.bend", "Q.scale(mode, bu2)", "Q.scale(Q.Many{}, bu2)", "local-list-head-linear"),
     ("instance-keeps-quantity", "lib/kernel_recursor.bend", "instance(C, op, rest, tail, R.c_define(C, op, c, x, Q.Zero{}, tyv, v))", "instance(C, op, rest, tail, R.c_define(C, op, c, x, Q.Many{}, tyv, v))", "parameter-slot-read"),
     ("open-abstract-for-instance", "lib/kernel_recursor.bend", "case Instance{values}: instance(C, op, tele, values, c)", "case Instance{_}: abstract(C, op, tele, c)", "parameter-value"),
     ("targets-abstract-for-instance", "lib/kernel_recursor_uniform.bend", "case Rec.Instance{values}: values", "case Rec.Instance{_}: levels(tele, R.c_size(C, op, c))", "uniform-at-nat"),
