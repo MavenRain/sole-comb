@@ -1,0 +1,8 @@
+exit 0
+--- stdout
+def sample : (Lan SMu Tree [] (Sec SColl 0 [])) := (In SMu Tree [] (ACtor fork) [(In SMu Tree [] (ACtor leaf) []); (In SMu Tree [] (ACtor fork) [(In SMu Tree [] (ACtor leaf) []); (In SMu Tree [] (ACtor leaf) [])])])
+def mirror : (Ran SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (Lan SMu Tree [] (Sec SColl 0 []))) := (Sec SPi w t (Lan SMu Tree [] (Sec SColl 0 [])) [t => (Elim SMu Tree [] t as x return (Lan SMu Tree [] (Sec SColl 0 [])) with | (ACtor leaf)  => (In SMu Tree [] (ACtor leaf) []) | (ACtor fork) l r => (In SMu Tree [] (ACtor fork) [(Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w r) mirror); (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w l) mirror)]))])
+def weight : (Ran SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) Nat) := (Sec SPi w t (Lan SMu Tree [] (Sec SColl 0 [])) [t => (Elim SMu Tree [] t as x return Nat with | (ACtor leaf)  => 1 | (ACtor fork) l r => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w r) weight)) (Out SPi w a Nat (APt w 3) natMul))) (Out SPi w a Nat (APt w (Out SPi w b Nat (APt w (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w l) weight)) (Out SPi w a Nat (APt w 2) natMul))) natAdd)))])
+def original : Nat := (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w sample) weight)
+def main : Nat := (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w (Out SPi w _ (Lan SMu Tree [] (Sec SColl 0 [])) (APt w sample) mirror)) weight)
+--- stderr

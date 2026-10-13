@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-nonfunction.sole-comb FAIL mismatch: an elim arm must be a function

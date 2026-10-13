@@ -1,0 +1,59 @@
+exit 0
+--- stdout
+CHECK examples/records.sole-comb defs=32 ok
+erased Nat
+erased Pair
+rec [tuple<union nat,union nat>; nat]
+fun Pair.first (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 0 (KVar 0)
+rec [tuple<union nat,union nat>; nat]
+fun Pair.second (struct tuple<union nat,union nat>) : union nat := KProj tuple<union nat,union nat> 1 (KVar 0)
+rec [tuple<union nat,union nat>]
+fun pair () : struct tuple<union nat,union nat> := KStruct tuple<union nat,union nat> [KLit 10; KLit 20]
+rec [nat]
+fun first () : union nat := KTail (KGlobal Pair.first) [KGlobal pair]
+rec [nat]
+fun second () : union nat := KTail (KGlobal Pair.second) [KGlobal pair]
+rec [tuple<union nat,union nat>; nat]
+fun linearFirst (struct tuple<union nat,union nat>) : union nat := KTail (KGlobal Pair.first) [KVar 0]
+erased Empty
+erased empty
+erased Other
+rec [tuple<union nat>; nat]
+fun Other.first (struct tuple<union nat>) : union nat := KProj tuple<union nat> 0 (KVar 0)
+rec [tuple<union nat>]
+fun other () : struct tuple<union nat> := KStruct tuple<union nat> [KLit 30]
+rec [nat]
+fun otherFirst () : union nat := KTail (KGlobal Other.first) [KGlobal other]
+erased Packet
+rec [tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>; any]
+fun Packet.kind (struct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>) : union any := KErased
+rec [tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>; tuple<union nat,union nat>]
+fun Packet.payload (struct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>) : struct tuple<union nat,union nat> := KProj tuple<struct tuple<union nat,union nat>,func fn<1>,union nat> 0 (KVar 0)
+rec [tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>; nat]
+fun Packet.handler (struct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>, union nat) : union nat := KTail (KProj tuple<struct tuple<union nat,union nat>,func fn<1>,union nat> 1 (KVar 1)) [KVar 0]
+rec [tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>; nat]
+fun Packet.count (struct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>) : union nat := KProj tuple<struct tuple<union nat,union nat>,func fn<1>,union nat> 2 (KVar 0)
+rec [nat; tuple<struct tuple<union nat,union nat>,func fn<1>,union nat>]
+fun packet$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]
+fun packet () : struct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat> := KStruct tuple<struct tuple<union nat,union nat>,func fn<1>,union nat> [KGlobal pair; KClos packet$0 1 []; KLit 40]
+rec [tuple<union nat,union nat>]
+fun payload () : struct tuple<union nat,union nat> := KTail (KGlobal Packet.payload) [KGlobal packet]
+rec [nat]
+fun handled () : union nat := KTail (KGlobal Packet.handler) [KGlobal packet; KApp (KGlobal Pair.first) [KGlobal payload]]
+rec [nat]
+fun count () : union nat := KTail (KGlobal Packet.count) [KGlobal packet]
+erased kind
+erased value
+erased Capture
+rec [tuple<union nat>; nat]
+fun Capture.item (struct tuple<union nat>) : union nat := KProj tuple<union nat> 0 (KVar 0)
+rec [tuple<union nat>]
+fun capture () : struct tuple<union nat> := KStruct tuple<union nat> [KLit 50]
+rec [nat]
+fun captured () : union nat := KTail (KGlobal Capture.item) [KGlobal capture]
+rec [nat; sum<struct tuple<union nat>|struct tuple<union nat>>]
+fun picked () : union nat := KCase sum<struct tuple<union nat>|struct tuple<union nat>> (KTag sum<struct tuple<union nat>|struct tuple<union nat>> 1 [KGlobal other]) [{0 1 (KTail (KGlobal Other.first) [KVar 0])}; {1 1 (KTail (KGlobal Other.first) [KVar 0])}]
+axiom Other.zero : struct tuple<union nat>
+rec [nat]
+fun zeroFirst () : union nat := KTail (KGlobal Other.first) [KGlobal Other.zero]
+--- stderr

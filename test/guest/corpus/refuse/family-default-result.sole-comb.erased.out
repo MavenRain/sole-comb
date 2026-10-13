@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-default-result.sole-comb FAIL mismatch: a tuple needs a right former as its expected type

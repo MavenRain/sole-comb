@@ -1,0 +1,2 @@
+mu B : Type 0 { yes : B; no : B }
+def read : B -> Nat := fun (b : B) => elim b as x in B return Nat { else: tuple () }

@@ -1,0 +1,6 @@
+mu Bytes : Type 0 with
+| bytesNil : Bytes
+| bytesCons : Nat -> Bytes -> Bytes
+
+mu State : Type 0 with
+| state : Nat -> Bytes -> State

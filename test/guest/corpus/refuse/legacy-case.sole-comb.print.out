@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/legacy-case.sole-comb FAIL line 2, column 23: E-R4-MATCH: 'case' is reserved; use elim

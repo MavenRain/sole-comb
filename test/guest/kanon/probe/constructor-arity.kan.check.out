@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: z takes 0 arguments and the term gives 1

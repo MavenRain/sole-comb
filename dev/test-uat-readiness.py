@@ -12,7 +12,6 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 BASELINE_SHA256 = "f4f4d0511b6ce5f7dc917f302dae8f40f4c927a6a90e4c6a22dd52ba083619ec"
 EXPECTED_CASES = 12
-HOSTS = ("bun", "node-worker", "native")
 PARSE_AXIOMS = runpy.run_path(str(ROOT / "dev/capture-uat-baseline.py"))["parse_axioms"]
 
 
@@ -90,12 +89,12 @@ def check_result(case, result):
 
 def sources(cases, root=ROOT):
     selected = [root / c["path"] for c in cases]
-    selected += [root / p for p in ("Makefile", "sole-comb", "dev/cli.py", "dev/build.py",
-                 "dev/toolchain.json", "dev/uat-readiness.json", "dev/test-uat-readiness.py",
+    selected += [root / p for p in ("Makefile", "sole-comb", "bin/main.c", "dev/c.mk",
+                 "dev/uat-readiness.json", "dev/test-uat-readiness.py",
                  "dev/test-uat-harness.py", "dev/capture-uat-baseline.py", "test/uat-baseline.lean")]
     selected += list((root / "dev/uat-baseline").glob("*"))
-    for directory in ("bin", "lib", "surface", "erase"):
-        selected += list((root / directory).glob("*.bend"))
+    for pattern in ("*.c", "*.h"):
+        selected += list((root / "lib").glob(pattern))
     return {str(p.relative_to(root)): digest(p.read_bytes()) for p in sorted(selected)}
 
 
@@ -111,13 +110,9 @@ def assert_inputs_unchanged(cases, before, root=ROOT):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default=",".join(HOSTS))
     parser.add_argument("--baseline-checkout", type=Path,
                         help="also rebuild and compare the pinned local Lean baseline")
     args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(set(hosts)) != len(hosts) or any(h not in HOSTS for h in hosts):
-        parser.error("hosts must be a unique list of bun,node-worker,native")
     baseline = load_baseline()
     cases = load_cases()
     before = sources(cases)
@@ -132,23 +127,22 @@ def main():
         if fresh != baseline:
             raise RuntimeError("live UAT baseline differs from the frozen inspection")
     observations = []
-    first = {}
-    for host in hosts:
-        for case in cases:
-            modes = ("print", "erased") if case["status"] == "landed" else ("print",)
-            for mode in modes:
-                result = subprocess.run(["./sole-comb", "check", case["path"], "--host", host,
-                                         f"--{mode}"], cwd=ROOT, capture_output=True, text=True, timeout=900)
-                compare_hosts(first, (case["id"], mode), check_result(case, result))
-                observation = {"host": host, "id": case["id"], "path": case["path"], "mode": mode,
-                               "exit": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
-                observations.append(observation)
-                log = work / f"{host}-{case['id']}-{mode}"
-                log.with_suffix(".stdout").write_text(result.stdout)
-                log.with_suffix(".stderr").write_text(result.stderr)
-        print(f"UAT READINESS PASS {host}: {len(cases)} probes", flush=True)
+    host = "c"
+    for case in cases:
+        modes = ("print", "erased") if case["status"] == "landed" else ("print",)
+        for mode in modes:
+            result = subprocess.run(["./sole-comb", "check", case["path"], f"--{mode}"],
+                                    cwd=ROOT, capture_output=True, text=True, timeout=900)
+            check_result(case, result)
+            observation = {"host": host, "id": case["id"], "path": case["path"], "mode": mode,
+                           "exit": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
+            observations.append(observation)
+            log = work / f"{host}-{case['id']}-{mode}"
+            log.with_suffix(".stdout").write_text(result.stdout)
+            log.with_suffix(".stderr").write_text(result.stderr)
+    print(f"UAT READINESS PASS {host}: {len(cases)} probes", flush=True)
     assert_inputs_unchanged(cases, before)
-    record = {"schema": 1, "stage": "UAT.0", "hosts": hosts, "sources": before,
+    record = {"schema": 1, "stage": "UAT.0", "sources": before,
               "baseline_sha256": BASELINE_SHA256, "cases": len(cases), "observations": observations}
     (work / "result.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     print(f"UAT READINESS PASS: {len(observations)} observations; {(work / 'result.json').relative_to(ROOT)}")

@@ -1,0 +1,1 @@
+axiom e : (sum () : Type) def n : Nat := absurd e

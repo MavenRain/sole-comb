@@ -1,0 +1,37 @@
+exit 0
+--- stdout
+CHECK examples/constructor-parameters.sole-comb defs=17 ok
+rec [mu<Box>; leg<mu<Box>,0,union any>]
+fun value () : union mu<Box> := KTag mu<Box> 0 [KLit 7]
+rec [mu<Box>; leg<mu<Box>,0,union any>]
+fun nested () : union mu<Box> := KTag mu<Box> 0 [KTag mu<Box> 0 [KLit 8]]
+rec [any; mu<Box>; leg<mu<Box>,0,union any>]
+fun make (union any) : union mu<Box> := KTag mu<Box> 0 [KVar 0]
+rec [mu<Box>; nat; leg<mu<Box>,0,union any>]
+fun read (union mu<Box>) : union nat := KCase mu<Box> (KVar 0) [{0 1 (KVar 0)}]
+rec [nat; mu<Box>; leg<mu<Box>,0,union any>]
+fun answer () : union nat := KTail (KGlobal read) [KTag mu<Box> 0 [KLit 9]]
+erased Alias
+rec [mu<Box>; leg<mu<Box>,0,union any>]
+fun aliasValue () : union mu<Box> := KTag mu<Box> 0 [KLit 10]
+rec [mu<Maybe>; leg<mu<Maybe>,0>; leg<mu<Maybe>,1,union any>]
+fun empty () : union mu<Maybe> := KTag mu<Maybe> 0 []
+rec [mu<Maybe>; leg<mu<Maybe>,0>; leg<mu<Maybe>,1,union any>]
+fun present () : union mu<Maybe> := KTag mu<Maybe> 1 [KLit 11]
+rec [mu<Both>; leg<mu<Both>,0,union any,union any>]
+fun pairValue () : union mu<Both> := KTag mu<Both> 0 [KLit 12; KErased]
+rec [mu<DepBox>; leg<mu<DepBox>,0,union any,union any>]
+fun dependentValue () : union mu<DepBox> := KTag mu<DepBox> 0 [KErased; KLit 13]
+rec [mu<At>; leg<mu<At>,0>]
+fun reflexiveValue () : union mu<At> := KTag mu<At> 0 []
+rec [mu<At>; leg<mu<At>,0>]
+fun reflexive () : union mu<At> := KTag mu<At> 0 []
+rec [nat]
+fun ignore () : union nat := KLit 0
+rec [nat]
+fun erasedArgument () : union nat := KTail (KGlobal ignore) []
+rec [mu<W>; mu<Box>; leg<mu<Box>,0,union any>; leg<mu<W>,0,union mu<Box>>]
+fun wrapped () : union mu<W> := KTag mu<W> 0 [KTag mu<Box> 0 [KLit 15]]
+rec [mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]
+fun numbers () : union mu<List> := KTag mu<List> 1 [KLit 16; KTag mu<List> 1 [KLit 17; KTag mu<List> 0 []]]
+--- stderr

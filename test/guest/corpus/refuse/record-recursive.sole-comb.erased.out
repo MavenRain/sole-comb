@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-recursive.sole-comb FAIL unbound: Loop

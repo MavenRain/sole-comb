@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def three : Nat := 3
+--- stderr

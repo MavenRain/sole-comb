@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-heterogeneous.sole-comb FAIL mismatch: the term has type Nat and the expected type is Type 1

@@ -1,0 +1,16 @@
+exit 0
+--- stdout
+CHECK examples/uat-foundation.sole-comb defs=6 ok
+rec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]
+fun flip (union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 0) [{0 0 (KTag mu<Z2> 1 [])}; {1 0 (KTag mu<Z2> 0 [])}]
+rec [mu<Z2>; leg<mu<Z2>,0>; leg<mu<Z2>,1>]
+fun multiply (union mu<Z2>, union mu<Z2>) : union mu<Z2> := KCase mu<Z2> (KVar 1) [{0 0 (KVar 0)}; {1 0 (KTail (KGlobal flip) [KVar 0])}]
+rec [mu<Box>; leg<mu<Box>,0,union any>]
+fun boxed () : union mu<Box> := KTag mu<Box> 0 [KLit 7]
+rec [nat; mu<Box>; leg<mu<Box>,0,union any>]
+fun unboxed () : union nat := KCase mu<Box> (KGlobal boxed) [{0 1 (KVar 0)}]
+rec [nat; mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]
+fun head () : union nat := KCase mu<List> (KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]) [{0 0 (KLit 0)}; {1 2 (KVar 1)}]
+rec [mu<EqN>; leg<mu<EqN>,0>]
+fun reflexive () : union mu<EqN> := KTag mu<EqN> 0 []
+--- stderr

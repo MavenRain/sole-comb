@@ -1,0 +1,10 @@
+exit 0
+--- stdout
+CHECK examples/uat-foundation.sole-comb defs=6 ok
+def flip : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 []))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Elim SMu Z2 [] x as y return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => (In SMu Z2 [] (ACtor g) []) | (ACtor g)  => (In SMu Z2 [] (ACtor e) []))])
+def multiply : (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (Lan SMu Z2 [] (Sec SColl 0 [])))) := (Sec SPi w x (Lan SMu Z2 [] (Sec SColl 0 [])) [x => (Sec SPi w y (Lan SMu Z2 [] (Sec SColl 0 [])) [y => (Elim SMu Z2 [] x as z return (Lan SMu Z2 [] (Sec SColl 0 [])) with | (ACtor e)  => y | (ACtor g)  => (Out SPi w _ (Lan SMu Z2 [] (Sec SColl 0 [])) (APt w y) flip))])])
+def boxed : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])
+def unboxed : Nat := (Elim SMu Box [] boxed as x return Nat with | (ACtor box) n => n)
+def head : Nat := (Elim SMu List [] ((In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])]) : (Lan SMu List [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor nil)  => 0 | (ACtor cons) n xs => n)
+def reflexive : (Lan SMu EqN [0; 0] (Sec SColl 0 [])) := (In SMu EqN [0; 0] (ACtor reflN) [0])
+--- stderr

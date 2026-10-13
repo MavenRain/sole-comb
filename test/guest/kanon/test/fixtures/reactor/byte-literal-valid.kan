@@ -1,0 +1,2 @@
+def literalBytes : Bytes := b"A\n\r\t\0\\\"\xFFé"
+def literalEmpty : Bytes := b""

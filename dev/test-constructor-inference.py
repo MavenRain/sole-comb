@@ -73,15 +73,6 @@ REFUSALS = [
     ("usage", BOTH + "def value : (1 n : Nat) -> Nat := fun (1 n : Nat) => " + elim("both n n", "Both", "Nat", "fun (a : Nat) (b : Nat) => natAdd a b") + "\n", "quantity"),
     ("section-field", "mu R (0 A : Type 0) : Type 0 { r : (Nat -> A) -> A -> R A }\ndef value : Nat := " + elim("r (fun (n : Nat) => n) 7", "R", "Nat", "fun (h : Nat -> Nat) (a : Nat) => a") + "\n", "the constructor r needs an expected type or an inferable field: field 1 has no inferable type (a section has no type of its own"),
 ]
-MUTANTS = [
-    ("infer-slot", "V.var(F.Int63.add(base, i))", "V.var(F.Int63.add(base, F.Int63.zero))", "distinct-parameters", "inconsistent parameters"),
-    ("infer-fields", "solve(c, base, np, [F.Pair2{dom, actual}], ps, field_site(name, k))", "M.Pure{ps}", "box", "the constructor box needs an expected type or an inferable field for the parameter A"),
-    ("infer-nominal", "zip(site, append(xs, ix), append(ys, jx))", "zip(site, ix, jx)", "nominal-field", "the constructor wrap needs an expected type or an inferable field for the parameter A"),
-    ("infer-indices", "zip(site, append(xs, ix), append(ys, jx))", "zip(site, xs, ys)", "value-parameter", "the constructor wrap needs an expected type or an inferable field for the parameter n"),
-    ("infer-annotation", 'T.Ann{T.In{S.SMu{family, it}, T.ACtor{name}, terms(ts, [])},\n              T.Lan{S.SMu{family, it}, T.Sec{S.SColl{np}, legs(pt)}}}', 'T.In{S.SMu{family, it}, T.ACtor{name}, terms(ts, [])}', "box", "an injection has no type of its own"),
-    ("drop-reverse", "append(vs, C.reverse(pv, []))", "append(vs, pv)", "parameter-index", "mismatch: the term has type Type 1 and the expected type is Nat"),
-    ("occurs-scan", "open_term(pending(T.scan_term(False{}, [], tm, rest)))", "open_term(rest)", "solved-slot", "unbound: de Bruijn index -4294967297 is outside the environment"),
-]
 
 
 def digest(data):
@@ -89,14 +80,14 @@ def digest(data):
 
 
 def source_hashes():
-    paths = [ROOT / "dev/test-constructor-inference.py", ROOT / "dev/test-constructor-parameters.py", ROOT / "dev/bend-policy.json", ROOT / "dev/house-bend.py", ROOT / "dev/toolchain.json", ROOT / "Makefile", ROOT / "examples/constructor-inference.sole-comb", ROOT / "examples/EXPECTATIONS.json"]
-    for directory in ("bin", "lib", "surface", "erase"):
-        paths.extend((ROOT / directory).glob("*.bend"))
+    paths = [ROOT / "dev/test-constructor-inference.py", ROOT / "dev/test-constructor-parameters.py", ROOT / "bin/main.c", ROOT / "dev/c.mk", ROOT / "Makefile", ROOT / "examples/constructor-inference.sole-comb", ROOT / "examples/EXPECTATIONS.json"]
+    for pattern in ("*.c", "*.h"):
+        paths.extend((ROOT / "lib").glob(pattern))
     return {str(p.relative_to(ROOT)): digest(p.read_bytes()) for p in sorted(paths)}
 
 
 def run(path, host, mode, marker=None):
-    result = parameters.run(ROOT, path, host, mode)
+    result = parameters.run(ROOT, path, mode)
     stem = WORK / f"{path.stem}-{host}-{mode}"
     stem.with_suffix(".stdout").write_bytes(result.stdout)
     stem.with_suffix(".stderr").write_bytes(result.stderr)
@@ -132,17 +123,11 @@ def compare(name, host, bodies):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default="bun,node-worker,native")
-    parser.add_argument("--mutations", action="store_true")
-    args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(set(hosts)) != len(hosts) or any(h not in ("bun", "node-worker", "native") for h in hosts):
-        parser.error("hosts must be a unique list of bun,node-worker,native")
-    if args.mutations and "bun" not in hosts:
-        parser.error("mutation checks require bun")
+    parser.parse_args()
+    host = "c"
     WORK.mkdir(parents=True, exist_ok=True)
     before = source_hashes()
-    observations, comparisons, outputs = [], [], {}
+    observations, comparisons = [], []
     cases = [(name, declarations, result, "", term, ty, result, arms) for name, declarations, term, ty, result, arms in PAIRS] + OPEN
     if not set(GOLDENS) <= {case[0] for case in cases}:
         raise RuntimeError(f"goldens name no pair: {sorted(set(GOLDENS) - {case[0] for case in cases})}")
@@ -152,39 +137,24 @@ def main():
             path = WORK / f"{name}-{variant}.sole-comb"
             family = explicit.split()[0] + (" i" if name in ("index", "family-index", "parameter-index") else "")
             path.write_text(declarations + f"def value : {ty} := {prefix}" + elim(scrutinee, family, result, arms) + "\n")
-            for host in hosts:
-                for mode in ("checked", "erased"):
-                    body, observation = run(path, host, mode)
-                    observations.append(observation)
-                    key = (name, variant, mode)
-                    if key in outputs and outputs[key] != body:
-                        raise RuntimeError(f"{name}/{variant}/{mode}: hosts disagree")
-                    outputs[key] = body
-                    bodies[variant, host, mode] = body
-        comparisons.extend(compare(name, host, bodies) for host in hosts)
+            for mode in ("checked", "erased"):
+                body, observation = run(path, host, mode)
+                observations.append(observation)
+                bodies[variant, host, mode] = body
+        comparisons.append(compare(name, host, bodies))
     for name, source, marker in REFUSALS:
         path = WORK / f"{name}.sole-comb"
         path.write_text(source)
-        for host in hosts:
-            _, observation = run(path, host, "checked", marker)
-            observations.append(observation)
-    for host in hosts:
-        for mode in ("checked", "erased"):
-            _, observation = run(ROOT / "examples/constructor-inference.sole-comb", host, mode)
-            observations.append(observation)
-    mutants = []
-    if args.mutations:
-        parameters.WORK = WORK
-        for name, old, new, case, marker in MUTANTS:
-            mutant = parameters.mutate(name, "surface/constructor_infer.bend", old, new, case, marker, WORK / f"{case}-inferred.sole-comb")
-            if mutant["kill"] != "refused":
-                raise RuntimeError(f"{name}: semantic mutant survived")
-            mutants.append(mutant)
+        _, observation = run(path, host, "checked", marker)
+        observations.append(observation)
+    for mode in ("checked", "erased"):
+        _, observation = run(ROOT / "examples/constructor-inference.sole-comb", host, mode)
+        observations.append(observation)
     if before != source_hashes():
         raise RuntimeError("sources changed during constructor inference checks")
-    record = {"schema": 1, "sources": before, "hosts": hosts, "pairs": len(cases), "refusals": len(REFUSALS), "comparisons": comparisons, "observations": observations, "mutants": mutants}
+    record = {"schema": 1, "sources": before, "pairs": len(cases), "refusals": len(REFUSALS), "comparisons": comparisons, "observations": observations}
     (WORK / "record.json").write_text(json.dumps(record, indent=2) + "\n")
-    print(f"CONSTRUCTOR INFERENCE PASS pairs={len(cases)} refusals={len(REFUSALS)} hosts={len(hosts)} observations={len(observations)} mutants={len(mutants)}")
+    print(f"CONSTRUCTOR INFERENCE PASS pairs={len(cases)} refusals={len(REFUSALS)} observations={len(observations)}")
 
 
 if __name__ == "__main__":

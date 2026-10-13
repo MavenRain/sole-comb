@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-header.sole-comb FAIL line 1, column 15: expected '{' after a family header, found ':='

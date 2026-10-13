@@ -1,0 +1,33 @@
+exit 0
+--- stdout
+CHECK examples/sum-erasure.sole-comb defs=29 ok
+axiom Nat : Type 1
+def Unit : Type 1 := (Ran SColl 0 (Sec SColl 0 []))
+def unit : Unit := (Sec SColl 0 [])
+def Mixed : Type 1 := (Lan SColl 3 (Sec SColl 3 [ => Unit;  => Nat;  => Unit]))
+def first : Mixed := (In SColl 3 (ALeg 0) [unit])
+def middle : Mixed := (In SColl 3 (ALeg 1) [42])
+def last : Mixed := (In SColl 3 (ALeg 2) [unit])
+def unwrap : (Ran SPi w _ Mixed Nat) := (Sec SPi w x Mixed [x => (Elim SColl 3 x with | (ALeg 0) u => 1 | (ALeg 1) n => n | (ALeg 2) u => 3)])
+def answer : Nat := (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) unwrap)
+def Types : Type 2 := (Lan SColl 2 (Sec SColl 2 [ => Type 1;  => Nat]))
+def typeTag : Types := (In SColl 2 (ALeg 0) [Nat])
+def natTag : Types := (In SColl 2 (ALeg 1) [7])
+def typeUnwrap : (Ran SPi w _ Types Nat) := (Sec SPi w x Types [x => (Elim SColl 2 x with | (ALeg 0) A => 9 | (ALeg 1) n => n)])
+def Pair : Type 1 := (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))
+def Nested : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Pair;  => Mixed]))
+def pairTag : Nested := (In SColl 2 (ALeg 0) [(Sec SColl 2 [ => 10;  => 20])])
+def sumTag : Nested := (In SColl 2 (ALeg 1) [middle])
+def nestedUnwrap : (Ran SPi w _ Nested Nat) := (Sec SPi w x Nested [x => (Elim SColl 2 x with | (ALeg 0) p => (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) unwrap) | (ALeg 1) $elim => (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w $elim) unwrap))])
+def WithFunction : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => (Ran SPi w _ Nat Nat);  => Unit]))
+def functionTag : WithFunction := (In SColl 2 (ALeg 0) [(Sec SPi w n Nat [n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))])])
+def applyTag : (Ran SPi w _ WithFunction Nat) := (Sec SPi w x WithFunction [x => (Elim SColl 2 x with | (ALeg 0) f => (Out SPi w _ Nat (APt w 5) f) | (ALeg 1) u => 0)])
+def choose : (Ran SPi w _ Nat (Ran SPi w _ Mixed (Ran SPi w _ Nat Nat))) := (Sec SPi w base Nat [base => (Sec SPi w x Mixed [x => (Elim SColl 3 x with | (ALeg 0) u => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w base) natAdd))]) | (ALeg 1) v => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w base) natAdd))) (Out SPi w a Nat (APt w v) natAdd))]) | (ALeg 2) u => (Sec SPi w n Nat [n => base]))])])
+def chosen : Nat := (Out SPi w _ Nat (APt w 2) (Out SPi w _ (Lan SColl 3 (Sec SColl 3 [ => (Ran SColl 0 (Sec SColl 0 []));  => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) (APt w middle) (Out SPi w _ Nat (APt w 10) choose)))
+def defaulted : (Ran SPi w _ (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 3 (Sec SColl 3 [ => Nat;  => Nat;  => Nat])) [x => (Elim SColl 3 x with | (ALeg 0) n => n | (ALeg 1) n => 99 | (ALeg 2) n => 99)])
+def Empty : Type 1 := (Lan SColl 0 (Sec SColl 0 []))
+axiom impossible : Empty
+def emptyCase : (Ran SPi w _ Empty Nat) := (Sec SPi w x Empty [x => (Elim SColl 0 x with)])
+def erasedBinder : (Ran SPi w _ (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) Nat) := (Sec SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) [x => (Elim SColl 2 x with | (ALeg 0) n => 10 | (ALeg 1) n => 20)])
+def withMotive : (Ran SPi w _ Mixed Nat) := (Sec SPi w x Mixed [x => (Elim SColl 3 x as value return Nat with | (ALeg 0) u => 0 | (ALeg 1) n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd)) | (ALeg 2) u => 2)])
+--- stderr

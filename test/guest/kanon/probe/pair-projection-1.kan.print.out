@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+def p : (Lan SPi w x Nat Nat) := (In SPi w x Nat (APt w 2) [3])
+def n : Nat := (Elim SPi w x Nat p as self return Nat with | (ALeg 0) x y => x)
+--- stderr

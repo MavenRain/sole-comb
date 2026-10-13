@@ -1,0 +1,8 @@
+-- Independently written product and projection definitions for the sugar.
+axiom Nat : Type 0
+def Empty : Type 0 := prod()
+def empty : Empty := tuple()
+def Box : Type 0 := prod(Nat)
+def Box.item : (1 recordArg : Box) -> Nat := fun (1 recordArg : Box) => recordArg.0
+def box : Box := tuple(7)
+def item : Nat := Box.item box

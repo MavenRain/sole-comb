@@ -1,5 +1,7 @@
 # Stage A compiler milestones
 
+This document is history: it records the retired Bend 2 host (S10, 2026-10-13). The text below is unchanged.
+
 The [public compiler entry decision](public-compiler-entry.md), adopted on
 2026-09-29, moves the real public driver and supported `.sole-comb` examples
 ahead of the former Stage C frontend timing. Public source checking now

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-duplicate.sole-comb FAIL line 2, column 105: expected '}' after the final default elim arm, found 'else'

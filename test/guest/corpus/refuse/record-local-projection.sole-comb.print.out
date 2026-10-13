@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-local-projection.sole-comb FAIL mismatch: E-RECORD-PROJECTION: use a qualified getter such as Pair.first value

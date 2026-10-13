@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+universe: a large elimination out of a proposition needs a subsingleton family at Box

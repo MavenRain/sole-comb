@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/legacy-rec.sole-comb FAIL line 2, column 5: E-R4-MATCH: 'rec' is reserved; use elim

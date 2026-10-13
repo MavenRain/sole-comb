@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: the term has type Nat and the expected type is A

@@ -1,0 +1,1 @@
+def s : sum (Nat, Nat) := inj 0 of 2 3 def n : Nat := case s with | c x => x

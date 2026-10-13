@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/function-arm-duplication.sole-comb FAIL quantity: the linear binder f must be used exactly once on every runtime path

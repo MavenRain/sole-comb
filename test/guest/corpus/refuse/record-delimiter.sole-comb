@@ -1,0 +1,2 @@
+axiom Nat : Type 0
+record Pair : Type 0 { first : Nat, second : Nat }

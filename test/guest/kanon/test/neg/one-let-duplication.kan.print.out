@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+quantity: the linear alias y may be used at most once

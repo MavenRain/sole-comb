@@ -1,0 +1,1 @@
+def t : prod (Nat, Nat) := tuple (0, 1) def n : Nat := t.1

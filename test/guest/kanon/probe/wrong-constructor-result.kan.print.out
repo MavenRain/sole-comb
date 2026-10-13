@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: a constructor of F ends at another type

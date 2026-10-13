@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-negative.sole-comb FAIL not yet: a family that is not strictly positive arrives at M2

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+cannot infer: the constructor box needs an expected type

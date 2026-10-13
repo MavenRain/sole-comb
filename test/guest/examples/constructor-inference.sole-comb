@@ -1,0 +1,16 @@
+-- Constructor fields determine erased parameters when no expected type is given.
+mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
+mu Both (0 A : Type 0) (0 B : Type 0) : Type 0 { both : A -> B -> Both A B }
+mu List (0 A : Type 0) : Type 0 { nil : List A; cons : A -> List A -> List A }
+mu Wrap (0 A : Type 0) : Type 0 { wrap : Box A -> Wrap A }
+mu Ix : (0 n : Nat) -> Type 0 { ix : (0 n : Nat) -> Ix n }
+mu WrapN (0 n : Nat) : Type 0 { wrapN : Ix n -> WrapN n }
+
+def read : Nat := elim (box 7) as x in Box return Nat { fun (n : Nat) => n }
+def nested : Box Nat := elim (box (box 8)) as x in Box return Box Nat { fun (b : Box Nat) => b }
+def pair : Nat := elim (both 7 (tuple () : prod ())) as x in Both return Nat { fun (n : Nat) (u : prod ()) => n }
+def head : Nat := elim (cons 1 nil) as x in List return Nat { 0; fun (n : Nat) (xs : List Nat) => n }
+def wrapped : Box Nat := elim (wrap (box 9)) as x in Wrap return Box Nat { fun (b : Box Nat) => b }
+def open : Nat -> Nat := fun (n : Nat) => elim (box n) as x in Box return Nat { fun (m : Nat) => m }
+def generic : (0 A : Type 0) -> A -> A := fun (0 A : Type 0) (a : A) => elim (box a) as x in Box return A { fun (b : A) => b }
+def indexed : Nat := elim (wrapN (ix 7)) as x in WrapN return Nat { fun (v : Ix 7) => 7 }

@@ -11,11 +11,10 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def inputs():
-    paths = [ROOT / "sole-comb", ROOT / "dev/cli.py", ROOT / "dev/build.py",
+    paths = [ROOT / "sole-comb", ROOT / "bin/main.c", ROOT / "dev/c.mk",
              ROOT / "examples/EXPECTATIONS.json", ROOT / "dev/test-cli.py",
-             ROOT / "dev/toolchain.json", ROOT / "dev/bend-policy.json",
              ROOT / "examples/records.kernel"]
-    for directory, pattern in (("bin", "*.bend"), ("lib", "*.bend"), ("surface", "*.bend"), ("erase", "*.bend"),
+    for directory, pattern in (("lib", "*.c"), ("lib", "*.h"),
                                ("examples", "*.sole-comb"), ("corpus/refuse", "*.sole-comb")):
         paths.extend((ROOT / directory).rglob(pattern))
     return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(paths)}
@@ -23,11 +22,7 @@ def inputs():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default="bun,node-worker,native")
-    args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(set(hosts)) != len(hosts) or any(h not in ("bun", "node-worker", "native") for h in hosts):
-        parser.error("hosts must be a unique list of bun,node-worker,native")
+    parser.parse_args()
     manifest = json.loads((ROOT / "examples/EXPECTATIONS.json").read_text())
     selected = set(manifest["positive"]) | set(manifest["negative"])
     found = {str(p.relative_to(ROOT)) for directory in ("examples", "corpus/refuse")
@@ -56,40 +51,39 @@ def main():
                              "stdout": result.stdout, "stderr": result.stderr})
         return result
 
-    for host in hosts:
-        for path, count in manifest["positive"].items():
-            result = run(["check", "--host", host, "--print", path], 0, host)
-            if result.stderr or not result.stdout.startswith(f"CHECK {path} defs={count} ok\n"):
-                raise RuntimeError(f"{host} {path}: malformed success or incorrect declaration count")
-            if printed.setdefault(path, result.stdout) != result.stdout:
-                raise RuntimeError(f"{host} {path}: printed kernel definitions differ from host {hosts[0]}")
-            print(f"PASS public {host}: {path}", flush=True)
-        for sugared, explicit in equivalents.items():
-            expanded = printed[sugared].partition("\n")[2]
-            if sugared == "examples/record-expansion.sole-comb":
-                expanded = expanded.replace("#record", "recordArg")
-            if expanded != printed[explicit].partition("\n")[2]:
-                raise RuntimeError(f"{host}: {sugared} differs from its independent explicit kernel expansion")
-            print(f"PASS public {host}: {sugared} equals explicit kernel expansion", flush=True)
-        if printed["examples/records.sole-comb"].partition("\n")[2] != (ROOT / "examples/records.kernel").read_text():
-            raise RuntimeError(f"{host}: records differ from the reviewed product and projection expectations")
-        print(f"PASS public {host}: record field types, indices, namespaces and binder hygiene", flush=True)
-        for path, marker in manifest["negative"].items():
-            result = run(["check", "--host", host, path], 1, host, marker=marker)
-            if result.stdout or not result.stderr.startswith(f"CHECK {path} FAIL "):
-                raise RuntimeError(f"{host} {path}: missing source refusal")
-        with tempfile.TemporaryDirectory(prefix="sole source ") as folder:
-            directory = Path(folder)
-            path = directory / "with spaces.sole-comb"
-            path.write_text("-- case match rec mu record else { ; }\naxiom Nat : Type 0\ndef with : Nat := 1\ndef absurd : Nat := 2\ndef end : Nat := 3\n")
-            result = run(["check", "--host", host, path], 0, host, cwd=directory)
-            if "defs=4 ok" not in result.stdout:
-                raise RuntimeError("reserved words in comments or permitted identifiers were rejected")
-            path.write_text('axiom Nat : Type 0\ndef invalid : Nat := b"case match rec else"\n')
-            result = run(["check", "--host", host, path], 1, host)
-            if "E-R4-MATCH" in result.stderr:
-                raise RuntimeError("reserved words inside a byte literal were treated as syntax")
-        print(f"PASS public {host}: {len(selected)} native files and 2 lexical boundary cases", flush=True)
+    host = "c"
+    for path, count in manifest["positive"].items():
+        result = run(["check", "--print", path], 0, host)
+        if result.stderr or not result.stdout.startswith(f"CHECK {path} defs={count} ok\n"):
+            raise RuntimeError(f"{host} {path}: malformed success or incorrect declaration count")
+        printed[path] = result.stdout
+        print(f"PASS public {host}: {path}", flush=True)
+    for sugared, explicit in equivalents.items():
+        expanded = printed[sugared].partition("\n")[2]
+        if sugared == "examples/record-expansion.sole-comb":
+            expanded = expanded.replace("#record", "recordArg")
+        if expanded != printed[explicit].partition("\n")[2]:
+            raise RuntimeError(f"{host}: {sugared} differs from its independent explicit kernel expansion")
+        print(f"PASS public {host}: {sugared} equals explicit kernel expansion", flush=True)
+    if printed["examples/records.sole-comb"].partition("\n")[2] != (ROOT / "examples/records.kernel").read_text():
+        raise RuntimeError(f"{host}: records differ from the reviewed product and projection expectations")
+    print(f"PASS public {host}: record field types, indices, namespaces and binder hygiene", flush=True)
+    for path, marker in manifest["negative"].items():
+        result = run(["check", path], 1, host, marker=marker)
+        if result.stdout or not result.stderr.startswith(f"CHECK {path} FAIL "):
+            raise RuntimeError(f"{host} {path}: missing source refusal")
+    with tempfile.TemporaryDirectory(prefix="sole source ") as folder:
+        directory = Path(folder)
+        path = directory / "with spaces.sole-comb"
+        path.write_text("-- case match rec mu record else { ; }\naxiom Nat : Type 0\ndef with : Nat := 1\ndef absurd : Nat := 2\ndef end : Nat := 3\n")
+        result = run(["check", path], 0, host, cwd=directory)
+        if "defs=4 ok" not in result.stdout:
+            raise RuntimeError("reserved words in comments or permitted identifiers were rejected")
+        path.write_text('axiom Nat : Type 0\ndef invalid : Nat := b"case match rec else"\n')
+        result = run(["check", path], 1, host)
+        if "E-R4-MATCH" in result.stderr:
+            raise RuntimeError("reserved words inside a byte literal were treated as syntax")
+    print(f"PASS public {host}: {len(selected)} native files and 2 lexical boundary cases", flush=True)
 
     with tempfile.TemporaryDirectory(prefix="sole cli ") as folder:
         directory = Path(folder)
@@ -106,7 +100,7 @@ def main():
         raise RuntimeError("public compiler sources changed during validation")
     work = ROOT / "_build/public"
     work.mkdir(parents=True, exist_ok=True)
-    report = {"schema": 1, "scope": "public checking with native function arms, default arms, closed records, recursive families and ordinary, product, sum and pair erasure examples", "hosts": hosts,
+    report = {"schema": 1, "scope": "public checking with native function arms, default arms, closed records, recursive families and ordinary, product, sum and pair erasure examples",
               "files": len(selected), "equivalences": equivalents, "observations": len(observations), "sources": before, "results": observations}
     (work / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     print(f"PASS public compiler: {len(observations)} command observations; source hashes stable", flush=True)

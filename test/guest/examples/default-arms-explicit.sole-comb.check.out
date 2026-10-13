@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/default-arms-explicit.sole-comb defs=20 ok
+--- stderr

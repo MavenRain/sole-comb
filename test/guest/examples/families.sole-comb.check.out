@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/families.sole-comb defs=23 ok
+--- stderr

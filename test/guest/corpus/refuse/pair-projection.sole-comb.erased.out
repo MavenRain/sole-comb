@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/pair-projection.sole-comb FAIL line 3, column 19: E-R4-MATCH: '.1' is reserved

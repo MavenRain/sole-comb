@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+def f : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (Lan SMu N [] (Sec SColl 0 []))) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as x return (Lan SMu N [] (Sec SColl 0 [])) with | (ACtor zero)  => (In SMu N [] (ACtor zero) []) | (ACtor succ) m => (Out SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (APt w m) f))])
+def z : (Lan SMu N [] (Sec SColl 0 [])) := (Out SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (APt w (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])) f)
+--- stderr

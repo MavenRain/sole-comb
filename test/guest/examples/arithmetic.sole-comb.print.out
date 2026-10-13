@@ -1,0 +1,7 @@
+exit 0
+--- stdout
+CHECK examples/arithmetic.sole-comb defs=3 ok
+axiom Nat : Type 1
+def answer : Nat := (Out SPi w b Nat (APt w 0) (Out SPi w a Nat (APt w (Out SPi w b Nat (APt w 7) (Out SPi w a Nat (APt w 6) natMul))) natAdd))
+def saturated : Nat := (Out SPi w b Nat (APt w 8) (Out SPi w a Nat (APt w 3) natSub))
+--- stderr

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: a structurally recursive definition eliminates its recursive argument at the head of its body

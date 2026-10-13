@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def t : (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) := (Sec SColl 2 [ => 0;  => 1])
+--- stderr

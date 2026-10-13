@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-field-colon.sole-comb FAIL line 2, column 23: expected a record field 'name : type' or '}', found identifier item

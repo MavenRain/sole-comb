@@ -1,0 +1,6 @@
+exit 0
+--- stdout
+axiom A : Type 1
+axiom a : A
+def p : (Lan SPi w X Type 1 X) := (In SPi w X Type 1 (APt w A) [a])
+--- stderr

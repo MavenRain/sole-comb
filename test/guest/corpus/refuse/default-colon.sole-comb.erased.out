@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-colon.sole-comb FAIL line 2, column 84: expected ':' after 'else', found 'fun'

@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/erasure.sole-comb defs=19 ok
+--- stderr

@@ -1,0 +1,12 @@
+exit 0
+--- stdout
+CHECK examples/constructor-inference.sole-comb defs=8 ok
+def read : Nat := (Elim SMu Box [] ((In SMu Box [] (ACtor box) [7]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor box) n => n)
+def nested : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (Elim SMu Box [] ((In SMu Box [] (ACtor box) [((In SMu Box [] (ACtor box) [8]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat])))]) : (Lan SMu Box [] (Sec SColl 1 [ => (Lan SMu Box [] (Sec SColl 1 [ => Nat]))]))) as x return (Lan SMu Box [] (Sec SColl 1 [ => Nat])) with | (ACtor box) b => b)
+def pair : Nat := (Elim SMu Both [] ((In SMu Both [] (ACtor both) [7; ((Sec SColl 0 []) : (Ran SColl 0 (Sec SColl 0 [])))]) : (Lan SMu Both [] (Sec SColl 2 [ => Nat;  => (Ran SColl 0 (Sec SColl 0 []))]))) as x return Nat with | (ACtor both) n u => n)
+def head : Nat := (Elim SMu List [] ((In SMu List [] (ACtor cons) [1; (In SMu List [] (ACtor nil) [])]) : (Lan SMu List [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor nil)  => 0 | (ACtor cons) n xs => n)
+def wrapped : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (Elim SMu Wrap [] ((In SMu Wrap [] (ACtor wrap) [((In SMu Box [] (ACtor box) [9]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat])))]) : (Lan SMu Wrap [] (Sec SColl 1 [ => Nat]))) as x return (Lan SMu Box [] (Sec SColl 1 [ => Nat])) with | (ACtor wrap) b => b)
+def open : (Ran SPi w _ Nat Nat) := (Sec SPi w n Nat [n => (Elim SMu Box [] ((In SMu Box [] (ACtor box) [n]) : (Lan SMu Box [] (Sec SColl 1 [ => Nat]))) as x return Nat with | (ACtor box) m => m)])
+def generic : (Ran SPi 0 A Type 1 (Ran SPi w _ A A)) := (Sec SPi 0 A Type 1 [A => (Sec SPi w a A [a => (Elim SMu Box [] ((In SMu Box [] (ACtor box) [a]) : (Lan SMu Box [] (Sec SColl 1 [ => A]))) as x return A with | (ACtor box) b => b)])])
+def indexed : Nat := (Elim SMu WrapN [] ((In SMu WrapN [] (ACtor wrapN) [((In SMu Ix [7] (ACtor ix) [7]) : (Lan SMu Ix [7] (Sec SColl 0 [])))]) : (Lan SMu WrapN [] (Sec SColl 1 [ => 7]))) as x return Nat with | (ACtor wrapN) v => 7)
+--- stderr

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/pair-arm-three.sole-comb FAIL missing branch: a pair elim arm must be a two-binder lambda

@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def n : Nat := let x : Nat := 3 in x
+--- stderr

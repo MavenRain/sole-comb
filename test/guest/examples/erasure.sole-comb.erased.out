@@ -1,0 +1,40 @@
+exit 0
+--- stdout
+CHECK examples/erasure.sole-comb defs=19 ok
+erased Nat
+erased Natural
+axiom opaque : union nat
+rec [nat]
+fun id (union nat) : union nat := KVar 0
+rec [nat]
+fun alias (union nat) : union nat := KTail (KGlobal id) [KVar 0]
+rec [nat]
+fun zero () : union nat := KLit 7
+rec [nat]
+fun ghostFunction () : union nat := KLit 9
+rec [nat]
+fun zeroCall () : union nat := KTail (KGlobal zero) []
+rec [nat]
+fun partial (union nat) : union nat := KTail (KApp (KGlobal natAdd) [KLit 10]) [KVar 0]
+rec [fn<1>; nat]
+fun apply (func fn<1>) : union nat := KTail (KVar 0) [KLit 2]
+rec [nat]
+fun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun capture (union nat) : union nat := KTail (KGlobal apply) [KClos capture$0 1 [KVar 0]]
+rec [nat]
+fun deadCapture$0 (union nat) : union nat := KTail (KGlobal zero) []
+fun deadCapture (union nat) : union nat := KTail (KGlobal apply) [KClos deadCapture$0 1 []]
+rec [nat]
+fun captureOrder$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natAdd) [KVar 2; KVar 1]; KVar 0]
+fun captureOrder (union nat, union nat) : union nat := KTail (KGlobal apply) [KClos captureOrder$0 1 [KVar 1; KVar 0]]
+rec [nat]
+fun linear (union nat) : union nat := KVar 0
+erased Unit
+erased unit
+rec [nat]
+fun dropUnit () : union nat := KLit 11
+rec [nat]
+fun unitCall () : union nat := KTail (KGlobal dropUnit) []
+rec [nat]
+fun answer () : union nat := KTail (KGlobal captureOrder) [KApp (KGlobal alias) [KLit 20]; KApp (KGlobal partial) [KLit 10]]
+--- stderr

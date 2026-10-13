@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/affine-duplication.sole-comb FAIL quantity: the linear binder x must be used exactly once on every runtime path

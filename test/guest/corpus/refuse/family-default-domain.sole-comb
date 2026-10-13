@@ -1,0 +1,3 @@
+mu Choice : Type 0 { number : Nat -> Choice; unit : prod () -> Choice }
+def read : Choice -> Nat := fun (c : Choice) =>
+  elim c as x in Choice return Nat { else: fun (n : Nat) => 0 }

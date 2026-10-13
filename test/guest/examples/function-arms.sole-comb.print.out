@@ -1,0 +1,17 @@
+exit 0
+--- stdout
+CHECK examples/function-arms.sole-comb defs=13 ok
+axiom Nat : Type 1
+def Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))
+def id : (Ran SPi w x Nat Nat) := (Sec SPi w x Nat [x => x])
+def plus : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))])])
+def unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))])
+def local : (Ran SPi w f (Ran SPi w n Nat Nat) (Ran SPi w x Two Nat)) := (Sec SPi w f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w x Nat (APt w $elim) id))])])
+def motive : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x as value return Nat with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 2) plus)))])
+def functions : (Ran SPi w x Two (Ran SPi w y Nat Nat)) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) a => (Sec SPi w b Nat [b => (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))]) | (ALeg 1) $elim => (Out SPi w a Nat (APt w $elim) plus))])
+def answer : Nat := (Out SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt w (In SColl 2 (ALeg 1) [41])) unwrap)
+def linear : (Ran SPi 1 x Nat Nat) := (Sec SPi 1 x Nat [x => x])
+def linearArms : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear) | (ALeg 1) $elim => (Out SPi 1 x Nat (APt 1 $elim) linear))])
+def localLinear : (Ran SPi 1 f (Ran SPi w n Nat Nat) (Ran SPi w x Two Nat)) := (Sec SPi 1 f (Ran SPi w n Nat Nat) [f => (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w n Nat (APt w $elim) f) | (ALeg 1) $elim => (Out SPi w n Nat (APt w $elim) f))])])
+def nested : (Ran SPi w x Two (Ran SPi w y Two Nat)) := (Sec SPi w x Two [x => (Sec SPi w y Two [y => (Elim SColl 2 x with | (ALeg 0) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w (Elim SColl 2 y with | (ALeg 0) $elim => (Out SPi w x Nat (APt w $elim) id) | (ALeg 1) $elim => (Out SPi w b Nat (APt w $elim) (Out SPi w a Nat (APt w 1) plus)))) plus)) | (ALeg 1) $elim => (Out SPi w x Nat (APt w $elim) id))])])
+--- stderr

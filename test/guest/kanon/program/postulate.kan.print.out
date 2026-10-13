@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+axiom x : Nat
+--- stderr

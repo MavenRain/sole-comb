@@ -1,0 +1,30 @@
+-- Product layouts omit type and proof fields and renumber runtime projections.
+axiom Nat : Type 0
+axiom P : Prop
+axiom proof : P
+record Pair : Type 0 { first : Nat; second : Nat }
+def pair : Pair := tuple(10, 20)
+record Mixed : Type 1 { kind : Type 0; witness : P; first : Nat; second : Nat; callback : Nat -> Nat; nested : Pair; trailing : Type 0 }
+def mixed : Mixed := tuple(Nat, proof, 30, 40, fun (n : Nat) => natAdd n 1, pair, Nat)
+def first : Nat := Mixed.first mixed
+def second : Nat := Mixed.second mixed
+def called : Nat := Mixed.callback mixed (Mixed.second mixed)
+def nested : Pair := Mixed.nested mixed
+def inner : Nat := Pair.second nested
+def kind : Type 0 := Mixed.kind mixed
+def witness : P := Mixed.witness mixed
+def trailing : Type 0 := Mixed.trailing mixed
+def captured : (n : Nat) -> Mixed := fun (n : Nat) => tuple(Nat, proof, n, n, fun (m : Nat) => natAdd n m, tuple(n, n), Nat)
+def linearFirst : (1 p : Pair) -> Nat := fun (1 p : Pair) => Pair.first p
+axiom external : Mixed
+def externalSecond : Nat := Mixed.second external
+
+-- Empty and entirely erased tuples carry no runtime fields.
+record Empty : Type 0 {}
+def empty : Empty := tuple()
+record AllErased : Type 1 { kind : Type 0; witness : P }
+def allErased : AllErased := tuple(Nat, proof)
+def ignore : AllErased -> Nat := fun (a : AllErased) => 7
+record Outer : Type 1 { erased : AllErased; kept : Mixed }
+def outer : Outer := tuple(allErased, mixed)
+def outerKept : Mixed := Outer.kept outer

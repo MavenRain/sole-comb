@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Check native families against frozen Kanon output and isolated sugar mutations."""
+"""Check native families against frozen Kanon output."""
 import argparse
 import hashlib
 import importlib.util
 import json
 from pathlib import Path
-import shutil
 import subprocess
-import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "_build/public-family"
@@ -46,26 +44,8 @@ GOLDENS = (
     "fun mutualValue () : union mu<Left> := KTag mu<Left> 1 [KTag mu<Right> 0 [KTag mu<Left> 0 []]]",
     "fun rightRead (union mu<Right>) : union mu<Left> := KCase mu<Right> (KVar 0) [{0 1 (KVar 0)}]",
 )
-# Each mutant names the observations that kill it. A refusal of the well-typed source is the
-# expected observation for result-lambda: the checker sees the arm result at the wrong type.
-MUTANTS = (
-    ("constructor-order", "L.reverse(S.fam_ctor, ctors, [])", "ctors", PROBE, ("output-changed",)),
-    ("field-order", "L.reverse(S.field, acc, [])", "acc", PROBE, ("output-changed",)),
-    ("result-lambda", "body(bs, value)", "value", SOURCE, ("output-changed", "refused")),
-    ("field-annotation", "S.Field{q, name, Some{ty}}", "S.Field{q, name, None{}}", "corpus/refuse/family-arm-domain.sole-comb", ("admitted",)),
-)
-
-
-def kill_kind(result, path, expected):
-    """Classify one mutant observation; None means the mutant survived."""
-    out, err = result.stdout.decode(), result.stderr.decode()
-    if result.returncode == 0 and not err and path in expected and out != expected[path]:
-        return "output-changed"
-    if result.returncode == 1 and not out and err.startswith(f"CHECK {path} FAIL "):
-        return "refused"
-    if result.returncode == 0 and not err and path not in expected and out.startswith(f"CHECK {path} defs=1 ok\n"):
-        return "admitted"
-    return None
+# The Kanon revision that recorded the reference fixtures (the semantic pin, read only).
+KANON_REVISION = "69f3be5198cda4334de4fd23b4ccc92cac595789"
 
 
 def digest(path):
@@ -75,12 +55,12 @@ def digest(path):
 def sources():
     paths = {ROOT / path for path in (
         SOURCE, ORACLE_SOURCE, PROBE, "Makefile", "dev/test-public-family.py", "dev/test-cli.py",
-        "dev/house-bend.py", "dev/bend-policy.json", "dev/build.py", "dev/cli.py", "sole-comb",
-        "dev/toolchain.json", "examples/EXPECTATIONS.json", "dev/reference-fixtures.py",
+        "bin/main.c", "dev/c.mk", "sole-comb",
+        "examples/EXPECTATIONS.json", "dev/reference-fixtures.py",
         "dev/reference-fixtures/manifest.json", "dev/reference-fixtures/public-family.json",
         "dev/validation/stage-a-family-erasure-reference.json")}
-    for directory in ("bin", "lib", "surface", "erase"):
-        paths.update((ROOT / directory).glob("*.bend"))
+    for pattern in ("*.c", "*.h"):
+        paths.update((ROOT / "lib").glob(pattern))
     paths.update((ROOT / "corpus/refuse").glob("*.sole-comb"))
     return {str(p.relative_to(ROOT)): digest(p) for p in sorted(paths)}
 
@@ -96,18 +76,11 @@ def run(name, argv, cwd=ROOT, expected=0):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default="bun,node-worker,native")
-    parser.add_argument("--mutations", action="store_true")
-    args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(set(hosts)) != len(hosts) or any(h not in ("bun", "node-worker", "native") for h in hosts):
-        parser.error("hosts must be a unique list of bun,node-worker,native")
-    if args.mutations and "bun" not in hosts:
-        parser.error("mutation checks require bun")
+    parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     (WORK / "result.json").unlink(missing_ok=True)
     before = sources()
-    pins = json.loads((ROOT / "dev/toolchain.json").read_text())
+    pins = {"kanon": {"revision": KANON_REVISION}}
     spec = importlib.util.spec_from_file_location("public_family_reference", ROOT / "dev/reference-fixtures.py")
     reference = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(reference)
@@ -116,44 +89,22 @@ def main():
         raise RuntimeError("public family reference differs from independent literal expectations")
     expected = f"CHECK {SOURCE} defs=23 ok\n{oracle}"
     observations = []
-    for host in hosts:
-        result = run(host, [ROOT / "sole-comb", "check", "--host", host, "--erased", SOURCE])
-        if result.stderr or result.stdout.decode() != expected:
-            raise RuntimeError(f"{host}: public family erasure differs from pinned reference")
-        observations.append({"host": host, "path": SOURCE, "exit": result.returncode, "stdout": result.stdout.decode(), "stderr": ""})
-        probe = run(f"{host}-probe", [ROOT / "sole-comb", "check", "--host", host, "--erased", PROBE])
-        if probe.stderr or probe.stdout.decode() != PROBE_EXPECTED:
-            raise RuntimeError(f"{host}: constructor and field order probe differs from its literal expectation")
-        observations.append({"host": host, "path": PROBE, "exit": probe.returncode, "stdout": probe.stdout.decode(), "stderr": ""})
-        print(f"PASS public families {host}: exact erased output, {len(GOLDENS)} literal goldens, exact order probe", flush=True)
-    mutations = []
-    if args.mutations:
-        outputs = {SOURCE: expected, PROBE: PROBE_EXPECTED}
-        for name, old, new, path, kills in MUTANTS:
-            dest = WORK / f"mutant-{name}"
-            if dest.exists():
-                shutil.rmtree(dest)
-            shutil.copytree(ROOT, dest, ignore=shutil.ignore_patterns(".git", "_build", ".gatework", ".kanon*", "__pycache__"))
-            source = dest / "surface/family.bend"
-            text = source.read_text()
-            if text.count(old) != 1:
-                raise RuntimeError(f"{name}: mutation anchor is not unique")
-            source.write_text(text.replace(old, new))
-            # A source or host compile failure never counts as a semantic kill.
-            run(f"{name}-build", [sys.executable, "-P", "dev/build.py", "--backend", "js"], cwd=dest)
-            result = run(name, [dest / "sole-comb", "check", "--host", "bun", "--erased", path], cwd=dest, expected=None)
-            kill = kill_kind(result, path, outputs)
-            if kill not in kills:
-                raise RuntimeError(f"{name}: mutant survived or failed outside an accepted observation ({kill})")
-            mutations.append({"name": name, "path": path, "compile_exit": 0, "exit": result.returncode,
-                              "stdout": result.stdout.decode(), "stderr": result.stderr.decode(), "kill": kill})
-            print(f"PASS public family mutant: {name} ({kill})", flush=True)
+    host = "c"
+    result = run(host, [ROOT / "sole-comb", "check", "--erased", SOURCE])
+    if result.stderr or result.stdout.decode() != expected:
+        raise RuntimeError(f"{host}: public family erasure differs from pinned reference")
+    observations.append({"host": host, "path": SOURCE, "exit": result.returncode, "stdout": result.stdout.decode(), "stderr": ""})
+    probe = run(f"{host}-probe", [ROOT / "sole-comb", "check", "--erased", PROBE])
+    if probe.stderr or probe.stdout.decode() != PROBE_EXPECTED:
+        raise RuntimeError(f"{host}: constructor and field order probe differs from its literal expectation")
+    observations.append({"host": host, "path": PROBE, "exit": probe.returncode, "stdout": probe.stdout.decode(), "stderr": ""})
+    print(f"PASS public families {host}: exact erased output, {len(GOLDENS)} literal goldens, exact order probe", flush=True)
     if sources() != before:
         raise RuntimeError("public family sources changed during validation")
-    record = {"schema": 1, "revision": pins["kanon"]["revision"], "hosts": hosts, "sources": before, "probe": PROBE,
-              "oracle": provenance, "observations": observations, "independent_goldens": len(GOLDENS), "mutations": mutations}
+    record = {"schema": 1, "revision": KANON_REVISION, "sources": before, "probe": PROBE,
+              "oracle": provenance, "observations": observations, "independent_goldens": len(GOLDENS)}
     (WORK / "result.json").write_text(json.dumps(record, indent=2) + "\n")
-    print(f"PUBLIC-FAMILY PASS hosts={','.join(hosts)} goldens={len(GOLDENS)} mutants={len(mutations)}", flush=True)
+    print(f"PUBLIC-FAMILY PASS goldens={len(GOLDENS)}", flush=True)
 
 
 if __name__ == "__main__":

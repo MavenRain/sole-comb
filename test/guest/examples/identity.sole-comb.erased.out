@@ -1,0 +1,9 @@
+exit 0
+--- stdout
+CHECK examples/identity.sole-comb defs=3 ok
+erased Nat
+rec [any]
+fun identity (union any) : union any := KVar 0
+rec [nat]
+fun answer () : union nat := KTail (KGlobal identity) [KLit 42]
+--- stderr

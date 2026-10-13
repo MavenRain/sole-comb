@@ -1,0 +1,1 @@
+def id : (x : Nat) -> Nat := fun (x : Nat) => x

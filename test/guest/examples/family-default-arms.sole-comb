@@ -1,0 +1,33 @@
+-- Family defaults follow constructor order and preserve field and result binders.
+mu Shade : Type 0 { light : Shade; medium : Shade; dark : Shade }
+def all : Shade -> Nat := fun (s : Shade) => elim s as x in Shade return Nat { else: 7 }
+def suffix : Shade -> Nat := fun (s : Shade) => elim s as x in Shade return Nat { 1; else: 2 }
+def function : Shade -> Nat -> Nat := fun (s : Shade) =>
+  elim s as x in Shade return Nat -> Nat { else: fun (n : Nat) => n }
+
+mu Pair : Type 0 { pairA : Nat -> Nat -> Pair; pairB : Nat -> Nat -> Pair; pairC : Nat -> Nat -> Pair }
+def readPair : Pair -> Nat := fun (p : Pair) =>
+  elim p as x in Pair return Nat { else: fun (a : Nat) (b : Nat) => natAdd a b }
+def pairSuffix : Pair -> Nat := fun (p : Pair) =>
+  elim p as x in Pair return Nat { fun (a : Nat) (b : Nat) => a; else: fun (a : Nat) (b : Nat) => b }
+def captured : (offset : Nat) -> Pair -> Nat := fun (offset : Nat) (p : Pair) =>
+  elim p as x in Pair return Nat { else: fun (a : Nat) (b : Nat) => natAdd offset (natAdd a b) }
+def pairFunction : Pair -> Nat -> Nat := fun (p : Pair) =>
+  elim p as x in Pair return Nat -> Nat { else: fun (a : Nat) (b : Nat) (n : Nat) => natAdd a n }
+
+mu Linear : Type 0 { linearA : (1 n : Nat) -> Linear; linearB : (1 n : Nat) -> Linear }
+def linearRead : Linear -> Nat := fun (p : Linear) =>
+  elim p as x in Linear return Nat { else: fun (1 n : Nat) => n }
+
+mu Pack : Type 1 { packA : (0 A : Type 0) -> A -> Nat -> Pack; packB : (0 A : Type 0) -> A -> Nat -> Pack }
+def last : Pack -> Nat := fun (p : Pack) =>
+  elim p as x in Pack return Nat { else: fun (0 A : Type 0) (a : A) (n : Nat) => n }
+
+mu N : Type 0 { zero : N; succ : N -> N }
+mu V : (0 i : N) -> Type 0 { vz : V zero; vs : (0 i : N) -> Nat -> V i -> V (succ i) }
+def copy : (0 i : N) -> V i -> V i := fun (0 i : N) (v : V i) =>
+  elim v as x in V j return V j { vz; else: fun (0 k : N) (a : Nat) (w : V k) => vs k a w }
+
+mu Box (0 A : Type 0) : Type 0 { boxA : A -> Box A; boxB : A -> Box A }
+def unbox : Box Nat -> Nat := fun (b : Box Nat) =>
+  elim b as x in Box return Nat { else: fun (n : Nat) => n }

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-arm-quantity.sole-comb FAIL quantity: the branch binder m is marked 0 and the field marks it w

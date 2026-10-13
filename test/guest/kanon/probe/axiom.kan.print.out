@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+axiom A : Type 1
+--- stderr

@@ -1,0 +1,2 @@
+mu N : Type 0 with | zero : N | succ : N -> N
+def rec f : N -> N := fun (n : N) => case n as x in N return N with | zero => zero | succ m => g n and g : N -> N := fun (n : N) => case n as x in N return N with | zero => zero | succ m => f m

@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK test/family-default-order.sole-comb defs=2 ok
+--- stderr

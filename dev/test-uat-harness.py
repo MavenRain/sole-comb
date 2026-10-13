@@ -99,7 +99,7 @@ class UATHarness(unittest.TestCase):
 
     def test_changed_inputs_are_rejected(self):
         cases = API["load_cases"]()
-        for name in ("test/uat/def-rec-excluded.sole-comb", "dev/uat-readiness.json", "bin/extra.bend"):
+        for name in ("test/uat/def-rec-excluded.sole-comb", "dev/uat-readiness.json", "lib/extra.c"):
             with self.subTest(path=name), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 for source in API["sources"](cases):

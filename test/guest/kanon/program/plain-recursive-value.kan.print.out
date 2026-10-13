@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def x : Nat := 0
+--- stderr

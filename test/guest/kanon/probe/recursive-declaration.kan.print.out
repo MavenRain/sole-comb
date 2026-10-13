@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def f : (Ran SPi w x Nat Nat) := (Sec SPi w x Nat [x => x])
+--- stderr

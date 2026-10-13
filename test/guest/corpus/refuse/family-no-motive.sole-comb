@@ -1,0 +1,2 @@
+mu N : Type 0 { zero : N }
+def read : N -> Nat := fun (n : N) => elim n { 0 }

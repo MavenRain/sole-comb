@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/pair-default.sole-comb FAIL wrong leg: a pair elim requires an explicit arm

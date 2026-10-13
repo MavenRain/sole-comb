@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-default-nonlast.sole-comb FAIL line 2, column 78: expected '}' after the final default elim arm, found number 1

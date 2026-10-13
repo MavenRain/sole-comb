@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def x : (Lan SMu F [] (Sec SColl 0 [])) := (In SMu F [] (ACtor s) [(In SMu F [] (ACtor z) [])])
+--- stderr

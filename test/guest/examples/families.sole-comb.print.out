@@ -1,0 +1,27 @@
+exit 0
+--- stdout
+CHECK examples/families.sole-comb defs=23 ok
+def first : (Lan SMu N [] (Sec SColl 0 [])) := (In SMu N [] (ACtor zero) [])
+def second : (Lan SMu N [] (Sec SColl 0 [])) := (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])
+def read : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) Nat) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as x return Nat with | (ACtor zero)  => 1 | (ACtor succ) m => 2)])
+def nested : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (Lan SMu N [] (Sec SColl 0 []))) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as x return (Lan SMu N [] (Sec SColl 0 [])) with | (ACtor zero)  => (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])]) | (ACtor succ) m => m)])
+def answer : Nat := (Out SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (APt w second) read)
+def nullFunction : (Ran SPi w _ (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat)) := (Sec SPi w n (Lan SMu N [] (Sec SColl 0 [])) [n => (Elim SMu N [] n as z return (Ran SPi w _ Nat Nat) with | (ACtor zero)  => (Sec SPi w x Nat [x => x]) | (ACtor succ) m => (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w x) natAdd))]))])
+axiom P : Type 0
+axiom proof : P
+def ghostValue : (Lan SMu Ghost [] (Sec SColl 0 [])) := (In SMu Ghost [] (ACtor ghost) [99; proof; 7])
+def ghostRead : (Ran SPi w _ (Lan SMu Ghost [] (Sec SColl 0 [])) Nat) := (Sec SPi w g (Lan SMu Ghost [] (Sec SColl 0 [])) [g => (Elim SMu Ghost [] g as x return Nat with | (ACtor ghost) gone witness value => value)])
+def capture : (Ran SPi w _ Nat (Ran SPi w _ (Lan SMu Ghost [] (Sec SColl 0 [])) (Ran SPi w _ Nat Nat))) := (Sec SPi w outer Nat [outer => (Sec SPi w g (Lan SMu Ghost [] (Sec SColl 0 [])) [g => (Elim SMu Ghost [] g as x return (Ran SPi w _ Nat Nat) with | (ACtor ghost) gone witness value => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w value) natAdd))) (Out SPi w a Nat (APt w outer) natAdd))]))])])
+axiom empty : (Lan SMu Empty [] (Sec SColl 0 []))
+def emptyRead : Nat := (Elim SMu Empty [] empty as x return Nat with)
+def mutualValue : (Lan SMu Left [] (Sec SColl 0 [])) := (In SMu Left [] (ACtor node) [(In SMu Right [] (ACtor link) [(In SMu Left [] (ACtor leaf) [])])])
+def leftRead : (Ran SPi w _ (Lan SMu Left [] (Sec SColl 0 [])) Nat) := (Sec SPi w a (Lan SMu Left [] (Sec SColl 0 [])) [a => (Elim SMu Left [] a as x return Nat with | (ACtor leaf)  => 1 | (ACtor node) b => 2)])
+def rightRead : (Ran SPi w _ (Lan SMu Right [] (Sec SColl 0 [])) (Lan SMu Left [] (Sec SColl 0 []))) := (Sec SPi w b (Lan SMu Right [] (Sec SColl 0 [])) [b => (Elim SMu Right [] b as x return (Lan SMu Left [] (Sec SColl 0 [])) with | (ACtor link) a => a)])
+def boxRead : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => (Ran SColl 0 (Sec SColl 0 []))])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => (Ran SColl 0 (Sec SColl 0 []))])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor box) p => 5)])
+def vector : (Lan SMu V [(In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])] (Sec SColl 0 [])) := (In SMu V [(In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])] (ACtor vs) [(In SMu N [] (ACtor zero) []); 11; (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) [])])
+def head : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) Nat)) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return Nat with | (ACtor vz)  => 0 | (ACtor vs) k a w => a)])])
+def copy : (Ran SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) (Ran SPi w _ (Lan SMu V [i] (Sec SColl 0 [])) (Lan SMu V [i] (Sec SColl 0 [])))) := (Sec SPi 0 i (Lan SMu N [] (Sec SColl 0 [])) [i => (Sec SPi w v (Lan SMu V [i] (Sec SColl 0 [])) [v => (Elim SMu V [i] v as x return (Lan SMu V [j] (Sec SColl 0 [])) with | (ACtor vz)  => (In SMu V [(In SMu N [] (ACtor zero) [])] (ACtor vz) []) | (ACtor vs) k a w => (In SMu V [(In SMu N [] (ACtor succ) [k])] (ACtor vs) [k; a; w]))])])
+def pn : (Lan SMu Pack [] (Sec SColl 0 [])) := (In SMu Pack [] (ACtor pack) [Nat; 7; 8])
+def pu : (Lan SMu Pack [] (Sec SColl 0 [])) := (In SMu Pack [] (ACtor pack) [(Ran SColl 0 (Sec SColl 0 [])); (Sec SColl 0 []); 9])
+def last : (Ran SPi w _ (Lan SMu Pack [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu Pack [] (Sec SColl 0 [])) [p => (Elim SMu Pack [] p as x return Nat with | (ACtor pack) A a n => n)])
+--- stderr

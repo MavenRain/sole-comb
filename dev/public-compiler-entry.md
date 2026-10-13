@@ -1,5 +1,7 @@
 # Public compiler entry decision
 
+This document is history: it records the retired Bend 2 host (S10, 2026-10-13). The text below is unchanged.
+
 Adopted on 2026-09-29 from the user's instruction: "We need .sole-comb examples,
 and we need to be working on the real, public compiler ASAP."
 

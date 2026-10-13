@@ -1,0 +1,20 @@
+exit 0
+--- stdout
+CHECK examples/constructor-inference.sole-comb defs=8 ok
+rec [nat; mu<Box>; leg<mu<Box>,0,union any>]
+fun read () : union nat := KCase mu<Box> (KTag mu<Box> 0 [KLit 7]) [{0 1 (KVar 0)}]
+rec [mu<Box>; leg<mu<Box>,0,union any>]
+fun nested () : union mu<Box> := KCase mu<Box> (KTag mu<Box> 0 [KTag mu<Box> 0 [KLit 8]]) [{0 1 (KVar 0)}]
+rec [nat; mu<Both>; leg<mu<Both>,0,union any,union any>]
+fun pair () : union nat := KCase mu<Both> (KTag mu<Both> 0 [KLit 7; KErased]) [{0 2 (KVar 1)}]
+rec [nat; mu<List>; leg<mu<List>,0>; leg<mu<List>,1,union any,union mu<List>>]
+fun head () : union nat := KCase mu<List> (KTag mu<List> 1 [KLit 1; KTag mu<List> 0 []]) [{0 0 (KLit 0)}; {1 2 (KVar 1)}]
+rec [mu<Box>; mu<Wrap>; leg<mu<Box>,0,union any>; leg<mu<Wrap>,0,union mu<Box>>]
+fun wrapped () : union mu<Box> := KCase mu<Wrap> (KTag mu<Wrap> 0 [KTag mu<Box> 0 [KLit 9]]) [{0 1 (KVar 0)}]
+rec [nat; mu<Box>; leg<mu<Box>,0,union any>]
+fun open (union nat) : union nat := KCase mu<Box> (KTag mu<Box> 0 [KVar 0]) [{0 1 (KVar 0)}]
+rec [any; mu<Box>; leg<mu<Box>,0,union any>]
+fun generic (union any) : union any := KCase mu<Box> (KTag mu<Box> 0 [KVar 0]) [{0 1 (KVar 0)}]
+rec [nat; mu<WrapN>; mu<Ix>; leg<mu<Ix>,0>; leg<mu<WrapN>,0,union mu<Ix>>]
+fun indexed () : union nat := KCase mu<WrapN> (KTag mu<WrapN> 0 [KTag mu<Ix> 0 []]) [{0 1 (KLit 7)}]
+--- stderr

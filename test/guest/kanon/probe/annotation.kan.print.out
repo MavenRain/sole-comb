@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def n : Nat := (3 : Nat)
+--- stderr

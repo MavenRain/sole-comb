@@ -1,0 +1,8 @@
+-- An explicit elim motive.
+axiom Nat : Type 0
+def Two : Type 0 := sum (Nat, Nat)
+def unwrap : (x : Two) -> Nat :=
+  fun (x : Two) => elim x as value return Nat {
+    fun (a : Nat) => a;
+    fun (b : Nat) => b;
+  }

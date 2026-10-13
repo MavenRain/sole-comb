@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: the annotation of constructor field x differs from its declared type

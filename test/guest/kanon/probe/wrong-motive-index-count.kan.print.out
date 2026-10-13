@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: the motive of F binds 1 index names and the family has 0

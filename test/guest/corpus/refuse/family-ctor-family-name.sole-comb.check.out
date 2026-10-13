@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-ctor-family-name.sole-comb FAIL line 1, column 17: E-FAMILY-CTOR: duplicate constructor N

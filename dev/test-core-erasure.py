@@ -6,7 +6,6 @@ import importlib.util
 import json
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import sys
 
@@ -99,22 +98,21 @@ def run(name, argv, env, cwd=ROOT, expected=0):
 def sources():
     paths = [ROOT / name for name in ("sole-comb",
              "Makefile",
-             "dev/cli.py",
-             "dev/build.py",
+             "bin/main.c",
+             "dev/c.mk",
              "dev/test-core-erasure.py",
-             "dev/test-core-erasure-mutations.py",
-             "dev/bend-policy.json",
-             "dev/house-bend.py",
-             "dev/toolchain.json",
-             "test/core-erasure.bend",
              "dev/reference-fixtures.py",
              "dev/reference-fixtures/manifest.json",
              "dev/reference-fixtures/core-erasure.json")]
-    for directory in ("lib", "surface", "erase", "bin"):
-        paths.extend((ROOT / directory).glob("*.bend"))
+    for pattern in ("*.c", "*.h"):
+        paths.extend((ROOT / "lib").glob(pattern))
     paths.extend(ROOT / name for name in POSITIVE)
     paths.extend(ROOT / name for name in ORACLE_SOURCES.values())
     return {str(p.relative_to(ROOT)): digest(p) for p in sorted(set(paths))}
+
+
+# The Kanon revision that recorded the reference fixtures (the semantic pin, read only).
+KANON_REVISION = "69f3be5198cda4334de4fd23b4ccc92cac595789"
 
 
 def oracle(pins, env):
@@ -131,76 +129,48 @@ def oracle(pins, env):
     return expected, provenance
 
 
-def contracts(pins, hosts, env):
-    build = module("core_erasure_build", ROOT / "dev/build.py")
-    binary, _, _ = build.compiler(pins)
-    source = ROOT / "test/core-erasure.bend"
-    run("contract-check", [binary, source, "--check-only"], env)
-    results = {}
-    if any(host in hosts for host in ("bun", "node-worker")):
-        run("contract-js", [binary, source, "-o", WORK / "contracts.js"], env)
-    for host in hosts:
-        if host == "native":
-            run("contract-native-build", [binary, source, "-o", WORK / "contracts.exe"], env)
-            argv = [WORK / "contracts.exe"]
-        elif host == "bun":
-            argv = [pins["tools"]["bun"]["path"], WORK / "contracts.js"]
-        else:
-            argv = [pins["tools"]["node"]["path"], "-e", build.node_worker_script(pins), WORK / "contracts.js"]
-        result = run(f"contract-{host}", argv, env)
-        if result["stderr"] or result["stdout"].strip() not in ("PASS", '"PASS"'):
-            raise RuntimeError(f"{host}: erasure contracts failed: {result}")
-        results[host] = result
-    return results
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default="bun,node-worker,native")
-    args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(hosts) != len(set(hosts)) or any(h not in ("bun", "node-worker", "native") for h in hosts):
-        parser.error("hosts must be unique bun,node-worker,native values")
+    parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     (WORK / "result.json").unlink(missing_ok=True)
     APPLIED.write_text(APPLIED_SOURCE)
     PAIR_PROBES.write_text(PAIR_PROBE_SOURCE)
     before = sources()
-    pins = json.loads((ROOT / "dev/toolchain.json").read_text())
-    env = dict(os.environ, BEND_NO_TELEMETRY="1", BEND_LIB=str(ROOT / "_build/bend-cache"))
+    pins = {"kanon": {"revision": KANON_REVISION}}
+    env = dict(os.environ)
     expected, provenance = oracle(pins, env)
     observations = []
-    for host in hosts:
-        for i, path in enumerate(POSITIVE):
-            result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", "--host", host, path], env)
-            actual = result["stdout"].partition("\n")[2]
-            count = COUNTS[path]
-            if result["stderr"] or result["stdout"].splitlines()[0] != f"CHECK {path} defs={count} ok" or actual != expected[path]:
-                raise RuntimeError(f"{host} {path}: erased public output differs from the pinned oracle\n{actual}")
-            observations.append({"host": host, "file": path, **result})
-        # An application whose remaining parameters all erase must refuse, not saturate.
-        checked = run(f"checked-{host}-applied", [ROOT / "sole-comb", "check", "--host", host, APPLIED], env)
-        if checked["stderr"]:
-            raise RuntimeError(f"{host} {APPLIED}: malformed checking success")
-        result = run(f"refused-{host}-applied", [ROOT / "sole-comb", "check", "--erased", "--host", host, APPLIED], env, expected=1)
-        if result["stdout"] or "not yet:" not in result["stderr"] or APPLIED_REFUSAL not in result["stderr"]:
-            raise RuntimeError(f"{host} {APPLIED}: missing erasure refusal: {result}")
-        observations.append({"host": host, "file": "applied-erased-arity", **result})
-        probes = run(f"pair-probes-{host}", [ROOT / "sole-comb", "check", "--erased", "--host", host, PAIR_PROBES], env)
-        if probes["stderr"] or probes["stdout"].splitlines()[0] != f"CHECK {PAIR_PROBES} defs=5 ok" or any(line not in probes["stdout"].splitlines() for line in PAIR_PROBE_GOLDENS):
-            raise RuntimeError(f"{host}: erasure contracts failed for native pair probes: {probes}")
-        observations.append({"host": host, "file": "pair-probes", **probes})
-        print(f"PASS public erasure {host}: {len(POSITIVE)} oracle comparisons, {len(PAIR_PROBE_GOLDENS)} pair goldens, 1 refusal", flush=True)
-    contract_results = contracts(pins, hosts, env)
+    host = "c"
+    for i, path in enumerate(POSITIVE):
+        result = run(f"public-{host}-{i}", [ROOT / "sole-comb", "check", "--erased", path], env)
+        actual = result["stdout"].partition("\n")[2]
+        count = COUNTS[path]
+        if result["stderr"] or result["stdout"].splitlines()[0] != f"CHECK {path} defs={count} ok" or actual != expected[path]:
+            raise RuntimeError(f"{host} {path}: erased public output differs from the pinned oracle\n{actual}")
+        observations.append({"host": host, "file": path, **result})
+    # An application whose remaining parameters all erase must refuse, not saturate.
+    checked = run(f"checked-{host}-applied", [ROOT / "sole-comb", "check", APPLIED], env)
+    if checked["stderr"]:
+        raise RuntimeError(f"{host} {APPLIED}: malformed checking success")
+    result = run(f"refused-{host}-applied", [ROOT / "sole-comb", "check", "--erased", APPLIED], env, expected=1)
+    if result["stdout"] or "not yet:" not in result["stderr"] or APPLIED_REFUSAL not in result["stderr"]:
+        raise RuntimeError(f"{host} {APPLIED}: missing erasure refusal: {result}")
+    observations.append({"host": host, "file": "applied-erased-arity", **result})
+    probes = run(f"pair-probes-{host}", [ROOT / "sole-comb", "check", "--erased", PAIR_PROBES], env)
+    if probes["stderr"] or probes["stdout"].splitlines()[0] != f"CHECK {PAIR_PROBES} defs=5 ok" or any(line not in probes["stdout"].splitlines() for line in PAIR_PROBE_GOLDENS):
+        raise RuntimeError(f"{host}: erasure contracts failed for native pair probes: {probes}")
+    observations.append({"host": host, "file": "pair-probes", **probes})
+    print(f"PASS public erasure {host}: {len(POSITIVE)} oracle comparisons, {len(PAIR_PROBE_GOLDENS)} pair goldens, 1 refusal", flush=True)
     if sources() != before:
         raise RuntimeError("erasure sources changed during validation")
     record = {"milestone": "A.5b.3.2d", "scope": "ordinary definitions, function closures, Nat, collection products and sums, dependent pairs, erased positions",
-              "hosts": hosts, "sources": before, "oracle": provenance, "oracle_results": expected,
-              "public_observations": observations, "contracts": contract_results,
+              "sources": before, "oracle": provenance, "oracle_results": expected,
+              "public_observations": observations,
               "independent_goldens": {"product": len(PRODUCT_GOLDENS), "sum": len(SUM_GOLDENS), "pair": len(PAIR_GOLDENS), "pair_probes": len(PAIR_PROBE_GOLDENS)},
               "structural_erasure": "finite collections and dependent pairs supported; recursive families pending", "full_erased_corpus": "pending", "wasm": "pending"}
     (WORK / "result.json").write_text(json.dumps(record, indent=2) + "\n")
-    print("PASS ordinary, product, sum and pair erasure: public observations, direct contracts, source hashes stable", flush=True)
+    print("PASS ordinary, product, sum and pair erasure: public observations, source hashes stable", flush=True)
 
 
 if __name__ == "__main__":

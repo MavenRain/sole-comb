@@ -1,0 +1,15 @@
+-- Computational prerequisites for the UAT pilot. No group law is claimed here.
+mu Z2 : Type 0 { e : Z2; g : Z2 }
+def flip : Z2 -> Z2 := fun (x : Z2) => elim x as y in Z2 return Z2 { g; e }
+def multiply : Z2 -> Z2 -> Z2 := fun (x : Z2) (y : Z2) => elim x as z in Z2 return Z2 { y; flip y }
+
+mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
+def boxed : Box Nat := box 7
+def unboxed : Nat := elim boxed as x in Box return Nat { fun (n : Nat) => n }
+
+mu List (0 A : Type 0) : Type 0 { nil : List A; cons : A -> List A -> List A }
+def head : Nat := elim (cons 1 nil) as x in List return Nat { 0; fun (n : Nat) (xs : List Nat) => n }
+
+-- Equality in Type 0 checks indices, but does not satisfy UAT's equality in Prop.
+mu EqN : (0 a : Nat) -> (0 b : Nat) -> Type 0 { reflN : (0 n : Nat) -> EqN n n }
+def reflexive : EqN 0 0 := reflN 0

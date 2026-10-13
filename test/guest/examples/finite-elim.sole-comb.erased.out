@@ -1,0 +1,14 @@
+exit 0
+--- stdout
+CHECK examples/finite-elim.sole-comb defs=6 ok
+erased Nat
+erased Two
+rec [sum<union nat|union nat>]
+fun left () : union sum<union nat|union nat> := KTag sum<union nat|union nat> 0 [KLit 7]
+rec [sum<union nat|union nat>]
+fun right () : union sum<union nat|union nat> := KTag sum<union nat|union nat> 1 [KLit 42]
+rec [sum<union nat|union nat>; nat]
+fun unwrap (union sum<union nat|union nat>) : union nat := KCase sum<union nat|union nat> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}]
+rec [nat]
+fun answer () : union nat := KTail (KGlobal unwrap) [KGlobal right]
+--- stderr

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+cannot infer: an elimination without a motive needs an expected type

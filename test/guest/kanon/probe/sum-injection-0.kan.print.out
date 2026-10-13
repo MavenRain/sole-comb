@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def s : (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) := (In SColl 2 (ALeg 0) [3])
+--- stderr

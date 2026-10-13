@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-sort.sole-comb FAIL universe: a type former is checked against a type that is not a universe:  Nat

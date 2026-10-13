@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+universe: the header of a family ends in a universe

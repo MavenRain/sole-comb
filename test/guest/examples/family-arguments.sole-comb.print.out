@@ -1,0 +1,8 @@
+exit 0
+--- stdout
+CHECK examples/family-arguments.sole-comb defs=4 ok
+def held : (Lan SMu Hold [] (Sec SColl 1 [ => (In SMu Box [] (ACtor box) [7])])) := (In SMu Hold [] (ACtor hold) [])
+def indexedValue : (Lan SMu Indexed [(In SMu Box [] (ACtor box) [9])] (Sec SColl 1 [ => Nat])) := (In SMu Indexed [(In SMu Box [] (ACtor box) [9])] (ACtor indexed) [(In SMu Box [] (ACtor box) [9])])
+def generic : (Ran SPi 0 A Type 1 (Ran SPi 0 a A (Lan SMu Indexed [(In SMu Box [] (ACtor box) [a])] (Sec SColl 1 [ => A])))) := (Sec SPi 0 A Type 1 [A => (Sec SPi 0 a A [a => (In SMu Indexed [(In SMu Box [] (ACtor box) [a])] (ACtor indexed) [(In SMu Box [] (ACtor box) [a])])])])
+def empty : (Lan SMu EmptyMaybe [] (Sec SColl 1 [ => (In SMu Maybe [] (ACtor none) [])])) := (In SMu EmptyMaybe [] (ACtor emptyMaybe) [])
+--- stderr

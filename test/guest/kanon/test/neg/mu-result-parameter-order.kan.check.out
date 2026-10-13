@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: the constructor pair must preserve its family parameters

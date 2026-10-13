@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-legacy.sole-comb FAIL line 1, column 20: E-R4-MATCH: branch-binder syntax is reserved; use elim arms

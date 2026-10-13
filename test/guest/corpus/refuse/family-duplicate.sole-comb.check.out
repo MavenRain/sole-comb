@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-duplicate.sole-comb FAIL line 1, column 27: E-FAMILY-CTOR: duplicate constructor zero

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+universe: a field of pack exceeds its family universe

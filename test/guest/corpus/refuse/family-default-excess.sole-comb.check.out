@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-default-excess.sole-comb FAIL wrong leg: family elim arm 1 of B has no constructor

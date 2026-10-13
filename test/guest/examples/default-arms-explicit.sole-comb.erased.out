@@ -1,0 +1,45 @@
+exit 0
+--- stdout
+CHECK examples/default-arms-explicit.sole-comb defs=20 ok
+erased Nat
+erased Three
+rec [nat]
+fun id (union nat) : union nat := KVar 0
+rec [nat]
+fun plus (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+rec [sum<union nat|union nat|union nat>; nat]
+fun all (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun suffix (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal plus) [KLit 10; KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun lambda (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KVar 0)}; {2 1 (KVar 0)}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun partial (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal plus) [KLit 1; KVar 0])}; {2 1 (KTail (KGlobal plus) [KLit 1; KVar 0])}]
+rec [fn<1>; sum<union nat|union nat|union nat>; nat]
+fun local (func fn<1>, union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KVar 2) [KVar 0])}; {2 1 (KTail (KVar 2) [KVar 0])}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun motive (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}]
+rec [nat; sum<union nat|union nat|union nat>]
+fun functions$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun functions$1 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun functions$2 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun functions (union sum<union nat|union nat|union nat>, union nat) : union nat := KTail (KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KClos functions$0 1 [KVar 0])}; {1 1 (KClos functions$1 1 [KVar 0])}; {2 1 (KClos functions$2 1 [KVar 0])}]) [KVar 0]
+rec [nat]
+fun linear (union nat) : union nat := KVar 0
+rec [sum<union nat|union nat|union nat>; nat]
+fun linearArms (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal linear) [KVar 0])}; {1 1 (KTail (KGlobal linear) [KVar 0])}; {2 1 (KTail (KGlobal linear) [KVar 0])}]
+rec [fn<1>; sum<union nat|union nat|union nat>; nat]
+fun localLinear (func fn<1>, union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KVar 2) [KVar 0])}; {1 1 (KTail (KVar 2) [KVar 0])}; {2 1 (KTail (KVar 2) [KVar 0])}]
+rec [nat; sum<union nat|union nat|union nat>]
+fun captured (union nat, union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KTail (KGlobal natAdd) [KVar 2; KVar 0])}; {1 1 (KTail (KGlobal natAdd) [KVar 2; KVar 0])}; {2 1 (KTail (KGlobal natAdd) [KVar 2; KVar 0])}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun scrutinee (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}])}; {1 1 (KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}])}; {2 1 (KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KTail (KGlobal id) [KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}])}]
+rec [sum<union nat|union nat|union nat>; nat]
+fun nested (union sum<union nat|union nat|union nat>, union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KTail (KGlobal plus) [KCase sum<union nat|union nat|union nat> (KVar 1) [{0 1 (KApp (KGlobal id) [KVar 0])}; {1 1 (KApp (KGlobal id) [KVar 0])}; {2 1 (KApp (KGlobal id) [KVar 0])}]; KVar 0])}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}]
+rec [sum<unit|union nat|union nat>; nat]
+fun heterogeneous (union sum<unit|union nat|union nat>) : union nat := KCase sum<unit|union nat|union nat> (KVar 0) [{0 0 (KLit 0)}; {1 1 (KTail (KGlobal id) [KVar 0])}; {2 1 (KTail (KGlobal id) [KVar 0])}]
+rec [nat; sum<union nat|union nat|union nat>]
+fun answer () : union nat := KTail (KGlobal suffix) [KTag sum<union nat|union nat|union nat> 2 [KLit 41]]
+rec [sum<union nat>; nat]
+fun one (union sum<union nat>) : union nat := KCase sum<union nat> (KVar 0) [{0 1 (KTail (KGlobal id) [KVar 0])}]
+--- stderr

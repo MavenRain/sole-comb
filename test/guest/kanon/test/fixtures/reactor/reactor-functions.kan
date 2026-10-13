@@ -1,0 +1,16 @@
+def empty : Bytes := bytesNil
+def prepend : Nat -> Bytes -> Bytes := fun (n : Nat) (b : Bytes) => bytesCons n b
+def byteHead : Bytes -> Nat := fun (b : Bytes) =>
+  case b as x in Bytes return Nat with | bytesNil => 0 | bytesCons h t => h
+def byteTail : Bytes -> Bytes := fun (b : Bytes) =>
+  case b as x in Bytes return Bytes with | bytesNil => bytesNil | bytesCons h t => t
+def rec byteLength : Bytes -> Nat := fun (b : Bytes) =>
+  case b as x in Bytes return Nat with | bytesNil => 0 | bytesCons h t => natAdd 1 (byteLength t)
+def initialState : State := state 0 bytesNil
+def stateCount : State -> Nat := fun (s : State) =>
+  case s as x in State return Nat with | state n b => n
+def stateBytes : State -> Bytes := fun (s : State) =>
+  case s as x in State return Bytes with | state n b => b
+def updateState : State -> Nat -> Bytes -> State := fun (s : State) (n : Nat) (b : Bytes) =>
+  case s as x in State return State with | state count old => state (natAdd count n) b
+def increment : Nat -> Nat := fun (n : Nat) => natAdd n 1

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-unknown-field.sole-comb FAIL unbound: Box.missing

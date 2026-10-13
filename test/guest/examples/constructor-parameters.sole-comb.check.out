@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/constructor-parameters.sole-comb defs=17 ok
+--- stderr

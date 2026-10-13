@@ -1,0 +1,23 @@
+exit 0
+--- stdout
+CHECK examples/erasure.sole-comb defs=19 ok
+axiom Nat : Type 1
+def Natural : Type 1 := Nat
+axiom opaque : Nat
+def id : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => n])
+def alias : (Ran SPi w n Nat Nat) := id
+def zero : (Ran SPi 0 ignored Nat Nat) := (Sec SPi 0 ignored Nat [ignored => 7])
+def ghostFunction : (Ran SPi 0 f (Ran SPi w _ Nat Nat) Nat) := (Sec SPi 0 f (Ran SPi w _ Nat Nat) [f => 9])
+def zeroCall : Nat := (Out SPi 0 ignored Nat (APt 0 42) zero)
+def partial : (Ran SPi w n Nat Nat) := (Out SPi w a Nat (APt w 10) natAdd)
+def apply : (Ran SPi w f (Ran SPi w _ Nat Nat) Nat) := (Sec SPi w f (Ran SPi w _ Nat Nat) [f => (Out SPi w _ Nat (APt w 2) f)])
+def capture : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w x) (Out SPi w a Nat (APt w n) natAdd))])) apply)])
+def deadCapture : (Ran SPi w n Nat Nat) := (Sec SPi w n Nat [n => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi 0 ignored Nat (APt 0 n) zero)])) apply)])
+def captureOrder : (Ran SPi w a Nat (Ran SPi w b Nat Nat)) := (Sec SPi w a Nat [a => (Sec SPi w b Nat [b => (Out SPi w f (Ran SPi w _ Nat Nat) (APt w (Sec SPi w x Nat [x => (Out SPi w b Nat (APt w x) (Out SPi w a Nat (APt w (Out SPi w b Nat (APt w b) (Out SPi w a Nat (APt w a) natAdd))) natAdd))])) apply)])])
+def linear : (Ran SPi 1 n Nat Nat) := (Sec SPi 1 n Nat [n => n])
+def Unit : Type 1 := (Ran SColl 0 (Sec SColl 0 []))
+def unit : Unit := (Sec SColl 0 [])
+def dropUnit : (Ran SPi w u Unit Nat) := (Sec SPi w u Unit [u => 11])
+def unitCall : Nat := (Out SPi w u (Ran SColl 0 (Sec SColl 0 [])) (APt w unit) dropUnit)
+def answer : Nat := (Out SPi w b Nat (APt w (Out SPi w n Nat (APt w 10) partial)) (Out SPi w a Nat (APt w (Out SPi w n Nat (APt w 20) alias)) captureOrder))
+--- stderr

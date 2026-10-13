@@ -1,0 +1,10 @@
+-- The checked binary tree family used by the Lean constructor bridge.
+mu Tree : Type 0 with
+| leaf : Tree
+| fork : Tree -> Tree -> Tree
+
+def sample : Tree := fork leaf (fork leaf leaf)
+def rec mirror : Tree -> Tree := fun (t : Tree) => case t as x in Tree return Tree with | leaf => leaf | fork l r => fork (mirror r) (mirror l)
+def rec weight : Tree -> Nat := fun (t : Tree) => case t as x in Tree return Nat with | leaf => 1 | fork l r => natAdd (natMul 2 (weight l)) (natMul 3 (weight r))
+def original : Nat := weight sample
+def main : Nat := weight (mirror sample)

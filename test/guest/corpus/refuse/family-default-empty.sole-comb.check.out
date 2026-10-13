@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-default-empty.sole-comb FAIL wrong leg: a default elim arm must cover at least one remaining constructor

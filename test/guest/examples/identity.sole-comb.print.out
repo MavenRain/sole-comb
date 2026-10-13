@@ -1,0 +1,7 @@
+exit 0
+--- stdout
+CHECK examples/identity.sole-comb defs=3 ok
+axiom Nat : Type 1
+def identity : (Ran SPi 0 A Type 1 (Ran SPi w x A A)) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => x])])
+def answer : Nat := (Out SPi w x Nat (APt w 42) (Out SPi 0 A Type 1 (APt 0 Nat) identity))
+--- stderr

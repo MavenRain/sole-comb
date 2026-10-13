@@ -1,0 +1,1 @@
+def n : Nat := let x : Nat := 2 in let x : Nat := 3 in x

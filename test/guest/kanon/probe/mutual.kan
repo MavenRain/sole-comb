@@ -1,0 +1,1 @@
+mutual mu A : Type := | a (x : B) : A mu B : Type := | b : B end

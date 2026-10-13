@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+missing branch: the elimination of Two has no branch at cb

@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK test/public-family-order.sole-comb defs=5 ok
+--- stderr

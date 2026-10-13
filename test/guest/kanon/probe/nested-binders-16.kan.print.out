@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def f : (Ran SPi w x0 Nat (Ran SPi w x1 Nat (Ran SPi w x2 Nat (Ran SPi w x3 Nat (Ran SPi w x4 Nat (Ran SPi w x5 Nat (Ran SPi w x6 Nat (Ran SPi w x7 Nat (Ran SPi w x8 Nat (Ran SPi w x9 Nat (Ran SPi w x10 Nat (Ran SPi w x11 Nat (Ran SPi w x12 Nat (Ran SPi w x13 Nat (Ran SPi w x14 Nat (Ran SPi w x15 Nat Nat)))))))))))))))) := (Sec SPi w x0 Nat [x0 => (Sec SPi w x1 Nat [x1 => (Sec SPi w x2 Nat [x2 => (Sec SPi w x3 Nat [x3 => (Sec SPi w x4 Nat [x4 => (Sec SPi w x5 Nat [x5 => (Sec SPi w x6 Nat [x6 => (Sec SPi w x7 Nat [x7 => (Sec SPi w x8 Nat [x8 => (Sec SPi w x9 Nat [x9 => (Sec SPi w x10 Nat [x10 => (Sec SPi w x11 Nat [x11 => (Sec SPi w x12 Nat [x12 => (Sec SPi w x13 Nat [x13 => (Sec SPi w x14 Nat [x14 => (Sec SPi w x15 Nat [x15 => x0])])])])])])])])])])])])])])])])
+--- stderr

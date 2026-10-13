@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-projection-target.sole-comb FAIL line 2, column 44: E-RECORD-PROJECTION: use a qualified getter such as Pair.first value

@@ -3,7 +3,6 @@
 import argparse
 import hashlib
 import json
-import shutil
 import subprocess
 import sys
 import time
@@ -129,15 +128,6 @@ GOLDENS["unconstrained"] = GOLDENS["annotated-scrutinee"]
 # A nullary parameterized constructor still requires the field's expected type.
 CASES.append(("plain-nullary", LIST + "mu W : Type 0 { w : List Nat -> W }\ndef value : W := w nil\n", None))
 GOLDENS["plain-nullary"] = (1, "(In SMu W [] (ACtor w) [(In SMu List [] (ACtor nil) [])])", "KTag mu<W> 0 [KTag mu<List> 0 []]")
-# name, file, anchor, replacement, case, expected stderr marker of the refusal that kills the mutant.
-MUTANTS = [
-    ("family-expected", "surface/elab.bend", "Constructor.arguments(go, append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices), c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "family-nullary", "the constructor nil needs an expected type or an inferable field for the parameter A"),
-    ("family-telescope-order", "surface/elab.bend", "append(F.Pair2<Q.t, F.Pair2<String, T.t>>, params, indices)", "append(F.Pair2<Q.t, F.Pair2<String, T.t>>, indices, params)", "family-parameter-index-order", "unbound: de Bruijn index 0 is outside the environment"),
-    ("expected-type", "surface/elab.bend", "Constructor.expected(go, c, f, ct, args, ty)", "elab_ctor_ref(go, c, f, ct, args)", "annotation", "the constructor box needs an expected type"),
-    ("parameter-order", "surface/constructor.bend", "reverse(vs, [])", "vs", "parameter-order", "the constructor box of Box needs the family Box as its expected type, but the expected type is (Ran SColl 0 (Sec SColl 0 []))"),
-    ("dependent-environment", "surface/constructor.bend", "value <> env", "env", "dependent-fields", "unbound: de Bruijn index 2 is outside the environment"),
-    ("plain-fields", "surface/elab.bend", "Constructor.arguments(go, fields, c, [], args)", "collect(Syn.t, T.t, K.ctx, ctx => s => go(ctx, None{}, s), c, args)", "plain-nullary", "the constructor nil needs an expected type or an inferable field for the parameter A"),
-]
 
 
 def digest(path):
@@ -149,15 +139,15 @@ def sha(data):
 
 
 def sources():
-    paths = {ROOT / p for p in ("Makefile", "dev/test-constructor-parameters.py", "dev/test-cli.py", "dev/house-bend.py", "dev/bend-policy.json", "dev/build.py", "dev/cli.py", "dev/toolchain.json", "sole-comb", "examples/constructor-parameters.sole-comb", "examples/EXPECTATIONS.json", "corpus/refuse/family-parameter-ctor.sole-comb")}
+    paths = {ROOT / p for p in ("Makefile", "dev/test-constructor-parameters.py", "dev/test-cli.py", "bin/main.c", "dev/c.mk", "sole-comb", "examples/constructor-parameters.sole-comb", "examples/EXPECTATIONS.json", "corpus/refuse/family-parameter-ctor.sole-comb")}
     paths.add(ROOT / "examples/family-arguments.sole-comb")
-    for directory in ("bin", "lib", "surface", "erase"):
-        paths.update((ROOT / directory).glob("*.bend"))
+    for pattern in ("*.c", "*.h"):
+        paths.update((ROOT / "lib").glob(pattern))
     return {str(p.relative_to(ROOT)): digest(p) for p in sorted(paths)}
 
 
-def run(root, path, host, mode):
-    args = [str(root / "sole-comb"), "check", "--host", host, "--print" if mode == "checked" else "--erased", str(path)]
+def run(root, path, mode):
+    args = [str(root / "sole-comb"), "check", "--print" if mode == "checked" else "--erased", str(path)]
     return subprocess.run(args, cwd=root, capture_output=True, timeout=900)
 
 
@@ -170,91 +160,50 @@ def first_line(data):
     return data.decode().split("\n", 1)[0]
 
 
-def mutate(name, file, old, new, case, marker, path):
-    target = WORK / "mutants" / name
-    if target.exists():
-        shutil.rmtree(target)
-    shutil.copytree(ROOT, target, ignore=shutil.ignore_patterns("_build", ".git", ".gatework", ".kanon-*", "__pycache__"))
-    changed = target / file
-    text = changed.read_text()
-    if text.count(old) != 1:
-        raise RuntimeError(f"{name}: mutation site is not unique")
-    changed.write_text(text.replace(old, new, 1))
-    # A source or host compile failure never counts as a semantic kill.
-    built = subprocess.run([sys.executable, "-P", "dev/build.py", "--backend", "js"], cwd=target, capture_output=True, timeout=1800)
-    (WORK / f"mutant-{name}-build.stdout").write_bytes(built.stdout)
-    (WORK / f"mutant-{name}-build.stderr").write_bytes(built.stderr)
-    if built.returncode:
-        raise RuntimeError(f"{name}: mutant failed to build: {built.stderr.decode()}")
-    result = run(target, path, "bun", "checked")
-    (WORK / f"mutant-{name}.stdout").write_bytes(result.stdout)
-    (WORK / f"mutant-{name}.stderr").write_bytes(result.stderr)
-    kill = "refused" if refused(result, path, marker) else None
-    return {"name": name, "file": file, "case": case, "marker": marker, "compile_exit": built.returncode, "exit": result.returncode,
-            "stderr_first_line": first_line(result.stderr), "stdout_sha256": sha(result.stdout), "stderr_sha256": sha(result.stderr), "kill": kill}
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hosts", default="bun,node-worker,native")
-    parser.add_argument("--mutations", action="store_true")
-    args = parser.parse_args()
-    hosts = args.hosts.split(",")
-    if not hosts or len(set(hosts)) != len(hosts) or any(h not in ("bun", "node-worker", "native") for h in hosts):
-        parser.error("hosts must be a unique list of bun,node-worker,native")
-    if args.mutations and "bun" not in hosts:
-        parser.error("mutation checks require bun")
+    parser.parse_args()
+    host = "c"
     WORK.mkdir(parents=True, exist_ok=True)
     (WORK / "result.json").unlink(missing_ok=True)
     if sorted(GOLDENS) != sorted(name for name, _, marker in CASES if not marker):
         raise RuntimeError("every positive case needs exactly one golden")
     before = sources()
-    observations, outputs, paths = [], {}, {}
+    observations, paths = [], {}
     for name, source, marker in CASES:
         path = WORK / f"{name}.sole-comb"
         path.write_text(source)
         paths[name] = path
-        for host in hosts:
-            for mode in ("checked",) if marker else ("checked", "erased"):
-                start = time.monotonic()
-                result = run(ROOT, path, host, mode)
-                seconds = round(time.monotonic() - start, 3)
-                stem = WORK / f"{name}-{host}-{mode}"
-                stem.with_suffix(".stdout").write_bytes(result.stdout)
-                stem.with_suffix(".stderr").write_bytes(result.stderr)
-                if marker and not refused(result, path, marker):
-                    raise RuntimeError(f"{name}/{host}/{mode}: exit={result.returncode}: {result.stderr.decode()}")
-                if not marker:
-                    defs, golden, erased = GOLDENS[name]
-                    text = result.stdout.decode()
-                    if result.returncode or result.stderr or not text.endswith("\n") or not text.startswith(f"CHECK {path} defs={defs} ok\n"):
-                        raise RuntimeError(f"{name}/{host}/{mode}: exit={result.returncode}: malformed successful output: {result.stderr.decode()}")
-                    if mode == "checked" and golden not in text:
-                        raise RuntimeError(f"{name}/{host}: checked output lacks its golden {golden!r}")
-                    if mode == "erased" and erased not in text:
-                        raise RuntimeError(f"{name}/{host}: erased output lacks its golden {erased!r}")
-                    if name == "long-list" and seconds >= LONG_LIMIT_S:
-                        raise RuntimeError(f"{name}/{host}/{mode}: {seconds} s is not under {LONG_LIMIT_S} s")
-                    key = name, mode
-                    if key in outputs and outputs[key] != result.stdout:
-                        raise RuntimeError(f"{name}/{mode}: host output differs")
-                    outputs[key] = result.stdout
-                observations.append({"case": name, "host": host, "mode": mode, "exit": result.returncode, "marker": marker, "seconds": seconds, "stdout_sha256": sha(result.stdout), "stderr_sha256": sha(result.stderr)})
-    mutants = []
-    if args.mutations:
-        mutants = [mutate(name, file, old, new, case, marker, paths[case]) for name, file, old, new, case, marker in MUTANTS]
-        survivors = [m for m in mutants if m["kill"] is None]
-        if survivors:
-            raise RuntimeError("semantic mutants survived: " + "; ".join(f"{m['name']}: exit={m['exit']} {m['stderr_first_line']}" for m in survivors))
+        for mode in ("checked",) if marker else ("checked", "erased"):
+            start = time.monotonic()
+            result = run(ROOT, path, mode)
+            seconds = round(time.monotonic() - start, 3)
+            stem = WORK / f"{name}-{host}-{mode}"
+            stem.with_suffix(".stdout").write_bytes(result.stdout)
+            stem.with_suffix(".stderr").write_bytes(result.stderr)
+            if marker and not refused(result, path, marker):
+                raise RuntimeError(f"{name}/{host}/{mode}: exit={result.returncode}: {result.stderr.decode()}")
+            if not marker:
+                defs, golden, erased = GOLDENS[name]
+                text = result.stdout.decode()
+                if result.returncode or result.stderr or not text.endswith("\n") or not text.startswith(f"CHECK {path} defs={defs} ok\n"):
+                    raise RuntimeError(f"{name}/{host}/{mode}: exit={result.returncode}: malformed successful output: {result.stderr.decode()}")
+                if mode == "checked" and golden not in text:
+                    raise RuntimeError(f"{name}/{host}: checked output lacks its golden {golden!r}")
+                if mode == "erased" and erased not in text:
+                    raise RuntimeError(f"{name}/{host}: erased output lacks its golden {erased!r}")
+                if name == "long-list" and seconds >= LONG_LIMIT_S:
+                    raise RuntimeError(f"{name}/{host}/{mode}: {seconds} s is not under {LONG_LIMIT_S} s")
+            observations.append({"case": name, "host": host, "mode": mode, "exit": result.returncode, "marker": marker, "seconds": seconds, "stdout_sha256": sha(result.stdout), "stderr_sha256": sha(result.stderr)})
     if sources() != before:
         raise RuntimeError("validation sources changed during the run")
     goldens = {name: {"defs": defs, "checked": checked, "erased": erased} for name, (defs, checked, erased) in GOLDENS.items()}
     long_list = {f"{o['host']}/{o['mode']}": o["seconds"] for o in observations if o["case"] == "long-list"}
-    record = {"schema": 3, "scope": "expected-type constructor parameters", "hosts": hosts, "cases": len(CASES), "goldens": goldens,
+    record = {"schema": 3, "scope": "expected-type constructor parameters", "cases": len(CASES), "goldens": goldens,
               "long_list": {"cells": LONG, "limit_s": LONG_LIMIT_S, "seconds": long_list},
-              "observations": observations, "mutants": mutants, "sources": before, "result": "pass"}
+              "observations": observations, "sources": before, "result": "pass"}
     (WORK / "result.json").write_text(json.dumps(record, indent=2) + "\n")
-    print(f"CONSTRUCTOR PARAMETERS PASS cases={len(CASES)} hosts={len(hosts)} observations={len(observations)} goldens={len(GOLDENS)} mutants={len(mutants)}")
+    print(f"CONSTRUCTOR PARAMETERS PASS cases={len(CASES)} observations={len(observations)} goldens={len(GOLDENS)}")
 
 
 if __name__ == "__main__":

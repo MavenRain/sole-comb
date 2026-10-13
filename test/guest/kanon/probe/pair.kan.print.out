@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def p : (Lan SPi w x Nat Nat) := (In SPi w x Nat (APt w 2) [3])
+--- stderr

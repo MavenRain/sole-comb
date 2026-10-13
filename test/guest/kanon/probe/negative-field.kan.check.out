@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+not yet: a family that is not strictly positive arrives at M2

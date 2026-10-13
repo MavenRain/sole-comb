@@ -1,5 +1,7 @@
 # S0-5 closeout
 
+This document is history: it records the retired Bend 2 host (S10, 2026-10-13). The text below is unchanged.
+
 Adopted on 2026-09-27. The subsequent [Stage A entry decision](stage-a-entry.md)
 supersedes this document's scratch-first work order. Further scratch compiler
 features are retired; real Stage A implementation is active under `lib/`.

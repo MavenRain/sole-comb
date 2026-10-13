@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-body.sole-comb FAIL line 2, column 85: expected a term, found '}'

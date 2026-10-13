@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def f : (Ran SPi w A Type 1 (Ran SPi w x A A)) := (Sec SPi w A Type 1 [A => (Sec SPi w x A [x => x])])
+--- stderr

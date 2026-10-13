@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+def A : Type 1 := Nat
+def x : A := 0
+--- stderr

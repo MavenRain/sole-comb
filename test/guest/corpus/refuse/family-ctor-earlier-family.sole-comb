@@ -1,0 +1,2 @@
+mu N : Type 0 { zero : N }
+mu M : Type 0 { N : M }

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+missing branch: the branch at s binds 0 fields and s takes 1

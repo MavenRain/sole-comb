@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def large : Nat := 123456789012345678901234567890
+--- stderr

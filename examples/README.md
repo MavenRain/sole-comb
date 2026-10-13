@@ -73,10 +73,10 @@ capture. `record-expansion` and `record-expansion-explicit` must print the same
 kernel definitions after renaming the generated binder; `records.kernel` records the reviewed field-index and
 type expectations for the larger example.
 
-Run `make test-cli` for the public command suite on all three hosts, or:
+Run `make test-cli` for the public command suite against the C launcher, or:
 
 ```sh
-python3 -P dev/test-cli.py --hosts bun,node-worker,native
+python3 -P dev/test-cli.py
 ```
 
 `EXPECTATIONS.json` records the declaration counts and refusal expectations.

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/pair-arm-count.sole-comb FAIL missing branch: a pair elim takes exactly one arm

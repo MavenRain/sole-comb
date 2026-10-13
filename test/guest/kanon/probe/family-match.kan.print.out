@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def n : Nat := (Elim SMu F [] ((In SMu F [] (ACtor z) []) : (Lan SMu F [] (Sec SColl 0 []))) as self return Nat with | (ACtor z)  => 0 | (ACtor s) x => 1)
+--- stderr

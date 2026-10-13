@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/default-excess.sole-comb FAIL wrong leg: the leg address is outside the collection

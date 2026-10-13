@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/constructor-inference.sole-comb defs=8 ok
+--- stderr

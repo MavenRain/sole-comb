@@ -1,0 +1,14 @@
+exit 0
+--- stdout
+CHECK examples/record-expansion.sole-comb defs=7 ok
+erased Nat
+erased Empty
+erased empty
+erased Box
+rec [tuple<union nat>; nat]
+fun Box.item (struct tuple<union nat>) : union nat := KProj tuple<union nat> 0 (KVar 0)
+rec [tuple<union nat>]
+fun box () : struct tuple<union nat> := KStruct tuple<union nat> [KLit 7]
+rec [nat]
+fun item () : union nat := KTail (KGlobal Box.item) [KGlobal box]
+--- stderr

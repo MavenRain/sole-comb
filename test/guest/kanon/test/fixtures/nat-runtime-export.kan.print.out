@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+def main : Nat := 12345678901234567890123456789
+--- stderr

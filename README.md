@@ -1,7 +1,7 @@
 # sole-comb
 
 A language with Kan extensions as its type-forming primitives and one primitive
-sum eliminator. The compiler host is Bend 2; the intended target is WebAssembly.
+sum eliminator. The compiler host is C compiled with TinyCC; the intended target is WebAssembly.
 
 UAT.0 preparation now pins the selected Lean proof baseline and its dependencies,
 records theorem types and transitive axioms, and checks the current public-source
@@ -227,53 +227,31 @@ pending.
 The constructor inference validation records the current host checks and
 integration gate status.
 
-Run from this directory with the locally pinned tools:
+Run from this directory with the pinned C toolchain (tcc 0.9.28rc mob@0fb54300):
 
 ```sh
-make build           # cached JavaScript build of the host entry
-make check           # host entry, library tests, and scoped source policies
-make test            # build, existing regressions, landed Stage A checks, policies, pins
-make gates           # existing regressions, landed Stage A checks, policies, pins
-make test-foundation # real A.1 library on Bun, Node worker, and native (INFO)
-make test-representation # real A.2 dependency closure on the same hosts
-make test-evaluation # real A.3 evaluator and converter on the same hosts
-make test-checking   # A.4 checker against pinned reference fixtures on all three hosts
-make test-checking-mutations # checker comparisons and three isolated mutations
-make test-pinfront   # pinned lexer/parser comparisons on all three hosts
-make test-pinfront-mutations # parser comparisons and five isolated mutations
-make test-elaboration # expression/declaration comparisons on all three hosts
-make test-elaboration-mutations # elaboration comparisons and three isolated mutations
-make test-program     # whole-program check/print comparisons and direct contracts
-make test-program-mutations # program comparisons and three isolated mutations
-make test-erasure     # erased representation and runtime scope against pinned Kanon
-make test-erasure-mutations # erasure support comparisons and three isolated mutations
-make test-core-erasure # ordinary and product erasure against pinned reference fixtures
-make test-core-erasure-mutations # quantity, binding, layout and projection mutations
-make test-family-layout # nominal family layouts against pinned reference fixtures
-make test-family-layout-mutations # layout comparisons and four semantic mutations
-make test-family-erasure # family constructor and match erasure against pinned reference fixtures
-make test-family-erasure-mutations # family erasure comparisons and eight semantic mutations
-make test-public-family # public families against frozen Kanon output
-make test-public-family-mutations # public families and four sugar mutations
-make test-family-defaults # family defaults, explicit expansions and refusals on all hosts
-make test-family-defaults-mutations # family defaults and four semantic mutations
-make house           # scoped source policies and landed module line budgets
-make bench-preflight # pins and current load; no benchmark samples
+make build  # compile the C host with tcc through dev/c.mk into build/sole-comb
+make check  # build, then require all 836 test/guest golden comparisons
+make test   # make check, C runner regressions, and the eight harness targets
+make gates  # the complete make test suite
 ```
 
-`dev/toolchain.json` retains `endpoint: null` until S0-5 selects Bun or the Node
-worker using valid measurements. `./sole-comb` is a tracked public source
-driver. It uses Bun for development while the endpoint is unset, or the selected
-endpoint afterward. `check --host bun|node-worker|native` overrides that host
-for validation. A development default does not select the qualified endpoint.
-No command installs tools or updates the pinned Bend checkout.
+The guest runner rejects empty suites, sources without golden files, and
+unreadable golden files. `make check` uses `test --expect 836` to detect a missing
+comparison. Update the reviewed count when adding or removing golden rows.
+
+`./sole-comb` is a tracked public source driver. It runs the C binary
+`build/sole-comb`, which `make build` compiles with tcc. No command installs
+tools.
 
 Semantic regression tests use immutable Kanon observations under
 `dev/reference-fixtures/`, including descriptors for the existing parser,
 elaboration, and program reference snapshots. The loader checks the fixture and
 referenced snapshot checksums, the Kanon
-revision, and the exact ordered case inputs before comparing the Bend results.
-The existing independent expectations and semantic mutation tests remain active.
+revision, and the exact ordered case inputs before comparing the C host results.
+The retained harnesses check independent expectations, and the guest suite
+compares recorded outputs. The retired Bend mutation harnesses remain documented
+in the historical validation records.
 `make test-reference-fixtures` checks fixture integrity and rejects OCaml source
 files anywhere in the repository outside build and Git directories. The
 [no-OCaml cleanup evidence](dev/validation/no-ocaml-cleanup.md) records the
@@ -310,6 +288,8 @@ twins are required before timing. No runtime endpoint has been selected.
 
 ## Benchmark measurements
 
+This section is history: its tools `dev/bench.sh` and `dev/bench.py` are retired (S10, 2026-10-13).
+
 `dev/bench.sh NAME 'exec COMMAND ARGS'` preserves the original interface. It runs
 one warm-up and five timed samples by default. `RUNS`, `BENCH_POLL_S` and
 `SOLE_COMB_TOOLCHAIN` remain supported. Use the Python entry for a JSON report:
@@ -325,7 +305,7 @@ shell, so the child CPU is the rusage of the measured program. S0-5 legs use
 runs under `/bin/zsh -f -c`; that CPU also includes the zsh start-up (about
 3 ms on darwin). The JSON `launcher` field records which path ran.
 
-Use `--accept-line 'All terms check.'` for Bend's check-only denominator.
+Use `--accept-line 'All terms check.'` for the retired host's check-only denominator.
 This requires exit zero and that complete stdout line. Do not label a run's
 compile cache `cold` or `warm` unless the caller has established that state;
 the default is `unknown`. This option records a declaration, not a cache reset.
@@ -361,6 +341,8 @@ elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict
 
 ## Historical Stage 0 evidence
 
+This section is history: the r2 tools, the r2 documents and the r2 make targets below are retired (S10, 2026-10-13).
+
 The [probe preparer](dev/r2-prepare.md),
 [serial measurement runner](dev/r2-run.md), and
 [R2 evidence assembler](dev/r2-risk.md) are ready for S0-5.
@@ -375,12 +357,12 @@ R2_OUTPUT=/new/scratch/directory` collects the required legs. Each attempt
 preserves raw measurements and a hash-bound manifest. A GREEN first round
 automatically gets an independent confirmation.
 
-The [scratch Bend lexer](dev/validation/s0-5-r2-lexer.md) passes 35 correctness
+The [retired scratch lexer](dev/validation/s0-5-r2-lexer.md) passes 35 correctness
 cases on Bun, the pinned Node worker, and the informational native build.
 Its source, tests, and six detected mutations remain under the scratch path.
 This is frontend development evidence; it does not qualify a probe endpoint.
 
-The [scratch Bend parser](dev/validation/s0-5-r2-parser.md) passes 75 syntax
+The [retired scratch parser](dev/validation/s0-5-r2-parser.md) passes 75 syntax
 and refusal cases on the same three runtimes, with eight detected mutations.
 It builds explicit syntax trees for the documented probe subset, preserves
 arm and declaration order, and refuses pattern keywords. Its fuel-bounded

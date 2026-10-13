@@ -1,0 +1,1 @@
+mutual mu A : Type := mu B : Type := end

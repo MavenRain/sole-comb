@@ -1,0 +1,1 @@
+axiom x : Type def f : (x : Nat) -> Nat := fun (x : Nat) => x

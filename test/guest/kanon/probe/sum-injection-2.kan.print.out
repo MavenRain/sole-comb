@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+wrong leg: the leg address is outside the collection

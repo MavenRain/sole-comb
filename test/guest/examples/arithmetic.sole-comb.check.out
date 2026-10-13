@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/arithmetic.sole-comb defs=3 ok
+--- stderr

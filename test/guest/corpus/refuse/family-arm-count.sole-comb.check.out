@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-arm-count.sole-comb FAIL missing branch: the elimination of N has no branch at succ

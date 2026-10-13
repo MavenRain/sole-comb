@@ -1,0 +1,9 @@
+exit 0
+--- stdout
+CHECK examples/arithmetic.sole-comb defs=3 ok
+erased Nat
+rec [nat]
+fun answer () : union nat := KTail (KGlobal natAdd) [KApp (KGlobal natMul) [KLit 6; KLit 7]; KLit 0]
+rec [nat]
+fun saturated () : union nat := KTail (KGlobal natSub) [KLit 3; KLit 8]
+--- stderr

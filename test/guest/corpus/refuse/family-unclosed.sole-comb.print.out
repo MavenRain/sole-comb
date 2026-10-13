@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-unclosed.sole-comb FAIL line 2, column 1: expected a constructor 'name : type' or '}', found end of input

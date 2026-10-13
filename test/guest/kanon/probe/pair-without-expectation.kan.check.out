@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+cannot infer: a pair needs an expected type

@@ -1,0 +1,4 @@
+axiom elim : Type
+axiom else : Type
+axiom record : Type
+def use : Type := elim

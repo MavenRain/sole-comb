@@ -1,0 +1,10 @@
+exit 0
+--- stdout
+CHECK examples/finite-elim.sole-comb defs=6 ok
+axiom Nat : Type 1
+def Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))
+def left : Two := (In SColl 2 (ALeg 0) [7])
+def right : Two := (In SColl 2 (ALeg 1) [42])
+def unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x with | (ALeg 0) a => a | (ALeg 1) b => b)])
+def answer : Nat := (Out SPi w x (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt w right) unwrap)
+--- stderr

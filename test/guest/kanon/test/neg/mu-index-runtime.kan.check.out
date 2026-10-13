@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+index not zero: the index i of W is at quantity w and every index binder is at 0

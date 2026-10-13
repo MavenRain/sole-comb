@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-delimiter.sole-comb FAIL line 1, column 31: expected ';' or '}' after a constructor, found ':'

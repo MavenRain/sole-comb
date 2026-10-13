@@ -1,0 +1,3 @@
+mu Linear : Type 0 { left : (1 n : Nat) -> Linear; right : (1 n : Nat) -> Linear }
+def read : Linear -> Nat := fun (p : Linear) =>
+  elim p as x in Linear return Nat { else: fun (1 n : Nat) => 0 }

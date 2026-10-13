@@ -1,0 +1,7 @@
+exit 0
+--- stdout
+CHECK examples/motive.sole-comb defs=3 ok
+axiom Nat : Type 1
+def Two : Type 1 := (Lan SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))
+def unwrap : (Ran SPi w x Two Nat) := (Sec SPi w x Two [x => (Elim SColl 2 x as value return Nat with | (ALeg 0) a => a | (ALeg 1) b => b)])
+--- stderr

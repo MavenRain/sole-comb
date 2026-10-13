@@ -1,0 +1,1 @@
+def rec f : (x : Nat) -> Nat := fun (x : Nat) => x

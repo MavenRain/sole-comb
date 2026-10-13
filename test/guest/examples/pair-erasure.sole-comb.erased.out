@@ -1,0 +1,60 @@
+exit 0
+--- stdout
+CHECK examples/pair-erasure.sole-comb defs=33 ok
+erased Nat
+erased P
+erased proof
+erased Both
+rec [pair<union nat,union nat>]
+fun both () : struct pair<union nat,union nat> := KStruct pair<union nat,union nat> [KLit 11; KLit 6]
+rec [nat; pair<union nat,union nat>]
+fun first () : union nat := KLet scrut (KGlobal both) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 1)))
+rec [nat; pair<union nat,union nat>]
+fun second () : union nat := KLet scrut (KGlobal both) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 0)))
+rec [nat; pair<union nat,union nat>]
+fun make (union nat) : struct pair<union nat,union nat> := KStruct pair<union nat,union nat> [KVar 0; KApp (KGlobal natAdd) [KVar 0; KLit 1]]
+rec [nat; pair<union nat,union nat>]
+fun returned () : union nat := KLet scrut (KApp (KGlobal make) [KLit 4]) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 0)))
+erased PointOnly
+rec [pair<union nat>]
+fun pointOnly () : struct pair<union nat> := KStruct pair<union nat> [KLit 3]
+rec [nat; pair<union nat>]
+fun pointValue () : union nat := KLet scrut (KGlobal pointOnly) (KLet _ (KProj pair<union nat> 0 (KVar 0)) (KVar 0))
+erased droppedProof
+erased FibreOnly
+rec [pair<union nat>]
+fun fibreOnly () : struct pair<union nat> := KStruct pair<union nat> [KLit 20]
+rec [nat; pair<union nat>]
+fun fibreValue () : union nat := KLet scrut (KGlobal fibreOnly) (KLet y (KProj pair<union nat> 0 (KVar 0)) (KVar 0))
+erased Neither
+rec [pair<>]
+fun neither () : struct pair<> := KErased
+erased droppedType
+erased Dependent
+rec [pair<union any>]
+fun dependent () : struct pair<union any> := KStruct pair<union any> [KLit 7]
+rec [any; pair<union any>]
+fun box (union any) : struct pair<union any> := KStruct pair<union any> [KVar 0]
+rec [pair<union any>; nat]
+fun unbox (struct pair<union any>) : union nat := KLit 9
+erased Nested
+rec [pair<union nat,struct pair<union nat,union nat>>]
+fun nested () : struct pair<union nat,struct pair<union nat,union nat>> := KStruct pair<union nat,struct pair<union nat,union nat>> [KLit 8; KGlobal both]
+rec [nat; pair<union nat,struct pair<union nat,union nat>>; pair<union nat,union nat>]
+fun nestedValue () : union nat := KLet scrut (KLet scrut (KGlobal nested) (KLet _ (KProj pair<union nat,struct pair<union nat,union nat>> 0 (KVar 0)) (KLet y (KProj pair<union nat,struct pair<union nat,union nat>> 1 (KVar 1)) (KVar 0)))) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 1)))
+erased FunctionPair
+rec [nat; pair<union nat,func fn<1>>]
+fun capture$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun capture (union nat) : struct pair<union nat,func fn<1>> := KStruct pair<union nat,func fn<1>> [KVar 0; KClos capture$0 1 [KVar 0]]
+rec [pair<union nat,func fn<1>>; nat]
+fun applyPair (struct pair<union nat,func fn<1>>) : union nat := KTail (KLet scrut (KVar 0) (KLet _ (KProj pair<union nat,func fn<1>> 0 (KVar 0)) (KLet y (KProj pair<union nat,func fn<1>> 1 (KVar 1)) (KVar 0)))) [KLit 5]
+rec [nat; pair<union nat,union nat>]
+fun outerAfter (union nat, struct pair<union nat,union nat>) : union nat := KTail (KGlobal natAdd) [KVar 1; KLet scrut (KVar 0) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 0)))]
+rec [nat; pair<union nat,union nat>]
+fun capturedAfter$0 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 2; KApp (KGlobal natAdd) [KVar 1; KVar 0]]
+fun capturedAfter (union nat, struct pair<union nat,union nat>, union nat) : union nat := KTail (KLet value (KLet scrut (KVar 1) (KLet x (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 0)))) (KClos capturedAfter$0 1 [KVar 3; KVar 0])) [KVar 0]
+rec [any; pair<union any,union any>]
+fun poly (union any) : struct pair<union any,union any> := KStruct pair<union any,union any> [KVar 0; KVar 0]
+rec [nat; pair<union nat,union nat>]
+fun polyValue () : union nat := KLet scrut (KApp (KGlobal poly) [KLit 5]) (KLet a (KProj pair<union nat,union nat> 0 (KVar 0)) (KLet y (KProj pair<union nat,union nat> 1 (KVar 1)) (KVar 1)))
+--- stderr

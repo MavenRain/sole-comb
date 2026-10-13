@@ -1,0 +1,8 @@
+-- A trailing semicolon and same-arity constructors keep declaration order.
+mu B : Type 0 { t : B; f : B; }
+def yes : B := t
+def no : B := f
+def pick : B -> Nat := fun (b : B) => elim b as x in B return Nat { 1; 2 }
+mu P : Type 0 { pair : Nat -> Nat -> P }
+def made : P := pair 3 4
+def fst : P -> Nat := fun (p : P) => elim p as x in P return Nat { fun (a : Nat) (b : Nat) => a }

@@ -1,0 +1,44 @@
+exit 0
+--- stdout
+CHECK examples/product-erasure.sole-comb defs=40 ok
+axiom Nat : Type 1
+axiom P : Type 0
+axiom proof : P
+def Pair : Type 1 := (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]))
+def Pair.first : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 0) #record)])
+def Pair.second : (Ran SPi 1 #record Pair Nat) := (Sec SPi 1 #record Pair [#record => (Out SColl 2 (ALeg 1) #record)])
+def pair : Pair := (Sec SColl 2 [ => 10;  => 20])
+def Mixed : Type 2 := (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => Pair;  => Type 1]))
+def Mixed.kind : (Ran SPi 1 #record Mixed Type 1) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 0) #record)])
+def Mixed.witness : (Ran SPi 1 #record Mixed P) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 1) #record)])
+def Mixed.first : (Ran SPi 1 #record Mixed Nat) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 2) #record)])
+def Mixed.second : (Ran SPi 1 #record Mixed Nat) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 3) #record)])
+def Mixed.callback : (Ran SPi 1 #record Mixed (Ran SPi w _ Nat Nat)) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 4) #record)])
+def Mixed.nested : (Ran SPi 1 #record Mixed Pair) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 5) #record)])
+def Mixed.trailing : (Ran SPi 1 #record Mixed Type 1) := (Sec SPi 1 #record Mixed [#record => (Out SColl 7 (ALeg 6) #record)])
+def mixed : Mixed := (Sec SColl 7 [ => Nat;  => proof;  => 30;  => 40;  => (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))]);  => pair;  => Nat])
+def first : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.first)
+def second : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.second)
+def called : Nat := (Out SPi w _ Nat (APt w (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.second)) (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.callback))
+def nested : Pair := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.nested)
+def inner : Nat := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 nested) Pair.second)
+def kind : Type 1 := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.kind)
+def witness : P := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.witness)
+def trailing : Type 1 := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 mixed) Mixed.trailing)
+def captured : (Ran SPi w n Nat Mixed) := (Sec SPi w n Nat [n => (Sec SColl 7 [ => Nat;  => proof;  => n;  => n;  => (Sec SPi w m Nat [m => (Out SPi w b Nat (APt w m) (Out SPi w a Nat (APt w n) natAdd))]);  => (Sec SColl 2 [ => n;  => n]);  => Nat])])
+def linearFirst : (Ran SPi 1 p Pair Nat) := (Sec SPi 1 p Pair [p => (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat])) (APt 1 p) Pair.first)])
+axiom external : Mixed
+def externalSecond : Nat := (Out SPi 1 #record (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1])) (APt 1 external) Mixed.second)
+def Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))
+def empty : Empty := (Sec SColl 0 [])
+def AllErased : Type 2 := (Ran SColl 2 (Sec SColl 2 [ => Type 1;  => P]))
+def AllErased.kind : (Ran SPi 1 #record AllErased Type 1) := (Sec SPi 1 #record AllErased [#record => (Out SColl 2 (ALeg 0) #record)])
+def AllErased.witness : (Ran SPi 1 #record AllErased P) := (Sec SPi 1 #record AllErased [#record => (Out SColl 2 (ALeg 1) #record)])
+def allErased : AllErased := (Sec SColl 2 [ => Nat;  => proof])
+def ignore : (Ran SPi w _ AllErased Nat) := (Sec SPi w a AllErased [a => 7])
+def Outer : Type 2 := (Ran SColl 2 (Sec SColl 2 [ => AllErased;  => Mixed]))
+def Outer.erased : (Ran SPi 1 #record Outer AllErased) := (Sec SPi 1 #record Outer [#record => (Out SColl 2 (ALeg 0) #record)])
+def Outer.kept : (Ran SPi 1 #record Outer Mixed) := (Sec SPi 1 #record Outer [#record => (Out SColl 2 (ALeg 1) #record)])
+def outer : Outer := (Sec SColl 2 [ => allErased;  => mixed])
+def outerKept : Mixed := (Out SPi 1 #record (Ran SColl 2 (Sec SColl 2 [ => (Ran SColl 2 (Sec SColl 2 [ => Type 1;  => P]));  => (Ran SColl 7 (Sec SColl 7 [ => Type 1;  => P;  => Nat;  => Nat;  => (Ran SPi w _ Nat Nat);  => (Ran SColl 2 (Sec SColl 2 [ => Nat;  => Nat]));  => Type 1]))])) (APt 1 outer) Outer.kept)
+--- stderr

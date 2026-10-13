@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/family-arguments.sole-comb defs=4 ok
+--- stderr

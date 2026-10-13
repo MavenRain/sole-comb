@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: the constructor vz of V gives the index (In SMu N [] (ACtor zero) []) and the type asks for (In SMu N [] (ACtor succ) [(In SMu N [] (ACtor zero) [])])

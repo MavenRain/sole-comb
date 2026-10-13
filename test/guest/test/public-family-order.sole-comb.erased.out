@@ -1,0 +1,14 @@
+exit 0
+--- stdout
+CHECK test/public-family-order.sole-comb defs=5 ok
+rec [mu<B>; leg<mu<B>,0>; leg<mu<B>,1>]
+fun yes () : union mu<B> := KTag mu<B> 0 []
+rec [mu<B>; leg<mu<B>,0>; leg<mu<B>,1>]
+fun no () : union mu<B> := KTag mu<B> 1 []
+rec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>]
+fun pick (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}]
+rec [mu<P>; leg<mu<P>,0,union nat,union nat>]
+fun made () : union mu<P> := KTag mu<P> 0 [KLit 3; KLit 4]
+rec [mu<P>; nat; leg<mu<P>,0,union nat,union nat>]
+fun fst (union mu<P>) : union nat := KCase mu<P> (KVar 0) [{0 2 (KVar 1)}]
+--- stderr

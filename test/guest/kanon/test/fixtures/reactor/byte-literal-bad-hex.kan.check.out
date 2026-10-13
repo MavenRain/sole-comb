@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+line 1, column 24: byte escape requires two hexadecimal digits

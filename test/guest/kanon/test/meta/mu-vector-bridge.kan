@@ -1,0 +1,15 @@
+-- The copy preserves erased indices and the ordered natural payloads.
+mu N : Type 0 with
+| zero : N
+| succ : N -> N
+
+mu V : (0 i : N) -> Type 0 with
+| vz : V zero
+| vs : (0 i : N) -> Nat -> V i -> V (succ i)
+
+def rec copy : (0 i : N) -> V i -> V i := fun (0 i : N) (v : V i) => case v as x in V j return V j with | vz => vz | vs 0 j a w => vs j a (copy j w)
+def rec observe : (0 i : N) -> V i -> Nat := fun (0 i : N) (v : V i) => case v as x in V j return Nat with | vz => 0 | vs 0 j a w => natAdd a (natMul 2 (observe j w))
+
+def sample : V (succ (succ zero)) := vs (succ zero) 17 (vs zero 25 vz)
+def original : Nat := observe (succ (succ zero)) sample
+def main : Nat := observe (succ (succ zero)) (copy (succ (succ zero)) sample)

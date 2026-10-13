@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-duplication.sole-comb FAIL quantity: the linear binder p must be used exactly once on every runtime path

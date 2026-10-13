@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-field-type.sole-comb FAIL universe: a term used as a type is not a universe:  Nat

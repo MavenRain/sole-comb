@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-default-linear.sole-comb FAIL quantity: the linear binder n must be used exactly once on every runtime path

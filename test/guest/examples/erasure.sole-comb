@@ -1,0 +1,23 @@
+-- Erasure follows checked types, including zero and type arguments.
+axiom Nat : Type 0
+def Natural : Type 0 := Nat
+axiom opaque : Nat
+def id : (n : Nat) -> Nat := fun (n : Nat) => n
+def alias : (n : Nat) -> Nat := id
+def zero : (0 ignored : Nat) -> Nat := fun (0 ignored : Nat) => 7
+def ghostFunction : (0 f : Nat -> Nat) -> Nat := fun (0 f : Nat -> Nat) => 9
+def zeroCall : Nat := zero 42
+def partial : (n : Nat) -> Nat := natAdd 10
+def apply : (f : Nat -> Nat) -> Nat := fun (f : Nat -> Nat) => f 2
+def capture : (n : Nat) -> Nat :=
+  fun (n : Nat) => apply (fun (x : Nat) => natAdd n x)
+def deadCapture : (n : Nat) -> Nat :=
+  fun (n : Nat) => apply (fun (x : Nat) => zero n)
+def captureOrder : (a : Nat) -> (b : Nat) -> Nat :=
+  fun (a : Nat) (b : Nat) => apply (fun (x : Nat) => natAdd (natAdd a b) x)
+def linear : (1 n : Nat) -> Nat := fun (1 n : Nat) => n
+def Unit : Type 0 := prod ()
+def unit : Unit := tuple ()
+def dropUnit : (u : Unit) -> Nat := fun (u : Unit) => 11
+def unitCall : Nat := dropUnit unit
+def answer : Nat := captureOrder (alias 20) (partial 10)

@@ -1,0 +1,1 @@
+def f : (x0 : Nat) -> (x1 : Nat) -> Nat := fun (x0 : Nat) (x1 : Nat) => x0

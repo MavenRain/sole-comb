@@ -1,0 +1,8 @@
+exit 0
+--- stdout
+CHECK test/family-default-order.sole-comb defs=2 ok
+rec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]
+fun all (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 7)}; {1 0 (KLit 7)}; {2 0 (KLit 7)}]
+rec [mu<B>; nat; leg<mu<B>,0>; leg<mu<B>,1>; leg<mu<B>,2>]
+fun suffix (union mu<B>) : union nat := KCase mu<B> (KVar 0) [{0 0 (KLit 1)}; {1 0 (KLit 2)}; {2 0 (KLit 2)}]
+--- stderr

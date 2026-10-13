@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-parameter-ctor.sole-comb FAIL cannot infer: the constructor box needs an expected type or an inferable field for the parameter A

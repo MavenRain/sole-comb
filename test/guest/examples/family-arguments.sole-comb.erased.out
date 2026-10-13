@@ -1,0 +1,12 @@
+exit 0
+--- stdout
+CHECK examples/family-arguments.sole-comb defs=4 ok
+rec [mu<Hold>; leg<mu<Hold>,0>]
+fun held () : union mu<Hold> := KTag mu<Hold> 0 []
+rec [mu<Indexed>; leg<mu<Indexed>,0>]
+fun indexedValue () : union mu<Indexed> := KTag mu<Indexed> 0 []
+rec [mu<Indexed>; leg<mu<Indexed>,0>]
+fun generic () : union mu<Indexed> := KTag mu<Indexed> 0 []
+rec [mu<EmptyMaybe>; leg<mu<EmptyMaybe>,0>]
+fun empty () : union mu<EmptyMaybe> := KTag mu<EmptyMaybe> 0 []
+--- stderr

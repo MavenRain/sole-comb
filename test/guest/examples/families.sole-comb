@@ -1,0 +1,42 @@
+-- Constructor and elim arm order is the declaration order.
+mu N : Type 0 { zero : N; succ : N -> N }
+def first : N := zero
+def second : N := succ zero
+def read : N -> Nat := fun (n : N) => elim n as x in N return Nat { 1; fun (m : N) => 2 }
+def nested : N -> N := fun (n : N) => elim n as x in N return N { succ zero; fun (m : N) => m }
+def answer : Nat := read second
+def nullFunction : N -> Nat -> Nat := fun (n : N) =>
+  elim n as z in N return Nat -> Nat { fun (x : Nat) => x; fun (m : N) => fun (x : Nat) => natAdd x 1 }
+
+axiom P : Prop
+axiom proof : P
+mu Ghost : Type 0 { ghost : (0 erased : Nat) -> P -> Nat -> Ghost }
+def ghostValue : Ghost := ghost 99 proof 7
+def ghostRead : Ghost -> Nat := fun (g : Ghost) => elim g as x in Ghost return Nat { fun (0 gone : Nat) (witness : P) (value : Nat) => value }
+def capture : Nat -> Ghost -> (Nat -> Nat) := fun (outer : Nat) (g : Ghost) =>
+  elim g as x in Ghost return Nat -> Nat { fun (0 gone : Nat) (witness : P) (value : Nat) => fun (n : Nat) => natAdd outer (natAdd value n) }
+
+mu Empty : Type 0 {}
+axiom empty : Empty
+def emptyRead : Nat := elim empty as x in Empty return Nat {}
+
+mu Left : Type 0 { leaf : Left; node : Right -> Left }
+and Right : Type 0 { link : Left -> Right }
+def mutualValue : Left := node (link leaf)
+def leftRead : Left -> Nat := fun (a : Left) => elim a as x in Left return Nat { 1; fun (b : Right) => 2 }
+def rightRead : Right -> Left := fun (b : Right) => elim b as x in Right return Left { fun (a : Left) => a }
+
+mu Box (0 A : Type 0) : Type 0 { box : A -> Box A }
+def boxRead : Box (prod ()) -> Nat := fun (b : Box (prod ())) => elim b as x in Box return Nat { fun (p : prod ()) => 5 }
+
+mu V : (0 i : N) -> Type 0 { vz : V zero; vs : (0 i : N) -> Nat -> V i -> V (succ i) }
+def vector : V (succ zero) := vs zero 11 vz
+def head : (0 i : N) -> V i -> Nat := fun (0 i : N) (v : V i) =>
+  elim v as x in V j return Nat { 0; fun (0 k : N) (a : Nat) (w : V k) => a }
+def copy : (0 i : N) -> V i -> V i := fun (0 i : N) (v : V i) =>
+  elim v as x in V j return V j { vz; fun (0 k : N) (a : Nat) (w : V k) => vs k a w }
+
+mu Pack : Type 1 { pack : (0 A : Type 0) -> A -> Nat -> Pack }
+def pn : Pack := pack Nat 7 8
+def pu : Pack := pack (prod ()) (tuple ()) 9
+def last : Pack -> Nat := fun (p : Pack) => elim p as x in Pack return Nat { fun (0 A : Type 0) (a : A) (n : Nat) => n }

@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/record-expansion.sole-comb defs=7 ok
+--- stderr

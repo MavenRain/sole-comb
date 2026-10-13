@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/pair-arm-quantity.sole-comb FAIL quantity: the branch binder x is marked 1 and the type marks it w

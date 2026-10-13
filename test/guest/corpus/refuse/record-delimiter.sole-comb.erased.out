@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-delimiter.sole-comb FAIL line 2, column 35: expected ';' or '}' after a record field, found ','

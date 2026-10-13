@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/unclosed-elim.sole-comb FAIL line 5, column 1: expected ';' or '}' after an elim arm, found end of input

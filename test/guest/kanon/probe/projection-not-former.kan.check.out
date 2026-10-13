@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: a projection reads a pair or a tuple, and this scrutinee is neither

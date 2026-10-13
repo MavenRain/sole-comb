@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+missing branch: the case has 1 branches and the type has 2 legs

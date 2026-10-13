@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+def x : Nat := 0
+def y : Nat := 1
+--- stderr

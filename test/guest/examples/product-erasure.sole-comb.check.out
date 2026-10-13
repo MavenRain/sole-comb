@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/product-erasure.sole-comb defs=40 ok
+--- stderr

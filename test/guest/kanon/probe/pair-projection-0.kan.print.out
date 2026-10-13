@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+wrong leg: a pair carries the projections .1 and .2 only

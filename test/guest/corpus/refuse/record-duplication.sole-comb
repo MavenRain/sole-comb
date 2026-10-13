@@ -1,0 +1,3 @@
+axiom Nat : Type 0
+record Pair : Type 0 { first : Nat; second : Nat }
+def invalid : (1 p : Pair) -> Nat := fun (1 p : Pair) => natAdd (Pair.first p) (Pair.second p)

@@ -1,0 +1,3 @@
+axiom Nat : Type 0
+record Box : Type 0 { item : Nat }
+def invalid : Box := tuple(Type 0)

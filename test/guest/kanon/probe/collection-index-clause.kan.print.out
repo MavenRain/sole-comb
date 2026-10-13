@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+mismatch: a case at a collection takes no index clause and its motive names F

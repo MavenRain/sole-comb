@@ -1,0 +1,37 @@
+exit 0
+--- stdout
+CHECK examples/pair-erasure.sole-comb defs=33 ok
+axiom Nat : Type 1
+axiom P : Type 0
+axiom proof : P
+def Both : Type 1 := (Lan SPi w x Nat Nat)
+def both : Both := (In SPi w x Nat (APt w 11) [6])
+def first : Nat := (Elim SPi w x Nat both with | (ALeg 0) x y => x)
+def second : Nat := (Elim SPi w x Nat both with | (ALeg 0) x y => y)
+def make : (Ran SPi w _ Nat Both) := (Sec SPi w n Nat [n => (In SPi w x Nat (APt w n) [(Out SPi w b Nat (APt w 1) (Out SPi w a Nat (APt w n) natAdd))])])
+def returned : Nat := (Elim SPi w x Nat (Out SPi w _ Nat (APt w 4) make) with | (ALeg 0) x y => y)
+def PointOnly : Type 1 := (Lan SPi w _ Nat P)
+def pointOnly : PointOnly := (In SPi w _ Nat (APt w 3) [proof])
+def pointValue : Nat := (Elim SPi w _ Nat pointOnly with | (ALeg 0) x y => x)
+def droppedProof : P := (Elim SPi w _ Nat pointOnly with | (ALeg 0) x y => y)
+def FibreOnly : Type 1 := (Lan SPi 0 x Nat Nat)
+def fibreOnly : FibreOnly := (In SPi 0 x Nat (APt 0 10) [20])
+def fibreValue : Nat := (Elim SPi 0 x Nat fibreOnly with | (ALeg 0) x y => y)
+def Neither : Type 2 := (Lan SPi w _ Type 1 P)
+def neither : Neither := (In SPi w _ Type 1 (APt w Nat) [proof])
+def droppedType : Type 1 := (Elim SPi w _ Type 1 neither with | (ALeg 0) x y => x)
+def Dependent : Type 2 := (Lan SPi 0 A Type 1 A)
+def dependent : Dependent := (In SPi 0 A Type 1 (APt 0 Nat) [7])
+def box : (Ran SPi 0 A Type 1 (Ran SPi w x A (Lan SPi 0 T Type 1 T))) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => (In SPi 0 T Type 1 (APt 0 A) [x])])])
+def unbox : (Ran SPi 0 A Type 1 (Ran SPi w _ (Lan SPi 0 T Type 1 T) Nat)) := (Sec SPi 0 A Type 1 [A => (Sec SPi w p (Lan SPi 0 T Type 1 T) [p => 9])])
+def Nested : Type 1 := (Lan SPi w _ Nat Both)
+def nested : Nested := (In SPi w _ Nat (APt w 8) [both])
+def nestedValue : Nat := (Elim SPi w x Nat (Elim SPi w _ Nat nested as value return Both with | (ALeg 0) x y => y) with | (ALeg 0) x y => x)
+def FunctionPair : Type 1 := (Lan SPi w _ Nat (Ran SPi w _ Nat Nat))
+def capture : (Ran SPi w _ Nat FunctionPair) := (Sec SPi w outer Nat [outer => (In SPi w _ Nat (APt w outer) [(Sec SPi w n Nat [n => (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w outer) natAdd))])])])
+def applyPair : (Ran SPi w _ FunctionPair Nat) := (Sec SPi w p FunctionPair [p => (Out SPi w _ Nat (APt w 5) (Elim SPi w _ Nat p as value return (Ran SPi w _ Nat Nat) with | (ALeg 0) x y => y))])
+def outerAfter : (Ran SPi w _ Nat (Ran SPi w _ Both Nat)) := (Sec SPi w outer Nat [outer => (Sec SPi w p Both [p => (Out SPi w b Nat (APt w (Elim SPi w x Nat p with | (ALeg 0) x y => y)) (Out SPi w a Nat (APt w outer) natAdd))])])
+def capturedAfter : (Ran SPi w _ Nat (Ran SPi w _ Both (Ran SPi w _ Nat Nat))) := (Sec SPi w outer Nat [outer => (Sec SPi w p Both [p => let value : Nat := (Elim SPi w x Nat p with | (ALeg 0) x y => y) in (Sec SPi w n Nat [n => (Out SPi w b Nat (APt w (Out SPi w b Nat (APt w n) (Out SPi w a Nat (APt w value) natAdd))) (Out SPi w a Nat (APt w outer) natAdd))])])])
+def poly : (Ran SPi 0 A Type 1 (Ran SPi w x A (Lan SPi w a A A))) := (Sec SPi 0 A Type 1 [A => (Sec SPi w x A [x => (In SPi w a A (APt w x) [x])])])
+def polyValue : Nat := (Elim SPi w a Nat (Out SPi w x Nat (APt w 5) (Out SPi 0 A Type 1 (APt 0 Nat) poly)) with | (ALeg 0) x y => x)
+--- stderr

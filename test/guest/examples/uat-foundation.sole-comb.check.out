@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/uat-foundation.sole-comb defs=6 ok
+--- stderr

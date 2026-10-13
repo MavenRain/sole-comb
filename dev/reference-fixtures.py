@@ -64,7 +64,7 @@ def load(pins, scope, inputs):
 
 
 def expressions(pins, scope, checks):
-    inputs = [[name, expr.bend, fixed] for name, expr, fixed in checks]
+    inputs = [[name, expr.text, fixed] for name, expr, fixed in checks]
     expected, provenance = load(pins, scope, inputs)
     if not isinstance(expected, list) or len(expected) != len(checks):
         raise RuntimeError(f"{scope} reference case count changed")

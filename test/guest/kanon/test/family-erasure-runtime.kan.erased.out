@@ -1,0 +1,16 @@
+exit 0
+--- stdout
+rec [mu<RP>; nat; leg<mu<RP>,0,union nat>]
+fun rpRead (union mu<RP>) : union nat := KCase mu<RP> (KVar 0) [{0 1 (KVar 0)}]
+rec [nat; mu<N>; leg<mu<N>,0>; leg<mu<N>,1,union mu<N>>]
+fun mkN (union nat) : union mu<N> := KTag mu<N> 1 [KTag mu<N> 0 []]
+rec [nat; mu<N>; leg<mu<N>,0>; leg<mu<N>,1,union mu<N>>]
+fun scrutApp (union nat) : union nat := KCase mu<N> (KApp (KGlobal mkN) [KVar 0]) [{0 0 (KLit 0)}; {1 1 (KLit 1)}]
+rec [mu<N>; nat; leg<mu<N>,0>; leg<mu<N>,1,union mu<N>>]
+fun nonTail (union mu<N>) : union nat := KTail (KGlobal natAdd) [KLit 1; KCase mu<N> (KVar 0) [{0 0 (KApp (KGlobal natAdd) [KLit 2; KLit 3])}; {1 1 (KLit 4)}]]
+rec [mu<N>; mu<Ghost>; leg<mu<N>,0>; leg<mu<N>,1,union mu<N>>; leg<mu<Ghost>,0,union nat>]
+fun tagClosure$0 (union mu<N>) : union mu<N> := KCase mu<N> (KVar 0) [{0 0 (KTag mu<N> 1 [KTag mu<N> 0 []])}; {1 1 (KVar 0)}]
+fun tagClosure (union mu<Ghost>, union mu<N>) : union mu<N> := KTail (KCase mu<Ghost> (KVar 1) [{0 1 (KClos tagClosure$0 1 [])}]) [KVar 0]
+rec [mu<Two>; nat; leg<mu<Two>,0,union nat,union nat>]
+fun firstOf (union mu<Two>) : union nat := KCase mu<Two> (KVar 0) [{0 2 (KVar 1)}]
+--- stderr

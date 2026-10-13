@@ -1,0 +1,11 @@
+exit 0
+--- stdout
+CHECK examples/record-expansion-explicit.sole-comb defs=7 ok
+axiom Nat : Type 1
+def Empty : Type 1 := (Ran SColl 0 (Sec SColl 0 []))
+def empty : Empty := (Sec SColl 0 [])
+def Box : Type 1 := (Ran SColl 1 (Sec SColl 1 [ => Nat]))
+def Box.item : (Ran SPi 1 recordArg Box Nat) := (Sec SPi 1 recordArg Box [recordArg => (Out SColl 1 (ALeg 0) recordArg)])
+def box : Box := (Sec SColl 1 [ => 7])
+def item : Nat := (Out SPi 1 recordArg (Ran SColl 1 (Sec SColl 1 [ => Nat])) (APt 1 box) Box.item)
+--- stderr

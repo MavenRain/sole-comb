@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+wrong leg: the branch at c keys a constructor and a case at a collection keys a leg

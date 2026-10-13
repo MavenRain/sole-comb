@@ -1,0 +1,56 @@
+exit 0
+--- stdout
+CHECK examples/sum-erasure.sole-comb defs=29 ok
+erased Nat
+erased Unit
+erased unit
+erased Mixed
+rec [sum<unit|union nat|unit>]
+fun first () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 0 []
+rec [sum<unit|union nat|unit>]
+fun middle () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 1 [KLit 42]
+rec [sum<unit|union nat|unit>]
+fun last () : union sum<unit|union nat|unit> := KTag sum<unit|union nat|unit> 2 []
+rec [sum<unit|union nat|unit>; nat]
+fun unwrap (union sum<unit|union nat|unit>) : union nat := KCase sum<unit|union nat|unit> (KVar 0) [{0 0 (KLit 1)}; {1 1 (KVar 0)}; {2 0 (KLit 3)}]
+rec [nat]
+fun answer () : union nat := KTail (KGlobal unwrap) [KGlobal middle]
+erased Types
+rec [sum<unit|union nat>]
+fun typeTag () : union sum<unit|union nat> := KTag sum<unit|union nat> 0 []
+rec [sum<unit|union nat>]
+fun natTag () : union sum<unit|union nat> := KTag sum<unit|union nat> 1 [KLit 7]
+rec [sum<unit|union nat>; nat]
+fun typeUnwrap (union sum<unit|union nat>) : union nat := KCase sum<unit|union nat> (KVar 0) [{0 0 (KLit 9)}; {1 1 (KVar 0)}]
+erased Pair
+erased Nested
+rec [sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>>; tuple<union nat,union nat>]
+fun pairTag () : union sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>> := KTag sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>> 0 [KStruct tuple<union nat,union nat> [KLit 10; KLit 20]]
+rec [sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>>]
+fun sumTag () : union sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>> := KTag sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>> 1 [KGlobal middle]
+rec [sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>>; nat]
+fun nestedUnwrap (union sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>>) : union nat := KCase sum<struct tuple<union nat,union nat>|union sum<unit|union nat|unit>> (KVar 0) [{0 1 (KTail (KGlobal unwrap) [KGlobal middle])}; {1 1 (KTail (KGlobal unwrap) [KVar 0])}]
+erased WithFunction
+rec [nat; sum<func fn<1>|unit>]
+fun functionTag$0 (union nat) : union nat := KTail (KGlobal natAdd) [KVar 0; KLit 1]
+fun functionTag () : union sum<func fn<1>|unit> := KTag sum<func fn<1>|unit> 0 [KClos functionTag$0 1 []]
+rec [sum<func fn<1>|unit>; nat]
+fun applyTag (union sum<func fn<1>|unit>) : union nat := KCase sum<func fn<1>|unit> (KVar 0) [{0 1 (KTail (KVar 0) [KLit 5])}; {1 0 (KLit 0)}]
+rec [nat; sum<unit|union nat|unit>]
+fun choose$0 (union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KVar 0]
+fun choose$1 (union nat, union nat, union nat) : union nat := KTail (KGlobal natAdd) [KVar 1; KApp (KGlobal natAdd) [KVar 2; KVar 0]]
+fun choose$2 (union nat, union nat) : union nat := KVar 1
+fun choose (union nat, union sum<unit|union nat|unit>, union nat) : union nat := KTail (KCase sum<unit|union nat|unit> (KVar 1) [{0 0 (KClos choose$0 1 [KVar 2])}; {1 1 (KClos choose$1 1 [KVar 3; KVar 0])}; {2 0 (KClos choose$2 1 [KVar 2])}]) [KVar 0]
+rec [nat]
+fun chosen () : union nat := KTail (KGlobal choose) [KLit 10; KGlobal middle; KLit 2]
+rec [sum<union nat|union nat|union nat>; nat]
+fun defaulted (union sum<union nat|union nat|union nat>) : union nat := KCase sum<union nat|union nat|union nat> (KVar 0) [{0 1 (KVar 0)}; {1 1 (KLit 99)}; {2 1 (KLit 99)}]
+erased Empty
+erased impossible
+rec [nat; any]
+fun emptyCase () : union nat := KCase any (KErased) []
+rec [sum<union nat|union nat>; nat]
+fun erasedBinder (union sum<union nat|union nat>) : union nat := KCase sum<union nat|union nat> (KVar 0) [{0 0 (KLit 10)}; {1 0 (KLit 20)}]
+rec [sum<unit|union nat|unit>; nat]
+fun withMotive (union sum<unit|union nat|unit>) : union nat := KCase sum<unit|union nat|unit> (KVar 0) [{0 0 (KLit 0)}; {1 1 (KTail (KGlobal natAdd) [KVar 0; KLit 1])}; {2 0 (KLit 2)}]
+--- stderr

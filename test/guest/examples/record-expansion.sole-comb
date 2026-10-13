@@ -1,0 +1,6 @@
+axiom Nat : Type 0
+record Empty : Type 0 {}
+def empty : Empty := tuple()
+record Box : Type 0 { item : Nat }
+def box : Box := tuple(7)
+def item : Nat := Box.item box

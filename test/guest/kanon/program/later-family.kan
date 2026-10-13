@@ -1,0 +1,1 @@
+def rec f : N -> N := fun (n : N) => n mu N : Type 0 with | zero : N | succ : N -> N

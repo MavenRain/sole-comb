@@ -1,0 +1,19 @@
+mu N : Type 0 with
+| zero : N
+| succ : N -> N
+
+mu Ghost : Type 0 with
+| ghost : (0 erased : Nat) -> Nat -> Ghost
+
+mu RP (n : Nat) : Type 0 with
+| rp : Nat -> RP n
+
+mu Two : Type 0 with
+| two : Nat -> Nat -> Two
+
+def rpRead : RP 3 -> Nat := fun (r : RP 3) => case r as x in RP return Nat with | rp v => v
+def mkN : Nat -> N := fun (k : Nat) => succ zero
+def scrutApp : Nat -> Nat := fun (k : Nat) => case mkN k as x in N return Nat with | zero => 0 | succ m => 1
+def nonTail : N -> Nat := fun (n : N) => natAdd 1 (case n as x in N return Nat with | zero => natAdd 2 3 | succ m => 4)
+def tagClosure : Ghost -> (N -> N) := fun (g : Ghost) => case g as x in Ghost return N -> N with | ghost 0 gone value => fun (n : N) => case n as y in N return N with | zero => succ zero | succ m => m
+def firstOf : Two -> Nat := fun (t : Two) => case t as x in Two return Nat with | two a b => a

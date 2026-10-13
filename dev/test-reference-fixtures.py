@@ -83,7 +83,7 @@ class FixtureTests(unittest.TestCase):
                 self.record[field] = original
 
     def test_invalid_count_and_expectation(self):
-        checks = [("case", SimpleNamespace(bend="1n"), "1")]
+        checks = [("case", SimpleNamespace(text="1n"), "1")]
         for value in ([], ["2"], [None]):
             with self.subTest(value=value):
                 self.record["expected"] = value

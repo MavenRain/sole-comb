@@ -1,0 +1,9 @@
+exit 0
+--- stdout
+CHECK test/public-family-order.sole-comb defs=5 ok
+def yes : (Lan SMu B [] (Sec SColl 0 [])) := (In SMu B [] (ACtor t) [])
+def no : (Lan SMu B [] (Sec SColl 0 [])) := (In SMu B [] (ACtor f) [])
+def pick : (Ran SPi w _ (Lan SMu B [] (Sec SColl 0 [])) Nat) := (Sec SPi w b (Lan SMu B [] (Sec SColl 0 [])) [b => (Elim SMu B [] b as x return Nat with | (ACtor t)  => 1 | (ACtor f)  => 2)])
+def made : (Lan SMu P [] (Sec SColl 0 [])) := (In SMu P [] (ACtor pair) [3; 4])
+def fst : (Ran SPi w _ (Lan SMu P [] (Sec SColl 0 [])) Nat) := (Sec SPi w p (Lan SMu P [] (Sec SColl 0 [])) [p => (Elim SMu P [] p as x return Nat with | (ACtor pair) a b => a)])
+--- stderr

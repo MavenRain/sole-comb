@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/family-group-duplicate.sole-comb FAIL line 1, column 43: E-FAMILY-CTOR: duplicate constructor mk

@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/record-universe.sole-comb FAIL universe: the former lives at 2 and the expected universe is 1

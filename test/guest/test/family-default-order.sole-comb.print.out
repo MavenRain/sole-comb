@@ -1,0 +1,6 @@
+exit 0
+--- stdout
+CHECK test/family-default-order.sole-comb defs=2 ok
+def all : (Ran SPi w _ (Lan SMu B [] (Sec SColl 0 [])) Nat) := (Sec SPi w v (Lan SMu B [] (Sec SColl 0 [])) [v => (Elim SMu B [] v as x return Nat with | (ACtor a)  => 7 | (ACtor b)  => 7 | (ACtor c)  => 7)])
+def suffix : (Ran SPi w _ (Lan SMu B [] (Sec SColl 0 [])) Nat) := (Sec SPi w v (Lan SMu B [] (Sec SColl 0 [])) [v => (Elim SMu B [] v as x return Nat with | (ACtor a)  => 1 | (ACtor b)  => 2 | (ACtor c)  => 2)])
+--- stderr

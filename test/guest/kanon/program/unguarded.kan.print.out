@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+termination: recursive definition f failed the structural termination guard

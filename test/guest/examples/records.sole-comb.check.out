@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+CHECK examples/records.sole-comb defs=32 ok
+--- stderr

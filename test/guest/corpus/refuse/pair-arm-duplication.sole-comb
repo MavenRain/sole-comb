@@ -1,0 +1,2 @@
+axiom Nat : Type 0
+def bad : (p : (1 x : Nat) * Nat) -> Nat := fun (p : (1 x : Nat) * Nat) => elim p { fun (1 x : Nat) (y : Nat) => natAdd x x }

@@ -1,0 +1,1 @@
+mu F : Type := | z : F | s (x : F) : F def n : Nat := match (z : F) as self in F i return Nat with

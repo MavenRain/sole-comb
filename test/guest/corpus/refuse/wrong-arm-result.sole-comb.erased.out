@@ -1,0 +1,4 @@
+exit 1
+--- stdout
+--- stderr
+CHECK corpus/refuse/wrong-arm-result.sole-comb FAIL mismatch: the term has type Type 2 and the expected type is Nat

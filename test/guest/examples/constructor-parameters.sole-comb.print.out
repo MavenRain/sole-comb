@@ -1,0 +1,21 @@
+exit 0
+--- stdout
+CHECK examples/constructor-parameters.sole-comb defs=17 ok
+def value : (Lan SMu Box [] (Sec SColl 1 [ => Nat])) := (In SMu Box [] (ACtor box) [7])
+def nested : (Lan SMu Box [] (Sec SColl 1 [ => (Lan SMu Box [] (Sec SColl 1 [ => Nat]))])) := (In SMu Box [] (ACtor box) [(In SMu Box [] (ACtor box) [8])])
+def make : (Ran SPi 0 A Type 1 (Ran SPi w _ A (Lan SMu Box [] (Sec SColl 1 [ => A])))) := (Sec SPi 0 A Type 1 [A => (Sec SPi w a A [a => (In SMu Box [] (ACtor box) [a])])])
+def read : (Ran SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi w b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => (Elim SMu Box [] b as x return Nat with | (ACtor box) n => n)])
+def answer : Nat := (Out SPi w _ (Lan SMu Box [] (Sec SColl 1 [ => Nat])) (APt w (In SMu Box [] (ACtor box) [9])) read)
+def Alias : Type 1 := (Lan SMu Box [] (Sec SColl 1 [ => Nat]))
+def aliasValue : Alias := (In SMu Box [] (ACtor box) [10])
+def empty : (Lan SMu Maybe [] (Sec SColl 1 [ => Nat])) := (In SMu Maybe [] (ACtor none) [])
+def present : (Lan SMu Maybe [] (Sec SColl 1 [ => Nat])) := (In SMu Maybe [] (ACtor some) [11])
+def pairValue : (Lan SMu Both [] (Sec SColl 2 [ => Nat;  => (Ran SColl 0 (Sec SColl 0 []))])) := (In SMu Both [] (ACtor both) [12; (Sec SColl 0 [])])
+def dependentValue : (Lan SMu DepBox [] (Sec SColl 1 [ => Nat])) := (In SMu DepBox [] (ACtor depBox) [(Ran SColl 0 (Sec SColl 0 [])); (Sec SColl 0 []); 13])
+def reflexiveValue : (Lan SMu At [14] (Sec SColl 1 [ => 14])) := (In SMu At [14] (ACtor at) [])
+def reflexive : (Ran SPi 0 x Nat (Lan SMu At [x] (Sec SColl 1 [ => x]))) := (Sec SPi 0 x Nat [x => (In SMu At [x] (ACtor at) [])])
+def ignore : (Ran SPi 0 b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) Nat) := (Sec SPi 0 b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) [b => 0])
+def erasedArgument : (Ran SPi 0 n Nat Nat) := (Sec SPi 0 n Nat [n => (Out SPi 0 b (Lan SMu Box [] (Sec SColl 1 [ => Nat])) (APt 0 (In SMu Box [] (ACtor box) [n])) ignore)])
+def wrapped : (Lan SMu W [] (Sec SColl 0 [])) := (In SMu W [] (ACtor w) [(In SMu Box [] (ACtor box) [15])])
+def numbers : (Lan SMu List [] (Sec SColl 1 [ => Nat])) := (In SMu List [] (ACtor cons) [16; (In SMu List [] (ACtor cons) [17; (In SMu List [] (ACtor nil) [])])])
+--- stderr

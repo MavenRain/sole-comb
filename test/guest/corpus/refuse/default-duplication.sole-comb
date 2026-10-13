@@ -1,0 +1,3 @@
+axiom Nat : Type 0
+def bad : (1 n : Nat) -> (x : sum (Nat, Nat)) -> Nat :=
+  fun (1 n : Nat) (x : sum (Nat, Nat)) => elim x { else: fun (payload : Nat) => natAdd n n }

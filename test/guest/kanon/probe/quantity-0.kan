@@ -1,0 +1,1 @@
+def f : (0 x : Nat) -> Nat := fun (0 x : Nat) => 0

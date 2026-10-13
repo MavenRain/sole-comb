@@ -1,0 +1,4 @@
+axiom Nat : Type 0
+def One : Type 0 := sum (Nat)
+def rejected : (x : One) -> Nat :=
+  fun (x : One) => elim x { fun (a : Nat) => a

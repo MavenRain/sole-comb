@@ -1,0 +1,1 @@
+axiom A : Type axiom a : A def p : (X : Type) * X := (A, a) def x : p.1 := p.2

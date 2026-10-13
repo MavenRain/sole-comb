@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+def id : (Ran SPi w x Nat Nat) := (Sec SPi w x Nat [x => x])
+def n : Nat := (Out SPi w x Nat (APt w 4) id)
+--- stderr

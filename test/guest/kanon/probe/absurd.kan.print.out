@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+axiom e : ((Lan SColl 0 (Sec SColl 0 [])) : Type 1)
+def n : Nat := (Elim SColl 0 e with)
+--- stderr
