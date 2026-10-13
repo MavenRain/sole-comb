@@ -1,4 +1,6 @@
-/* Regression checks for missing, unreadable and incomplete golden suites. */
+/* Regression checks for missing, unreadable and incomplete golden suites,
+   and for the directory walk (a symlink to a directory, a nested directory
+   that does not open). */
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -38,21 +40,43 @@ static void write_golden(const char *path, const char *source) {
   if (fclose(out) != 0) exit(2);
 }
 
+/* The temp dir template: $TMPDIR when it is set and not empty (one trailing
+   "/" removed), else /tmp. Returns 0 when the template does not fit. */
+static int temp_template(char *dir, size_t size) {
+  const char *base = getenv("TMPDIR");
+  size_t length;
+  int written;
+  if (base == NULL || base[0] == 0) base = "/tmp";
+  length = strlen(base);
+  if (base[length - 1] == '/') length--;
+  written = snprintf(dir, size, "%.*s/sole-comb-runner-XXXXXX", (int)length,
+                     base);
+  return written >= 0 && (size_t)written < size;
+}
+
 int main(void) {
-  char dir[] = "/tmp/sole-comb-runner-XXXXXX";
+  char dir[1000];
   char source[1024];
   char golden[1100];
   char unreadable[1100];
   char empty[1024];
+  char links[1024];
+  char loop[1100];
+  char locked[1024];
+  char closed[1100];
   char *args[4];
   const char *invalid[] = {"0", "-1", "abc", "18446744073709551616000"};
   size_t at;
   TestCount count;
-  if (mkdtemp(dir) == NULL) return 2;
+  if (!temp_template(dir, sizeof dir) || mkdtemp(dir) == NULL) return 2;
   snprintf(source, sizeof source, "%s/answer.sole-comb", dir);
   snprintf(golden, sizeof golden, "%s.check.out", source);
   snprintf(unreadable, sizeof unreadable, "%s.print.out", source);
   snprintf(empty, sizeof empty, "%s/empty", dir);
+  snprintf(links, sizeof links, "%s/links", dir);
+  snprintf(loop, sizeof loop, "%s/loop", links);
+  snprintf(locked, sizeof locked, "%s/locked", dir);
+  snprintf(closed, sizeof closed, "%s/closed", locked);
   if (mkdir(empty, 0700) != 0) return 2;
   write_source(source);
   write_golden(golden, source);
@@ -91,6 +115,40 @@ int main(void) {
   require(count.runs == 1 && count.fails == 1,
           "a source without goldens fails");
 
+  if (mkdir(links, 0700) != 0 || symlink(".", loop) != 0) return 2;
+  count.runs = count.passes = count.fails = 0;
+  test_walk(links, &count);
+  require(count.runs == 1 && count.fails == 1,
+          "a symlink to a directory fails and is not followed");
+
+  if (mkdir(locked, 0700) != 0 || mkdir(closed, 0700) != 0 ||
+      chmod(closed, 0000) != 0) return 2;
+  count.runs = count.passes = count.fails = 0;
+  test_walk(locked, &count);
+  require(count.runs == 1 && count.fails == 1,
+          "a nested directory that does not open fails");
+  if (chmod(closed, 0700) != 0) return 2;
+
+  write_golden(golden, source);
+  if (unlink(loop) != 0 || symlink("loop", loop) != 0) return 2;
+  count.runs = count.passes = count.fails = 0;
+  test_walk(dir, &count);
+  require(count.runs == 2 && count.passes == 1 && count.fails == 1,
+          "a symlink with an unresolvable target fails beside a passing row");
+  args[0] = dir;
+  require(command(1, args) == CLI_EXIT_FAIL,
+          "an unresolvable nested symlink makes the suite fail");
+  if (unlink(loop) != 0 || chmod(locked, 0400) != 0) return 2;
+  count.runs = count.passes = count.fails = 0;
+  test_walk(dir, &count);
+  require(count.runs == 2 && count.passes == 1 && count.fails == 1,
+          "an entry whose metadata is inaccessible fails beside a passing row");
+  require(command(1, args) == CLI_EXIT_FAIL,
+          "an inaccessible nested entry makes the suite fail");
+  if (chmod(locked, 0700) != 0 || unlink(golden) != 0) return 2;
+
+  if (rmdir(links) != 0 || rmdir(closed) != 0 ||
+      rmdir(locked) != 0) return 2;
   if (unlink(source) != 0 || rmdir(empty) != 0 || rmdir(dir) != 0) return 2;
   printf("RUNNER failures=%d\n", failures);
   return failures == 0 ? 0 : 1;

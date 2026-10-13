@@ -14,6 +14,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "sole.h"
 
@@ -796,6 +797,13 @@ static void test_row(const char *path, SourceKind kind, TestMode mode,
   arena_release(mark);
 }
 
+/* One FAIL row with no golden comparison. */
+static void test_fail(const char *path, const char *why, TestCount *count) {
+  printf("TEST %s FAIL %s\n", path, why);
+  count->runs++;
+  count->fails++;
+}
+
 static void test_source(const char *path, TestCount *count) {
   SourceKind kind = source_kind(path);
   unsigned long before = count->runs;
@@ -803,15 +811,12 @@ static void test_source(const char *path, TestCount *count) {
   if (kind == SOURCE_NONE) return;
   for (at = 0; at < sizeof test_modes / sizeof test_modes[0]; at++)
     test_row(path, kind, test_modes[at], count);
-  if (count->runs == before) {
-    printf("TEST %s FAIL no goldens\n", path);
-    count->runs++;
-    count->fails++;
-  }
+  if (count->runs == before) test_fail(path, "no goldens", count);
 }
 
 /* The entry names of a directory in byte order (readdir gives no order),
-   without "." and "..". Returns 0 when path does not open as a directory. */
+   without "." and "..". Returns 0 when path does not open as a directory
+   or a readdir call fails (NULL with errno set). */
 static int directory_names(const char *path, const char ***out_names,
                            int *out_count) {
   DIR *dir = opendir(path);
@@ -819,8 +824,10 @@ static int directory_names(const char *path, const char ***out_names,
   const char **names = NULL;
   int count = 0;
   int room = 0;
+  int failed;
   if (dir == NULL) return 0;
-  for (entry = readdir(dir); entry != NULL; entry = readdir(dir)) {
+  for (errno = 0, entry = readdir(dir); entry != NULL;
+       errno = 0, entry = readdir(dir)) {
     const char *name = entry->d_name;
     size_t length;
     char *copy;
@@ -841,22 +848,65 @@ static int directory_names(const char *path, const char ***out_names,
     names[at] = copy;
     count++;
   }
+  failed = errno != 0;
   closedir(dir);
+  if (failed) return 0;
   *out_names = names;
   *out_count = count;
   return 1;
 }
 
-/* A directory walks its entries in byte order; a file runs its goldens. */
-static void test_walk(const char *path, TestCount *count) {
+static void test_entry(const char *path, TestCount *count);
+
+/* The entries of a directory in byte order; a directory that does not open
+   or read is one FAIL row. */
+static void test_directory(const char *path, TestCount *count) {
   const char **names;
   int n;
   int at;
   if (!directory_names(path, &names, &n)) {
-    test_source(path, count);
+    test_fail(path, "directory", count);
     return;
   }
-  for (at = 0; at < n; at++) test_walk(path_join(path, names[at]), count);
+  for (at = 0; at < n; at++) test_entry(path_join(path, names[at]), count);
+}
+
+/* A directory entry (lstat): a directory walks; a symlink to a directory is
+   one FAIL row and is not followed (no cycle); another entry runs its
+   goldens. A failed metadata lookup is one FAIL row. */
+static void test_entry(const char *path, TestCount *count) {
+  struct stat link;
+  struct stat target;
+  if (lstat(path, &link) != 0) {
+    test_fail(path, "stat", count);
+    return;
+  }
+  if (S_ISDIR(link.st_mode)) {
+    test_directory(path, count);
+    return;
+  }
+  if (S_ISLNK(link.st_mode)) {
+    if (stat(path, &target) != 0) {
+      test_fail(path, "stat", count);
+      return;
+    }
+    if (S_ISDIR(target.st_mode)) {
+      test_fail(path, "symlink", count);
+      return;
+    }
+  }
+  test_source(path, count);
+}
+
+/* A test path (a command argument, a symlink followed): a directory walks
+   its entries; a file runs its goldens. */
+static void test_walk(const char *path, TestCount *count) {
+  struct stat info;
+  if (stat(path, &info) == 0 && S_ISDIR(info.st_mode)) {
+    test_directory(path, count);
+    return;
+  }
+  test_source(path, count);
 }
 
 /* A test path: a directory that opens, or a readable file with a source
@@ -942,11 +992,7 @@ static int test_command(int count, char **words, const char **extra,
   for (at = 0; at < path_count; at++) {
     unsigned long before = total.runs;
     test_walk(paths[at], &total);
-    if (total.runs == before) {
-      printf("TEST %s FAIL no goldens\n", paths[at]);
-      total.runs++;
-      total.fails++;
-    }
+    if (total.runs == before) test_fail(paths[at], "no goldens", &total);
   }
   line = sink_new();
   sink_puts(&line, "TEST n=");

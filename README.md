@@ -5,7 +5,7 @@ sum eliminator. The compiler host is C compiled with TinyCC; the intended target
 
 UAT.0 preparation now pins the selected Lean proof baseline and its dependencies,
 records theorem types and transitive axioms, and checks the current public-source
-prerequisites on all three hosts. See the [readiness evidence](dev/validation/uat-readiness.md)
+prerequisites on the C host. See the [readiness evidence](dev/validation/uat-readiness.md)
 and [UAT implementation schedule](dev/uat-proof-portability.md).
 
 The public compiler now checks `.sole-comb` source files through production
@@ -25,8 +25,9 @@ The [native examples](examples/README.md) cover dependent functions, Nat
 primitives, closed records with qualified getters, and finite-sum `elim` with
 optional motives and final `else: function` defaults. Records expand to Ran
 products and Out projections; each default expands into checked positional arms. The public command
-builds its host compiler on demand and checks the file's exact bytes.
-`make check`, `make test`, and `make gates` include these public-command tests.
+runs `build/sole-comb`, which `make build` compiles, and checks the file's exact bytes.
+`make test` and `make gates` run these public-command tests. `make check` runs
+only the C build and the guest golden comparisons.
 The [public compiler decision](dev/public-compiler-entry.md) moves this work
 ahead of the former Stage C frontend timing.
 
@@ -210,16 +211,17 @@ after the generic kernel-program refactors in 2e.18a and 2e.18b. Both kernel
 Elim sites route when a recursive constructor leg binds more binders than
 its fields; other terms retain kernel case analysis. The result closes
 parameter aliases out of branch usage, and evaluation refuses delayed
-recursive branches. The final route checks pass 41 cases on Bun and Node
-worker and kill 10 Bun mutations, with the pinned checking oracle unchanged.
-Native route and the incomplete native integration gates remain unvalidated
-at the unchanged memory cap. Public hypothesis syntax, recursive iota,
+recursive branches. Public hypothesis syntax, recursive iota,
 recursor erasure, empty-family recursors, mutual and affine routed families
 remain pending.
 
-The instance Make targets validate Bun and Node worker. Native compilation
-remains an explicit `make test-recursor-instance-native` check; the recorded
-native run exceeded the unchanged 900-second harness deadline.
+History (retired Bend host, S10, 2026-10-13): the final route checks passed
+41 cases on Bun and Node worker and killed 10 Bun mutations. The pinned
+checking oracle did not change. The native route and the incomplete native
+integration gates stayed unvalidated at the unchanged memory cap. The
+instance Make targets validated Bun and Node worker. Native compilation was
+an explicit `make test-recursor-instance-native` check. The recorded native
+run exceeded the unchanged 900-second harness deadline.
 
 Recursive definitions, structural recursor sugar, complete erased-corpus
 integration, WebAssembly build/run and the full kernel differential remain
@@ -281,8 +283,9 @@ later compiler work and fail explicitly. Complete erasure and
 KANON-DIFF remain A.5b.3.2 work. Stage A acceptance remains pending.
 
 R2 is pending and will qualify the operational compiler before M0 closure.
-The [workload manifest](dev/r2-workloads.json) and scratch validation records
+The workload manifest `dev/r2-workloads.json` and scratch validation records
 retain their evidence, but further scratch compiler features are retired.
+The last commit with the manifest is 4e61f97.
 Complete source qualification and any language-alignment changes to the
 twins are required before timing. No runtime endpoint has been selected.
 
@@ -343,9 +346,10 @@ elapsed. `PASS` means a measurement leg completed; it is not an R2 ratio verdict
 
 This section is history: the r2 tools, the r2 documents and the r2 make targets below are retired (S10, 2026-10-13).
 
-The [probe preparer](dev/r2-prepare.md),
-[serial measurement runner](dev/r2-run.md), and
-[R2 evidence assembler](dev/r2-risk.md) are ready for S0-5.
+The probe preparer `dev/r2-prepare.md`,
+serial measurement runner `dev/r2-run.md`, and
+R2 evidence assembler `dev/r2-risk.md` are ready for S0-5.
+The last commit with these three files is 4e61f97.
 `make test-r2-prepare` checks builds, correctness qualification, and the
 hash-bound handoff. Once the scratch probe and twins exist, `make r2-prepare
 R2_PREPARE_PLAN=/absolute/path/to/prepare-plan.json R2_OUTPUT=/new/scratch/directory`

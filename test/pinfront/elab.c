@@ -16,7 +16,8 @@
    SURFACE_BR_DEFAULT abort (the C enum is the surface superset; the
    pinfront parser makes no BrDefault). "(line N)" is a surface/elab.bend
    line of copied code; "(pinfront line N)" is a test/pinfront/elab.bend
-   line of a changed def. M.result(A) is the int return (1 = Pure with
+   line of a changed def (the .bend files are at 4e61f97, the last commit
+   with them). M.result(A) is the int return (1 = Pure with
    *out, 0 = Abort with *error); a Unit result has no out. The walker ~go
    is the (walk_env, go) pair of SurfaceElabWalk; go(c, e, s) is a direct
    call. M.bind and M.map_result are C if statements and M.lift is the
@@ -625,8 +626,9 @@ static const Term *fam_term(Text name, Int63 np, const Terms *terms) {
 static Int63 length_tele(const Telescope *xs);
 static Int63 length_surface(const SurfaceTerms *xs);
 
-/* collect (line 55) at go with None (pinfront lines 286 and 382): a loop
-   plus a reverse. Each argument is elaborated with no expected type. */
+/* collect (line 55) at go with None (pinfront lines 286, 382, 507 and
+   508): a loop plus a reverse. Each term is elaborated with no expected
+   type. The one twin of the surface collect_walk (S11). */
 static int collect_go(const void *walk_env, SurfaceElabWalk go,
                       const CheckCtx *c, const SurfaceTerms *xs,
                       const Terms **out, const KError **error) {
@@ -826,20 +828,6 @@ static const Texts *fam_names(const SurfaceFams *fams) {
   return Texts_cons(fams->head.name, fam_names(fams->tail));
 }
 
-/* collect of go with no expectation (lines 607 and 608). */
-static int collect_walk(const void *walk_env, SurfaceElabWalk go,
-                        const CheckCtx *c, const SurfaceTerms *items,
-                        const Terms **out, const KError **error) {
-  const Terms *acc = NULL;
-  for (; items != NULL; items = items->tail) {
-    const Term *tm;
-    if (!go(walk_env, c, NULL, items->head, &tm, error)) return 0;
-    acc = Terms_cons(tm, acc);
-  }
-  *out = Terms_reverse(acc);
-  return 1;
-}
-
 static TermBinder binder_of(Quantity q, Text name) {
   TermBinder b;
   b.quantity = q;
@@ -889,7 +877,8 @@ static int app_point(const void *walk_env, SurfaceElabWalk go,
   return 1;
 }
 
-/* cod_former (line 332): *out NULL = None (no former, no point view). */
+/* cod_former (pinfront line 318): *out NULL = None (no former, no point
+   view). */
 static int cod_former(const CheckCtx *c, const ValueFormer *former,
                       const Value **out, const KError **error) {
   RulesPoint point;
@@ -918,7 +907,7 @@ static int elab_group(const void *walk_env, SurfaceElabWalk go,
   return 1;
 }
 
-/* elab_branch (line 362). */
+/* elab_branch (pinfront line 327). */
 static int elab_branch(const void *walk_env, SurfaceElabWalk go,
                        const CheckCtx *c, const ValueShape *s,
                        const VLegs *legs, const TermMotive *mo,
@@ -1102,7 +1091,7 @@ static int mu_ref_of(const CheckCtx *c, Text x, MuRef *out) {
   return 1;
 }
 
-/* elab_fam_ref (line 415). */
+/* elab_fam_ref (pinfront line 377). */
 static int elab_fam_ref(const void *walk_env, SurfaceElabWalk go,
                         const CheckCtx *c, const Family *f,
                         const SurfaceTerms *args, const Term **out,
@@ -1132,7 +1121,7 @@ static int project_type(const CheckCtx *c, const Term *scrut, const Value *w,
                     error);
 }
 
-/* cod_of (line 426): *out NULL = None. */
+/* cod_of (pinfront line 388): *out NULL = None. */
 static int cod_of(const CheckCtx *c, const Value *expected, const Value **out,
                   const KError **error) {
   const Value *w;
@@ -1156,7 +1145,7 @@ static int elab_mu_motive(const void *walk_env, SurfaceElabWalk go,
                            penv, mo, out, error);
 }
 
-/* elab_mu_branch (line 432). */
+/* elab_mu_branch (pinfront line 394). */
 static int elab_mu_branch(const void *walk_env, SurfaceElabWalk go,
                           const CheckCtx *c, Text n, const Family *fam,
                           const TermMotive *mo, const Values *penv,
@@ -1272,7 +1261,7 @@ static int elab_ctor_decl(const CheckCtx *c, Text family,
   return 1;
 }
 
-/* elab_coll_case (line 460). */
+/* elab_coll_case (pinfront line 421). */
 static int elab_coll_case(const void *walk_env, SurfaceElabWalk go,
                           const CheckCtx *c, const Value *expected,
                           const Term *scrut, const Value *w,
@@ -1339,7 +1328,7 @@ static int app_head(const CheckCtx *c, const SurfaceTerm *head, MuRef *out) {
   return mu_ref_of(c, head->as.var.name, out);
 }
 
-/* elab_fun (line 486): C recursion (depth = binder count). */
+/* elab_fun (pinfront line 437): C recursion (depth = binder count). */
 static int elab_fun(const void *walk_env, SurfaceElabWalk go,
                     const SurfaceBinders *bs, const CheckCtx *c,
                     const Value *expected, const SurfaceTerm *body,
@@ -1429,7 +1418,7 @@ static int ctor_decls(const CheckCtx *c, Text name,
   return 1;
 }
 
-/* elab_mu_case (line 509). */
+/* elab_mu_case (pinfront line 460). */
 static int elab_mu_case(const void *walk_env, SurfaceElabWalk go,
                         const CheckCtx *c, const Value *expected,
                         const Term *scrut, Text n, const Values *ixv,
@@ -1506,7 +1495,8 @@ static int define_families(const SurfaceFams *fams, Budget budget,
   return 1;
 }
 
-/* case_former (line 558): SCOLL, SPAR, SNU and SPI share the last arm. */
+/* case_former (pinfront line 477): SCOLL, SPAR, SNU and SPI share the
+   last arm. */
 static int case_former(const void *walk_env, SurfaceElabWalk go,
                        const CheckCtx *c, const Value *expected,
                        const Term *scrut, const Value *w,
@@ -1573,7 +1563,7 @@ static int elab_case(const void *walk_env, SurfaceElabWalk go,
                     error);
 }
 
-/* elab_node (line 594): one switch over the 22 tags. */
+/* elab_node (pinfront line 495): one switch over the 22 tags. */
 static int elab_node(const void *walk_env, SurfaceElabWalk go,
                      const CheckCtx *c, const Value *expected,
                      const SurfaceTerm *s, const Term **out,
@@ -1617,14 +1607,14 @@ static int elab_node(const void *walk_env, SurfaceElabWalk go,
   }
   case SURFACE_SSUM: {
     const Terms *terms;
-    if (!collect_walk(walk_env, go, c, s->as.sum.items, &terms, error))
+    if (!collect_go(walk_env, go, c, s->as.sum.items, &terms, error))
       return 0;
     *out = sum_ty(terms);
     return 1;
   }
   case SURFACE_SPROD: {
     const Terms *terms;
-    if (!collect_walk(walk_env, go, c, s->as.prod.items, &terms, error))
+    if (!collect_go(walk_env, go, c, s->as.prod.items, &terms, error))
       return 0;
     *out = prod_ty(terms);
     return 1;

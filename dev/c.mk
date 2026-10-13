@@ -3,7 +3,7 @@
 # Run from the repository root: make -f dev/c.mk c-check
 # c-check compiles each C twin with tcc -Wall -Werror into build/obj/.
 # c-build links build/sole-comb (the public CLI, bin/main.c).
-# The Makefile keeps the Bend targets until the flip (stage S9).
+# The Makefile target build calls c-check and c-build; test-runner calls c-test.
 
 TCC ?= tcc
 C_FLAGS = -Wall -Werror -Ilib
