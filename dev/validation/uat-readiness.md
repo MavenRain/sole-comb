@@ -6,6 +6,10 @@ Lean inspection. The UAT.0 row stays open until the public structural recursors
 land. They remain the next Stage A compiler prerequisite. UAT.1 through UAT.5
 remain implementation work under the existing M1 semantic-delta schedule.
 
+History (retired Bend host, S10, 2026-10-13): the three hosts in this record
+are Bun, Node worker and native. The C host runs `make test-uat-readiness` in
+`make test` and `make gates`, not in `make check`.
+
 ## Baseline and assumptions
 
 The UAT revision is `f9d2bc270631eaefb9985c38e0c804b825a7ee2d`, with
