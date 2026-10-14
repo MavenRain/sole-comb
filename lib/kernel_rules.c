@@ -1163,6 +1163,20 @@ int rules_c_open(RulesCtx ctx, const Closure *clo, const Values *args,
                               clo->body, out, error);
 }
 
+/* c_open_at (S14): c_eval of arg, then c_open of clo at that value. When the
+   closure body has no T.Var, it does not read the value, thus the c_eval is
+   not done. The argument is checked before this call, its evaluation spends
+   no fuel and gives no error, thus the result stays the same. This stops
+   the O(depth) evaluation of each argument of a nested application. */
+int rules_c_open_at(RulesCtx ctx, const Closure *clo, const Term *arg,
+                    const Value **out, const KError **error) {
+  const Value *v;
+  if (!term_exists_var(clo->body))
+    return rules_c_open(ctx, clo, NULL, out, error);
+  if (!rules_c_eval(ctx, arg, &v, error)) return 0;
+  return rules_c_open(ctx, clo, Values_cons(v, NULL), out, error);
+}
+
 RulesCtx rules_c_bind(RulesCtx ctx, Text x, Quantity q, const Value *ty) {
   return ops_bind(x, q, ty, ctx);
 }
@@ -2000,7 +2014,6 @@ int rules_pi_intro_in(const RulesHost *host, RulesCtx ctx, Quantity mode,
   const Term *fibre;
   QuantityUsage pu;
   QuantityUsage fu;
-  const Value *pv;
   const Value *cod;
   if (!rules_with_former(
           ctx, NO,
@@ -2024,9 +2037,7 @@ int rules_pi_intro_in(const RulesHost *host, RulesCtx ctx, Quantity mode,
   if (!rules_c_check(host, ctx, quantity_mul(mode, point.quantity), a.arg,
                      point.domain, &pu, error))
     return 0;
-  if (!rules_c_eval(ctx, a.arg, &pv, error)) return 0;
-  if (!rules_c_open(ctx, former.diagram, Values_cons(pv, NULL), &cod, error))
-    return 0;
+  if (!rules_c_open_at(ctx, former.diagram, a.arg, &cod, error)) return 0;
   if (!rules_c_check(host, ctx, mode, fibre, cod, &fu, error)) return 0;
   *out = quantity_sequence(pu, fu);
   return 1;
@@ -2043,7 +2054,6 @@ int rules_pi_elim_out(const RulesHost *host, RulesCtx ctx, Quantity mode,
   ValueFormer former;
   RulesPoint point;
   QuantityUsage pu;
-  const Value *pv;
   if (!term_as_apt(addr, &a)) {
     *error = error_wrong_leg(
         text_of_cstring("an application takes the point address"));
@@ -2056,9 +2066,7 @@ int rules_pi_elim_out(const RulesHost *host, RulesCtx ctx, Quantity mode,
   if (!rules_c_check(host, ctx, quantity_mul(mode, point.quantity), a.arg,
                      point.domain, &pu, error))
     return 0;
-  if (!rules_c_eval(ctx, a.arg, &pv, error)) return 0;
-  if (!rules_c_open(ctx, former.diagram, Values_cons(pv, NULL), &out->ty,
-                    error))
+  if (!rules_c_open_at(ctx, former.diagram, a.arg, &out->ty, error))
     return 0;
   out->uses = quantity_sequence(inf.uses, pu);
   return 1;
@@ -2380,8 +2388,18 @@ int rules_elim_out(const RulesHost *host, RulesCtx ctx, Quantity mode,
   return rules_elim_out_pack(host, ctx, mode, p, addr, head, out, error);
 }
 
+/* tele_reads (S14): YES when a binder type of tele has a T.Var. */
+static Bool rules_tele_reads(const Telescope *tele) {
+  for (; tele != NULL; tele = tele->tail)
+    if (term_exists_var(tele->head.binding.type)) return YES;
+  return NO;
+}
+
 /* The pair comes back in two out parameters. The self tail call is a loop.
-   The two length mismatch arms are one test after the loop. */
+   The two length mismatch arms are one test after the loop. env_out NULL
+   (S14) = the caller does not read the environment. Then an argument that
+   no later binder type reads is not evaluated and not put in env (as
+   rules_c_open_at). */
 int rules_tele_walk(const RulesHost *host, RulesCtx ctx, Quantity mode,
                     const Telescope *tele, const Terms *args,
                     const Values *env, QuantityUsage uses,
@@ -2396,8 +2414,10 @@ int rules_tele_walk(const RulesHost *host, RulesCtx ctx, Quantity mode,
     if (!rules_c_check(host, ctx, quantity_mul(mode, tele->head.quantity),
                        args->head, tyv, &au, error))
       return 0;
-    if (!rules_c_eval(ctx, args->head, &v, error)) return 0;
-    env = Values_cons(v, env);
+    if (env_out != NULL || rules_tele_reads(tele->tail)) {
+      if (!rules_c_eval(ctx, args->head, &v, error)) return 0;
+      env = Values_cons(v, env);
+    }
     uses = quantity_sequence(uses, au);
     tele = tele->tail;
     args = args->tail;
@@ -2406,7 +2426,7 @@ int rules_tele_walk(const RulesHost *host, RulesCtx ctx, Quantity mode,
     *error = error_mismatch(rules_wrong_pack());
     return 0;
   }
-  *env_out = env;
+  if (env_out != NULL) *env_out = env;
   *uses_out = uses;
   return 1;
 }
@@ -2450,7 +2470,6 @@ int rules_form_mu(const RulesHost *host, RulesCtx ctx, const TermShape *s,
   const Family *fam;
   const Terms *ps;
   const Values *penv;
-  const Values *ienv;
   if (!rules_as_mu_term(s, &n, &ix)) {
     *error = error_mismatch(rules_wrong_pack());
     return 0;
@@ -2462,7 +2481,7 @@ int rules_form_mu(const RulesHost *host, RulesCtx ctx, const TermShape *s,
     return 0;
   if (!rules_mu_telescope(host, ctx, QUANTITY_ZERO,
                           text_append(text_of_cstring("the indices of "), n),
-                          rules_family_indices(fam), ix, penv, &ienv, error))
+                          rules_family_indices(fam), ix, penv, NULL, error))
     return 0;
   *out = rules_family_level(fam);
   return 1;

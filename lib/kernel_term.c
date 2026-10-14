@@ -88,6 +88,8 @@ const Term *term_ann(const Term *tm, const Term *ty) {
 const Term *term_global(Text name) {
   Term *term = term_cell(TERM_GLOBAL);
   term->as.global.name = name;
+  term->as.global.seen.globals = NULL;
+  term->as.global.seen.entry = NULL;
   return term;
 }
 
@@ -331,4 +333,17 @@ Bool term_exists_name(Bool include_families, const Texts *names,
                       const Term *term) {
   return term_scan(include_families, names,
                    term_scan_of(NO, Terms_cons(term, NULL)));
+}
+
+/* exists_var (S14): YES if a T.Var occurs in term, at any binder depth. A
+   term without a T.Var does not read its environment. The scan does not
+   count binders, thus a bound variable also gives YES (a safe answer). */
+Bool term_exists_var(const Term *term) {
+  TermScan state = term_scan_of(NO, Terms_cons(term, NULL));
+  while (state.found == NO && state.pending != NULL)
+    state = state.pending->head->tag == TERM_VAR
+                ? term_scan_of(YES, NULL)
+                : term_scan_term(NO, NULL, state.pending->head,
+                                 state.pending->tail);
+  return state.found;
 }

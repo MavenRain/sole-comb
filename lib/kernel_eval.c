@@ -127,6 +127,49 @@ int eval_eval_addr(const RulesHost *host, RulesCtx ctx, const Values *env,
   return 0; /* each tag returns above */
 }
 
+/* global_find with the cache of the term or head that names the global.
+   A globals map does not change, so a name has the same entry for each
+   lookup in one map. The term or head is an arena cell, not a const
+   object, so the cache can change. */
+static const GlobalEntry *eval_find_seen(Text name, const GlobalSeen *seen,
+                                         const Globals *globals) {
+  GlobalSeen *cache = (GlobalSeen *)seen;
+  if (cache->globals != globals) {
+    cache->entry = global_find(name, globals);
+    cache->globals = globals;
+  }
+  return cache->entry;
+}
+
+/* value_hglobal with the cache set to the entry that eval_eval_entry
+   found. */
+static const Head *eval_hglobal_seen(Text name, const Globals *globals,
+                                     const GlobalEntry *found) {
+  const Head *head = value_hglobal(name);
+  GlobalSeen *cache = (GlobalSeen *)&head->as.hglobal.seen;
+  cache->globals = globals;
+  cache->entry = found;
+  return head;
+}
+
+/* A def body is closed, and an evaluation reads only ctx.globals, so each
+   reference under one globals map gets the same value. The memo keeps it:
+   the body is evaluated once per map, not once per reference. A failed
+   evaluation keeps no value. */
+static int eval_memo_body(const RulesHost *host, RulesCtx ctx,
+                          const GlobalDef *def, const Value **out,
+                          const KError **error) {
+  GlobalMemo *memo = def->memo;
+  if (memo->globals == ctx.globals) {
+    *out = memo->value;
+    return 1;
+  }
+  if (!eval_request_eval(host, ctx, NULL, def->body, out, error)) return 0;
+  memo->globals = ctx.globals;
+  memo->value = *out;
+  return 1;
+}
+
 int eval_eval_entry(const RulesHost *host, RulesCtx ctx, Text name,
                     const GlobalEntry *found, const Value **out,
                     const KError **error) {
@@ -137,13 +180,12 @@ int eval_eval_entry(const RulesHost *host, RulesCtx ctx, Text name,
   switch (found->tag) {
   case GLOBAL_AXIOM:
   case GLOBAL_PRIM:
-    *out = value_vneutral(value_hglobal(name), NULL);
+    *out = value_vneutral(eval_hglobal_seen(name, ctx.globals, found), NULL);
     return 1;
   case GLOBAL_DEF:
     if (found->as.def.reducible && found->as.def.rec_arg == NULL)
-      return eval_request_eval(host, ctx, NULL, found->as.def.body, out,
-                               error);
-    *out = value_vneutral(value_hglobal(name), NULL);
+      return eval_memo_body(host, ctx, &found->as.def, out, error);
+    *out = value_vneutral(eval_hglobal_seen(name, ctx.globals, found), NULL);
     return 1;
   }
   return 0; /* each tag returns above */
@@ -170,7 +212,9 @@ int eval_head_prim(RulesCtx ctx, const Head *head, Prim *out) {
   case VALUE_HLOCAL: return 0;
   case VALUE_HGLOBAL:
     return eval_found_prim(
-        global_find_prim(head->as.hglobal.name, ctx.globals), out);
+        global_found_prim(eval_find_seen(
+            head->as.hglobal.name, &head->as.hglobal.seen, ctx.globals)),
+        out);
   }
   return 0; /* each tag returns above */
 }
@@ -287,7 +331,10 @@ int eval_candidate_neutral(RulesCtx ctx, const ValueNeutral *neutral,
   case VALUE_HGLOBAL:
     return eval_candidate_def(
         neutral->spine,
-        global_find_def(neutral->head->as.hglobal.name, ctx.globals), out);
+        global_found_def(eval_find_seen(neutral->head->as.hglobal.name,
+                                        &neutral->head->as.hglobal.seen,
+                                        ctx.globals)),
+        out);
   }
   return 0; /* each tag returns above */
 }
@@ -511,6 +558,42 @@ int eval_quote_leg(const RulesHost *host, RulesCtx ctx, Int63 size,
                               TermBinders_length(leg->binders), out, error);
 }
 
+/* rules_out_value with the shape evaluated last. rules_out_with reads the
+   shape only to freeze a stuck head, so a beta step does not evaluate it
+   (an SPI domain is a type, often a mu former). The caller gets p from
+   rules_rules on the shape tag first: SPAR and SNU give the same error as
+   eval_eval_shape, before any evaluation. */
+static int eval_out_lazy(const RulesHost *host, RulesCtx ctx,
+                         const Values *env, const RulesEvaluator *ev,
+                         RulesPack p, const TermShape *shape,
+                         const VAddr *address, const Value *value,
+                         const Value **out, const KError **error) {
+  const ValueShape *s;
+  if (!rules_beta_out(host, p, ev, address, value, out, error)) return 0;
+  if (*out != NULL) return 1;
+  if (!eval_eval_shape(host, ctx, env, shape, &s, error)) return 0;
+  return rules_freeze_option(value, value_sout(s, address), NULL, out,
+                             error);
+}
+
+/* rules_elim_value with the shape evaluated last, as eval_out_lazy. */
+static int eval_elim_lazy(const RulesHost *host, RulesCtx ctx,
+                          const Values *env, const RulesEvaluator *ev,
+                          RulesPack p, const TermElim *elim,
+                          const Value *value, const Value **out,
+                          const KError **error) {
+  const ValueShape *s;
+  if (!rules_beta_elim(host, p, ev, elim->branches, env, value, out, error))
+    return 0;
+  if (*out != NULL) return 1;
+  if (!eval_eval_shape(host, ctx, env, elim->shape, &s, error)) return 0;
+  return rules_freeze_option(
+      value,
+      value_selim(value_stuck(s, elim->scrut_q, elim->motive, elim->branches,
+                              env)),
+      NULL, out, error);
+}
+
 int eval_eval_step(const RulesHost *host, RulesCtx ctx, const Values *env,
                    const Term *term, const Value **out, const KError **error) {
   RulesEvaluator ev = eval_ev(ctx);
@@ -564,27 +647,27 @@ int eval_eval_step(const RulesHost *host, RulesCtx ctx, const Values *env,
     return 1;
   }
   case TERM_OUT: {
-    const ValueShape *s;
+    RulesPack p;
     const VAddr *a;
     const Value *v;
     const Value *applied;
-    if (!eval_eval_shape(host, ctx, env, term->as.out.shape, &s, error))
-      return 0;
+    if (!rules_rules(term->as.out.shape->tag, &p, error)) return 0;
     if (!eval_eval_addr(host, ctx, env, term->as.out.address, &a, error))
       return 0;
     if (!eval_request_eval(host, ctx, env, term->as.out.head, &v, error))
       return 0;
-    if (!rules_out_value(host, &ev, s, a, v, &applied, error)) return 0;
+    if (!eval_out_lazy(host, ctx, env, &ev, p, term->as.out.shape, a, v,
+                       &applied, error))
+      return 0;
     return eval_request_whnf(host, ctx, applied, out, error);
   }
   case TERM_ELIM: {
     const TermElim *elim = term->as.elim.elim;
-    const ValueShape *s;
+    RulesPack p;
     const Value *v;
-    if (!eval_eval_shape(host, ctx, env, elim->shape, &s, error)) return 0;
+    if (!rules_rules(elim->shape->tag, &p, error)) return 0;
     if (!eval_request_eval(host, ctx, env, elim->scrut, &v, error)) return 0;
-    return rules_elim_value(host, &ev, s, elim->scrut_q, elim->motive,
-                            elim->branches, env, v, out, error);
+    return eval_elim_lazy(host, ctx, env, &ev, p, elim, v, out, error);
   }
   case TERM_LET: {
     const Value *v;
@@ -600,7 +683,10 @@ int eval_eval_step(const RulesHost *host, RulesCtx ctx, const Values *env,
     return eval_annotate(host, ctx, env, v, term->as.ann.ty, out, error);
   }
   case TERM_GLOBAL:
-    return eval_eval_global(host, ctx, term->as.global.name, out, error);
+    return eval_eval_entry(host, ctx, term->as.global.name,
+                           eval_find_seen(term->as.global.name,
+                                          &term->as.global.seen, ctx.globals),
+                           out, error);
   case TERM_AUTO: *error = error_not_yet(rules_auto_word()); return 0;
   }
   return 0; /* each tag returns above */

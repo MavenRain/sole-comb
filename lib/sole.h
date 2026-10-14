@@ -594,6 +594,13 @@ typedef enum {
   TERM_VAR, TERM_UNIV, TERM_LAN, TERM_RAN, TERM_IN, TERM_ELIM, TERM_SEC,
   TERM_OUT, TERM_LET, TERM_ANN, TERM_GLOBAL, TERM_LIT, TERM_AUTO
 } TermTag;
+/* The entry of a global name in one globals map, kept in a T.Global term
+   and a V.head (eval_find_seen). globals NULL = no entry yet. Not a Bend
+   field: a cache only. */
+typedef struct {
+  const struct Globals *globals;
+  const struct GlobalEntry *entry;
+} GlobalSeen;
 struct Term {
   TermTag tag;
   union {
@@ -607,7 +614,7 @@ struct Term {
     struct { const TermShape *shape; const TermAddr *address; const Term *head; } out;
     struct { Text name; const Term *ty; const Term *value; const Term *body; } let;
     struct { const Term *term; const Term *ty; } ann;
-    struct { Text name; } global;
+    struct { Text name; GlobalSeen seen; } global;
     struct { const Literal *literal; } lit;
   } as;
 };
@@ -669,6 +676,7 @@ TermScan term_scan_term(Bool include_families, const Texts *names,
 Bool term_scan(Bool include_families, const Texts *names, TermScan state);
 Bool term_exists_name(Bool include_families, const Texts *names,
                       const Term *term);
+Bool term_exists_var(const Term *term);
 
 /* ========================================== lib/kernel_positivity.bend */
 
@@ -792,7 +800,7 @@ typedef struct {
   HeadTag tag;
   union {
     struct { Int63 level; } hlocal;
-    struct { Text name; } hglobal;
+    struct { Text name; GlobalSeen seen; } hglobal;
   } as;
 } Head;
 
@@ -1329,6 +1337,8 @@ int rules_c_eval(RulesCtx ctx, const Term *tm, const Value **out,
                  const KError **error);
 int rules_c_open(RulesCtx ctx, const Closure *clo, const Values *args,
                  const Value **out, const KError **error);
+int rules_c_open_at(RulesCtx ctx, const Closure *clo, const Term *arg,
+                    const Value **out, const KError **error);
 RulesCtx rules_c_bind(RulesCtx ctx, Text x, Quantity q, const Value *ty);
 RulesCtx rules_c_define(RulesCtx ctx, Text x, Quantity q, const Value *ty,
                         const Value *value);
@@ -1783,14 +1793,21 @@ int prim_apply(Prim prim, const Literals *args, const Value **out,
 
 /* =============================================== lib/kernel_global.bend */
 
+/* The value of a def body for one globals map (eval_eval_entry). globals
+   NULL = no value yet. Not a Bend field: a cache only. */
+typedef struct {
+  const Globals *globals;
+  const Value *value;
+} GlobalMemo;
 /* def_entry = Definition{ty, body, reducible, rec_arg, partial}. rec_arg
-   NULL = None{}. */
+   NULL = None{}. memo is set by global_definition. */
 typedef struct {
   const Term *ty;
   const Term *body;
   Bool reducible;
   const Int63 *rec_arg;
   Bool partial;
+  GlobalMemo *memo;
 } GlobalDef;
 /* axiom_entry = Postulate{ax_ty}. */
 typedef struct {
@@ -1803,7 +1820,7 @@ typedef struct {
 } GlobalPrim;
 /* entry = Def{definition} | Axiom{postulate} | Prim{primitive}. */
 typedef enum { GLOBAL_DEF, GLOBAL_AXIOM, GLOBAL_PRIM } GlobalEntryTag;
-typedef struct {
+typedef struct GlobalEntry {
   GlobalEntryTag tag;
   union {
     GlobalDef def;

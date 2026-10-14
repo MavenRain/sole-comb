@@ -42,6 +42,61 @@ static void write_golden(const char *path, const char *source) {
 
 /* The temp dir template: $TMPDIR when it is set and not empty (one trailing
    "/" removed), else /tmp. Returns 0 when the template does not fit. */
+/* S14 speed cases: a dependent codomain (id), mu indices that no binder
+   reads (Agreement), a def with many references (two) and an application
+   whose head stays neutral (observe n). */
+static const char *kan_ok =
+    "mu N : Type 0 with\n| zero : N\n| succ : N -> N\n"
+    "mu Agreement : (0 a : Nat) -> (0 b : Nat) -> Type 0 with\n"
+    "| same : (0 a : Nat) -> Agreement a a\n"
+    "def rec observe : N -> Nat := fun (n : N) => case n as x in N return "
+    "Nat with | zero => 0 | succ m => natAdd 1 (observe m)\n"
+    "def id : (A : Type 0) -> A -> A := fun (A : Type 0) (x : A) => x\n"
+    "def two : Nat := natAdd 1 1\n"
+    "def dep : Agreement (id Nat two) 2 := same (natAdd two (natMul two 0))\n"
+    "def many : Agreement (natAdd two (natAdd two (natAdd two two))) 8 := "
+    "same 8\n"
+    "def stuck : (n : N) -> Agreement (observe n) (observe n) := "
+    "fun (n : N) => same (observe n)\n";
+static const char *kan_bad =
+    "mu N : Type 0 with\n| zero : N\n| succ : N -> N\n"
+    "mu Agreement : (0 a : Nat) -> (0 b : Nat) -> Type 0 with\n"
+    "| same : (0 a : Nat) -> Agreement a a\n"
+    "def rec observe : N -> Nat := fun (n : N) => case n as x in N return "
+    "Nat with | zero => 0 | succ m => natAdd 1 (observe m)\n"
+    "def stuck : (n : N) -> Agreement (observe n) (observe (succ n)) := "
+    "fun (n : N) => same (observe n)\n";
+static char nested[SOLE_SOURCE_LIMIT + 1];
+
+/* Write text to path, then check it (with --kan when kan is not 0). The
+   result is the check exit code. */
+static int check_text(const char *path, const char *text, int kan) {
+  const char *extra[16];
+  char *args[2];
+  FILE *out = fopen(path, "wb");
+  if (out == NULL) exit(2);
+  fputs(text, out);
+  if (fclose(out) != 0) exit(2);
+  args[0] = "--kan";
+  args[1] = (char *)path;
+  return kan ? check_command(2, args, extra, 0)
+             : check_command(1, args + 1, extra, 0);
+}
+
+/* The deepest nesting under SOLE_SOURCE_LIMIT: `prim 1 (prim 1 ( ... 0
+   ... ))`, 11 bytes for each level (2975 levels). */
+static void nested_source(const char *prim) {
+  const char *head = "axiom Nat : Type 0\ndef answer : Nat := ";
+  size_t levels = (SOLE_SOURCE_LIMIT - strlen(head) - 2) / 11;
+  size_t at;
+  char *end = nested + strlen(strcpy(nested, head));
+  for (at = 0; at < levels; at++) end += sprintf(end, "%s 1 (", prim);
+  *end++ = '0';
+  for (at = 0; at < levels; at++) *end++ = ')';
+  *end++ = '\n';
+  *end = '\0';
+}
+
 static int temp_template(char *dir, size_t size) {
   const char *base = getenv("TMPDIR");
   size_t length;
@@ -146,6 +201,18 @@ int main(void) {
   require(command(1, args) == CLI_EXIT_FAIL,
           "an inaccessible nested entry makes the suite fail");
   if (chmod(locked, 0700) != 0 || unlink(golden) != 0) return 2;
+
+  nested_source("natAdd");
+  require(check_text(source, nested, 0) == 0,
+          "the deepest nested natAdd checks");
+  nested_source("natMul");
+  require(check_text(source, nested, 0) == 0,
+          "the deepest nested natMul checks");
+  require(check_text(source, kan_ok, 1) == 0,
+          "a dependent codomain, unread indices, a shared def and a neutral "
+          "head check");
+  require(check_text(source, kan_bad, 1) == CLI_EXIT_FAIL,
+          "a neutral head with a different index fails");
 
   if (rmdir(links) != 0 || rmdir(closed) != 0 ||
       rmdir(locked) != 0) return 2;

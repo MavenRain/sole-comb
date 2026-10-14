@@ -25,6 +25,10 @@ const GlobalEntry *global_definition(const Term *ty, const Term *body,
                                      Bool reducible, const Int63 *rec_arg,
                                      Bool partial) {
   GlobalEntry *entry = (GlobalEntry *)entry_new(GLOBAL_DEF);
+  GlobalMemo *memo = (GlobalMemo *)arena_alloc(sizeof *memo);
+  memo->globals = NULL;
+  memo->value = NULL;
+  entry->as.def.memo = memo;
   entry->as.def.ty = ty;
   entry->as.def.body = body;
   entry->as.def.reducible = reducible;

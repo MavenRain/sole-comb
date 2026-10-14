@@ -70,6 +70,8 @@ const Head *value_hglobal(Text name) {
   Head *head = arena_alloc(sizeof *head);
   head->tag = VALUE_HGLOBAL;
   head->as.hglobal.name = name;
+  head->as.hglobal.seen.globals = NULL;
+  head->as.hglobal.seen.entry = NULL;
   return head;
 }
 

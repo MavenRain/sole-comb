@@ -928,6 +928,8 @@ int check_infer_node(const RulesHost *host, RulesCtx c, Quantity mode,
     case TERM_GLOBAL:
       head.tag = VALUE_HGLOBAL;
       head.as.hglobal.name = tm->as.global.name;
+      head.as.hglobal.seen.globals = NULL;
+      head.as.hglobal.seen.entry = NULL;
       if (!runtime_ops_head_ty(c.check, &head, &ty, error)) return 0;
       out->ty = ty;
       out->uses = quantity_empty();
