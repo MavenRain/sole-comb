@@ -86,6 +86,26 @@ static const char *kan_bad =
 static const char *kan_lan_ok = KAN_LAN;
 static const char *kan_lan_bad =
     KAN_LAN "def wrong : Agreement 1 1 := keep (lift 1) (lift 2)\n";
+/* S16 memo cases (H8): the front end and the kernel evaluate the same
+   closed constructor argument (observe ...), thus the kernel reads the
+   memo of the front end. A closed argument whose evaluation fails is used
+   two times in one def. A failed evaluation keeps no value, thus the def
+   fails. */
+#define KAN_KEPT                                                             \
+  "mu N : Type 0 with\n| zero : N\n| succ : N -> N\n"                        \
+  "mu Agreement : (0 a : Nat) -> (0 b : Nat) -> Type 0 with\n"               \
+  "| same : (0 a : Nat) -> Agreement a a\n"                                  \
+  "def rec observe : N -> Nat := fun (n : N) => case n as x in N return "    \
+  "Nat with | zero => 0 | succ m => natAdd 1 (observe m)\n"                  \
+  "def both : Agreement 2 2 -> Agreement 2 2 -> Agreement 2 2 := "           \
+  "fun (x : Agreement 2 2) (y : Agreement 2 2) => y\n"
+static const char *kan_kept_ok =
+    KAN_KEPT "def seen : Agreement (observe (succ (succ zero))) 2 := "
+    "both (same (observe (succ (succ zero)))) "
+    "(same (observe (succ (succ zero))))\n";
+static const char *kan_kept_bad =
+    KAN_KEPT "def bad : Agreement 2 2 := "
+    "both (same (natAdd auto 1)) (same (natAdd auto 1))\n";
 static char nested[SOLE_SOURCE_LIMIT + 1];
 
 /* Write text to path, then check it (with --kan when kan is not 0). The
@@ -237,6 +257,10 @@ int main(void) {
           "a closed former under many lambdas and an open former check");
   require(check_text(source, kan_lan_bad, 1) == CLI_EXIT_FAIL,
           "an open former with a different index fails");
+  require(check_text(source, kan_kept_ok, 1) == 0,
+          "a closed argument that two checks evaluate checks");
+  require(check_text(source, kan_kept_bad, 1) == CLI_EXIT_FAIL,
+          "a closed argument that fails to evaluate, used two times, fails");
 
   if (rmdir(links) != 0 || rmdir(closed) != 0 ||
       rmdir(locked) != 0) return 2;

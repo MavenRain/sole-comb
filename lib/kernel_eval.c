@@ -170,35 +170,42 @@ static int eval_memo_body(const RulesHost *host, RulesCtx ctx,
   return 1;
 }
 
-/* The memo of a closed T.Lan node (H6). A closed node does not read its
-   environment, and an evaluation reads only ctx.globals, so each
+/* The memo of a closed term node (H6, H8). A closed node does not read
+   its environment, and an evaluation reads only ctx.globals, so each
    evaluation of the node under one globals map gets the same value. The
-   value closes over the first environment, but a diagram closure is only
-   opened with its binders, thus the closed body does not read that
-   environment. The safety argument of eval_find_seen and eval_memo_body
-   applies: a globals map does not change, arena_release is only in
-   bin/main.c test_row (it releases the term and the map together), and
-   one thread evaluates. The state guard is necessary: ctx.globals is NULL
-   for an empty map, and memo.globals starts at NULL. */
-static int eval_lan_kept(RulesCtx ctx, const Term *term, const Value **out) {
-  if (term->tag != TERM_LAN || term->as.lan.memo.state != LAN_KEPT ||
-      term->as.lan.memo.globals != ctx.globals)
+   value closes over the first environment, but a closure is only opened
+   with its binders, thus the closed body does not read that environment.
+   The safety argument of eval_find_seen and eval_memo_body applies: a
+   globals map does not change, arena_release is only in bin/main.c
+   test_row (it releases the term and the map together), and one thread
+   evaluates. The state guard is necessary: ctx.globals is NULL for an
+   empty map, and memo.globals starts at NULL. */
+static int eval_term_kept(RulesCtx ctx, const Term *term, const Value **out) {
+  if (term->memo_state != MEMO_KEPT || term->memo.globals != ctx.globals)
     return 0;
-  *out = term->as.lan.memo.value;
+  *out = term->memo.value;
   return 1;
 }
 
-/* Keep the value of a T.Lan node after a good evaluation. The node is
-   scanned once (term_closed). An open node keeps no value. The term is an
-   arena cell, not a const object, so the memo can change. */
-static void eval_lan_keep(RulesCtx ctx, const Term *term, const Value *value) {
-  LanMemo *memo = (LanMemo *)&term->as.lan.memo;
-  if (memo->state == LAN_UNSEEN)
-    memo->state = term_closed(term) == YES ? LAN_CLOSED : LAN_OPEN;
-  if (memo->state == LAN_OPEN) return;
-  memo->state = LAN_KEPT;
-  memo->globals = ctx.globals;
-  memo->value = value;
+/* H6 reads the memo only for a T.Lan node. The memo of a node of an other
+   tag is kept only at the eval_eval entry (H8), and an evaluation step
+   does not read it, thus the steps under a fuel host do not change. */
+static int eval_lan_kept(RulesCtx ctx, const Term *term, const Value **out) {
+  return term->tag == TERM_LAN && eval_term_kept(ctx, term, out);
+}
+
+/* Keep the value of a node after a good evaluation. The node is scanned
+   once (term_closed). An open node keeps no value. The term is an arena
+   cell, not a const object, so the memo can change (eval_entry_keeps keeps
+   the static term_auto cell out). */
+static void eval_term_keep(RulesCtx ctx, const Term *term, const Value *value) {
+  Term *cell = (Term *)term;
+  if (cell->memo_state == MEMO_UNSEEN)
+    cell->memo_state = term_closed(term) == YES ? MEMO_CLOSED : MEMO_OPEN;
+  if (cell->memo_state == MEMO_OPEN) return;
+  cell->memo_state = MEMO_KEPT;
+  cell->memo.globals = ctx.globals;
+  cell->memo.value = value;
 }
 
 int eval_eval_entry(const RulesHost *host, RulesCtx ctx, Text name,
@@ -650,7 +657,7 @@ int eval_eval_step(const RulesHost *host, RulesCtx ctx, const Values *env,
     if (!eval_eval_shape(host, ctx, env, term->as.lan.shape, &s, error))
       return 0;
     *out = value_vlan(s, value_close(env, term->as.lan.diagram), NULL);
-    eval_lan_keep(ctx, term, *out);
+    eval_term_keep(ctx, term, *out);
     return 1;
   }
   case TERM_RAN: {
@@ -927,12 +934,44 @@ static RulesHost eval_host(void) {
   return host;
 }
 
+/* The tags that the eval_eval entry keeps a value for (H8). A leaf takes
+   one step, and term_auto is a static cell that must not change. */
+static int eval_entry_keeps(const Term *term) {
+  switch (term->tag) {
+  case TERM_VAR:
+  case TERM_UNIV:
+  case TERM_GLOBAL:
+  case TERM_LIT:
+  case TERM_AUTO: return 0;
+  case TERM_LAN:
+  case TERM_RAN:
+  case TERM_IN:
+  case TERM_ELIM:
+  case TERM_SEC:
+  case TERM_OUT:
+  case TERM_LET:
+  case TERM_ANN: return 1;
+  }
+  return 0; /* each tag returns above */
+}
+
+/* The depth-0 evaluation (H8). The front end and the kernel evaluate the
+   same closed Term under the same globals map (for example the argument
+   of a constructor and its declared index), thus the second evaluation
+   reads the memo. The host has no fuel, so a budget result does not
+   change. A failed evaluation keeps no value: each use gets the error
+   again. */
 int eval_eval(const Globals *globals, const Values *env, const Term *term,
               const Value **out, const KError **error) {
   RulesHost host = eval_host();
   RulesCtx ctx;
   ctx.globals = globals;
-  return eval_request_eval(&host, ctx, env, term, out, error);
+  if (!eval_entry_keeps(term))
+    return eval_request_eval(&host, ctx, env, term, out, error);
+  if (eval_term_kept(ctx, term, out)) return 1;
+  if (!eval_request_eval(&host, ctx, env, term, out, error)) return 0;
+  eval_term_keep(ctx, term, *out);
+  return 1;
 }
 
 int eval_whnf(const Globals *globals, const Value *value, const Value **out,

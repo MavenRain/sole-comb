@@ -6,10 +6,14 @@
 static Term *term_cell(TermTag tag) {
   Term *term = arena_alloc(sizeof *term);
   term->tag = tag;
+  term->memo_state = MEMO_UNSEEN;
+  term->memo.globals = NULL;
+  term->memo.value = NULL;
   return term;
 }
 
-static const Term term_auto_cell = {TERM_AUTO, {{0}}};
+static const Term term_auto_cell = {TERM_AUTO, MEMO_UNSEEN, {{0}},
+                                    {NULL, NULL}};
 
 const Term *term_var(Int63 index) {
   Term *term = term_cell(TERM_VAR);
@@ -27,9 +31,6 @@ const Term *term_lan(const TermShape *shape, const Term *diagram) {
   Term *term = term_cell(TERM_LAN);
   term->as.lan.shape = shape;
   term->as.lan.diagram = diagram;
-  term->as.lan.memo.state = LAN_UNSEEN;
-  term->as.lan.memo.globals = NULL;
-  term->as.lan.memo.value = NULL;
   return term;
 }
 

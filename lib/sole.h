@@ -601,21 +601,25 @@ typedef struct {
   const struct Globals *globals;
   const struct GlobalEntry *entry;
 } GlobalSeen;
-/* The value of a closed T.Lan node under one globals map (eval TERM_LAN,
-   H6). LAN_UNSEEN = the node is not scanned yet; LAN_KEPT = value is the
-   value of the node under globals. Not a Bend field: a cache only. */
-typedef enum { LAN_UNSEEN, LAN_OPEN, LAN_CLOSED, LAN_KEPT } LanState;
+/* The value of a closed term node under one globals map: H6 keeps it for
+   a T.Lan node in each evaluation (eval TERM_LAN), H8 keeps it for each
+   node that the eval_eval entry evaluates. MEMO_UNSEEN = the node is not
+   scanned yet; MEMO_KEPT = memo.value is the value of the node under
+   memo.globals. Not a Bend field: a cache only. The state is not in the
+   TermMemo struct: it fills the gap after the tag, thus a Term is 64
+   bytes and not 80 (the arena rounds to 16). */
+typedef enum { MEMO_UNSEEN, MEMO_OPEN, MEMO_CLOSED, MEMO_KEPT } MemoState;
 typedef struct {
-  LanState state;
   const struct Globals *globals;
   const struct Value *value;
-} LanMemo;
+} TermMemo;
 struct Term {
   TermTag tag;
+  MemoState memo_state;
   union {
     struct { Int63 index; } var;
     struct { Level level; } univ;
-    struct { const TermShape *shape; const Term *diagram; LanMemo memo; } lan;
+    struct { const TermShape *shape; const Term *diagram; } lan;
     struct { const TermShape *shape; const Term *diagram; } ran;
     struct { const TermShape *shape; const TermAddr *address; const Terms *args; } in;
     struct { const TermElim *elim; } elim;
@@ -626,6 +630,7 @@ struct Term {
     struct { Text name; GlobalSeen seen; } global;
     struct { const Literal *literal; } lit;
   } as;
+  TermMemo memo;
 };
 
 const Term *term_var(Int63 index);
