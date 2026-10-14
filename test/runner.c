@@ -66,6 +66,26 @@ static const char *kan_bad =
     "Nat with | zero => 0 | succ m => natAdd 1 (observe m)\n"
     "def stuck : (n : N) -> Agreement (observe n) (observe (succ n)) := "
     "fun (n : N) => same (observe n)\n";
+/* S15 memo cases (H6): a closed former (N) under many lambdas, and an open
+   former (Agreement a a, it reads the bound a) at two values of a in one
+   def. Each def has a new globals map, thus the two values must be in one
+   def. A memo that keeps the value of the open former accepts wrong. */
+#define KAN_LAN                                                              \
+  "mu N : Type 0 with\n| zero : N\n| succ : N -> N\n"                        \
+  "mu Agreement : (0 a : Nat) -> (0 b : Nat) -> Type 0 with\n"               \
+  "| same : (0 a : Nat) -> Agreement a a\n"                                  \
+  "def k : N -> N -> N -> N -> N := "                                        \
+  "fun (a : N) (b : N) (c : N) (d : N) => succ d\n"                          \
+  "def use : N := k zero (succ zero) zero (k zero zero (succ zero) zero)\n"  \
+  "def lift : (a : Nat) -> Agreement a a := fun (a : Nat) => same a\n"       \
+  "def one : Agreement 1 1 := lift 1\n"                                      \
+  "def two : Agreement 2 2 := lift 2\n"                                     \
+  "def keep : Agreement 1 1 -> Agreement 1 1 -> Agreement 1 1 := "           \
+  "fun (x : Agreement 1 1) (y : Agreement 1 1) => y\n"                       \
+  "def fine : Agreement 1 1 := keep (lift 1) one\n"
+static const char *kan_lan_ok = KAN_LAN;
+static const char *kan_lan_bad =
+    KAN_LAN "def wrong : Agreement 1 1 := keep (lift 1) (lift 2)\n";
 static char nested[SOLE_SOURCE_LIMIT + 1];
 
 /* Write text to path, then check it (with --kan when kan is not 0). The
@@ -213,6 +233,10 @@ int main(void) {
           "head check");
   require(check_text(source, kan_bad, 1) == CLI_EXIT_FAIL,
           "a neutral head with a different index fails");
+  require(check_text(source, kan_lan_ok, 1) == 0,
+          "a closed former under many lambdas and an open former check");
+  require(check_text(source, kan_lan_bad, 1) == CLI_EXIT_FAIL,
+          "an open former with a different index fails");
 
   if (rmdir(links) != 0 || rmdir(closed) != 0 ||
       rmdir(locked) != 0) return 2;

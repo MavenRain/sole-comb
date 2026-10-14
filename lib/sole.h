@@ -601,12 +601,21 @@ typedef struct {
   const struct Globals *globals;
   const struct GlobalEntry *entry;
 } GlobalSeen;
+/* The value of a closed T.Lan node under one globals map (eval TERM_LAN,
+   H6). LAN_UNSEEN = the node is not scanned yet; LAN_KEPT = value is the
+   value of the node under globals. Not a Bend field: a cache only. */
+typedef enum { LAN_UNSEEN, LAN_OPEN, LAN_CLOSED, LAN_KEPT } LanState;
+typedef struct {
+  LanState state;
+  const struct Globals *globals;
+  const struct Value *value;
+} LanMemo;
 struct Term {
   TermTag tag;
   union {
     struct { Int63 index; } var;
     struct { Level level; } univ;
-    struct { const TermShape *shape; const Term *diagram; } lan;
+    struct { const TermShape *shape; const Term *diagram; LanMemo memo; } lan;
     struct { const TermShape *shape; const Term *diagram; } ran;
     struct { const TermShape *shape; const TermAddr *address; const Terms *args; } in;
     struct { const TermElim *elim; } elim;
@@ -677,6 +686,7 @@ Bool term_scan(Bool include_families, const Texts *names, TermScan state);
 Bool term_exists_name(Bool include_families, const Texts *names,
                       const Term *term);
 Bool term_exists_var(const Term *term);
+Bool term_closed(const Term *term);
 
 /* ========================================== lib/kernel_positivity.bend */
 

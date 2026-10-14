@@ -170,6 +170,37 @@ static int eval_memo_body(const RulesHost *host, RulesCtx ctx,
   return 1;
 }
 
+/* The memo of a closed T.Lan node (H6). A closed node does not read its
+   environment, and an evaluation reads only ctx.globals, so each
+   evaluation of the node under one globals map gets the same value. The
+   value closes over the first environment, but a diagram closure is only
+   opened with its binders, thus the closed body does not read that
+   environment. The safety argument of eval_find_seen and eval_memo_body
+   applies: a globals map does not change, arena_release is only in
+   bin/main.c test_row (it releases the term and the map together), and
+   one thread evaluates. The state guard is necessary: ctx.globals is NULL
+   for an empty map, and memo.globals starts at NULL. */
+static int eval_lan_kept(RulesCtx ctx, const Term *term, const Value **out) {
+  if (term->tag != TERM_LAN || term->as.lan.memo.state != LAN_KEPT ||
+      term->as.lan.memo.globals != ctx.globals)
+    return 0;
+  *out = term->as.lan.memo.value;
+  return 1;
+}
+
+/* Keep the value of a T.Lan node after a good evaluation. The node is
+   scanned once (term_closed). An open node keeps no value. The term is an
+   arena cell, not a const object, so the memo can change. */
+static void eval_lan_keep(RulesCtx ctx, const Term *term, const Value *value) {
+  LanMemo *memo = (LanMemo *)&term->as.lan.memo;
+  if (memo->state == LAN_UNSEEN)
+    memo->state = term_closed(term) == YES ? LAN_CLOSED : LAN_OPEN;
+  if (memo->state == LAN_OPEN) return;
+  memo->state = LAN_KEPT;
+  memo->globals = ctx.globals;
+  memo->value = value;
+}
+
 int eval_eval_entry(const RulesHost *host, RulesCtx ctx, Text name,
                     const GlobalEntry *found, const Value **out,
                     const KError **error) {
@@ -410,7 +441,8 @@ int eval_eval_shape(const RulesHost *host, RulesCtx ctx, const Values *env,
   switch (shape->tag) {
   case SHAPE_SPI: {
     const Value *d;
-    if (!eval_request_eval(host, ctx, env, shape->as.spi.domain, &d, error))
+    if (!eval_lan_kept(ctx, shape->as.spi.domain, &d) &&
+        !eval_request_eval(host, ctx, env, shape->as.spi.domain, &d, error))
       return 0;
     *out = shape_spi_value(shape->as.spi.quantity, shape->as.spi.binder, d);
     return 1;
@@ -614,9 +646,11 @@ int eval_eval_step(const RulesHost *host, RulesCtx ctx, const Values *env,
   case TERM_LIT: *out = value_vlit(term->as.lit.literal); return 1;
   case TERM_LAN: {
     const ValueShape *s;
+    if (eval_lan_kept(ctx, term, out)) return 1;
     if (!eval_eval_shape(host, ctx, env, term->as.lan.shape, &s, error))
       return 0;
     *out = value_vlan(s, value_close(env, term->as.lan.diagram), NULL);
+    eval_lan_keep(ctx, term, *out);
     return 1;
   }
   case TERM_RAN: {

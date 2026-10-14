@@ -27,6 +27,9 @@ const Term *term_lan(const TermShape *shape, const Term *diagram) {
   Term *term = term_cell(TERM_LAN);
   term->as.lan.shape = shape;
   term->as.lan.diagram = diagram;
+  term->as.lan.memo.state = LAN_UNSEEN;
+  term->as.lan.memo.globals = NULL;
+  term->as.lan.memo.value = NULL;
   return term;
 }
 
@@ -346,4 +349,143 @@ Bool term_exists_var(const Term *term) {
                 : term_scan_term(NO, NULL, state.pending->head,
                                  state.pending->tail);
   return state.found;
+}
+
+/* One pending term of term_closed: the term and the number of binders
+   above it. */
+typedef struct {
+  const Term *term;
+  Int63 depth;
+} TermAt;
+SOLE_LIST(TermsAt, TermAt)
+
+static const TermsAt *closed_push(const Term *term, Int63 depth,
+                                  const TermsAt *rest) {
+  TermAt at = {term, depth};
+  return TermsAt_cons(at, rest);
+}
+
+static const TermsAt *closed_push_all(const Terms *terms, Int63 depth,
+                                      const TermsAt *rest) {
+  for (; terms != NULL; terms = terms->tail)
+    rest = closed_push(terms->head, depth, rest);
+  return rest;
+}
+
+static const TermsAt *closed_push_shape(const TermShape *shape, Int63 depth,
+                                        const TermsAt *rest) {
+  return closed_push_all(shape_payload_term(shape), depth, rest);
+}
+
+static const TermsAt *closed_push_addr(const TermAddr *address, Int63 depth,
+                                       const TermsAt *rest) {
+  return closed_push_all(term_addr_terms(address, NULL), depth, rest);
+}
+
+static const TermsAt *closed_push_legs(const TermLegs *legs, Int63 depth,
+                                       const TermsAt *rest) {
+  for (; legs != NULL; legs = legs->tail)
+    rest = closed_push(
+        legs->head->body,
+        depth + (Int63)TermBinders_length(legs->head->binders), rest);
+  return rest;
+}
+
+/* The binders of a T.Lan or T.Ran diagram: the point binder of an SPi
+   former (rules_form_pi), none for the other shapes. */
+static Int63 closed_diagram_binders(const TermShape *shape) {
+  switch (shape->tag) {
+  case SHAPE_SPI: return 1;
+  case SHAPE_SCOLL:
+  case SHAPE_SPAR:
+  case SHAPE_SMU:
+  case SHAPE_SNU: return 0;
+  }
+  return 0; /* each tag returns above */
+}
+
+static const TermsAt *closed_push_elim(const TermElim *elim, Int63 depth,
+                                       const TermsAt *rest) {
+  const TermBranches *branches = elim->branches;
+  rest = closed_push_shape(elim->shape, depth,
+                           closed_push(elim->scrut, depth, rest));
+  if (elim->motive != NULL)
+    rest = closed_push(elim->motive->body,
+                       depth + (Int63)Texts_length(elim->motive->idx) + 1,
+                       rest);
+  for (; branches != NULL; branches = branches->tail)
+    rest = closed_push_addr(
+        branches->head.address, depth,
+        closed_push(branches->head.leg->body,
+                    depth + (Int63)TermBinders_length(
+                                branches->head.leg->binders),
+                    rest));
+  return rest;
+}
+
+/* closed (H6): YES if each T.Var of term is bound inside term. A closed
+   term does not read its environment. Each binder form adds its binder
+   count: a leg its binders, a motive its indices and self, a let body
+   one, an SPi diagram one. A loop over the pending list (worklist). */
+Bool term_closed(const Term *term) {
+  const TermsAt *pending = closed_push(term, 0, NULL);
+  while (pending != NULL) {
+    TermAt at = pending->head;
+    Int63 d = at.depth;
+    pending = pending->tail;
+    switch (at.term->tag) {
+    case TERM_VAR:
+      if (at.term->as.var.index >= d) return NO;
+      break;
+    case TERM_UNIV:
+    case TERM_GLOBAL:
+    case TERM_LIT:
+    case TERM_AUTO: break;
+    case TERM_LAN:
+      pending = closed_push_shape(
+          at.term->as.lan.shape, d,
+          closed_push(at.term->as.lan.diagram,
+                      d + closed_diagram_binders(at.term->as.lan.shape),
+                      pending));
+      break;
+    case TERM_RAN:
+      pending = closed_push_shape(
+          at.term->as.ran.shape, d,
+          closed_push(at.term->as.ran.diagram,
+                      d + closed_diagram_binders(at.term->as.ran.shape),
+                      pending));
+      break;
+    case TERM_IN:
+      pending = closed_push_shape(
+          at.term->as.in.shape, d,
+          closed_push_addr(at.term->as.in.address, d,
+                           closed_push_all(at.term->as.in.args, d, pending)));
+      break;
+    case TERM_SEC:
+      pending = closed_push_shape(
+          at.term->as.sec.shape, d,
+          closed_push_legs(at.term->as.sec.legs, d, pending));
+      break;
+    case TERM_OUT:
+      pending = closed_push_shape(
+          at.term->as.out.shape, d,
+          closed_push_addr(at.term->as.out.address, d,
+                           closed_push(at.term->as.out.head, d, pending)));
+      break;
+    case TERM_ELIM:
+      pending = closed_push_elim(at.term->as.elim.elim, d, pending);
+      break;
+    case TERM_LET:
+      pending = closed_push(
+          at.term->as.let.ty, d,
+          closed_push(at.term->as.let.value, d,
+                      closed_push(at.term->as.let.body, d + 1, pending)));
+      break;
+    case TERM_ANN:
+      pending = closed_push(at.term->as.ann.term, d,
+                            closed_push(at.term->as.ann.ty, d, pending));
+      break;
+    }
+  }
+  return YES;
 }
